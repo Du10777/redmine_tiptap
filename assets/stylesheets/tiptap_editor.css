@@ -1,0 +1,866 @@
+/* Этот файл склеивается скриптом ./src/_build.sh — не редактировать вручную */
+
+.tiptap-wrapper {
+  margin-bottom: 8px;
+}
+
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  margin-bottom: 4px;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.tiptap-toolbar-zone {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.tiptap-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.tiptap-style-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-style-btn {
+  gap: 3px;
+  width: 31px;
+  justify-content: space-between;
+}
+
+.tiptap-style-arrow {
+  font-size: 10px;
+  color: #666;
+  pointer-events: none;
+}
+
+.tiptap-style-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 150px;
+}
+
+.tiptap-style-option {
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tiptap-style-option:hover {
+  background: #d0e4ff;
+}
+
+.tiptap-align-wrapper,
+.tiptap-list-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-align-btn,
+.tiptap-list-btn {
+  gap: 2px;
+}
+
+.tiptap-align-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-align-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tiptap-align-option {
+  min-width: 28px;
+}
+
+.tiptap-list-dropdown {
+  top: 28px;
+  min-width: 190px;
+}
+
+.tiptap-font-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-font-btn {
+  gap: 2px;
+}
+
+.tiptap-font-icon {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 15px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tiptap-font-dropdown {
+  top: 28px;
+  min-width: 170px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.tiptap-style-option.active {
+  background: #eaf3ff;
+  font-weight: 600;
+}
+
+.tiptap-btn {
+  height: 26px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: monospace;
+  min-width: 28px;
+}
+
+.tiptap-btn:hover { background: #e8e8e8; }
+
+.tiptap-btn.active {
+  background: #d0e4ff;
+  border-color: #5b9bd5;
+  font-weight: bold;
+}
+
+.tiptap-sep {
+  width: 1px;
+  height: 20px;
+  background: #ccc;
+  margin: 0 4px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.tiptap-select {
+  height: 26px;
+  padding: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.tiptap-select:hover { background: #e8e8e8; }
+
+.tiptap-size-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-size-input {
+  height: 26px;
+  width: 52px;
+  padding: 0 16px 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.tiptap-size-arrow {
+  position: absolute;
+  right: 4px;
+  font-size: 10px;
+  color: #666;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tiptap-size-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-height: 240px;
+  overflow-y: auto;
+  min-width: 52px;
+}
+
+.tiptap-size-option {
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tiptap-size-option:hover {
+  background: #d0e4ff;
+}
+
+.tiptap-color-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 2px 5px;
+}
+
+.tiptap-color-label {
+  position: relative;
+  font-size: 15px;
+  font-weight: bold;
+  pointer-events: none;
+  display: inline-block;
+  line-height: 1;
+}
+
+.tiptap-color-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: transparent;
+  border-radius: 1px;
+}
+
+.tiptap-bg-label {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0 3px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.tiptap-link-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.tiptap-content {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tiptap-content p {
+  padding-left: 0 !important;
+}
+
+.ProseMirror {
+  padding: 8px;
+  min-height: 150px;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.ProseMirror p { margin-top: 0 !important; margin-bottom: 2px !important; min-height: 0 !important; }
+.ProseMirror h1 { font-size: 1.6em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h2 { font-size: 1.3em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h3 { font-size: 1.1em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h4 { font-size: 1em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h5 { font-size: 0.9em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h6 { font-size: 0.85em; font-weight: bold; margin: 8px 0 4px; color: #555; }
+.ProseMirror code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px; font-family: monospace; }
+.ProseMirror pre { background: #f0f0f0; padding: 8px; border-radius: 3px; overflow-x: auto; }
+.ProseMirror pre code { background: none; padding: 0; }
+.ProseMirror ul { padding-left: 20px; list-style: disc; }
+.ProseMirror ol { padding-left: 20px; list-style: decimal; }
+.ProseMirror li { margin: 0 !important; }
+.ProseMirror li > p { margin: 0 !important; }
+
+/* Межстрочный интервал в сохранённом виде */
+div.wiki p,
+div.wiki-page p {
+  margin: 0 0 2px 0 !important;
+  line-height: 1.25 !important;
+}
+
+div.wiki li,
+div.wiki-page li {
+  margin: 0 !important;
+}
+
+div.wiki li > p,
+div.wiki-page li > p {
+  margin: 0 !important;
+}
+
+.tiptap-source {
+  width: 100%;
+  min-height: 150px;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  border: 1px solid #ccc !important;
+  border-radius: 3px;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Список задач (чекбоксы) — редактор и просмотр */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 4px;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+ul[data-type="taskList"] li > label {
+  user-select: none;
+}
+
+ul[data-type="taskList"] li > label input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* в редакторе сдвигаем чекбоксы внутрь зоны */
+.ProseMirror ul[data-type="taskList"] {
+  padding-left: 24px;
+}
+
+/* вне редактора чекбокс некликабелен и приглушён сразу (до отработки JS) */
+ul[data-type="taskList"] li > label input {
+  pointer-events: none;
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.ProseMirror ul[data-type="taskList"] li > label input {
+  pointer-events: auto;
+  filter: none;
+  opacity: 1;
+}
+
+ul[data-type="taskList"] li > div {
+  flex: 1;
+}
+
+ul[data-type="taskList"] li > div > p {
+  margin: 0;
+}
+
+ul[data-type="taskList"] li[data-checked="true"] > div {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.ProseMirror a,
+.wiki .tiptap a { color: #169; text-decoration: underline; }
+.ProseMirror u { text-decoration: underline; }
+
+.ProseMirror hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 8px 0;
+}
+
+/* Collapse-блоки — сохранённый вид */
+.wiki details,
+.wiki-page details {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  clear: both;
+}
+
+.wiki summary {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.wiki details[open] summary {
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px 3px 0 0;
+}
+
+.wiki details > div[data-type="collapsible-content"] {
+  padding: 8px 10px;
+}
+
+/* Collapse-блоки — редактор */
+.ProseMirror details {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.ProseMirror summary {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: default;
+}
+
+.ProseMirror div[data-type="collapsible-content"] {
+  padding: 8px 10px;
+}
+
+/* Цитата — в редакторе и в сохранённом виде */
+.tiptap-quote,
+.wiki .tiptap-quote,
+.wiki-page .tiptap-quote {
+  border: 1px solid #ccc;
+  border-left: 4px solid #999;
+  border-radius: 3px;
+  margin: 8px 0;
+  padding: 0;
+  background: #fafafa;
+}
+
+.tiptap-quote-header {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+  color: #555;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+
+.tiptap-quote-body {
+  padding: 8px 10px;
+}
+
+.tiptap-quote-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ресайз картинок */
+.tiptap-image-wrapper {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+}
+
+.tiptap-image-selected {
+  outline: 2px solid #000;
+}
+
+.tiptap-image-selected img {
+  display: block;
+}
+
+.tiptap-resize-handle {
+  position: absolute;
+  width:  5px;
+  height: 5px;
+  background: #000;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  z-index: 10;
+}
+
+.tiptap-resize-nw { top:    -4.5px; left:  -4.5px; cursor: nw-resize; }
+.tiptap-resize-ne { top:    -4.5px; right: -4.5px; cursor: ne-resize; }
+.tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
+.tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }
+
+/* Модалка (общая) */
+.tiptap-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.tiptap-modal {
+  background: #fff;
+  border-radius: 6px;
+  width: 360px;
+  max-width: 90vw;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tiptap-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
+
+.tiptap-modal-close {
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+  border: none;
+  background: none;
+  line-height: 1;
+}
+
+.tiptap-modal-close:hover { color: #333; }
+
+.tiptap-modal-list {
+  padding: 8px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.tiptap-modal-empty {
+  padding: 16px;
+  text-align: center;
+  color: #888;
+  font-size: 13px;
+}
+
+.tiptap-modal-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.tiptap-modal-item:hover { background: #f0f0f0; }
+
+.tiptap-modal-item.selected { background: #d0e4ff; }
+
+.tiptap-modal-item-icon {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  font-family: monospace;
+  color: #888;
+}
+
+.tiptap-modal-item-name {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tiptap-modal-footer {
+  border-top: 1px solid #ccc;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tiptap-modal-footer label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.tiptap-modal-insert-btn {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tiptap-modal-insert-btn:hover { background: #e8e8e8; }
+
+.tiptap-modal-insert-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tiptap-modal-wide {
+  width: 750px;
+  max-width: 90vw;
+}
+
+/* Плитка картинок */
+.tiptap-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.tiptap-image-tile {
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.tiptap-image-tile:hover { background: #f0f0f0; }
+
+.tiptap-image-tile.selected {
+  border-color: #3d8ef8;
+  background: #d0e4ff;
+}
+
+.tiptap-image-tile img {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.tiptap-image-tile-name {
+  font-size: 11px;
+  color: #555;
+  text-align: center;
+  word-break: break-all;
+  max-width: 100px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Палитра цветов */
+.tiptap-palette {
+  position: absolute;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 176px;
+}
+
+.tiptap-palette-hex-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.tiptap-palette-hex {
+  flex: 1;
+  height: 24px;
+  padding: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.tiptap-palette-hex-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+
+.tiptap-palette-hex-btn:hover { background: #e8e8e8; }
+
+.tiptap-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 18px);
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.tiptap-palette-cell {
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.tiptap-palette-cell:hover {
+  transform: scale(1.2);
+  border-color: #333;
+}
+
+.tiptap-palette-reset {
+  width: 100%;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.tiptap-palette-reset:hover { background: #e8e8e8; }
+
+/* Таблицы — редактор */
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  min-width: 40px;
+}
+
+.ProseMirror table th {
+  background: #f0f0f0;
+  font-weight: bold;
+  text-align: left;
+}
+
+.ProseMirror table p { margin: 0 !important; min-height: 0 !important; line-height: 1.2 !important; }
+
+/* Хендл ресайза колонки */
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #3d8ef8;
+  cursor: col-resize;
+  z-index: 20;
+}
+
+.ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+/* Выделенные ячейки */
+.ProseMirror table .selectedCell {
+  background: #d0e4ff;
+}
+
+/* Таблицы — сохранённый вид */
+.wiki table.tiptap-table,
+.wiki-page table.tiptap-table,
+.wiki table,
+.wiki-page table {
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+
+.wiki table td,
+.wiki table th,
+.wiki-page table td,
+.wiki-page table th {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.wiki table p,
+.wiki-page table p {
+  margin: 0 !important;
+  min-height: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.wiki table th,
+.wiki-page table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Контекстное меню таблицы */
+.tiptap-table-menu {
+  position: absolute;
+  z-index: 10001;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 4px 0;
+  min-width: 180px;
+}
+
+.tiptap-table-menu-item {
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tiptap-table-menu-item:hover { background: #d0e4ff; }
+
+.tiptap-table-menu-item.danger { color: #c00; }
+.tiptap-table-menu-item.danger:hover { background: #fdd; }
+
+.tiptap-table-menu-sep {
+  height: 1px;
+  background: #eee;
+  margin: 4px 0;
+}

@@ -1,0 +1,105 @@
+/* Collapse-блоки — сохранённый вид */
+.wiki details,
+.wiki-page details {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  clear: both;
+}
+
+.wiki summary {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.wiki details[open] summary {
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px 3px 0 0;
+}
+
+.wiki details > div[data-type="collapsible-content"] {
+  padding: 8px 10px;
+}
+
+/* Collapse-блоки — редактор */
+.ProseMirror details {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.ProseMirror summary {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: default;
+}
+
+.ProseMirror div[data-type="collapsible-content"] {
+  padding: 8px 10px;
+}
+
+/* Цитата — в редакторе и в сохранённом виде */
+.tiptap-quote,
+.wiki .tiptap-quote,
+.wiki-page .tiptap-quote {
+  border: 1px solid #ccc;
+  border-left: 4px solid #999;
+  border-radius: 3px;
+  margin: 8px 0;
+  padding: 0;
+  background: #fafafa;
+}
+
+.tiptap-quote-header {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+  color: #555;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+
+.tiptap-quote-body {
+  padding: 8px 10px;
+}
+
+.tiptap-quote-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ресайз картинок */
+.tiptap-image-wrapper {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+}
+
+.tiptap-image-selected {
+  outline: 2px solid #000;
+}
+
+.tiptap-image-selected img {
+  display: block;
+}
+
+.tiptap-resize-handle {
+  position: absolute;
+  width:  5px;
+  height: 5px;
+  background: #000;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  z-index: 10;
+}
+
+.tiptap-resize-nw { top:    -4.5px; left:  -4.5px; cursor: nw-resize; }
+.tiptap-resize-ne { top:    -4.5px; right: -4.5px; cursor: ne-resize; }
+.tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
+.tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }

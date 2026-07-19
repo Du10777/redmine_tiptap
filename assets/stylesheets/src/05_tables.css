@@ -1,0 +1,104 @@
+/* Таблицы — редактор */
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  min-width: 40px;
+}
+
+.ProseMirror table th {
+  background: #f0f0f0;
+  font-weight: bold;
+  text-align: left;
+}
+
+.ProseMirror table p { margin: 0 !important; min-height: 0 !important; line-height: 1.2 !important; }
+
+/* Хендл ресайза колонки */
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #3d8ef8;
+  cursor: col-resize;
+  z-index: 20;
+}
+
+.ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+/* Выделенные ячейки */
+.ProseMirror table .selectedCell {
+  background: #d0e4ff;
+}
+
+/* Таблицы — сохранённый вид */
+.wiki table.tiptap-table,
+.wiki-page table.tiptap-table,
+.wiki table,
+.wiki-page table {
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+
+.wiki table td,
+.wiki table th,
+.wiki-page table td,
+.wiki-page table th {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.wiki table p,
+.wiki-page table p {
+  margin: 0 !important;
+  min-height: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.wiki table th,
+.wiki-page table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Контекстное меню таблицы */
+.tiptap-table-menu {
+  position: absolute;
+  z-index: 10001;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 4px 0;
+  min-width: 180px;
+}
+
+.tiptap-table-menu-item {
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tiptap-table-menu-item:hover { background: #d0e4ff; }
+
+.tiptap-table-menu-item.danger { color: #c00; }
+.tiptap-table-menu-item.danger:hover { background: #fdd; }
+
+.tiptap-table-menu-sep {
+  height: 1px;
+  background: #eee;
+  margin: 4px 0;
+}
