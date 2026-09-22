@@ -31,9 +31,31 @@
 .ProseMirror h4 { font-size: 1em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h5 { font-size: 0.9em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h6 { font-size: 0.85em; font-weight: bold; margin: 8px 0 4px; color: #555; }
-.ProseMirror code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px; font-family: monospace; }
-.ProseMirror pre { background: #f0f0f0; padding: 8px; border-radius: 3px; overflow-x: auto; }
-.ProseMirror pre code { background: none; padding: 0; }
+/* Код оформляем ровно так же, как Redmine рисует его в режиме просмотра
+   (правила div.wiki pre и div.wiki *:not(pre)>code), иначе в редакторе блок
+   кода выглядит иначе, чем увидит читатель. Шрифт не задаём: у Redmine уже
+   есть глобальное правило "pre, code", и своё monospace его только ломало. */
+.ProseMirror code {
+  background: rgba(62, 91, 118, 0.08);
+  padding: 0.1em 0.1em;
+  border-radius: 0.1em;
+  white-space: pre-wrap;
+}
+.ProseMirror pre {
+  margin: 1em 1em 1em 1.6em;
+  padding: 8px;
+  background: #fafafa;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  line-height: normal;
+  overflow-x: auto;
+}
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  white-space: pre;
+}
 .ProseMirror ul { padding-left: 20px; list-style: disc; }
 .ProseMirror ol { padding-left: 20px; list-style: decimal; }
 .ProseMirror li { margin: 0 !important; }
