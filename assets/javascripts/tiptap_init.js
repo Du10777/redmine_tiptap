@@ -151,11 +151,21 @@ function setupSavedTaskList() {
   });
 }
 
-scanAndInit();
-setupSavedTableCopy();
-setupSavedTaskList();
-var observer = new MutationObserver(function() {
+function boot() {
   scanAndInit();
+  setupSavedTableCopy();
   setupSavedTaskList();
-});
-observer.observe(document.body, { childList: true, subtree: true });
+  var observer = new MutationObserver(function() {
+    scanAndInit();
+    setupSavedTaskList();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// Бандл подключается из <head>, поэтому к моменту его выполнения document.body
+// может ещё не существовать — ждём готовности DOM.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}

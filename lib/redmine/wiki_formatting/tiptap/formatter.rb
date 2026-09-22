@@ -2,8 +2,11 @@ module Redmine
   module WikiFormatting
     module Tiptap
       class Formatter
-        def initialize(text)
+        # Redmine 7 вызывает форматтер как new(text, options),
+        # Redmine 6 — как new(text). Второй аргумент опционален.
+        def initialize(text, options = {})
           @text = text
+          @options = options
         end
 
         def to_html(*args)
@@ -14,6 +17,7 @@ module Redmine
       module Helper
         def wikitoolbar_for(field_id, preview_url = preview_text_path)
           heads_for_wiki_formatter
+          nil
         end
 
         def heads_for_wiki_formatter
@@ -25,6 +29,9 @@ module Redmine
             end
             @heads_for_wiki_formatter_included = true
           end
+          # Оба хелпера вызываются из вьюх как <%= ... %>, поэтому возвращаем nil,
+          # иначе в разметку попадает результат последнего выражения ("true").
+          nil
         end
 
         def initial_page_content(page)
