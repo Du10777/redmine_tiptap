@@ -289,10 +289,11 @@ function initTextarea(textarea) {
     ],
     content: '',
     onUpdate: function(props) {
+      // Переводы строки вокруг содержимого блока кода не добавляем: после
+      // <code> браузер их не отбрасывает (в отличие от <pre>), и в режиме
+      // просмотра они превращались в пустую строку сверху и снизу блока.
       textarea.value = serializeAttachmentHTML(props.editor.getHTML())
-        .replace(/<details open="">/g, '<details>')
-        .replace(/<pre><code([^>]*)>/g, '<pre><code$1>\n')
-        .replace(/<\/code><\/pre>/g, '\n</code></pre>');
+        .replace(/<details open="">/g, '<details>');
     },
   });
 
