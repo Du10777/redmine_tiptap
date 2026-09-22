@@ -22,6 +22,96 @@ import {
   patchAddInlineAttachmentMarkup,
 } from './tiptap_attachments.js';
 
+// --- Ограничение высоты области ввода ---------------------------------------
+// Без ограничения редактор растёт под объём текста: тулбар уезжает вверх за
+// край экрана, а кнопки формы («Сохранить»/«Отмена») — вниз. Считаем, сколько
+// места реально остаётся по вертикали, и включаем прокрутку внутри области.
+// Всё в CSS-пикселях, поэтому смена масштаба страницы (Ctrl +/-) сама даёт
+// больше или меньше доступной высоты — достаточно пересчитать на resize.
+
+var MIN_EDITOR_HEIGHT = 160;     // ниже не опускаемся даже на низком экране
+var FALLBACK_BELOW = 220;        // запас под кнопки, если форму найти не удалось
+var EDITOR_GAP = 16;             // небольшой зазор, чтобы кнопки не липли к краю
+var MIN_VIEWPORT_RATIO = 0.45;   // меньше этой доли экрана редактор не делаем
+
+// Кнопки формы («Сохранить»/«Создать»), до которых редактор должен «дотянуться».
+function submitAnchor(wrapper) {
+  var form = wrapper.closest('form');
+  if (!form) return null;
+  return form.querySelector('input[type="submit"], button[type="submit"]')
+    || form.querySelector('.buttons');
+}
+
+function applyMaxHeight(wrapper) {
+  // У скрытого редактора (форма правки задачи до её раскрытия) все размеры
+  // нулевые — мерить нечего. Оставляем запасное значение из CSS и пересчитаем,
+  // когда редактор появится на экране.
+  if (wrapper.getClientRects().length === 0) return;
+
+  var content = wrapper.querySelector('.tiptap-content');
+  var toolbar = wrapper.querySelector('.tiptap-toolbar');
+  if (!content || !toolbar) return;
+
+  var target = window.innerHeight - EDITOR_GAP;   // на столько по вертикали мы претендуем
+  var anchorEl = submitAnchor(wrapper);
+  var avail;
+
+  if (anchorEl) {
+    // Не моделируем вёрстку формы, а меряем её как есть: сколько сейчас занимает
+    // всё от верха тулбара до низа кнопок. Уменьшение области ввода на N пикселей
+    // ровно на столько же поднимает кнопки, поэтому нужную высоту получаем одной
+    // арифметической поправкой — независимо от того, что ещё стоит на форме.
+    var span = anchorEl.getBoundingClientRect().bottom - toolbar.getBoundingClientRect().top;
+    avail = content.getBoundingClientRect().height - (span - target);
+  } else {
+    avail = target - toolbar.offsetHeight - FALLBACK_BELOW;
+  }
+
+  // На формах, где под редактором стоит ещё много всего (правка задачи: ниже
+  // описания идут атрибуты и редактор примечаний), «дотянуться до кнопок»
+  // означало бы схлопнуть редактор почти в ноль. Ниже этой доли экрана не идём.
+  var floorH = window.innerHeight * MIN_VIEWPORT_RATIO;
+  if (avail < floorH) avail = floorH;
+  if (avail < MIN_EDITOR_HEIGHT) avail = MIN_EDITOR_HEIGHT;
+
+  wrapper.style.setProperty('--tiptap-max-height', Math.round(avail) + 'px');
+}
+
+// Редактор может быть создан скрытым (форма правки задачи раскрывается позже).
+// display:none не порождает мутаций childList, поэтому ловим момент появления
+// через ResizeObserver и считаем высоту только на переходе «скрыт -> виден» —
+// так пересчёт не зацикливается на собственных изменениях размера.
+var sizeObserver = window.ResizeObserver
+  ? new window.ResizeObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var wrapper = entry.target;
+        var visible = entry.contentRect.height > 0 || entry.contentRect.width > 0;
+        if (!visible) {
+          wrapper._tiptapHidden = true;
+        } else if (wrapper._tiptapHidden) {
+          wrapper._tiptapHidden = false;
+          applyMaxHeight(wrapper);
+        }
+      });
+    })
+  : null;
+
+function watchVisibility(wrapper) {
+  if (!sizeObserver) return;
+  wrapper._tiptapHidden = wrapper.getClientRects().length === 0;
+  sizeObserver.observe(wrapper);
+}
+
+var maxHeightPending = false;
+function refreshMaxHeights() {
+  if (maxHeightPending) return;
+  maxHeightPending = true;
+  window.requestAnimationFrame(function() {
+    maxHeightPending = false;
+    document.querySelectorAll('.tiptap-wrapper').forEach(applyMaxHeight);
+  });
+}
+
 function initTextarea(textarea) {
   if (textarea.dataset.tiptapInit) return;
   textarea.dataset.tiptapInit = '1';
@@ -131,6 +221,9 @@ function initTextarea(textarea) {
   setupImagePaste(editorDiv, editor, textarea);
   setupFileInputBinding(textarea, editor);
   setupTableContextMenu(editorDiv, editor);
+
+  applyMaxHeight(wrapper);
+  watchVisibility(wrapper);
 }
 
 function scanAndInit() {
@@ -158,8 +251,23 @@ function boot() {
   var observer = new MutationObserver(function() {
     scanAndInit();
     setupSavedTaskList();
+    refreshMaxHeights();
   });
   observer.observe(document.body, { childList: true, subtree: true });
+
+  // resize срабатывает и при смене масштаба страницы (Ctrl +/-):
+  // window.innerHeight задан в CSS-пикселях, поэтому при отдалении
+  // доступная высота редактора автоматически становится больше.
+  window.addEventListener('resize', refreshMaxHeights);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', refreshMaxHeights);
+  }
+
+  // Редактор мог быть скрыт в момент создания (форма правки задачи
+  // раскрывается по кнопке) — к моменту фокуса размеры уже настоящие.
+  document.addEventListener('focusin', function(e) {
+    if (e.target.closest && e.target.closest('.tiptap-wrapper')) refreshMaxHeights();
+  });
 }
 
 // Бандл подключается из <head>, поэтому к моменту его выполнения document.body
