@@ -5,6 +5,9 @@
   /* Не даём редактору расти под объём текста: выше экрана он не поднимается,
      дальше — прокрутка внутри. Точное значение проставляет JS на .tiptap-wrapper,
      значение в var() — запасное на случай, если JS ещё не отработал. */
+  /* --tiptap-height задаётся только когда пользователь тянул ручку размера;
+     в обычном режиме высота по содержимому, а ограничивает её max-height. */
+  height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   overflow-y: auto;
 }
@@ -56,6 +59,7 @@ div.wiki-page li > p {
 .tiptap-source {
   width: 100%;
   min-height: 150px;
+  height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   padding: 8px;
   font-family: monospace;
@@ -64,7 +68,9 @@ div.wiki-page li > p {
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
-  resize: vertical;
+  /* размер меняется общей ручкой .tiptap-resizer, нативный угол textarea убираем,
+     иначе на одном поле оказывается два разных ресайзера */
+  resize: none;
 }
 
 /* Список задач (чекбоксы) — редактор и просмотр */

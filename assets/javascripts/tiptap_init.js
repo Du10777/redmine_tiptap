@@ -55,6 +55,9 @@ function submitAnchor(wrapper) {
 }
 
 function applyMaxHeight(wrapper) {
+  // Размер, выставленный ручкой, важнее автоподбора.
+  if (wrapper._tiptapManualHeight) return;
+
   // У скрытого редактора (форма правки задачи до её раскрытия) все размеры
   // нулевые — мерить нечего. Оставляем запасное значение из CSS и пересчитаем,
   // когда редактор появится на экране.
@@ -123,6 +126,89 @@ function refreshMaxHeights() {
     maxHeightPending = false;
     document.querySelectorAll('.tiptap-wrapper').forEach(applyMaxHeight);
   });
+}
+
+// --- Ручка изменения размера -------------------------------------------------
+// Автоподбор высоты подходит не всем и не всегда, поэтому даём утащить нижний
+// правый угол области ввода мышью. Выбранная высота запоминается и применяется
+// ко всем редакторам; двойной клик по ручке возвращает автоматический режим.
+
+var HEIGHT_STORAGE_KEY = 'redmineTiptapEditorHeight';
+
+function readStoredHeight() {
+  try {
+    var value = parseInt(window.localStorage.getItem(HEIGHT_STORAGE_KEY), 10);
+    return value > 0 ? value : 0;
+  } catch (e) {
+    return 0;   // localStorage может быть недоступен (приватный режим, политика)
+  }
+}
+
+function writeStoredHeight(height) {
+  try {
+    if (height) {
+      window.localStorage.setItem(HEIGHT_STORAGE_KEY, String(height));
+    } else {
+      window.localStorage.removeItem(HEIGHT_STORAGE_KEY);
+    }
+  } catch (e) { /* не критично: размер просто не переживёт перезагрузку */ }
+}
+
+function setManualHeight(wrapper, height) {
+  wrapper._tiptapManualHeight = height;
+  wrapper.style.setProperty('--tiptap-height', height + 'px');
+  wrapper.style.setProperty('--tiptap-max-height', height + 'px');
+}
+
+function clearManualHeight(wrapper) {
+  wrapper._tiptapManualHeight = 0;
+  wrapper.style.removeProperty('--tiptap-height');
+  applyMaxHeight(wrapper);
+}
+
+function buildResizer(wrapper) {
+  var grip = document.createElement('div');
+  grip.className = 'tiptap-resizer';
+  grip.title = 'Потянуть — изменить высоту редактора, двойной клик — вернуть автоматическую';
+
+  grip.addEventListener('pointerdown', function(event) {
+    event.preventDefault();
+
+    // Тянуть могли за любую из двух областей — считаем от видимой.
+    var box = wrapper.querySelector('.tiptap-content');
+    var source = wrapper.querySelector('.tiptap-source');
+    if (source && source.style.display !== 'none') box = source;
+
+    var startY = event.clientY;
+    var startHeight = box.getBoundingClientRect().height;
+
+    function onMove(moveEvent) {
+      var height = Math.round(startHeight + (moveEvent.clientY - startY));
+      if (height < MIN_EDITOR_HEIGHT) height = MIN_EDITOR_HEIGHT;
+      setManualHeight(wrapper, height);
+    }
+
+    function onUp() {
+      grip.removeEventListener('pointermove', onMove);
+      grip.removeEventListener('pointerup', onUp);
+      grip.removeEventListener('pointercancel', onUp);
+      writeStoredHeight(wrapper._tiptapManualHeight);
+    }
+
+    // Захват указателя: события доедут до ручки, даже если курсор ушёл за её край.
+    grip.setPointerCapture(event.pointerId);
+    grip.addEventListener('pointermove', onMove);
+    grip.addEventListener('pointerup', onUp);
+    grip.addEventListener('pointercancel', onUp);
+  });
+
+  grip.addEventListener('dblclick', function(event) {
+    event.preventDefault();
+    writeStoredHeight(0);
+    document.querySelectorAll('.tiptap-wrapper').forEach(clearManualHeight);
+  });
+
+  return grip;
 }
 
 function initTextarea(textarea) {
@@ -235,7 +321,14 @@ function initTextarea(textarea) {
   setupFileInputBinding(textarea, editor);
   setupTableContextMenu(editorDiv, editor);
 
-  applyMaxHeight(wrapper);
+  wrapper.appendChild(buildResizer(wrapper));
+
+  var stored = readStoredHeight();
+  if (stored) {
+    setManualHeight(wrapper, stored);
+  } else {
+    applyMaxHeight(wrapper);
+  }
   watchVisibility(wrapper);
 }
 

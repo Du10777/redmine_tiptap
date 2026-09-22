@@ -103,3 +103,26 @@
 .tiptap-resize-ne { top:    -4.5px; right: -4.5px; cursor: ne-resize; }
 .tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
 .tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }
+
+/* Ручка изменения размера области редактирования — правый нижний угол.
+   margin-left:auto прижимает её вправо, оставаясь в потоке под полем ввода. */
+.tiptap-resizer {
+  display: block;
+  margin-left: auto;
+  width: 18px;
+  height: 13px;
+  cursor: ns-resize;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  background-color: #f5f5f5;
+  background-image: repeating-linear-gradient(315deg, #aaa 0 1px, transparent 1px 4px);
+  background-position: center;
+  background-size: 11px 8px;
+  background-repeat: no-repeat;
+  touch-action: none;
+}
+
+.tiptap-resizer:hover {
+  background-color: #e8e8e8;
+}

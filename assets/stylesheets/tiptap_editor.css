@@ -292,6 +292,9 @@
   /* Не даём редактору расти под объём текста: выше экрана он не поднимается,
      дальше — прокрутка внутри. Точное значение проставляет JS на .tiptap-wrapper,
      значение в var() — запасное на случай, если JS ещё не отработал. */
+  /* --tiptap-height задаётся только когда пользователь тянул ручку размера;
+     в обычном режиме высота по содержимому, а ограничивает её max-height. */
+  height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   overflow-y: auto;
 }
@@ -343,6 +346,7 @@ div.wiki-page li > p {
 .tiptap-source {
   width: 100%;
   min-height: 150px;
+  height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   padding: 8px;
   font-family: monospace;
@@ -351,7 +355,9 @@ div.wiki-page li > p {
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
-  resize: vertical;
+  /* размер меняется общей ручкой .tiptap-resizer, нативный угол textarea убираем,
+     иначе на одном поле оказывается два разных ресайзера */
+  resize: none;
 }
 
 /* Список задач (чекбоксы) — редактор и просмотр */
@@ -522,6 +528,29 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 .tiptap-resize-ne { top:    -4.5px; right: -4.5px; cursor: ne-resize; }
 .tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
 .tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }
+
+/* Ручка изменения размера области редактирования — правый нижний угол.
+   margin-left:auto прижимает её вправо, оставаясь в потоке под полем ввода. */
+.tiptap-resizer {
+  display: block;
+  margin-left: auto;
+  width: 18px;
+  height: 13px;
+  cursor: ns-resize;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  background-color: #f5f5f5;
+  background-image: repeating-linear-gradient(315deg, #aaa 0 1px, transparent 1px 4px);
+  background-position: center;
+  background-size: 11px 8px;
+  background-repeat: no-repeat;
+  touch-action: none;
+}
+
+.tiptap-resizer:hover {
+  background-color: #e8e8e8;
+}
 
 /* Модалка (общая) */
 .tiptap-modal-overlay {
