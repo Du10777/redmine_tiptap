@@ -33,6 +33,18 @@ var MIN_EDITOR_HEIGHT = 160;     // ниже не опускаемся даже 
 var FALLBACK_BELOW = 220;        // запас под кнопки, если форму найти не удалось
 var EDITOR_GAP = 16;             // небольшой зазор, чтобы кнопки не липли к краю
 var MIN_VIEWPORT_RATIO = 0.45;   // меньше этой доли экрана редактор не делаем
+var STICKY_FALLBACK = 50;        // Redmine сам компенсирует шапку через scroll-margin-top: 50px
+
+// Прилипшая шапка задачи (#sticky-issue-header) — это position: fixed поверх
+// страницы: вёрстку она не сдвигает, а накрывает верх окна. Место под неё
+// резервируем всегда, даже пока она скрыта, — она появится, как только
+// страницу прокрутят к форме, и иначе спрячет под собой тулбар редактора.
+function topOverlayHeight() {
+  var bar = document.getElementById('sticky-issue-header');
+  if (!bar) return 0;
+  var h = bar.getBoundingClientRect().height;
+  return h > 0 ? h : STICKY_FALLBACK;
+}
 
 // Кнопки формы («Сохранить»/«Создать»), до которых редактор должен «дотянуться».
 function submitAnchor(wrapper) {
@@ -52,7 +64,8 @@ function applyMaxHeight(wrapper) {
   var toolbar = wrapper.querySelector('.tiptap-toolbar');
   if (!content || !toolbar) return;
 
-  var target = window.innerHeight - EDITOR_GAP;   // на столько по вертикали мы претендуем
+  // На столько по вертикали мы претендуем: окно минус перекрытая сверху полоса.
+  var target = window.innerHeight - topOverlayHeight() - EDITOR_GAP;
   var anchorEl = submitAnchor(wrapper);
   var avail;
 
