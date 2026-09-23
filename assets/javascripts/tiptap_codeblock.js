@@ -1,10 +1,280 @@
-import CodeBlock from '@tiptap/extension-code-block';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import { common, createLowlight } from 'lowlight';
 
+import powershell from 'highlight.js/lib/languages/powershell';
+import dockerfile from 'highlight.js/lib/languages/dockerfile';
+import nginx from 'highlight.js/lib/languages/nginx';
+import apache from 'highlight.js/lib/languages/apache';
+import properties from 'highlight.js/lib/languages/properties';
+import dns from 'highlight.js/lib/languages/dns';
+import puppet from 'highlight.js/lib/languages/puppet';
+
+// Один движок подсветки и для редактора, и для просмотра — иначе цвета
+// в этих двух режимах разъезжаются. Набор common (37 языков) плюс то, что
+// чаще встречается в задачах по инфраструктуре.
+export const lowlight = createLowlight(common);
+lowlight.register({ powershell, dockerfile, nginx, apache, properties, dns, puppet });
+
+export const CODE_LANGUAGES = lowlight.listLanguages().slice().sort();
+
+// «Без подсветки» — это не пустое значение, а явный plaintext: именно его
+// TipTap подставляет как defaultLanguage, и хранить одно и то же состояние
+// двумя разными способами (null и 'plaintext') значило бы путаться.
+var NO_LANGUAGE = 'plaintext';
+var RECENT_KEY = 'redmineTiptapCodeLangRecent';
+var USAGE_KEY = 'redmineTiptapCodeLangUsage';
+// Недавние держим короткими: из частых они исключаются, чтобы не дублироваться,
+// и при длинном списке недавних группа «Частые» почти всегда пустовала бы.
+var RECENT_LIMIT = 3;
+var FREQUENT_LIMIT = 6;
+
+// --- Запоминание выбора -----------------------------------------------------
+// Список частых заранее не задан: он набирается из того, что реально выбирают.
+
+function readJson(key, fallback) {
+  try {
+    var raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    return fallback;   // localStorage может быть недоступен
+  }
+}
+
+function writeJson(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) { /* не критично: выбор просто не переживёт перезагрузку */ }
+}
+
+function recentLanguages() {
+  var list = readJson(RECENT_KEY, []);
+  if (!Array.isArray(list)) return [];
+  return list.filter(function(lang) { return lowlight.registered(lang); });
+}
+
+function frequentLanguages() {
+  var usage = readJson(USAGE_KEY, {}) || {};
+  return Object.keys(usage)
+    .filter(function(lang) { return lowlight.registered(lang); })
+    .sort(function(a, b) { return usage[b] - usage[a] || a.localeCompare(b); })
+    .slice(0, FREQUENT_LIMIT);
+}
+
+function rememberLanguage(language) {
+  if (!language || language === NO_LANGUAGE) return;   // «без подсветки» не запоминаем
+
+  var recent = recentLanguages().filter(function(lang) { return lang !== language; });
+  recent.unshift(language);
+  writeJson(RECENT_KEY, recent.slice(0, RECENT_LIMIT));
+
+  var usage = readJson(USAGE_KEY, {}) || {};
+  usage[language] = (usage[language] || 0) + 1;
+  writeJson(USAGE_KEY, usage);
+}
+
+function languageLabel(language) {
+  return language || NO_LANGUAGE;
+}
+
+// --- Выпадающий список выбора языка -----------------------------------------
+
+var openPanel = null;
+
+function closeLanguagePanel() {
+  if (openPanel && openPanel.parentNode) openPanel.parentNode.removeChild(openPanel);
+  openPanel = null;
+}
+
+document.addEventListener('mousedown', function(event) {
+  if (openPanel && !openPanel.contains(event.target)) closeLanguagePanel();
+}, true);
+
+function openLanguagePanel(anchorEl, current, onPick) {
+  closeLanguagePanel();
+
+  var panel = document.createElement('div');
+  panel.className = 'tiptap-lang-panel';
+
+  var search = document.createElement('input');
+  search.type = 'text';
+  search.className = 'tiptap-lang-search';
+  search.placeholder = 'Поиск языка';
+  panel.appendChild(search);
+
+  var list = document.createElement('div');
+  list.className = 'tiptap-lang-list';
+  panel.appendChild(list);
+
+  function pick(language) {
+    rememberLanguage(language);
+    closeLanguagePanel();
+    onPick(language);
+  }
+
+  function addOption(language, label) {
+    var option = document.createElement('div');
+    option.className = 'tiptap-lang-option';
+    if (language === current) option.className += ' active';
+    option.textContent = label || language;
+    option.addEventListener('mousedown', function(event) {
+      event.preventDefault();
+      pick(language);
+    });
+    list.appendChild(option);
+  }
+
+  function addGroup(title) {
+    var head = document.createElement('div');
+    head.className = 'tiptap-lang-group';
+    head.textContent = title;
+    list.appendChild(head);
+  }
+
+  function render(filter) {
+    list.innerHTML = '';
+    var needle = (filter || '').trim().toLowerCase();
+
+    if (needle) {
+      var matches = CODE_LANGUAGES.filter(function(lang) {
+        return lang.toLowerCase().indexOf(needle) !== -1;
+      });
+      if (!matches.length) {
+        var empty = document.createElement('div');
+        empty.className = 'tiptap-lang-empty';
+        empty.textContent = 'Ничего не найдено';
+        list.appendChild(empty);
+        return;
+      }
+      matches.forEach(function(lang) { addOption(lang); });
+      return;
+    }
+
+    addOption(NO_LANGUAGE, 'Без подсветки (plaintext)');
+
+    var recent = recentLanguages();
+    if (recent.length) {
+      addGroup('Недавние');
+      recent.forEach(function(lang) { addOption(lang); });
+    }
+
+    var frequent = frequentLanguages().filter(function(lang) {
+      return recent.indexOf(lang) === -1;
+    });
+    if (frequent.length) {
+      addGroup('Частые');
+      frequent.forEach(function(lang) { addOption(lang); });
+    }
+
+    addGroup('Все языки');
+    CODE_LANGUAGES.forEach(function(lang) {
+      if (lang !== NO_LANGUAGE) addOption(lang);   // уже показан первым пунктом
+    });
+  }
+
+  search.addEventListener('input', function() { render(search.value); });
+  search.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeLanguagePanel();
+      return;
+    }
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      var first = list.querySelector('.tiptap-lang-option');
+      if (first) first.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    }
+  });
+
+  render('');
+
+  // Панель живёт в body: область ввода прокручивается и обрезала бы её.
+  document.body.appendChild(panel);
+  var rect = anchorEl.getBoundingClientRect();
+  var left = Math.round(rect.right - panel.offsetWidth);
+  panel.style.left = Math.max(4, left) + 'px';
+  panel.style.top = Math.round(rect.bottom + 2) + 'px';
+  if (rect.bottom + panel.offsetHeight > window.innerHeight - 4) {
+    panel.style.top = Math.max(4, Math.round(rect.top - panel.offsetHeight - 2)) + 'px';
+  }
+
+  openPanel = panel;
+  search.focus();
+}
+
+// --- Само расширение --------------------------------------------------------
 // Блок кода с возможностью форматирования текста внутри:
 // - marks перечислены явно БЕЗ inline-code, иначе внутренний <code> в
 //   <pre><code> при обратном парсинге даёт вложенные <code>.
-export const FormattableCodeBlock = CodeBlock.extend({
+export const FormattableCodeBlock = CodeBlockLowlight.extend({
   marks: 'bold italic strike underline link textStyle',
+
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      lowlight: lowlight,
+      // Без этого блок без языка подсвечивался бы автоопределением: ярлык
+      // показывал «нет», а текст всё равно был цветным — и в просмотре
+      // такого не происходило. «Без подсветки» должно значить ровно это.
+      defaultLanguage: 'plaintext',
+    };
+  },
+
+  addNodeView() {
+    return function(props) {
+      var node = props.node;
+      var editor = props.editor;
+      var getPos = props.getPos;
+
+      var wrapper = document.createElement('div');
+      wrapper.className = 'tiptap-code-wrapper';
+
+      var pre = document.createElement('pre');
+      var code = document.createElement('code');
+      pre.appendChild(code);
+
+      var badge = document.createElement('div');
+      badge.className = 'tiptap-code-lang';
+      badge.contentEditable = 'false';
+      badge.title = 'Язык блока кода — нажать, чтобы выбрать';
+
+      function syncLanguage(currentNode) {
+        var language = currentNode.attrs.language || NO_LANGUAGE;
+        badge.textContent = languageLabel(language);
+        code.className = language ? 'language-' + language : '';
+      }
+
+      badge.addEventListener('mousedown', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openLanguagePanel(badge, node.attrs.language || NO_LANGUAGE, function(language) {
+          var pos = getPos();
+          if (typeof pos !== 'number') return;
+          var attrs = Object.assign({}, node.attrs, { language: language || NO_LANGUAGE });
+          editor.view.dispatch(editor.view.state.tr.setNodeMarkup(pos, undefined, attrs));
+          editor.view.focus();
+        });
+      });
+
+      syncLanguage(node);
+      wrapper.appendChild(badge);
+      wrapper.appendChild(pre);
+
+      return {
+        dom: wrapper,
+        contentDOM: code,
+        update: function(updatedNode) {
+          if (updatedNode.type !== node.type) return false;
+          node = updatedNode;
+          syncLanguage(updatedNode);
+          return true;
+        },
+        // Всё, что происходит в бейдже, документа не касается.
+        ignoreMutation: function(mutation) {
+          return !code.contains(mutation.target);
+        },
+      };
+    };
+  },
 
   addCommands() {
     return {
@@ -65,3 +335,56 @@ export const FormattableCodeBlock = CodeBlock.extend({
     };
   },
 });
+
+// --- Подсветка сохранённого текста (режим просмотра) ------------------------
+// Тем же движком и теми же классами, что и в редакторе, иначе один и тот же
+// код выглядел бы в этих режимах по-разному.
+
+function escapeHtml(text) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function hastToHtml(node) {
+  if (node.type === 'text') return escapeHtml(node.value);
+  var inner = (node.children || []).map(hastToHtml).join('');
+  if (node.type !== 'element') return inner;
+  var classes = (node.properties && node.properties.className) || [];
+  return '<span class="' + escapeHtml(classes.join(' ')) + '">' + inner + '</span>';
+}
+
+function languageOf(codeEl) {
+  var match = (codeEl.className || '').match(/language-([\w+#-]+)/);
+  return match ? match[1] : NO_LANGUAGE;
+}
+
+export function highlightSavedCodeBlocks() {
+  var blocks = document.querySelectorAll('pre > code');
+
+  Array.prototype.forEach.call(blocks, function(code) {
+    if (code.closest('.ProseMirror')) return;        // в редакторе красит расширение
+    if (code.dataset.tiptapHighlighted) return;      // уже обработан
+    code.dataset.tiptapHighlighted = '1';
+
+    var language = languageOf(code);
+    var pre = code.parentNode;
+    var host = pre && pre.parentNode;
+
+    // Бейдж с языком показываем и здесь: читатель видит то же, что автор.
+    if (language && host) {
+      host.className += host.className.indexOf('tiptap-code-view') === -1 ? ' tiptap-code-view' : '';
+      if (!host.querySelector('.tiptap-code-lang')) {
+        var badge = document.createElement('div');
+        badge.className = 'tiptap-code-lang tiptap-code-lang-static';
+        badge.textContent = languageLabel(language);
+        host.insertBefore(badge, pre);
+        // Кнопка копирования кода у Redmine стоит в том же углу — сдвигаем её.
+        host.style.setProperty('--tiptap-lang-badge-w', Math.ceil(badge.offsetWidth) + 'px');
+      }
+    }
+
+    if (!language || !lowlight.registered(language)) return;
+    try {
+      code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
+    } catch (e) { /* неизвестная грамматика — оставляем текст как есть */ }
+  });
+}

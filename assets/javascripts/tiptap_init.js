@@ -11,6 +11,7 @@ import {
   FormattableCodeBlock,
 } from './tiptap_extensions.js';
 import { buildToolbar } from './tiptap_toolbar.js';
+import { highlightSavedCodeBlocks } from './tiptap_codeblock.js';
 import { setupTableContextMenu } from './tiptap_table_menu.js';
 import { setupTablePaste, setupSavedTableCopy } from './tiptap_table_paste.js';
 import {
@@ -355,9 +356,11 @@ function boot() {
   scanAndInit();
   setupSavedTableCopy();
   setupSavedTaskList();
+  highlightSavedCodeBlocks();
   var observer = new MutationObserver(function() {
     scanAndInit();
     setupSavedTaskList();
+    highlightSavedCodeBlocks();
     refreshMaxHeights();
   });
   observer.observe(document.body, { childList: true, subtree: true });

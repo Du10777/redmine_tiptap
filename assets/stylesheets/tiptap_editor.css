@@ -949,3 +949,177 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   background: #eee;
   margin: 4px 0;
 }
+
+/* --- Ярлык с языком в углу блока кода ------------------------------------ */
+/* Обёртка нужна, чтобы ярлык позиционировался относительно самого блока.
+   В редакторе её создаёт node view, в просмотре — класс вешается на
+   существующую обёртку Redmine (div.pre-wrapper). */
+
+.tiptap-code-wrapper,
+.tiptap-code-view {
+  position: relative;
+}
+
+.tiptap-code-lang {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 2;
+  padding: 0 5px;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  background: #fff;
+  color: #666;
+  font-family: Consolas, Menlo, "Liberation Mono", Courier, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.tiptap-code-lang:hover {
+  border-color: #aaa;
+  color: #333;
+}
+
+/* В просмотре ярлык только подписывает блок, выбирать там нечего. */
+.tiptap-code-lang-static {
+  cursor: default;
+}
+
+.tiptap-code-lang-static:hover {
+  border-color: #d5d5d5;
+  color: #666;
+}
+
+/* В просмотре в этом же углу живёт кнопка копирования кода — уводим её
+   левее ровно на ширину ярлыка, её меряет JS. */
+.tiptap-code-view a.copy-pre-content-link {
+  inset-inline-end: calc(var(--tiptap-lang-badge-w, 0px) + 9px);
+}
+
+/* Блок кода в редакторе рисует node view, поэтому внешние отступы обёртки
+   должны повторять отступы самого pre, иначе блок съедет. */
+.ProseMirror .tiptap-code-wrapper > pre {
+  margin: 0;
+}
+
+.ProseMirror .tiptap-code-wrapper {
+  margin: 1em 0;
+}
+
+/* --- Панель выбора языка -------------------------------------------------- */
+/* Живёт в body: область ввода прокручивается и обрезала бы выпадашку. */
+
+.tiptap-lang-panel {
+  position: fixed;
+  z-index: 10000;
+  width: 220px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.tiptap-lang-search {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 3px 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  outline: none;
+}
+
+.tiptap-lang-search:focus {
+  border-color: #628db6;
+}
+
+.tiptap-lang-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.tiptap-lang-group {
+  padding: 4px 6px 2px;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.tiptap-lang-option {
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-family: Consolas, Menlo, "Liberation Mono", Courier, monospace;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tiptap-lang-option:hover {
+  background: #eef3f8;
+}
+
+.tiptap-lang-option.active {
+  background: #628db6;
+  color: #fff;
+}
+
+.tiptap-lang-empty {
+  padding: 6px;
+  color: #999;
+  font-size: 12px;
+}
+
+/* --- Палитра подсветки ---------------------------------------------------- */
+/* Цвета сняты с родной схемы Redmine (.syntaxhl, pygments colorful), чтобы
+   подсвеченный код не выбивался из остального интерфейса. Классы — от
+   highlight.js, один и тот же набор в редакторе и в просмотре. */
+
+.hljs-comment,
+.hljs-quote { color: #888888; }
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-name { color: #008800; font-weight: bold; }
+
+.hljs-type,
+.hljs-class .hljs-title { color: #333399; font-weight: bold; }
+
+.hljs-string,
+.hljs-regexp,
+.hljs-template-variable,
+.hljs-subst { background-color: #fff0f0; }
+
+.hljs-number { color: #0000DD; font-weight: bold; }
+
+.hljs-title,
+.hljs-title.function_ { color: #0066BB; font-weight: bold; }
+
+.hljs-title.class_,
+.hljs-selector-class { color: #BB0066; font-weight: bold; }
+
+.hljs-built_in,
+.hljs-symbol { color: #007020; }
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-selector-attr { color: #0000CC; }
+
+.hljs-variable,
+.hljs-params,
+.hljs-template-tag { color: #996633; }
+
+.hljs-tag { color: #007700; }
+
+.hljs-meta { color: #557799; }
+
+.hljs-deletion { color: #A00000; }
+.hljs-addition { color: #00A000; }
+
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
