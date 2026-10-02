@@ -72,8 +72,10 @@ function rememberLanguage(language) {
   writeJson(USAGE_KEY, usage);
 }
 
-function languageLabel(language) {
-  return language || NO_LANGUAGE;
+// Есть ли у блока язык, который стоит подписывать. plaintext — это «без
+// подсветки», его не подписываем ни в редакторе, ни в просмотре.
+function hasLanguage(language) {
+  return !!language && language !== NO_LANGUAGE;
 }
 
 // --- Выпадающий список выбора языка -----------------------------------------
@@ -239,8 +241,16 @@ export const FormattableCodeBlock = CodeBlockLowlight.extend({
 
       function syncLanguage(currentNode) {
         var language = currentNode.attrs.language || NO_LANGUAGE;
-        badge.textContent = languageLabel(language);
-        code.className = language ? 'language-' + language : '';
+        code.className = 'language-' + language;
+        if (hasLanguage(language)) {
+          badge.textContent = language;
+          badge.classList.remove('tiptap-code-lang-empty');
+        } else {
+          // Без языка ничего не подписываем: ярлык прячется и появляется только
+          // при наведении на блок — иначе язык было бы негде выбрать.
+          badge.textContent = 'язык';
+          badge.classList.add('tiptap-code-lang-empty');
+        }
       }
 
       badge.addEventListener('mousedown', function(event) {
@@ -358,33 +368,48 @@ function languageOf(codeEl) {
 }
 
 export function highlightSavedCodeBlocks() {
-  var blocks = document.querySelectorAll('pre > code');
+  var blocks = document.querySelectorAll('.wiki pre > code');
 
   Array.prototype.forEach.call(blocks, function(code) {
-    if (code.closest('.ProseMirror')) return;        // в редакторе красит расширение
-    if (code.dataset.tiptapHighlighted) return;      // уже обработан
-    code.dataset.tiptapHighlighted = '1';
+    if (code.closest('.ProseMirror')) return;   // в редакторе красит само расширение
 
     var language = languageOf(code);
-    var pre = code.parentNode;
-    var host = pre && pre.parentNode;
 
-    // Бейдж с языком показываем и здесь: читатель видит то же, что автор.
-    if (language && host) {
-      host.className += host.className.indexOf('tiptap-code-view') === -1 ? ' tiptap-code-view' : '';
-      if (!host.querySelector('.tiptap-code-lang')) {
-        var badge = document.createElement('div');
-        badge.className = 'tiptap-code-lang tiptap-code-lang-static';
-        badge.textContent = languageLabel(language);
-        host.insertBefore(badge, pre);
-        // Кнопка копирования кода у Redmine стоит в том же углу — сдвигаем её.
-        host.style.setProperty('--tiptap-lang-badge-w', Math.ceil(badge.offsetWidth) + 'px');
+    // Подсветка. Redmine, добавляя кнопку «Копировать», подменяет <pre> его
+    // копией — флаг на <code> копируется вместе с ним, поэтому повторно уже
+    // подсвеченный код не трогаем.
+    if (!code.dataset.tiptapHighlighted) {
+      code.dataset.tiptapHighlighted = '1';
+      if (hasLanguage(language) && lowlight.registered(language)) {
+        try {
+          code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
+        } catch (e) { /* неизвестная грамматика — оставляем текст как есть */ }
       }
     }
 
-    if (!language || !lowlight.registered(language)) return;
-    try {
-      code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
-    } catch (e) { /* неизвестная грамматика — оставляем текст как есть */ }
+    if (!hasLanguage(language)) return;
+
+    // Ярлык ставим только в обёртку Redmine (div.pre-wrapper). Пока её нет,
+    // ставить некуда: Redmine потом заменит <pre> копией, и ярлык снаружи
+    // осиротел бы. Когда обёртка появится, MutationObserver вызовет нас снова.
+    var wrapper = code.parentNode && code.parentNode.parentNode;
+    if (!wrapper || !wrapper.classList || !wrapper.classList.contains('pre-wrapper')) return;
+    if (wrapper.querySelector(':scope > .tiptap-code-corner')) return;
+
+    // «Копировать» и ярлык в одном flex-контейнере: кнопка встаёт слева от
+    // ярлыка сама, без замеров ширины. Обработчик клика у кнопки висит на
+    // самом элементе и читает текст из исходного <pre>, так что перенос ему
+    // не мешает.
+    var corner = document.createElement('div');
+    corner.className = 'tiptap-code-corner';
+    var copyLink = wrapper.querySelector(':scope > a.copy-pre-content-link');
+    if (copyLink) corner.appendChild(copyLink);
+
+    var badge = document.createElement('div');
+    badge.className = 'tiptap-code-lang tiptap-code-lang-static';
+    badge.textContent = language;
+    corner.appendChild(badge);
+
+    wrapper.insertBefore(corner, wrapper.firstChild);
   });
 }

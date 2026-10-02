@@ -1,10 +1,8 @@
 /* --- Ярлык с языком в углу блока кода ------------------------------------ */
-/* Обёртка нужна, чтобы ярлык позиционировался относительно самого блока.
-   В редакторе её создаёт node view, в просмотре — класс вешается на
-   существующую обёртку Redmine (div.pre-wrapper). */
+/* В редакторе обёртку с position: relative создаёт node view. В просмотре
+   ею служит div.pre-wrapper, который добавляет сам Redmine. */
 
-.tiptap-code-wrapper,
-.tiptap-code-view {
+.tiptap-code-wrapper {
   position: relative;
 }
 
@@ -41,10 +39,38 @@
   color: #666;
 }
 
-/* В просмотре в этом же углу живёт кнопка копирования кода — уводим её
-   левее ровно на ширину ярлыка, её меряет JS. */
-.tiptap-code-view a.copy-pre-content-link {
-  inset-inline-end: calc(var(--tiptap-lang-badge-w, 0px) + 9px);
+/* Без языка ярлык в редакторе не подписывает блок: он скрыт и появляется
+   только при наведении — чтобы язык всё-таки можно было выбрать. */
+.tiptap-code-lang-empty {
+  visibility: hidden;
+  font-style: italic;
+}
+
+.tiptap-code-wrapper:hover .tiptap-code-lang-empty {
+  visibility: visible;
+}
+
+/* В просмотре ярлык и кнопка «Копировать» Redmine делят один угол: оба
+   кладутся в flex-контейнер, и кнопка встаёт слева от ярлыка сама, какой
+   бы длины ни было название языка. */
+.tiptap-code-corner {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tiptap-code-corner .tiptap-code-lang {
+  position: static;
+}
+
+/* Специфичность выше родного div.pre-wrapper a.copy-pre-content-link,
+   иначе кнопка осталась бы позиционированной абсолютно поверх ярлыка. */
+div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
+  position: static;
 }
 
 /* Блок кода в редакторе рисует node view, поэтому внешние отступы обёртки
