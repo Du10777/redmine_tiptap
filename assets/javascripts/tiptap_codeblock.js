@@ -8,14 +8,55 @@ import apache from 'highlight.js/lib/languages/apache';
 import properties from 'highlight.js/lib/languages/properties';
 import dns from 'highlight.js/lib/languages/dns';
 import puppet from 'highlight.js/lib/languages/puppet';
+import oneC from 'highlight.js/lib/languages/1c';
+import routeros from 'highlight.js/lib/languages/routeros';
+import accesslog from 'highlight.js/lib/languages/accesslog';
+
+import { log, journalctl, ciscoIos, cmd, dockerCompose } from './tiptap_code_languages.js';
 
 // Один движок подсветки и для редактора, и для просмотра — иначе цвета
-// в этих двух режимах разъезжаются. Набор common (37 языков) плюс то, что
-// чаще встречается в задачах по инфраструктуре.
+// в этих двух режимах разъезжаются.
+//
+// Откуда берётся список языков: это ровно то, что зарегистрировано здесь.
+// Набор common (37 грамматик из highlight.js), плюс отдельные грамматики
+// highlight.js, плюс свои из tiptap_code_languages.js. Всё это собирается
+// в бандл при сборке; с сервера во время работы ничего не подгружается.
+// Чтобы добавить язык: импортировать грамматику, зарегистрировать её ниже,
+// при желании описать в LANGUAGE_INFO и пересобрать бандл.
 export const lowlight = createLowlight(common);
-lowlight.register({ powershell, dockerfile, nginx, apache, properties, dns, puppet });
+lowlight.register({
+  powershell, dockerfile, nginx, apache, properties, dns, puppet,
+  '1c': oneC, routeros, accesslog,
+  log, journalctl, 'cisco-ios': ciscoIos, cmd, 'docker-compose': dockerCompose,
+});
 
-export const CODE_LANGUAGES = lowlight.listLanguages().slice().sort();
+// Как язык подписан в списке и на ярлыке, пояснение в списке и слова, по
+// которым его можно найти. Нужно там, где идентификатор неочевиден или его
+// ищут по-русски («1С» с кириллической С не совпадает с латинским «1c»).
+// Языки, которых здесь нет, показываются под своим идентификатором.
+var LANGUAGE_INFO = {
+  '1c':             { label: '1С',             hint: '1С:Предприятие',      keywords: '1c 1с bsl предприятие enterprise' },
+  'cmd':            { label: 'cmd',            hint: 'Windows, .bat',       keywords: 'bat batch dos windows' },
+  'docker-compose': { label: 'docker compose', hint: 'YAML',                keywords: 'compose yaml yml docker' },
+  'log':            { label: 'log',            hint: 'логи сервисов Linux', keywords: 'logs syslog логи журнал linux' },
+  'journalctl':     { label: 'journalctl',     hint: 'systemd',             keywords: 'journal systemd журнал логи' },
+  'cisco-ios':      { label: 'Cisco IOS',      hint: 'IOS / IOS-XE',        keywords: 'cisco ios ios-xe циско' },
+  'routeros':       { label: 'RouterOS',       hint: 'MikroTik',            keywords: 'mikrotik микротик' },
+  'accesslog':      { label: 'access log',     hint: 'nginx, apache',       keywords: 'nginx apache access логи' },
+};
+
+function labelOf(language) {
+  return (LANGUAGE_INFO[language] && LANGUAGE_INFO[language].label) || language;
+}
+
+function searchTextOf(language) {
+  var info = LANGUAGE_INFO[language] || {};
+  return [language, info.label || '', info.hint || '', info.keywords || ''].join(' ').toLowerCase();
+}
+
+export const CODE_LANGUAGES = lowlight.listLanguages().slice().sort(function(a, b) {
+  return labelOf(a).toLowerCase().localeCompare(labelOf(b).toLowerCase());
+});
 
 // «Без подсветки» — это не пустое значение, а явный plaintext: именно его
 // TipTap подставляет как defaultLanguage, и хранить одно и то же состояние
@@ -117,7 +158,14 @@ function openLanguagePanel(anchorEl, current, onPick) {
     var option = document.createElement('div');
     option.className = 'tiptap-lang-option';
     if (language === current) option.className += ' active';
-    option.textContent = label || language;
+    option.textContent = label || labelOf(language);
+    var hint = !label && LANGUAGE_INFO[language] && LANGUAGE_INFO[language].hint;
+    if (hint) {
+      var hintEl = document.createElement('span');
+      hintEl.className = 'tiptap-lang-hint';
+      hintEl.textContent = hint;
+      option.appendChild(hintEl);
+    }
     option.addEventListener('mousedown', function(event) {
       event.preventDefault();
       pick(language);
@@ -138,7 +186,7 @@ function openLanguagePanel(anchorEl, current, onPick) {
 
     if (needle) {
       var matches = CODE_LANGUAGES.filter(function(lang) {
-        return lang.toLowerCase().indexOf(needle) !== -1;
+        return searchTextOf(lang).indexOf(needle) !== -1;
       });
       if (!matches.length) {
         var empty = document.createElement('div');
@@ -243,7 +291,7 @@ export const FormattableCodeBlock = CodeBlockLowlight.extend({
         var language = currentNode.attrs.language || NO_LANGUAGE;
         code.className = 'language-' + language;
         if (hasLanguage(language)) {
-          badge.textContent = language;
+          badge.textContent = labelOf(language);
           badge.classList.remove('tiptap-code-lang-empty');
         } else {
           // Без языка ничего не подписываем: ярлык прячется и появляется только
@@ -407,7 +455,7 @@ export function highlightSavedCodeBlocks() {
 
     var badge = document.createElement('div');
     badge.className = 'tiptap-code-lang tiptap-code-lang-static';
-    badge.textContent = language;
+    badge.textContent = labelOf(language);
     corner.appendChild(badge);
 
     wrapper.insertBefore(corner, wrapper.firstChild);

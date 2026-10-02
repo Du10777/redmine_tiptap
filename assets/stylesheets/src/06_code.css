@@ -141,6 +141,18 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
   color: #fff;
 }
 
+/* Пояснение после названия: «1С:Предприятие», «MikroTik», «nginx, apache». */
+.tiptap-lang-hint {
+  margin-left: 6px;
+  color: #999;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+.tiptap-lang-option.active .tiptap-lang-hint {
+  color: #dbe6f1;
+}
+
 .tiptap-lang-empty {
   padding: 6px;
   color: #999;
@@ -194,6 +206,14 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
 
 .hljs-deletion { color: #A00000; }
 .hljs-addition { color: #00A000; }
+
+/* Логи (свои грамматики log и journalctl): уровни сообщений своими цветами,
+   чтобы ошибки и предупреждения было видно, не вчитываясь. */
+.hljs-log-error { color: #C00000; font-weight: bold; }
+.hljs-log-warn { color: #B35C00; font-weight: bold; }
+.hljs-log-ok { color: #118811; font-weight: bold; }
+.hljs-log-info { color: #0057AE; }
+.hljs-link { color: #3E5B76; text-decoration: underline; }
 
 .hljs-emphasis { font-style: italic; }
 .hljs-strong { font-weight: bold; }
