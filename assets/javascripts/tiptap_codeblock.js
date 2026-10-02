@@ -1,49 +1,39 @@
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { common, createLowlight } from 'lowlight';
-
-import powershell from 'highlight.js/lib/languages/powershell';
-import dockerfile from 'highlight.js/lib/languages/dockerfile';
-import nginx from 'highlight.js/lib/languages/nginx';
-import apache from 'highlight.js/lib/languages/apache';
-import properties from 'highlight.js/lib/languages/properties';
-import dns from 'highlight.js/lib/languages/dns';
-import puppet from 'highlight.js/lib/languages/puppet';
-import oneC from 'highlight.js/lib/languages/1c';
-import routeros from 'highlight.js/lib/languages/routeros';
-import accesslog from 'highlight.js/lib/languages/accesslog';
-
-import { log, journalctl, ciscoIos, cmd, dockerCompose } from './tiptap_code_languages.js';
+import { createLowlight } from 'lowlight';
 
 // Один движок подсветки и для редактора, и для просмотра — иначе цвета
 // в этих двух режимах разъезжаются.
 //
-// Откуда берётся список языков: это ровно то, что зарегистрировано здесь.
-// Набор common (37 грамматик из highlight.js), плюс отдельные грамматики
-// highlight.js, плюс свои из tiptap_code_languages.js. Всё это собирается
-// в бандл при сборке; с сервера во время работы ничего не подгружается.
-// Чтобы добавить язык: импортировать грамматику, зарегистрировать её ниже,
-// при желании описать в LANGUAGE_INFO и пересобрать бандл.
-export const lowlight = createLowlight(common);
-lowlight.register({
-  powershell, dockerfile, nginx, apache, properties, dns, puppet,
-  '1c': oneC, routeros, accesslog,
-  log, journalctl, 'cisco-ios': ciscoIos, cmd, 'docker-compose': dockerCompose,
+// Языки сюда не вшиты. Они лежат по файлу на язык в папке highlight/ плагина;
+// highlight/_compile.sh собирает их в assets/javascripts/tiptap_highlight.js.
+// Тот подключается раньше этого бандла и кладёт список языков в
+// window.TiptapHighlightLanguages — здесь он регистрируется. Если файла с
+// языками нет, редактор работает как обычно, просто без подсветки.
+var LANGUAGES = (window.TiptapHighlightLanguages || []).filter(function(lang) {
+  return lang && lang.id && typeof lang.grammar === 'function';
 });
 
+export const lowlight = createLowlight();
+
 // Как язык подписан в списке и на ярлыке, пояснение в списке и слова, по
-// которым его можно найти. Нужно там, где идентификатор неочевиден или его
-// ищут по-русски («1С» с кириллической С не совпадает с латинским «1c»).
-// Языки, которых здесь нет, показываются под своим идентификатором.
-var LANGUAGE_INFO = {
-  '1c':             { label: '1С',             hint: '1С:Предприятие',      keywords: '1c 1с bsl предприятие enterprise' },
-  'cmd':            { label: 'cmd',            hint: 'Windows, .bat',       keywords: 'bat batch dos windows' },
-  'docker-compose': { label: 'docker compose', hint: 'YAML',                keywords: 'compose yaml yml docker' },
-  'log':            { label: 'log',            hint: 'логи сервисов Linux', keywords: 'logs syslog логи журнал linux' },
-  'journalctl':     { label: 'journalctl',     hint: 'systemd',             keywords: 'journal systemd журнал логи' },
-  'cisco-ios':      { label: 'Cisco IOS',      hint: 'IOS / IOS-XE',        keywords: 'cisco ios ios-xe циско' },
-  'routeros':       { label: 'RouterOS',       hint: 'MikroTik',            keywords: 'mikrotik микротик' },
-  'accesslog':      { label: 'access log',     hint: 'nginx, apache',       keywords: 'nginx apache access логи' },
-};
+// которым его можно найти — всё это задаётся в файле языка. Языки без
+// подписи показываются под своим идентификатором.
+var LANGUAGE_INFO = {};
+
+LANGUAGES.forEach(function(lang) {
+  try {
+    lowlight.register(lang.id, lang.grammar);
+    LANGUAGE_INFO[lang.id] = { label: lang.label, hint: lang.hint, keywords: lang.keywords };
+  } catch (e) { /* сломанный файл языка не должен ронять редактор */ }
+});
+
+// plaintext нужен всегда: это «без подсветки» и язык блока по умолчанию.
+// Без него TipTap включил бы для таких блоков автоопределение языка.
+if (!lowlight.registered('plaintext')) {
+  lowlight.register('plaintext', function() {
+    return { name: 'Plain text', aliases: ['text', 'txt'], disableAutodetect: true };
+  });
+}
 
 function labelOf(language) {
   return (LANGUAGE_INFO[language] && LANGUAGE_INFO[language].label) || language;
@@ -261,7 +251,16 @@ export const FormattableCodeBlock = CodeBlockLowlight.extend({
   addOptions() {
     return {
       ...this.parent?.(),
-      lowlight: lowlight,
+      // Автоопределение языка выключено целиком: TipTap включает его для
+      // блоков с незарегистрированным языком (например, если файл языка
+      // убрали из highlight/), и в редакторе такой блок раскрашивался бы
+      // наугад, а в просмотре оставался обычным текстом.
+      lowlight: {
+        highlight: function(language, value, options) { return lowlight.highlight(language, value, options); },
+        highlightAuto: function(value) { return lowlight.highlight(NO_LANGUAGE, value); },
+        listLanguages: function() { return lowlight.listLanguages(); },
+        registered: function(name) { return lowlight.registered(name); },
+      },
       // Без этого блок без языка подсвечивался бы автоопределением: ярлык
       // показывал «нет», а текст всё равно был цветным — и в просмотре
       // такого не происходило. «Без подсветки» должно значить ровно это.
