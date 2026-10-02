@@ -1,3 +1,5 @@
+require_relative 'sanitizer'
+
 module Redmine
   module WikiFormatting
     module Tiptap
@@ -19,7 +21,7 @@ module Redmine
                       .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
                       .gsub(%r{\n(</code></pre>)}, '\1')
           html = unwrap_quotes(html) if html.include?('tiptap-quote')
-          html
+          Sanitizer.call(html)
         end
 
         private

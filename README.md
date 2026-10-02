@@ -38,6 +38,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 **Code**
 - Code blocks with syntax highlighting in the editor and on saved pages: 52 languages, and you can add more (see [Syntax highlighting](#syntax-highlighting)).
 - The language of a block is chosen from a badge in its corner, with search, recent and frequent languages.
+- Tab and Shift+Tab indent and outdent lines inside a code block; bold, links and colors inside code are kept.
 
 **Blocks**
 - Collapsible block: a title with hidden content (`<details>`). Collapsed on saved pages, expanded in the editor.
@@ -45,7 +46,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 
 **Editing**
 - `<HTML>` mode to view and edit the HTML source.
-- Markdown-style typing: `#` for headings, `-` and `1.` for lists, `[ ]` for tasks, ```` ``` ```` for a code block, `**bold**`, `---` for a horizontal rule. Standard keyboard shortcuts: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z and others.
+- Markdown-style typing: `#` for headings, `-` and `1.` for lists, `[ ]` for tasks, ```` ```python ```` for a code block (any language name or none), `**bold**`, `---` for a horizontal rule. Standard keyboard shortcuts: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z and others.
 - The editor never grows taller than the window: the toolbar and the form buttons stay in view, and the text scrolls inside. The height follows the window size and page zoom.
 - A resize grip in the bottom right corner sets the height by hand. The height is remembered; double-click returns to automatic height.
 
@@ -53,6 +54,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 - Works in all Redmine text fields with formatting: issue descriptions and notes, wiki pages, news, forum messages, documents, project descriptions, long text custom fields, including fields that appear on the page later.
 - Text is stored as HTML. To use the editor, choose *TipTap HTML* as the text formatting in Redmine settings.
 - Stays fast on large texts: editors in hidden forms are created only when the form is opened, and long code blocks are highlighted when they scroll into view.
+- Saved texts are shown without unsafe HTML: scripts, event handlers and `javascript:` links are removed when a page is displayed, only what the editor itself produces is kept. This covers texts that come through the REST API or the `<HTML>` mode as well.
 
 ## Syntax highlighting
 
@@ -113,6 +115,7 @@ Step 2 matters. At startup Redmine republishes plugin assets only if their files
 ### After updating
 
 - The editor's script and stylesheet are served with a content fingerprint in their URLs, so browsers load the new version right after the restart. Users do not need to clear their browser cache.
+- If *Cache formatted text* is enabled in Redmine settings (Administration → Settings → General), clear Redmine's cache once after updating to a version with HTML cleaning: `bundle exec rake tmp:cache:clear RAILS_ENV=production` in the Redmine folder. Otherwise pages rendered before the update can be shown from the cache, uncleaned, until their text changes.
 - Earlier versions of the plugin copied the script to `public/tiptap_bundle.js`. These files are no longer used and can be deleted:
   ```sh
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
