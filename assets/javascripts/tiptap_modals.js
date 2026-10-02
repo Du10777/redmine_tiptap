@@ -94,9 +94,18 @@ export function openAttachmentPicker(editor, urlMap) {
 
   insertBtn.addEventListener('click', function() {
     if (!selected) return;
-    editor.chain().focus().insertContent(
-      '<a href="' + urlMap[selected].url + '">\ud83d\udcce ' + selected + '</a>'
-    ).run();
+    var entry = urlMap[selected];
+    var label = '\ud83d\udcce ' + selected;
+    // Inserted as data, not as an HTML string, so that a file name with "&" or
+    // quotes cannot break the markup.
+    var content = entry.id
+      ? { type: 'text', text: label, marks: [{ type: 'link', attrs: { href: entry.url } }] }
+      // Uploaded in this form and not saved yet: until the form is saved the
+      // file has no download address (entry.url is a temporary blob: URL that
+      // dies with the page). Redmine's own link syntax refers to the attachment
+      // by its name and becomes a link on the saved page.
+      : { type: 'text', text: '\ud83d\udcce attachment:"' + selected + '"' };
+    editor.chain().focus().insertContent(content).run();
     close();
   });
 
@@ -266,9 +275,16 @@ export function openLinkModal(editor) {
     if (!url) { close(); return; }
 
     if (state.selection.empty && text) {
-      // No selection - insert the text as a link
+      // No selection - insert the text as a link. The text and the URL go in as
+      // data, not as an HTML string: a quote in the URL or "<" in the text would
+      // break the markup. setLink checks the URL (javascript: and the like are
+      // refused); with a refused URL the text is inserted without a link.
+      var from = state.selection.from;
       editor.chain().focus()
-        .insertContent('<a href="' + url + '">' + text + '</a>')
+        .insertContent({ type: 'text', text: text })
+        .setTextSelection({ from: from, to: from + text.length })
+        .setLink({ href: url })
+        .setTextSelection(from + text.length)
         .run();
     } else {
       // Selection exists - wrap it in a link

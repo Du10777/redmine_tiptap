@@ -11,7 +11,7 @@ export function setupTablePaste(editorDiv, editor) {
     e.preventDefault();
     e.stopImmediatePropagation(); // don't let image-paste fire on the Excel screenshot
 
-    var cleaned = cleanExcelTable(html);
+    var cleaned = cleanPastedTables(html);
     editor.chain().focus().insertContent(cleaned).run();
   }, true);
 
@@ -55,15 +55,17 @@ export function setupTablePaste(editorDiv, editor) {
   }, false);
 }
 
-function cleanExcelTable(html) {
+// Cleans every table of the pasted HTML in place and keeps the rest of it: the
+// text around the tables and further tables used to be dropped, only the first
+// table was inserted.
+function cleanPastedTables(html) {
   var div = document.createElement('div');
   div.innerHTML = html;
 
   // Resolve the .xlNN classes from <style> into inline styles
-  var styleTag = div.querySelector('style');
   var classRules = {};
   var baseFontSize = null;
-  if (styleTag) {
+  div.querySelectorAll('style').forEach(function(styleTag) {
     var css = styleTag.textContent;
     var re = /\.(xl\d+)\s*\{([^}]*)\}/g;
     var m;
@@ -76,11 +78,19 @@ function cleanExcelTable(html) {
       var fm0 = tdMatch[1].match(/font-size:\s*([\d.]+)pt/i);
       if (fm0) baseFontSize = Math.round(parseFloat(fm0[1]));
     }
-  }
+  });
 
-  var table = div.querySelector('table');
-  if (!table) return html;
+  var tables = div.querySelectorAll('table');
+  if (!tables.length) return html;
+  tables.forEach(function(table) { cleanTable(table, classRules, baseFontSize); });
 
+  // Leftovers of the clipboard document (<head> contents, Office XML).
+  div.querySelectorAll('style, meta, link, title, script, xml').forEach(function(el) { el.remove(); });
+
+  return div.innerHTML.replace(/<p>\s*<\/p>/g, '<p></p>');
+}
+
+function cleanTable(table, classRules, baseFontSize) {
   table.querySelectorAll('img').forEach(function(img) { img.remove(); });
 
   // Collect column widths from <col width=N>
@@ -97,7 +107,11 @@ function cleanExcelTable(html) {
 
   // Process the cells
   table.querySelectorAll('tr').forEach(function(row) {
-    Array.prototype.slice.call(row.children).forEach(function(cell, idx) {
+    var column = 0;   // the column a cell starts in, counting the colspan of the cells before it
+    Array.prototype.slice.call(row.children).forEach(function(cell) {
+      var span = parseInt(cell.getAttribute('colspan'), 10) || 1;
+      var widths = colWidths.slice(column, column + span);
+      column += span;
       var cls = cell.getAttribute('class');
       var hasBorder = cls && classRules[cls] && /border\s*:\s*[^;]*(solid|windowtext)/i.test(classRules[cls]);
 
@@ -123,9 +137,9 @@ function cleanExcelTable(html) {
       }
       if (align) cell.style.textAlign = align;
 
-      // Column width (TipTap stores it in colwidth)
-      if (colWidths[idx]) {
-        cell.setAttribute('colwidth', colWidths[idx]);
+      // Column width (TipTap stores it in colwidth: one width per spanned column)
+      if (widths.length === span && widths.every(Boolean)) {
+        cell.setAttribute('colwidth', widths.join(','));
       }
 
       // Clean up extra line breaks/spaces inside the cell text
@@ -154,11 +168,17 @@ function cleanExcelTable(html) {
 
   removeEmptyEdgeColumns(table);
 
-  var out = table.outerHTML
-    .replace(/>\s+</g, '><')
-    .replace(/<p>\s*<\/p>/g, '<p></p>');
+  // Whitespace between the table's own tags (rows, cells) is not content.
+  // Only there: removing it everywhere would also glue words that are
+  // separated by a space between two tags, like "<b>a</b> <i>b</i>".
+  table.querySelectorAll('thead, tbody, tfoot, tr').forEach(stripWhitespaceNodes);
+  stripWhitespaceNodes(table);
+}
 
-  return out;
+function stripWhitespaceNodes(el) {
+  Array.prototype.slice.call(el.childNodes).forEach(function(node) {
+    if (node.nodeType === 3 && !/\S/.test(node.nodeValue)) node.remove();
+  });
 }
 
 // Excel often adds an empty auxiliary column on the right/left

@@ -587,21 +587,32 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
       opt.textContent = o.label;
       opt.addEventListener('mousedown', function(e) {
         e.preventDefault();
-        applyList(o.value);
         dropdown.style.display = 'none';
+        document.removeEventListener('mousedown', closeOnOutsideClick, true);
+        applyList(o.value);
       });
       dropdown.appendChild(opt);
     });
 
+    // The focus stays in the editor. Moving it to the button (as before) blurred
+    // the editor, the blur is a transaction, and row 2 is rebuilt on every
+    // transaction - together with the dropdown that had just been opened, so
+    // the first click did nothing. Clicks elsewhere close the dropdown.
+    function closeOnOutsideClick(e) {
+      if (wrapper.contains(e.target)) return;
+      dropdown.style.display = 'none';
+      document.removeEventListener('mousedown', closeOnOutsideClick, true);
+    }
     btn.addEventListener('mousedown', function(e) {
       e.preventDefault();
       var show = dropdown.style.display === 'none';
       dropdown.style.display = show ? 'block' : 'none';
-      if (show) { positionDropdown(dropdown, btn); btn.focus(); }
-    });
-    // close on focus loss (no document listener - row2 is recreated)
-    wrapper.addEventListener('focusout', function(e) {
-      if (!wrapper.contains(e.relatedTarget)) dropdown.style.display = 'none';
+      if (show) {
+        positionDropdown(dropdown, btn);
+        document.addEventListener('mousedown', closeOnOutsideClick, true);
+      } else {
+        document.removeEventListener('mousedown', closeOnOutsideClick, true);
+      }
     });
 
     wrapper.appendChild(btn);
