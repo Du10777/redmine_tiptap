@@ -52,19 +52,20 @@ export default {
 - `_compile.sh` — сборка;
 - `_check.mjs` — проверка языков при сборке;
 - `_common.js` — общие куски для своих грамматик;
-- `_hljs/` — файлы, которые импортируют перенесённые грамматики (папку создаёт скрипт переноса).
+- `_convert_grammar.py` — скрипт переноса грамматик из highlight.js (см. ниже);
+- `_vendor/` — файлы, которые импортируют перенесённые грамматики (папку создаёт скрипт переноса).
 
-Папка `README/` — эта документация и скрипт переноса `convert_hljs_language.py`.
+Папка `README/` — эта документация.
 
 ## Как добавить язык из highlight.js
 
-Готовые грамматики (их больше 190) лежат здесь: https://github.com/highlightjs/highlight.js/tree/main/src/languages. Названия и псевдонимы перечислены в [SUPPORTED_LANGUAGES.md](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md); там же есть около сотни сторонних грамматик из отдельных репозиториев. Любую из них переносит в формат плагина скрипт `README/convert_hljs_language.py`.
+Готовые грамматики (их больше 190) лежат здесь: https://github.com/highlightjs/highlight.js/tree/main/src/languages. Названия и псевдонимы перечислены в [SUPPORTED_LANGUAGES.md](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md); там же есть около сотни сторонних грамматик из отдельных репозиториев. Любую из них переносит в формат плагина скрипт `_convert_grammar.py` из этой папки.
 
 Скрипту нужен Python 3.6+ (без сторонних пакетов) и доступ к github.com. Запускать его надо из папки плагина:
 
 ```sh
 cd /path/to/redmine/plugins/redmine_tiptap
-python3 highlight/README/convert_hljs_language.py erlang
+python3 highlight/_convert_grammar.py erlang
 sh highlight/_compile.sh
 ```
 
@@ -74,35 +75,35 @@ sh highlight/_compile.sh
 
 ```sh
 # список языков highlight.js (* — уже есть в highlight/), можно с фильтром по слову
-python3 highlight/README/convert_hljs_language.py --list
-python3 highlight/README/convert_hljs_language.py --list sql
+python3 highlight/_convert_grammar.py --list
+python3 highlight/_convert_grammar.py --list sql
 
 # несколько языков сразу
-python3 highlight/README/convert_hljs_language.py erlang nix fsharp
+python3 highlight/_convert_grammar.py erlang nix fsharp
 
 # своё название, подсказка и слова для поиска (только для одного языка за раз)
-python3 highlight/README/convert_hljs_language.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp эрланг"
+python3 highlight/_convert_grammar.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp эрланг"
 
 # заменить короткий файл из комплекта полной копией, которую можно править
-python3 highlight/README/convert_hljs_language.py routeros --force --label RouterOS --hint MikroTik --keywords "mikrotik микротик"
+python3 highlight/_convert_grammar.py routeros --force --label RouterOS --hint MikroTik --keywords "mikrotik микротик"
 
 # язык, которого ещё нет в выпущенной версии highlight.js, — из ветки разработки
-python3 highlight/README/convert_hljs_language.py odin --ref main
+python3 highlight/_convert_grammar.py odin --ref main
 
 # ссылка на файл грамматики — прямо из адресной строки браузера
-python3 highlight/README/convert_hljs_language.py https://github.com/highlightjs/highlight.js/blob/main/src/languages/odin.js
+python3 highlight/_convert_grammar.py https://github.com/highlightjs/highlight.js/blob/main/src/languages/odin.js
 
 # сторонняя грамматика: ссылка на репозиторий, файл грамматики скрипт найдёт сам
-python3 highlight/README/convert_hljs_language.py https://github.com/highlightjs/highlightjs-terraform
+python3 highlight/_convert_grammar.py https://github.com/highlightjs/highlightjs-terraform
 
 # локальный файл грамматики
-python3 highlight/README/convert_hljs_language.py ~/grammars/mylang.js --id mylang
+python3 highlight/_convert_grammar.py ~/grammars/mylang.js --id mylang
 
 # короткий файл со ссылкой на npm-пакет вместо копии кода
-python3 highlight/README/convert_hljs_language.py erlang --npm
+python3 highlight/_convert_grammar.py erlang --npm
 
 # посмотреть, что будет сделано, ничего не меняя
-python3 highlight/README/convert_hljs_language.py erlang --dry-run
+python3 highlight/_convert_grammar.py erlang --dry-run
 ```
 
 ### Что делает скрипт
@@ -110,7 +111,7 @@ python3 highlight/README/convert_hljs_language.py erlang --dry-run
 1. Скачивает `src/languages/<имя>.js` той версии highlight.js, на которой работает плагин. Версия берётся из `package-lock.json` (сейчас 11.12.0): грамматики пишутся под движок своей версии. Другую версию, ветку или коммит задаёт `--ref`.
 2. Название языка берёт из строки `Language:` в заголовке грамматики, слова для поиска — из её псевдонимов (`aliases`). `id` — имя файла грамматики.
 3. Кладёт код грамматики в `highlight/<id>.js` без изменений, кроме экспорта: `export default function(hljs)` превращается в `function grammar(hljs)`, а в конец файла дописывается объект языка `export default { id, label, keywords, grammar }`. Если грамматика написана как модуль CommonJS (`module.exports = ...`), в начало добавляется строка с `module` и `exports`.
-4. Если грамматика импортирует другие файлы, скачивает их в `highlight/_hljs/<источник>-<версия>/` по тем же путям, что в репозитории, и направляет туда импорты. Например, `typescript` импортирует `javascript.js` и `lib/ecmascript.js`. Эти файлы общие для всех языков из того же источника и той же версии; править их не нужно.
+4. Если грамматика импортирует другие файлы, скачивает их в `highlight/_vendor/<источник>-<версия>/` по тем же путям, что в репозитории, и направляет туда импорты. Например, `typescript` импортирует `javascript.js` и `lib/ecmascript.js`. Эти файлы общие для всех языков из того же источника и той же версии; править их не нужно.
 5. Проверяет строку `Requires:` — языки, которыми размечается вложенный код (например, `php-template` нужны `xml` и `php`). Если их нет в `highlight/`, подсказывает команду, которой их добавить. Без них вложенный код просто остаётся без цвета, ошибкой это не считается.
 6. Не перезаписывает существующие файлы без `--force` и не берёт `id`, который уже занят другим файлом.
 
@@ -130,9 +131,8 @@ python3 highlight/README/convert_hljs_language.py erlang --dry-run
 | `--force` | Заменять существующие файлы. |
 | `--dry-run` | Показать, что будет сделано, ничего не меняя. |
 | `--list [СЛОВО]` | Список языков highlight.js и сторонних грамматик, можно с фильтром по слову. |
-| `--prune` | Удалить из `_hljs/` файлы, которые больше не импортирует ни один язык. |
+| `--prune` | Удалить из `_vendor/` файлы, которые больше не импортирует ни один язык. |
 
-Сообщения скрипт пишет по-русски или по-английски — по языку системы.
 
 **Копия или `--npm`?** Копия показывает правила прямо в файле: их можно править, можно взять грамматику новее установленного пакета или стороннюю. Копия не меняется при обновлении highlight.js в плагине; чтобы обновить её, перенесите язык заново с `--force`. Файл с `--npm` занимает несколько строк, а грамматика в нём обновляется вместе с плагином.
 
@@ -152,10 +152,10 @@ sh highlight/_compile.sh
 
 ## Как убрать язык
 
-Удалите файл языка из `highlight/`, соберите и перезапустите Redmine. Сохранённые блоки этого языка останутся как есть и будут показаны обычным текстом. Файлы в `_hljs/`, которые больше никому не нужны, убирает команда:
+Удалите файл языка из `highlight/`, соберите и перезапустите Redmine. Сохранённые блоки этого языка останутся как есть и будут показаны обычным текстом. Файлы в `_vendor/`, которые больше никому не нужны, убирает команда:
 
 ```sh
-python3 highlight/README/convert_hljs_language.py --prune
+python3 highlight/_convert_grammar.py --prune
 ```
 
 ## Свои грамматики и правка правил
@@ -178,7 +178,7 @@ sh highlight/_compile.sh
 
 Первая команда убирает вашу сборку, последняя собирает языки заново вместе с вашими. После этого перезапустите Redmine. Если вы правили файлы языков из комплекта, git может попросить разрешить конфликт в них.
 
-Если плагин поставлен из архива, сохраните свои файлы языков и папку `_hljs/` перед заменой папки плагина, верните их после и соберите языки.
+Если плагин поставлен из архива, сохраните свои файлы языков и папку `_vendor/` перед заменой папки плагина, верните их после и соберите языки.
 
 ## Размер
 

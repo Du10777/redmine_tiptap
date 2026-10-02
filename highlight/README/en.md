@@ -52,19 +52,20 @@ Files and folders whose names start with `_` are not languages:
 - `_compile.sh` builds the languages;
 - `_check.mjs` checks the languages during the build;
 - `_common.js` holds shared parts of the plugin's own grammars;
-- `_hljs/` holds files imported by converted grammars (created by the conversion script).
+- `_convert_grammar.py` is the script that converts highlight.js grammars (see below);
+- `_vendor/` holds files imported by converted grammars (created by the conversion script).
 
-The `README/` folder holds this documentation and the conversion script `convert_hljs_language.py`.
+The `README/` folder holds this documentation.
 
 ## Adding a language from highlight.js
 
-Ready grammars (more than 190) are here: https://github.com/highlightjs/highlight.js/tree/main/src/languages. Their names and aliases are listed in [SUPPORTED_LANGUAGES.md](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md), together with about a hundred third-party grammars kept in separate repositories. The script `README/convert_hljs_language.py` converts any of them into the plugin's format.
+Ready grammars (more than 190) are here: https://github.com/highlightjs/highlight.js/tree/main/src/languages. Their names and aliases are listed in [SUPPORTED_LANGUAGES.md](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md), together with about a hundred third-party grammars kept in separate repositories. The script `_convert_grammar.py` in this folder converts any of them into the plugin's format.
 
 The script needs Python 3.6+ (no extra packages) and access to github.com. Run it from the plugin folder:
 
 ```sh
 cd /path/to/redmine/plugins/redmine_tiptap
-python3 highlight/README/convert_hljs_language.py erlang
+python3 highlight/_convert_grammar.py erlang
 sh highlight/_compile.sh
 ```
 
@@ -74,35 +75,35 @@ Examples:
 
 ```sh
 # list of highlight.js languages (* = already in highlight/), optionally filtered by a word
-python3 highlight/README/convert_hljs_language.py --list
-python3 highlight/README/convert_hljs_language.py --list sql
+python3 highlight/_convert_grammar.py --list
+python3 highlight/_convert_grammar.py --list sql
 
 # several languages at once
-python3 highlight/README/convert_hljs_language.py erlang nix fsharp
+python3 highlight/_convert_grammar.py erlang nix fsharp
 
 # own name, hint and search words (one language at a time)
-python3 highlight/README/convert_hljs_language.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp"
+python3 highlight/_convert_grammar.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp"
 
 # replace a short file shipped with the plugin with an editable full copy
-python3 highlight/README/convert_hljs_language.py routeros --force --label RouterOS --hint MikroTik --keywords "mikrotik микротик"
+python3 highlight/_convert_grammar.py routeros --force --label RouterOS --hint MikroTik --keywords "mikrotik микротик"
 
 # a language not yet in a released highlight.js version, from the development branch
-python3 highlight/README/convert_hljs_language.py odin --ref main
+python3 highlight/_convert_grammar.py odin --ref main
 
 # a link to a grammar file, right from the browser address bar
-python3 highlight/README/convert_hljs_language.py https://github.com/highlightjs/highlight.js/blob/main/src/languages/odin.js
+python3 highlight/_convert_grammar.py https://github.com/highlightjs/highlight.js/blob/main/src/languages/odin.js
 
 # a third-party grammar: a link to its repository, the script finds the grammar file
-python3 highlight/README/convert_hljs_language.py https://github.com/highlightjs/highlightjs-terraform
+python3 highlight/_convert_grammar.py https://github.com/highlightjs/highlightjs-terraform
 
 # a local grammar file
-python3 highlight/README/convert_hljs_language.py ~/grammars/mylang.js --id mylang
+python3 highlight/_convert_grammar.py ~/grammars/mylang.js --id mylang
 
 # a short file referencing the npm package instead of a copy of the code
-python3 highlight/README/convert_hljs_language.py erlang --npm
+python3 highlight/_convert_grammar.py erlang --npm
 
 # show what would be done without changing anything
-python3 highlight/README/convert_hljs_language.py erlang --dry-run
+python3 highlight/_convert_grammar.py erlang --dry-run
 ```
 
 ### What the script does
@@ -110,7 +111,7 @@ python3 highlight/README/convert_hljs_language.py erlang --dry-run
 1. Downloads `src/languages/<name>.js` of the highlight.js version the plugin runs on. The version is read from `package-lock.json` (currently 11.12.0), because grammars are written for the engine of their own version. `--ref` selects another version, branch or commit.
 2. Takes the language name from the `Language:` line of the grammar header and the search words from its aliases (`aliases`). The `id` is the grammar file name.
 3. Puts the grammar code into `highlight/<id>.js` unchanged except for the export: `export default function(hljs)` becomes `function grammar(hljs)`, and the language object `export default { id, label, keywords, grammar }` is appended at the end of the file. If the grammar is a CommonJS module (`module.exports = ...`), a line declaring `module` and `exports` is added at the top.
-4. If the grammar imports other files, downloads them into `highlight/_hljs/<source>-<version>/` under the same paths as in the repository and points the imports there. For example, `typescript` imports `javascript.js` and `lib/ecmascript.js`. These files are shared by all languages from the same source and version; there is no need to edit them.
+4. If the grammar imports other files, downloads them into `highlight/_vendor/<source>-<version>/` under the same paths as in the repository and points the imports there. For example, `typescript` imports `javascript.js` and `lib/ecmascript.js`. These files are shared by all languages from the same source and version; there is no need to edit them.
 5. Checks the `Requires:` line, which lists the languages used for embedded code (for example, `php-template` needs `xml` and `php`). If they are not in `highlight/`, prints the command that adds them. Without them the embedded code simply stays uncolored; this is not an error.
 6. Does not overwrite existing files without `--force` and does not take an `id` already used by another file.
 
@@ -130,9 +131,8 @@ After conversion the language can be edited right in its file.
 | `--force` | Replace existing files. |
 | `--dry-run` | Show what would be done without changing anything. |
 | `--list [WORD]` | List highlight.js languages and third-party grammars, optionally filtered by a word. |
-| `--prune` | Delete files in `_hljs/` that no language imports any more. |
+| `--prune` | Delete files in `_vendor/` that no language imports any more. |
 
-The script prints its messages in Russian or English, following the system language.
 
 **Copy or `--npm`?** A copy shows the rules right in the file: you can edit them, take a grammar newer than the installed package, or a third-party one. A copy does not change when the plugin upgrades highlight.js; to refresh it, convert the language again with `--force`. A file made with `--npm` is a few lines long, and its grammar is upgraded together with the plugin.
 
@@ -152,10 +152,10 @@ If the Redmine server has neither Docker nor Node.js, build on any machine that 
 
 ## Removing a language
 
-Delete the language file from `highlight/`, build, and restart Redmine. Saved blocks in this language stay as they are and are shown as plain text. Files in `_hljs/` that are no longer needed are removed with:
+Delete the language file from `highlight/`, build, and restart Redmine. Saved blocks in this language stay as they are and are shown as plain text. Files in `_vendor/` that are no longer needed are removed with:
 
 ```sh
-python3 highlight/README/convert_hljs_language.py --prune
+python3 highlight/_convert_grammar.py --prune
 ```
 
 ## Own grammars and editing rules
@@ -178,7 +178,7 @@ sh highlight/_compile.sh
 
 The first command discards your build, the last one builds the languages again, including yours. Then restart Redmine. If you have edited language files shipped with the plugin, git may ask you to resolve conflicts in them.
 
-If the plugin was installed from an archive, save your language files and the `_hljs/` folder before replacing the plugin folder, put them back afterwards, and build the languages.
+If the plugin was installed from an archive, save your language files and the `_vendor/` folder before replacing the plugin folder, put them back afterwards, and build the languages.
 
 ## Size
 

@@ -61,7 +61,7 @@ Code blocks are highlighted in the editor and on saved pages alike. The language
 You can add your own languages. Each language is one file in the `highlight/` folder. Any of the 190+ highlight.js grammars, or a third-party one, is converted into such a file with one command:
 
 ```sh
-python3 highlight/README/convert_hljs_language.py erlang
+python3 highlight/_convert_grammar.py erlang
 sh highlight/_compile.sh
 ```
 
