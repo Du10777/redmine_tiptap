@@ -1,4 +1,4 @@
-// python-repl — встроенная грамматика highlight.js.
+// python-repl: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/python-repl';
 
 export default {

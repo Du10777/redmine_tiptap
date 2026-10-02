@@ -1,4 +1,4 @@
-// cpp — встроенная грамматика highlight.js.
+// cpp: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/cpp';
 
 export default {

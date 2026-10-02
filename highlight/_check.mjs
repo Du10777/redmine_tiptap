@@ -1,19 +1,19 @@
-// Проверка языков подсветки перед сборкой, её запускает _compile.sh:
-//   node highlight/_check.mjs /tmp/hl-check/*.mjs
+// Checks the highlight languages before the build; it is run by _compile.sh:
+//   node highlight/_check.mjs <temporary dir>/*.mjs
 //
-// Каждый язык заранее собран в отдельный модуль. Здесь он загружается,
-// регистрируется в lowlight — том же движке, что работает в браузере, — и
-// раскрашивает пробный текст. Без проверки сломанная грамматика молча
-// осталась бы без цвета, а ошибка при загрузке одного файла языка оставила
-// бы без подсветки все языки сразу.
+// Each language has already been built into a separate module. Here it is loaded,
+// registered in lowlight (the same engine that runs in the browser) and made to
+// highlight a sample text. Without this check a broken grammar would silently
+// stay uncolored, and an error while loading a single language file would leave
+// all languages without highlighting at once.
 import { createLowlight } from 'lowlight';
 import { basename } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-// id попадает в сохранённый HTML как class="language-<id>".
+// The id ends up in the saved HTML as class="language-<id>".
 const ID_RE = /^[a-z0-9][a-z0-9_-]*$/;
 
-// Текст, в котором есть за что зацепиться почти любой грамматике.
+// Text that gives almost any grammar something to match.
 const SAMPLE = [
   '#!/bin/sh',
   'x = 1; y := "str" + \'c\' // comment',
@@ -59,8 +59,8 @@ for (const file of process.argv.slice(2)) {
   }
   ids.set(lang.id, name);
 
-  // Если грамматика не регистрируется, highlight.js не бросает исключение,
-  // а пишет в console.error и подставляет простой текст — ловим это.
+  // If a grammar fails to register, highlight.js does not throw an exception
+  // but writes to console.error and falls back to plain text, so catch that.
   const logged = [];
   const consoleError = console.error;
   console.error = (...args) => logged.push(args.map((a) => (a && a.message) || String(a)).join(' '));

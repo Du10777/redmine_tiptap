@@ -2,11 +2,11 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   background: #fff;
-  /* Не даём редактору расти под объём текста: выше экрана он не поднимается,
-     дальше — прокрутка внутри. Точное значение проставляет JS на .tiptap-wrapper,
-     значение в var() — запасное на случай, если JS ещё не отработал. */
-  /* --tiptap-height задаётся только когда пользователь тянул ручку размера;
-     в обычном режиме высота по содержимому, а ограничивает её max-height. */
+  /* Do not let the editor grow with the amount of text: it never gets taller than
+     the screen, past that it scrolls inside. JS sets the exact value on .tiptap-wrapper;
+     the value in var() is a fallback in case JS has not run yet. */
+  /* --tiptap-height is set only after the user has dragged the resize handle;
+     normally the height follows the content and is capped by max-height. */
   height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   overflow-y: auto;
@@ -31,14 +31,14 @@
 .ProseMirror h4 { font-size: 1em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h5 { font-size: 0.9em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h6 { font-size: 0.85em; font-weight: bold; margin: 8px 0 4px; color: #555; }
-/* Оформление кода в редакторе. Такой же вид принудительно задаётся и режиму
-   просмотра — см. блок "Код в режиме просмотра" ниже, там же пояснение. */
+/* Code styling in the editor. The same look is forced on view mode as well -
+   see the "Code in view mode" block below, which also explains why. */
 .ProseMirror code {
   background: #f0f0f0;
   padding: 1px 4px;
   border-radius: 3px;
   font-family: monospace;
-  /* как и у Redmine в просмотре: пробелы внутри строчного кода не схлопываются */
+  /* same as Redmine in view mode: spaces inside inline code are not collapsed */
   white-space: pre-wrap;
 }
 .ProseMirror pre {
@@ -53,15 +53,15 @@
   white-space: pre;
 }
 
-/* --- Код в режиме просмотра ------------------------------------------------
-   Redmine рисует сохранённый код своими правилами div.wiki pre и
-   div.wiki *:not(pre)>code: светлый фон, рамка и отступ слева 1.6em. В
-   редакторе вид другой, и один и тот же блок выглядел по-разному до и после
-   сохранения. Приводим просмотр к виду редактора.
-   Область действия сужена по body[data-text-formatting]: если форматирование
-   переключат на textile или markdown, оформление Redmine останется родным.
-   Заодно селектор специфичнее исходного, поэтому не зависит от порядка
-   подключения таблиц стилей. */
+/* --- Code in view mode -----------------------------------------------------
+   Redmine renders saved code with its own rules div.wiki pre and
+   div.wiki *:not(pre)>code: a light background, a border and a 1.6em left
+   margin. The editor looks different, and the same block looked different
+   before and after saving. Here view mode is made to look like the editor.
+   The scope is narrowed by body[data-text-formatting]: if the text formatting
+   is switched to textile or markdown, Redmine keeps its native styling.
+   The selector is also more specific than the original one, so it does not
+   depend on the order in which the stylesheets are loaded. */
 body[data-text-formatting="tiptap"] div.wiki pre {
   margin: 1em 0;
   padding: 8px;
@@ -79,8 +79,8 @@ body[data-text-formatting="tiptap"] div.wiki > code {
   font-family: monospace;
 }
 
-/* У кнопки копирования отступ справа был рассчитан на margin: 1em у pre,
-   а мы правый отступ убрали — иначе кнопка уезжает внутрь блока. */
+/* The right offset of the copy button was calculated for margin: 1em on pre,
+   and we removed the right margin - otherwise the button drifts into the block. */
 body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
   inset-inline-end: 3px;
 }
@@ -89,7 +89,7 @@ body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
 .ProseMirror li { margin: 0 !important; }
 .ProseMirror li > p { margin: 0 !important; }
 
-/* Межстрочный интервал в сохранённом виде */
+/* Line spacing in the saved view */
 div.wiki p,
 div.wiki-page p {
   margin: 0 0 2px 0 !important;
@@ -118,12 +118,12 @@ div.wiki-page li > p {
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
-  /* размер меняется общей ручкой .tiptap-resizer, нативный угол textarea убираем,
-     иначе на одном поле оказывается два разных ресайзера */
+  /* the size is changed by the shared .tiptap-resizer handle; the native textarea
+     corner is removed, otherwise one field ends up with two different resizers */
   resize: none;
 }
 
-/* Список задач (чекбоксы) — редактор и просмотр */
+/* Task list (checkboxes): editor and view mode */
 ul[data-type="taskList"] {
   list-style: none;
   padding-left: 4px;
@@ -146,12 +146,12 @@ ul[data-type="taskList"] li > label input {
   cursor: pointer;
 }
 
-/* в редакторе сдвигаем чекбоксы внутрь зоны */
+/* in the editor, shift the checkboxes inside the area */
 .ProseMirror ul[data-type="taskList"] {
   padding-left: 24px;
 }
 
-/* вне редактора чекбокс некликабелен и приглушён сразу (до отработки JS) */
+/* outside the editor the checkbox is unclickable and dimmed right away (before JS runs) */
 ul[data-type="taskList"] li > label input {
   pointer-events: none;
   filter: grayscale(1);

@@ -1,4 +1,4 @@
-// makefile — встроенная грамматика highlight.js.
+// makefile: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/makefile';
 
 export default {

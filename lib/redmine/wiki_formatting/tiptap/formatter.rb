@@ -2,18 +2,18 @@ module Redmine
   module WikiFormatting
     module Tiptap
       class Formatter
-        # Redmine 7 вызывает форматтер как new(text, options),
-        # Redmine 6 — как new(text). Второй аргумент опционален.
+        # Redmine 7 calls the formatter as new(text, options),
+        # Redmine 6 as new(text). The second argument is optional.
         def initialize(text, options = {})
           @text = text
           @options = options
         end
 
-        # Редактор не считает переводы строки сразу после <code> и перед
-        # </code> частью кода и убирает их при загрузке. В записях, сохранённых
-        # прежними версиями плагина, они лежат в тексте и в просмотре давали
-        # пустую строку сверху и снизу блока — вычищаем их и здесь, чтобы
-        # просмотр совпадал с редактором.
+        # The editor does not treat line breaks right after <code> and before
+        # </code> as part of the code and strips them on load. Entries saved by
+        # earlier versions of the plugin still have them in the text, and in view
+        # mode they produced an empty line above and below the block - strip them
+        # here as well, so that view mode matches the editor.
         def to_html(*args)
           @text.to_s
                .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
@@ -36,8 +36,8 @@ module Redmine
             end
             @heads_for_wiki_formatter_included = true
           end
-          # Оба хелпера вызываются из вьюх как <%= ... %>, поэтому возвращаем nil,
-          # иначе в разметку попадает результат последнего выражения ("true").
+          # Both helpers are called from views as <%= ... %>, so return nil,
+          # otherwise the result of the last expression ("true") ends up in the markup.
           nil
         end
 

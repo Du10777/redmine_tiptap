@@ -1,5 +1,5 @@
-// cmd / .bat — встроенная грамматика highlight.js (dos) под привычным именем.
-// Псевдонимы переопределены, чтобы не перехватить у исходной её собственные.
+// cmd / .bat: built-in highlight.js grammar (dos) under a familiar name.
+// The aliases are overridden so as not to take over the original grammar's own aliases.
 import dos from 'highlight.js/lib/languages/dos';
 
 export default {

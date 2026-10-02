@@ -1,5 +1,5 @@
 #!/bin/sh
-# Сборка JS-бандла через esbuild в docker-контейнере node:20-alpine.
+# Builds the JS bundle with esbuild in a node:20-alpine docker container.
 set -e
 
 PLUGIN_DIR="$(cd "$(dirname "$0")/../.." && pwd)"

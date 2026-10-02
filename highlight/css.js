@@ -1,4 +1,4 @@
-// css — встроенная грамматика highlight.js.
+// css: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/css';
 
 export default {

@@ -1,14 +1,14 @@
 module RedmineTiptap
   class Hooks < Redmine::Hook::ViewListener
-    # Скрипты и стили отдаются через конвейер ассетов Redmine (Propshaft). В адресе
-    # файла — отпечаток содержимого, поэтому после обновления плагина браузер
-    # сразу берёт новую версию, а не держит старую из кэша. В public/ Redmine
-    # при этом ничего не пишется, и права на запись туда не нужны.
+    # Scripts and styles are served through the Redmine asset pipeline (Propshaft). The file
+    # URL contains a fingerprint of the content, so after a plugin update the browser picks
+    # up the new version right away instead of keeping the old one from cache. Nothing is
+    # written to Redmine's public/ in the process, and no write access there is needed.
     #
-    # defer: скрипты выполняются после разбора страницы, когда скрипты Redmine
-    # (jQuery, application-legacy с функциями вложений) уже загружены, и строго
-    # в порядке подключения. Поэтому языки подсветки (tiptap_highlight, собирается
-    # из папки highlight/) идут раньше редактора: он забирает их при старте.
+    # defer: the scripts run after the page is parsed, when the Redmine scripts (jQuery,
+    # application-legacy with the attachment functions) are already loaded, and strictly in
+    # the order they are included. That is why the highlight languages (tiptap_highlight,
+    # built from the highlight/ folder) come before the editor: it picks them up on startup.
     def view_layouts_base_html_head(context = {})
       javascript_include_tag('tiptap_highlight', plugin: 'redmine_tiptap', defer: true) +
         javascript_include_tag('tiptap_bundle', plugin: 'redmine_tiptap', defer: true) +

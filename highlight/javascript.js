@@ -1,4 +1,4 @@
-// javascript — встроенная грамматика highlight.js.
+// javascript: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/javascript';
 
 export default {

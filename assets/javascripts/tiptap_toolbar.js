@@ -21,7 +21,7 @@ function makeButton(label, title, action, isActive, html) {
   return btn;
 }
 
-// Кнопка с обновляемым active-состоянием (не пересоздаётся при selectionUpdate)
+// Button with an updatable active state (not recreated on selectionUpdate)
 function makeToggleButton(spec, registry) {
   var btn = makeButton(spec.label, spec.title, spec.action, false, spec.html);
   registry.push({ btn: btn, isActive: spec.isActive });
@@ -34,8 +34,8 @@ function makeSep() {
   return sep;
 }
 
-// Позиционирует выпадающий список через fixed относительно кнопки —
-// чтобы overflow:hidden/auto родительских контейнеров его не обрезал.
+// Positions the dropdown with position:fixed relative to the button,
+// so that overflow:hidden/auto of parent containers does not clip it.
 function positionDropdown(dropdown, anchor) {
   var r = anchor.getBoundingClientRect();
   dropdown.style.position = 'fixed';
@@ -150,14 +150,14 @@ var ALIGN_SVG = {
   justify: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="currentColor"><rect x="1" y="2" width="14" height="1.5"/><rect x="1" y="6" width="14" height="1.5"/><rect x="1" y="10" width="14" height="1.5"/><rect x="1" y="14" width="14" height="1.5"/></g></svg>',
 };
 
-// Строит стабильную строку 1 тулбара. Возвращает { row1El, updateState }.
+// Builds the stable toolbar row 1. Returns { row1El, updateState }.
 function makeRow1(editor) {
   var row = document.createElement('div');
   row.className = 'tiptap-toolbar-row';
 
-  var toggles = []; // { btn, isActive } — обновляются в updateState
+  var toggles = []; // { btn, isActive } - updated in updateState
 
-  // --- Стиль абзаца: кнопка-дропдаун с меткой H/H1../M ---
+  // --- Paragraph style: dropdown button with an H/H1../M label ---
   var styleWrapper = document.createElement('span');
   styleWrapper.className = 'tiptap-style-wrapper';
 
@@ -213,7 +213,7 @@ function makeRow1(editor) {
   styleWrapper.appendChild(styleDropdown);
   row.appendChild(styleWrapper);
 
-  // --- Выравнивание (кнопка-дропдаун, горизонтальное меню) ---
+  // --- Alignment (dropdown button, horizontal menu) ---
   var alignWrapper = document.createElement('span');
   alignWrapper.className = 'tiptap-align-wrapper';
 
@@ -268,7 +268,7 @@ function makeRow1(editor) {
   alignWrapper.appendChild(alignDropdown);
   row.appendChild(alignWrapper);
 
-  // --- Отступы ---
+  // --- Indentation ---
   row.appendChild(makeButton('', 'Уменьшить отступ', function() { editor.chain().focus().outdent().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"><line x1="1" y1="3" x2="15" y2="3"/><line x1="6" y1="6.5" x2="15" y2="6.5"/><line x1="6" y1="9.5" x2="15" y2="9.5"/><line x1="1" y1="13" x2="15" y2="13"/><path d="M4 6 L1 8 L4 10" stroke-linejoin="round"/></g></svg>'));
   row.appendChild(makeButton('', 'Увеличить отступ', function() { editor.chain().focus().indent().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"><line x1="1" y1="3" x2="15" y2="3"/><line x1="6" y1="6.5" x2="15" y2="6.5"/><line x1="6" y1="9.5" x2="15" y2="9.5"/><line x1="1" y1="13" x2="15" y2="13"/><path d="M1 6 L4 8 L1 10" stroke-linejoin="round"/></g></svg>'));
 
@@ -290,7 +290,7 @@ function makeRow1(editor) {
 
   row.appendChild(makeSep());
 
-  // --- Шрифт: кнопка-дропдаун с иконкой Ff ---
+  // --- Font: dropdown button with an Ff icon ---
   var fontWrapper = document.createElement('span');
   fontWrapper.className = 'tiptap-font-wrapper';
 
@@ -336,7 +336,7 @@ function makeRow1(editor) {
   fontWrapper.appendChild(fontDropdown);
   row.appendChild(fontWrapper);
 
-  // --- Размер шрифта ---
+  // --- Font size ---
   var sizeWrapper = document.createElement('span');
   sizeWrapper.className = 'tiptap-size-wrapper';
 
@@ -403,7 +403,7 @@ function makeRow1(editor) {
   sizeWrapper.appendChild(sizeDropdown);
   row.appendChild(sizeWrapper);
 
-  // --- Цвет текста ---
+  // --- Text color ---
   var colorBtn = document.createElement('button');
   colorBtn.type = 'button';
   colorBtn.className = 'tiptap-btn tiptap-color-btn';
@@ -419,7 +419,7 @@ function makeRow1(editor) {
   });
   row.appendChild(colorBtn);
 
-  // --- Цвет фона ---
+  // --- Background color ---
   var bgBtn = document.createElement('button');
   bgBtn.type = 'button';
   bgBtn.className = 'tiptap-btn tiptap-color-btn';
@@ -436,13 +436,13 @@ function makeRow1(editor) {
   row.appendChild(bgBtn);
 
   function updateState() {
-    // toggle-кнопки (BIUS)
+    // toggle buttons (BIUS)
     toggles.forEach(function(t) {
       if (t.isActive()) t.btn.classList.add('active');
       else t.btn.classList.remove('active');
     });
 
-    // выравнивание: иконка на кнопке + active в меню
+    // alignment: icon on the button + active in the menu
     var curAlign = 'left';
     ['center', 'right', 'justify'].forEach(function(al) {
       if (editor.isActive({ textAlign: al })) curAlign = al;
@@ -453,7 +453,7 @@ function makeRow1(editor) {
       else alignOptionBtns[al].classList.remove('active');
     });
 
-    // метка стиля абзаца
+    // paragraph style label
     var cur = 'paragraph';
     if (editor.isActive('heading', { level: 1 })) cur = 'h1';
     else if (editor.isActive('heading', { level: 2 })) cur = 'h2';
@@ -483,7 +483,7 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
   bar.className = 'tiptap-toolbar';
   var sourceMode = false;
 
-  // Строка 1: исходники + стабильные форматирующие контролы
+  // Row 1: source code + stable formatting controls
   var row1 = document.createElement('div');
   row1.className = 'tiptap-toolbar-row';
 
@@ -495,12 +495,12 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
 
   var fmt = makeRow1(editor);
 
-  // srcBtn и разделитель — в начало строки 1, перед форматирующими контролами
+  // srcBtn and a separator go at the start of row 1, before the formatting controls
   fmt.row1El.insertBefore(makeSep(), fmt.row1El.firstChild);
   fmt.row1El.insertBefore(srcBtn, fmt.row1El.firstChild);
   row1 = fmt.row1El;
 
-  // Строка 2: остальные кнопки (пересоздаётся при обновлениях)
+  // Row 2: the remaining buttons (recreated on updates)
   var row2 = document.createElement('div');
   row2.className = 'tiptap-toolbar-row';
 
@@ -524,7 +524,7 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
       sourceDiv.style.display = 'none';
       srcBtn.classList.remove('active');
     }
-    // прячем все контролы строки 1 (кроме srcBtn) и всю строку 2
+    // hide all row 1 controls (except srcBtn) and all of row 2
     Array.prototype.forEach.call(row1.children, function(ch) {
       if (ch !== srcBtn) ch.style.display = sourceMode ? 'none' : '';
     });
@@ -532,7 +532,7 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     refresh();
   });
 
-  // --- Список: кнопка-дропдаун с иконкой нумерации ---
+  // --- List: dropdown button with a numbering icon ---
   var LIST_ICON = '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><text x="0" y="3.5" style="font-size:5px;font-weight:700;fill:currentColor">1</text><text x="0" y="8.5" style="font-size:5px;font-weight:700;fill:currentColor">2</text><text x="0" y="13.5" style="font-size:5px;font-weight:700;fill:currentColor">3</text><g stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><line x1="6" y1="2" x2="13" y2="2"/><line x1="6" y1="7" x2="13" y2="7"/><line x1="6" y1="12" x2="13" y2="12"/></g></g></svg>';
 
   function makeListSelect() {
@@ -599,7 +599,7 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
       dropdown.style.display = show ? 'block' : 'none';
       if (show) { positionDropdown(dropdown, btn); btn.focus(); }
     });
-    // закрытие по потере фокуса (без document-listener — row2 пересоздаётся)
+    // close on focus loss (no document listener - row2 is recreated)
     wrapper.addEventListener('focusout', function(e) {
       if (!wrapper.contains(e.relatedTarget)) dropdown.style.display = 'none';
     });
@@ -615,13 +615,13 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
 
     row2.innerHTML = '';
 
-    // отменить / повторить
+    // undo / redo
     row2.appendChild(makeButton('\u21a9', 'Отменить',  function() { editor.chain().focus().undo().run(); }, false));
     row2.appendChild(makeButton('\u21aa', 'Повторить', function() { editor.chain().focus().redo().run(); }, false));
 
     row2.appendChild(makeSep());
 
-    // collapse / inline-код / блок кода
+    // collapse / inline code / code block
     row2.appendChild(makeButton('', 'Collapse-блок', function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
     row2.appendChild(makeButton('<>', 'Код', function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
     row2.appendChild(makeButton('', 'Блок кода', function() {
@@ -639,20 +639,20 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
 
     row2.appendChild(makeSep());
 
-    // горизонтальная линия / цитата
+    // horizontal rule / quote
     row2.appendChild(makeButton('', 'Горизонтальная линия', function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
     row2.appendChild(makeButton('', 'Цитата', function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
 
     row2.appendChild(makeSep());
 
-    // добавить / удалить ссылку
+    // add / remove link
     row2.appendChild(makeButton('', 'Ссылка', function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
     row2.appendChild(makeButton('', 'Убрать ссылку', function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
 
-    // список
+    // list
     row2.appendChild(makeListSelect());
 
-    // остальное
+    // the rest
     var btns = [
       { label: '', title: 'Вставить таблицу',        action: function() { openTableModal(editor); }, active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>' },
       { label: '\ud83d\udcce', title: 'Вставить вложение',             action: function() { openAttachmentPicker(editor, urlMap); }, active: false },

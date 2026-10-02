@@ -221,7 +221,7 @@ export function openLinkModal(editor) {
   closeBtn.addEventListener('click', close);
   header.appendChild(closeBtn);
 
-  // Выделенный текст
+  // Selected text
   var state = editor.view.state;
   var selectedText = state.doc.textBetween(state.selection.from, state.selection.to, ' ');
   var existingHref = editor.getAttributes('link').href || '';
@@ -266,12 +266,12 @@ export function openLinkModal(editor) {
     if (!url) { close(); return; }
 
     if (state.selection.empty && text) {
-      // Нет выделения — вставляем текст со ссылкой
+      // No selection - insert the text as a link
       editor.chain().focus()
         .insertContent('<a href="' + url + '">' + text + '</a>')
         .run();
     } else {
-      // Есть выделение — оборачиваем в ссылку
+      // Selection exists - wrap it in a link
       editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
     }
     close();

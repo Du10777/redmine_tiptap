@@ -1,4 +1,4 @@
-// routeros — встроенная грамматика highlight.js.
+// routeros: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/routeros';
 
 export default {

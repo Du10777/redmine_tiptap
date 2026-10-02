@@ -1,4 +1,4 @@
-// ПКМ-меню для работы с таблицей
+// Right-click menu for working with a table
 export function setupTableContextMenu(editorDiv, editor) {
   editorDiv.addEventListener('contextmenu', function(e) {
     var cell = e.target.closest('td, th');

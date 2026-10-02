@@ -1,4 +1,4 @@
-// java — встроенная грамматика highlight.js.
+// java: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/java';
 
 export default {

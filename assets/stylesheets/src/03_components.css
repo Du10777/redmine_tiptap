@@ -1,4 +1,4 @@
-/* Collapse-блоки — сохранённый вид */
+/* Collapsible blocks: saved view */
 .wiki details,
 .wiki-page details {
   border: 1px solid #ccc;
@@ -25,7 +25,7 @@
   padding: 8px 10px;
 }
 
-/* Collapse-блоки — редактор */
+/* Collapsible blocks: editor */
 .ProseMirror details {
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -44,7 +44,7 @@
   padding: 8px 10px;
 }
 
-/* Цитата — в редакторе и в сохранённом виде */
+/* Quote: in the editor and in the saved view */
 .tiptap-quote,
 .wiki .tiptap-quote,
 .wiki-page .tiptap-quote {
@@ -74,7 +74,7 @@
   margin-bottom: 0;
 }
 
-/* Ресайз картинок */
+/* Image resizing */
 .tiptap-image-wrapper {
   display: inline-block;
   position: relative;
@@ -104,8 +104,8 @@
 .tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
 .tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }
 
-/* Ручка изменения размера области редактирования — правый нижний угол.
-   margin-left:auto прижимает её вправо, оставаясь в потоке под полем ввода. */
+/* Resize handle of the editing area: the bottom right corner.
+   margin-left:auto pushes it to the right while it stays in the flow below the input. */
 .tiptap-resizer {
   display: block;
   margin-left: auto;

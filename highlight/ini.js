@@ -1,4 +1,4 @@
-// ini — встроенная грамматика highlight.js.
+// ini: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/ini';
 
 export default {

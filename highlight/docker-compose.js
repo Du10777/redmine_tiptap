@@ -1,6 +1,6 @@
-// docker compose — встроенная грамматика YAML под своим именем, чтобы её можно
-// было выбрать и подписать как docker compose. Псевдонимы переопределены,
-// чтобы не перехватить у yaml его собственные (yml).
+// docker compose: built-in YAML grammar under its own name, so that it can be
+// picked and labeled as docker compose. The aliases are overridden so as not
+// to take over the aliases of yaml itself (yml).
 import yaml from 'highlight.js/lib/languages/yaml';
 
 export default {

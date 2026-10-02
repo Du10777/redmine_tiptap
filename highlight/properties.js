@@ -1,4 +1,4 @@
-// properties — встроенная грамматика highlight.js.
+// properties: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/properties';
 
 export default {

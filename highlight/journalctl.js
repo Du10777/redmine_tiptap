@@ -1,6 +1,6 @@
-// Вывод journalctl — своя грамматика.
-// Строка: <время> <хост> <процесс[pid]>: <сообщение>. Время — в любом из
-// форматов вывода: short, short-iso, short-precise, short-full, short-monotonic.
+// journalctl output: the plugin's own grammar.
+// Line: <time> <host> <process[pid]>: <message>. The time can be in any of the
+// output formats: short, short-iso, short-precise, short-full, short-monotonic.
 import { concat, logMessageRules, TS_WEEKDAY, TS_ISO, TS_SYSLOG, TS_MONOTONIC } from './_common.js';
 
 export default {
@@ -14,7 +14,7 @@ export default {
       name: 'journalctl',
       aliases: ['journal'],
       contains: [
-        // служебные строки: -- Boot 3f2a… --, -- Logs begin at … --, -- No entries --
+        // marker lines: -- Boot 3f2a... --, -- Logs begin at ... --, -- No entries --
         { scope: 'comment', match: /^-- .* --$/ },
         {
           begin: [concat('^', timestamp), /\s+/, /[\w.-]+/, /\s+/, /[^\s\[:]+(?:\[\d+\])?:/],

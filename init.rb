@@ -3,8 +3,8 @@ Redmine::Plugin.register :redmine_tiptap do
   author 'du10'
   description 'Replaces default textarea with TipTap WYSIWYG editor. Supports Redmine 6.*'
   version '0.1.0'
-  # Именно диапазон, а не version_or_higher: тот пропускал и Redmine 7,
-  # где плагин не поддерживается.
+  # Deliberately a range, not version_or_higher: that one also let Redmine 7
+  # through, where the plugin is not supported.
   requires_redmine version: '6.0'..'6.99'
 end
 

@@ -1,16 +1,16 @@
 #!/bin/sh
-# Собирает все языки подсветки из этой папки в один файл, который подключает
-# плагин: assets/javascripts/tiptap_highlight.js.
+# Builds all highlight languages from this folder into one file that the plugin
+# loads: assets/javascripts/tiptap_highlight.js.
 #
-# Каждый *.js в этой папке — один язык (файлы и папки с «_» в начале — общие
-# куски, а не языки). Добавить язык = положить сюда файл и запустить этот скрипт.
-# Перед сборкой каждый язык проверяется (_check.mjs): если какой-то сломан,
-# сборка останавливается, а прежний tiptap_highlight.js остаётся на месте.
-# После сборки перезапустите Redmine: ассеты плагина он публикует при старте.
+# Every *.js in this folder is one language (files and folders starting with "_" are
+# shared parts, not languages). To add a language, put a file here and run this script.
+# Each language is checked before the build (_check.mjs): if any of them is broken,
+# the build stops and the previous tiptap_highlight.js stays in place.
+# After the build restart Redmine: it publishes the plugin assets at startup.
 #
-# Сборка идёт в docker-контейнере node:20-alpine, как и у основного бандла.
-# Если Docker нет, но есть Node.js 18+, — прямо на этой машине.
-# Подробно — README/ru.md, README/en.md.
+# The build runs in a node:20-alpine docker container, like the main bundle.
+# If there is no Docker but Node.js 18+ is available, it runs right on this machine.
+# Details: README/ru.md, README/en.md.
 set -e
 
 PLUGIN_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -27,14 +27,14 @@ BUILD='
         langs="$langs $f"
     done
 
-    # проверка: каждый язык собирается отдельным модулем, загружается и
-    # раскрашивает пробный текст тем же движком, что работает в браузере
+    # check: each language is built as a separate module, loaded, and made to
+    # highlight a sample text with the same engine that runs in the browser
     npx esbuild $langs --bundle --format=esm --charset=utf8 --log-level=warning \
         --outdir="$tmp/check" --out-extension:.js=.mjs
     node highlight/_check.mjs "$tmp"/check/*.mjs
 
-    # точка входа: импортирует все языки и кладёт их список в window,
-    # откуда его забирает основной бандл редактора
+    # entry point: imports all languages and puts their list into window,
+    # where the main editor bundle picks it up
     entry="$tmp/entry.js"
     list=""
     n=0
@@ -45,11 +45,11 @@ BUILD='
     done
     echo "window.TiptapHighlightLanguages = [$list];" >> "$entry"
 
-    # --charset=utf8: иначе каждая кириллическая буква (их много в 1С) кодируется
-    # шестибайтной escape-последовательностью и файл раздувается втрое
+    # --charset=utf8: otherwise every Cyrillic letter (there are many in 1C) is encoded
+    # as a six-byte escape sequence and the file grows threefold
     npx esbuild "$entry" --bundle --format=iife --minify --charset=utf8 \
         --log-level=warning --outfile=assets/javascripts/tiptap_highlight.js
-    echo "языков подсветки собрано: $n"
+    echo "highlight languages built: $n"
 '
 
 if docker info >/dev/null 2>&1; then
@@ -57,6 +57,6 @@ if docker info >/dev/null 2>&1; then
 elif command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1; then
     cd "$PLUGIN_DIR" && sh -c "$BUILD"
 else
-    echo "Для сборки нужен Docker или Node.js 18+ / Docker or Node.js 18+ is required" >&2
+    echo "Docker or Node.js 18+ is required for the build" >&2
     exit 1
 fi

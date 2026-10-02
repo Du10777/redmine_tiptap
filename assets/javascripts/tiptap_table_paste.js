@@ -1,5 +1,5 @@
-// Чистит вставку таблиц из Excel/Word: убирает мусорные стили,
-// картинки-скриншоты, фиксированные ширины
+// Cleans up tables pasted from Excel/Word: strips junk styles,
+// screenshot images, fixed widths
 export function setupTablePaste(editorDiv, editor) {
   editorDiv.addEventListener('paste', function(e) {
     var clipboard = e.clipboardData;
@@ -9,15 +9,15 @@ export function setupTablePaste(editorDiv, editor) {
     if (!html || html.indexOf('<table') === -1) return;
 
     e.preventDefault();
-    e.stopImmediatePropagation(); // не даём image-paste сработать на скриншот Excel
+    e.stopImmediatePropagation(); // don't let image-paste fire on the Excel screenshot
 
     var cleaned = cleanExcelTable(html);
     editor.chain().focus().insertContent(cleaned).run();
   }, true);
 
-  // Копирование: ProseMirror сам кладёт таблицу в буфер (CellSelection не
-  // отражается в DOM-выделении, поэтому cloneContents бесполезен). Ловим в
-  // bubble-фазе уже готовый HTML от PM и переписываем: границы + px→pt.
+  // Copy: ProseMirror itself puts the table on the clipboard (a CellSelection is
+  // not reflected in the DOM selection, so cloneContents is useless). We catch
+  // PM's ready-made HTML in the bubble phase and rewrite it: borders + px->pt.
   editorDiv.addEventListener('copy', function(e) {
     var html = e.clipboardData.getData('text/html');
     if (!html || html.indexOf('<table') === -1) return;
@@ -25,7 +25,7 @@ export function setupTablePaste(editorDiv, editor) {
     var container = document.createElement('div');
     container.innerHTML = html;
 
-    // убираем служебный маркер среза ProseMirror
+    // remove ProseMirror's internal slice marker
     container.querySelectorAll('[data-pm-slice]').forEach(function(el) {
       el.removeAttribute('data-pm-slice');
     });
@@ -40,7 +40,7 @@ export function setupTablePaste(editorDiv, editor) {
       cell.style.padding = '1px';
     });
 
-    // Excel читает font-size в pt, а не px — конвертируем
+    // Excel reads font-size in pt, not px - convert it
     container.querySelectorAll('[style*="font-size"]').forEach(function(el) {
       if (el.style.fontSize.indexOf('px') === -1) return;
       var px = parseFloat(el.style.fontSize);
@@ -59,7 +59,7 @@ function cleanExcelTable(html) {
   var div = document.createElement('div');
   div.innerHTML = html;
 
-  // Резолвим классы .xlNN из <style> в инлайн-стили
+  // Resolve the .xlNN classes from <style> into inline styles
   var styleTag = div.querySelector('style');
   var classRules = {};
   var baseFontSize = null;
@@ -70,7 +70,7 @@ function cleanExcelTable(html) {
     while ((m = re.exec(css)) !== null) {
       classRules[m[1]] = m[2].replace(/\s+/g, ' ').trim();
     }
-    // Базовый font-size из правила td { ... }
+    // Base font-size from the td { ... } rule
     var tdMatch = css.match(/(?:^|\})\s*td\s*\{([^}]*)\}/);
     if (tdMatch) {
       var fm0 = tdMatch[1].match(/font-size:\s*([\d.]+)pt/i);
@@ -83,7 +83,7 @@ function cleanExcelTable(html) {
 
   table.querySelectorAll('img').forEach(function(img) { img.remove(); });
 
-  // Собираем ширины столбцов из <col width=N>
+  // Collect column widths from <col width=N>
   var colWidths = [];
   table.querySelectorAll('col').forEach(function(col) {
     var w = col.getAttribute('width');
@@ -95,13 +95,13 @@ function cleanExcelTable(html) {
     colWidths.push(w ? parseInt(w) : null);
   });
 
-  // Обрабатываем ячейки
+  // Process the cells
   table.querySelectorAll('tr').forEach(function(row) {
     Array.prototype.slice.call(row.children).forEach(function(cell, idx) {
       var cls = cell.getAttribute('class');
       var hasBorder = cls && classRules[cls] && /border\s*:\s*[^;]*(solid|windowtext)/i.test(classRules[cls]);
 
-      // Сохраняем font-size, если был в классе
+      // Keep the font-size if the class had one
       var fontSize = null;
       if (cls && classRules[cls]) {
         var fm = classRules[cls].match(/font-size:\s*([\d.]+)pt/i);
@@ -123,17 +123,17 @@ function cleanExcelTable(html) {
       }
       if (align) cell.style.textAlign = align;
 
-      // Ширина столбца (TipTap хранит в colwidth)
+      // Column width (TipTap stores it in colwidth)
       if (colWidths[idx]) {
         cell.setAttribute('colwidth', colWidths[idx]);
       }
 
-      // Чистим лишние переносы/пробелы внутри текста ячейки
+      // Clean up extra line breaks/spaces inside the cell text
       cell.innerHTML = cell.innerHTML
         .replace(/\n\s+/g, ' ')
         .replace(/\s*<br>\s*/g, '<br>');
 
-      // Однострочные ячейки (без <br>) не переносим
+      // Single-line cells (no <br>) are not wrapped
       if (cell.innerHTML.indexOf('<br>') === -1) {
         cell.style.whiteSpace = 'nowrap';
       }
@@ -144,7 +144,7 @@ function cleanExcelTable(html) {
     });
   });
 
-  // Убираем <col>, <colgroup>, <style>
+  // Remove <col>, <colgroup>, <style>
   table.querySelectorAll('col, colgroup').forEach(function(el) { el.remove(); });
   table.removeAttribute('width');
   table.removeAttribute('style');
@@ -161,7 +161,7 @@ function cleanExcelTable(html) {
   return out;
 }
 
-// Excel часто добавляет пустой служебный столбец справа/слева
+// Excel often adds an empty auxiliary column on the right/left
 function removeEmptyEdgeColumns(table) {
   var rows = Array.prototype.slice.call(table.querySelectorAll('tr'));
   if (rows.length === 0) return;
@@ -178,14 +178,14 @@ function removeEmptyEdgeColumns(table) {
     });
   }
 
-  // Справа
+  // On the right
   while (colCount > 1 && colEmpty(colCount - 1)) {
     rows.forEach(function(r) {
       if (r.children[colCount - 1]) r.children[colCount - 1].remove();
     });
     colCount--;
   }
-  // Слева
+  // On the left
   while (colCount > 1 && colEmpty(0)) {
     rows.forEach(function(r) {
       if (r.children[0]) r.children[0].remove();
@@ -194,26 +194,26 @@ function removeEmptyEdgeColumns(table) {
   }
 }
 
-// Копирование таблиц из сохранённого вида (просмотр wiki/issue) в Excel
+// Copying tables from the saved view (wiki/issue display) into Excel
 export function setupSavedTableCopy() {
   document.addEventListener('copy', function(e) {
     var sel = window.getSelection();
     if (!sel || sel.rangeCount === 0) return;
 
-    // Только если выделение внутри просмотра, не в редакторе
+    // Only if the selection is inside the view, not in the editor
     var anchor = sel.anchorNode;
     if (!anchor) return;
     var el = anchor.nodeType === 1 ? anchor : anchor.parentElement;
     if (!el || !el.closest('.wiki, .wiki-page')) return;
-    if (el.closest('.ProseMirror')) return; // редактор обрабатывается отдельно
+    if (el.closest('.ProseMirror')) return; // the editor is handled separately
 
     var container = document.createElement('div');
     container.appendChild(sel.getRangeAt(0).cloneContents());
 
     var table = container.querySelector('table');
     if (!table) {
-      // При выделении внутри таблицы браузер часто отдаёт голые td/tr
-      // без обёртки <table> — заворачиваем их сами.
+      // When selecting inside a table, the browser often returns bare td/tr
+      // without a <table> wrapper - we wrap them ourselves.
       var hasCells = container.querySelector('td, th, tr');
       if (!hasCells) return;
 

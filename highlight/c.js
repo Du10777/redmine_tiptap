@@ -1,4 +1,4 @@
-// c — встроенная грамматика highlight.js.
+// c: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/c';
 
 export default {

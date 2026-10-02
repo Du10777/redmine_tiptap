@@ -3,34 +3,35 @@ import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { createLowlight } from 'lowlight';
 
-// Один движок подсветки и для редактора, и для просмотра — иначе цвета
-// в этих двух режимах разъезжаются.
+// One highlighting engine for both the editor and the view mode - otherwise the
+// colors in these two modes drift apart.
 //
-// Языки сюда не вшиты. Они лежат по файлу на язык в папке highlight/ плагина;
-// highlight/_compile.sh собирает их в assets/javascripts/tiptap_highlight.js.
-// Тот подключается раньше этого бандла и кладёт список языков в
-// window.TiptapHighlightLanguages — здесь он регистрируется. Если файла с
-// языками нет, редактор работает как обычно, просто без подсветки.
+// Languages are not baked in here. They live one file per language in the plugin's
+// highlight/ folder; highlight/_compile.sh builds them into
+// assets/javascripts/tiptap_highlight.js. That file is loaded before this bundle and
+// puts the language list into window.TiptapHighlightLanguages - the list is
+// registered here. If the languages file is missing, the editor works as usual,
+// just without highlighting.
 var LANGUAGES = (window.TiptapHighlightLanguages || []).filter(function(lang) {
   return lang && lang.id && typeof lang.grammar === 'function';
 });
 
 export const lowlight = createLowlight();
 
-// Как язык подписан в списке и на ярлыке, пояснение в списке и слова, по
-// которым его можно найти — всё это задаётся в файле языка. Языки без
-// подписи показываются под своим идентификатором.
+// How a language is labeled in the list and on the badge, its hint in the list, and
+// the words it can be found by - all of this is set in the language file. Languages
+// without a label are shown under their identifier.
 var LANGUAGE_INFO = {};
 
 LANGUAGES.forEach(function(lang) {
   try {
     lowlight.register(lang.id, lang.grammar);
     LANGUAGE_INFO[lang.id] = { label: lang.label, hint: lang.hint, keywords: lang.keywords };
-  } catch (e) { /* сломанный файл языка не должен ронять редактор */ }
+  } catch (e) { /* a broken language file must not bring down the editor */ }
 });
 
-// plaintext нужен всегда: это «без подсветки» и язык блока по умолчанию.
-// Без него TipTap включил бы для таких блоков автоопределение языка.
+// plaintext is always needed: it is "no highlighting" and the default block language.
+// Without it TipTap would enable language auto-detection for such blocks.
 if (!lowlight.registered('plaintext')) {
   lowlight.register('plaintext', function() {
     return { name: 'Plain text', aliases: ['text', 'txt'], disableAutodetect: true };
@@ -50,33 +51,34 @@ export const CODE_LANGUAGES = lowlight.listLanguages().slice().sort(function(a, 
   return labelOf(a).toLowerCase().localeCompare(labelOf(b).toLowerCase());
 });
 
-// «Без подсветки» — это не пустое значение, а явный plaintext: именно его
-// TipTap подставляет как defaultLanguage, и хранить одно и то же состояние
-// двумя разными способами (null и 'plaintext') значило бы путаться.
+// "No highlighting" is not an empty value but an explicit plaintext: that is what
+// TipTap substitutes as defaultLanguage, and storing the same state in two
+// different ways (null and 'plaintext') would only cause confusion.
 var NO_LANGUAGE = 'plaintext';
 var RECENT_KEY = 'redmineTiptapCodeLangRecent';
 var USAGE_KEY = 'redmineTiptapCodeLangUsage';
-// Недавние держим короткими: из частых они исключаются, чтобы не дублироваться,
-// и при длинном списке недавних группа «Частые» почти всегда пустовала бы.
+// Keep the recent list short: recent languages are excluded from the frequent ones
+// to avoid duplicates, and with a long recent list the "Frequent" group would almost
+// always be empty.
 var RECENT_LIMIT = 3;
 var FREQUENT_LIMIT = 6;
 
-// --- Запоминание выбора -----------------------------------------------------
-// Список частых заранее не задан: он набирается из того, что реально выбирают.
+// --- Remembering the choice -------------------------------------------------
+// The frequent list is not predefined: it is built up from what users actually pick.
 
 function readJson(key, fallback) {
   try {
     var raw = window.localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
   } catch (e) {
-    return fallback;   // localStorage может быть недоступен
+    return fallback;   // localStorage may be unavailable
   }
 }
 
 function writeJson(key, value) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
-  } catch (e) { /* не критично: выбор просто не переживёт перезагрузку */ }
+  } catch (e) { /* not critical: the choice just won't survive a reload */ }
 }
 
 function recentLanguages() {
@@ -94,7 +96,7 @@ function frequentLanguages() {
 }
 
 function rememberLanguage(language) {
-  if (!language || language === NO_LANGUAGE) return;   // «без подсветки» не запоминаем
+  if (!language || language === NO_LANGUAGE) return;   // "no highlighting" is not remembered
 
   var recent = recentLanguages().filter(function(lang) { return lang !== language; });
   recent.unshift(language);
@@ -105,13 +107,13 @@ function rememberLanguage(language) {
   writeJson(USAGE_KEY, usage);
 }
 
-// Есть ли у блока язык, который стоит подписывать. plaintext — это «без
-// подсветки», его не подписываем ни в редакторе, ни в просмотре.
+// Whether the block has a language worth labeling. plaintext is "no highlighting",
+// so it is labeled neither in the editor nor in the view mode.
 function hasLanguage(language) {
   return !!language && language !== NO_LANGUAGE;
 }
 
-// --- Выпадающий список выбора языка -----------------------------------------
+// --- Language picker dropdown -----------------------------------------------
 
 var openPanel = null;
 
@@ -209,7 +211,7 @@ function openLanguagePanel(anchorEl, current, onPick) {
 
     addGroup('Все языки');
     CODE_LANGUAGES.forEach(function(lang) {
-      if (lang !== NO_LANGUAGE) addOption(lang);   // уже показан первым пунктом
+      if (lang !== NO_LANGUAGE) addOption(lang);   // already shown as the first item
     });
   }
 
@@ -229,7 +231,7 @@ function openLanguagePanel(anchorEl, current, onPick) {
 
   render('');
 
-  // Панель живёт в body: область ввода прокручивается и обрезала бы её.
+  // The panel lives in body: the editing area scrolls and would clip it.
   document.body.appendChild(panel);
   var rect = anchorEl.getBoundingClientRect();
   var left = Math.round(rect.right - panel.offsetWidth);
@@ -243,19 +245,19 @@ function openLanguagePanel(anchorEl, current, onPick) {
   search.focus();
 }
 
-// --- Подсветка в редакторе ---------------------------------------------------
-// Своя замена плагину CodeBlockLowlight из TipTap. Тот на каждое нажатие
-// клавиши внутри блока кода заново раскрашивал ВСЕ блоки документа: на логе в
-// 3000 строк это 140 мс на символ, а на слабом ноутбуке — больше полсекунды.
-// Здесь на нажатие готовая раскраска только сдвигается вместе с текстом, а
-// перекраска идёт после паузы в наборе и только для изменившихся блоков.
+// --- Highlighting in the editor ----------------------------------------------
+// Our own replacement for TipTap's CodeBlockLowlight plugin. On every keystroke
+// inside a code block, that plugin re-highlighted ALL blocks of the document: on a
+// 3000-line log that is 140 ms per character, on a weak laptop over half a second.
+// Here a keystroke only shifts the existing highlighting along with the text, and
+// re-highlighting happens after a pause in typing and only for the changed blocks.
 
 var HIGHLIGHT_KEY = new PluginKey('tiptapCodeHighlight');
-var HIGHLIGHT_DELAY = 50;   // мс паузы в наборе до перекраски
+var HIGHLIGHT_DELAY = 50;   // ms of typing pause before re-highlighting
 
-// Раскраска блока, привязанная к самому узлу документа. Узлы ProseMirror
-// неизменяемы: пока блок не правили, это тот же объект, и раскрашивать его
-// заново не нужно. Новый или изменённый блок — новый объект, его в кэше нет.
+// A block's highlighting, tied to the document node itself. ProseMirror nodes are
+// immutable: as long as the block is not edited, it is the same object and needs no
+// re-highlighting. A new or changed block is a new object, which is not in the cache.
 var blockTokenCache = new WeakMap();
 
 function collectTokens(nodes, classes, out, offset) {
@@ -277,8 +279,8 @@ function blockTokens(node) {
   if (tokens) return tokens;
   tokens = [];
   var language = node.attrs.language;
-  // Незарегистрированный язык — обычный текст. Автоопределения языка нет:
-  // иначе блок раскрашивался бы наугад, а в просмотре оставался без цвета.
+  // An unregistered language is plain text. There is no language auto-detection:
+  // otherwise the block would be colored at random, yet stay uncolored in view mode.
   if (hasLanguage(language) && lowlight.registered(language)) {
     try {
       collectTokens(lowlight.highlight(language, node.textContent).children, [], tokens, { pos: 0 });
@@ -302,7 +304,7 @@ function codeDecorations(doc) {
   return DecorationSet.create(doc, decorations);
 }
 
-// Есть ли блок кода, которого ещё нет в кэше раскраски, — новый или изменённый.
+// Whether any code block is not in the highlighting cache yet - a new or changed one.
 function hasStaleBlocks(doc) {
   var stale = false;
   doc.descendants(function(node) {
@@ -326,7 +328,7 @@ function codeHighlightPlugin() {
           return { decorations: codeDecorations(newState.doc), stale: false };
         }
         if (!tr.docChanged) return value;
-        // На правку только сдвигаем готовую раскраску вслед за текстом.
+        // On an edit, only shift the existing highlighting to follow the text.
         return {
           decorations: value.decorations.map(tr.mapping, tr.doc),
           stale: value.stale || hasStaleBlocks(newState.doc),
@@ -341,8 +343,8 @@ function codeHighlightPlugin() {
     view: function() {
       var timer = null;
       return {
-        // Каждое новое изменение откладывает перекраску: она случится, когда
-        // в наборе наступит пауза в HIGHLIGHT_DELAY мс.
+        // Every new change postpones re-highlighting: it happens once there
+        // is a pause of HIGHLIGHT_DELAY ms in typing.
         update: function(view) {
           if (!HIGHLIGHT_KEY.getState(view.state).stale) return;
           clearTimeout(timer);
@@ -360,18 +362,18 @@ function codeHighlightPlugin() {
   });
 }
 
-// --- Само расширение --------------------------------------------------------
-// Блок кода с возможностью форматирования текста внутри:
-// - marks перечислены явно БЕЗ inline-code, иначе внутренний <code> в
-//   <pre><code> при обратном парсинге даёт вложенные <code>.
+// --- The extension itself ---------------------------------------------------
+// A code block that allows text formatting inside:
+// - marks are listed explicitly WITHOUT inline-code, otherwise the inner <code> in
+//   <pre><code> produces nested <code> when parsed back.
 export const FormattableCodeBlock = CodeBlock.extend({
   marks: 'bold italic strike underline link textStyle',
 
   addOptions() {
     return {
       ...this.parent?.(),
-      // Блок без явного языка — «без подсветки». Значение попадает и в
-      // атрибут, поэтому в сохранённом HTML это видно как language-plaintext.
+      // A block without an explicit language is "no highlighting". The value also
+      // goes into the attribute, so the saved HTML shows it as language-plaintext.
       defaultLanguage: 'plaintext',
     };
   },
@@ -405,8 +407,9 @@ export const FormattableCodeBlock = CodeBlock.extend({
           badge.textContent = labelOf(language);
           badge.classList.remove('tiptap-code-lang-empty');
         } else {
-          // Без языка ничего не подписываем: ярлык прячется и появляется только
-          // при наведении на блок — иначе язык было бы негде выбрать.
+          // Without a language nothing is labeled: the badge is hidden and appears
+          // only on hovering over the block - otherwise there would be nowhere to
+          // pick the language.
           badge.textContent = 'язык';
           badge.classList.add('tiptap-code-lang-empty');
         }
@@ -437,7 +440,7 @@ export const FormattableCodeBlock = CodeBlock.extend({
           syncLanguage(updatedNode);
           return true;
         },
-        // Всё, что происходит в бейдже, документа не касается.
+        // Whatever happens in the badge does not concern the document.
         ignoreMutation: function(mutation) {
           return !code.contains(mutation.target);
         },
@@ -449,9 +452,9 @@ export const FormattableCodeBlock = CodeBlock.extend({
     return {
       ...this.parent?.(),
 
-      // Вытащить текст из блока кода в обычный параграф.
-      // Есть выделение -> режем блок на: код(до) + параграф(выделенное) + код(после).
-      // Нет выделения (курсор в блоке) -> весь блок превращается в параграф.
+      // Lift text out of a code block into a regular paragraph.
+      // Selection -> cut the block into: code(before) + paragraph(selected) + code(after).
+      // No selection (cursor in the block) -> the whole block turns into a paragraph.
       liftFromCodeBlock: () => function(props) {
         var state = props.state;
         var dispatch = props.dispatch;
@@ -477,8 +480,8 @@ export const FormattableCodeBlock = CodeBlock.extend({
           toOff = sel.to - contentStart;
         }
 
-        // Отрезаем разделительные \n, примыкающие к выделению, чтобы
-        // соседние блоки кода не получили лишний ведущий/хвостовой перенос.
+        // Cut off the \n separators adjacent to the selection, so that the
+        // neighboring code blocks do not get an extra leading/trailing newline.
         var full = cbNode.textContent;
         var beforeEnd = fromOff;
         var afterStart = toOff;
@@ -505,9 +508,9 @@ export const FormattableCodeBlock = CodeBlock.extend({
   },
 });
 
-// --- Подсветка сохранённого текста (режим просмотра) ------------------------
-// Тем же движком и теми же классами, что и в редакторе, иначе один и тот же
-// код выглядел бы в этих режимах по-разному.
+// --- Highlighting saved text (view mode) ------------------------------------
+// With the same engine and the same classes as in the editor, otherwise the same
+// code would look different in these modes.
 
 function escapeHtml(text) {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -526,10 +529,10 @@ function languageOf(codeEl) {
   return match ? match[1] : NO_LANGUAGE;
 }
 
-// Раскрашиваем сохранённый блок, только когда он оказывается на экране или
-// рядом с ним. Страница с большими логами открывается сразу, а блок внутри
-// свёрнутого Collapse не стоит ничего, пока его не раскроют (у содержимого
-// закрытого <details> нет размеров, и наблюдатель его не видит).
+// A saved block is highlighted only when it ends up on screen or close to it.
+// A page with big logs opens right away, and a block inside a collapsed Collapse
+// costs nothing until it is expanded (the contents of a closed <details> have
+// no size, and the observer does not see them).
 var viewHighlightObserver = window.IntersectionObserver
   ? new window.IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
@@ -540,8 +543,9 @@ var viewHighlightObserver = window.IntersectionObserver
     }, { rootMargin: '300px 0px' })
   : null;
 
-// Какие блоки уже отданы наблюдателю. Не флаг на элементе: Redmine подменяет
-// <pre> копией, флаг скопировался бы вместе с ним, и копию никто бы не раскрасил.
+// Which blocks have already been handed to the observer. Not a flag on the element:
+// Redmine replaces <pre> with a copy, the flag would be copied along with it, and
+// nobody would highlight the copy.
 var observedCodes = new WeakSet();
 
 function highlightCodeElement(code) {
@@ -551,19 +555,19 @@ function highlightCodeElement(code) {
   if (!hasLanguage(language) || !lowlight.registered(language)) return;
   try {
     code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
-  } catch (e) { /* неизвестная грамматика — оставляем текст как есть */ }
+  } catch (e) { /* unknown grammar - leave the text as is */ }
 }
 
 export function highlightSavedCodeBlocks() {
   var blocks = document.querySelectorAll('.wiki pre > code');
 
   Array.prototype.forEach.call(blocks, function(code) {
-    if (code.closest('.ProseMirror')) return;   // в редакторе красит свой плагин
+    if (code.closest('.ProseMirror')) return;   // colored by the editor's own plugin
 
     var language = languageOf(code);
 
-    // Подсветка. Флаг tiptapHighlighted ставится уже после раскраски, и при
-    // подмене <pre> копией он копируется вместе с готовыми цветами.
+    // Highlighting. The tiptapHighlighted flag is set only after coloring, and when
+    // <pre> is replaced with a copy, it gets copied along with the finished colors.
     if (!code.dataset.tiptapHighlighted && !observedCodes.has(code)) {
       if (viewHighlightObserver) {
         observedCodes.add(code);
@@ -575,17 +579,18 @@ export function highlightSavedCodeBlocks() {
 
     if (!hasLanguage(language)) return;
 
-    // Ярлык ставим только в обёртку Redmine (div.pre-wrapper). Пока её нет,
-    // ставить некуда: Redmine потом заменит <pre> копией, и ярлык снаружи
-    // осиротел бы. Когда обёртка появится, MutationObserver вызовет нас снова.
+    // The badge is placed only into Redmine's wrapper (div.pre-wrapper). Until it
+    // exists, there is nowhere to put it: Redmine will later replace <pre> with a
+    // copy, and a badge outside would be orphaned. When the wrapper appears,
+    // MutationObserver will call us again.
     var wrapper = code.parentNode && code.parentNode.parentNode;
     if (!wrapper || !wrapper.classList || !wrapper.classList.contains('pre-wrapper')) return;
     if (wrapper.querySelector(':scope > .tiptap-code-corner')) return;
 
-    // «Копировать» и ярлык в одном flex-контейнере: кнопка встаёт слева от
-    // ярлыка сама, без замеров ширины. Обработчик клика у кнопки висит на
-    // самом элементе и читает текст из исходного <pre>, так что перенос ему
-    // не мешает.
+    // "Copy" and the badge share one flex container: the button sits to the left of
+    // the badge on its own, without measuring widths. The button's click handler is
+    // attached to the element itself and reads the text from the original <pre>, so
+    // the move does not interfere with it.
     var corner = document.createElement('div');
     corner.className = 'tiptap-code-corner';
     var copyLink = wrapper.querySelector(':scope > a.copy-pre-content-link');

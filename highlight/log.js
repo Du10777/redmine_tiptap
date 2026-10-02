@@ -1,6 +1,6 @@
-// Логи сервисов Linux — своя грамматика.
-// Не привязана к конкретному сервису: ловит то, что встречается в логах почти
-// всех демонов — время, уровень, адреса, процессы, пути, ключ=значение.
+// Linux service logs: the plugin's own grammar.
+// Not tied to a specific service: catches what shows up in the logs of almost
+// every daemon - time, level, addresses, processes, paths, key=value.
 import { logMessageRules } from './_common.js';
 
 export default {

@@ -1,19 +1,19 @@
 #!/bin/sh
-# Главный build-скрипт плагина: собирает JS, языки подсветки и CSS, затем перезапускает Redmine.
+# Main build script of the plugin: builds JS, highlight languages and CSS, then restarts Redmine.
 set -e
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "== Сборка JS =="
+echo "== Building JS =="
 sh "$DIR/assets/javascripts/_build.sh"
 
-echo "== Сборка языков подсветки =="
+echo "== Building highlight languages =="
 sh "$DIR/highlight/_compile.sh"
 
-echo "== Сборка CSS =="
+echo "== Building CSS =="
 sh "$DIR/assets/stylesheets/src/_build.sh"
 
-echo "== Перезапуск Redmine =="
+echo "== Restarting Redmine =="
 docker compose -f ~/redmine/docker-compose.yml restart redmine
 
-echo "== Готово =="
+echo "== Done =="

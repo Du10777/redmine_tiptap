@@ -1,4 +1,4 @@
-// perl — встроенная грамматика highlight.js.
+// perl: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/perl';
 
 export default {

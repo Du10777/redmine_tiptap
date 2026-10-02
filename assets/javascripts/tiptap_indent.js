@@ -1,7 +1,7 @@
 import { Extension } from '@tiptap/core';
 
 const MAX_INDENT = 8;
-const STEP = 30; // px на уровень
+const STEP = 30; // px per level
 
 export const Indent = Extension.create({
   name: 'indent',

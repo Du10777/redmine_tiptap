@@ -1,4 +1,4 @@
-// r — встроенная грамматика highlight.js.
+// r: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/r';
 
 export default {

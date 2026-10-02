@@ -1,4 +1,4 @@
-// 1c — встроенная грамматика highlight.js.
+// 1c: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/1c';
 
 export default {

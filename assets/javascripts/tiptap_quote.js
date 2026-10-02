@@ -1,6 +1,6 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 
-// Блок цитаты: заголовок (кто/когда/ссылка) + тело цитаты
+// Quote block: header (who/when/link) + quote body
 export const QuoteBlock = Node.create({
   name: 'quoteBlock',
   group: 'block',

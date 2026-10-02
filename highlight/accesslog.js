@@ -1,4 +1,4 @@
-// accesslog — встроенная грамматика highlight.js.
+// accesslog: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/accesslog';
 
 export default {

@@ -1,4 +1,4 @@
-/* Этот файл склеивается скриптом ./src/_build.sh — не редактировать вручную */
+/* This file is assembled by ./src/_build.sh - do not edit it by hand */
 
 .tiptap-wrapper {
   margin-bottom: 8px;
@@ -289,11 +289,11 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   background: #fff;
-  /* Не даём редактору расти под объём текста: выше экрана он не поднимается,
-     дальше — прокрутка внутри. Точное значение проставляет JS на .tiptap-wrapper,
-     значение в var() — запасное на случай, если JS ещё не отработал. */
-  /* --tiptap-height задаётся только когда пользователь тянул ручку размера;
-     в обычном режиме высота по содержимому, а ограничивает её max-height. */
+  /* Do not let the editor grow with the amount of text: it never gets taller than
+     the screen, past that it scrolls inside. JS sets the exact value on .tiptap-wrapper;
+     the value in var() is a fallback in case JS has not run yet. */
+  /* --tiptap-height is set only after the user has dragged the resize handle;
+     normally the height follows the content and is capped by max-height. */
   height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   overflow-y: auto;
@@ -318,14 +318,14 @@
 .ProseMirror h4 { font-size: 1em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h5 { font-size: 0.9em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h6 { font-size: 0.85em; font-weight: bold; margin: 8px 0 4px; color: #555; }
-/* Оформление кода в редакторе. Такой же вид принудительно задаётся и режиму
-   просмотра — см. блок "Код в режиме просмотра" ниже, там же пояснение. */
+/* Code styling in the editor. The same look is forced on view mode as well -
+   see the "Code in view mode" block below, which also explains why. */
 .ProseMirror code {
   background: #f0f0f0;
   padding: 1px 4px;
   border-radius: 3px;
   font-family: monospace;
-  /* как и у Redmine в просмотре: пробелы внутри строчного кода не схлопываются */
+  /* same as Redmine in view mode: spaces inside inline code are not collapsed */
   white-space: pre-wrap;
 }
 .ProseMirror pre {
@@ -340,15 +340,15 @@
   white-space: pre;
 }
 
-/* --- Код в режиме просмотра ------------------------------------------------
-   Redmine рисует сохранённый код своими правилами div.wiki pre и
-   div.wiki *:not(pre)>code: светлый фон, рамка и отступ слева 1.6em. В
-   редакторе вид другой, и один и тот же блок выглядел по-разному до и после
-   сохранения. Приводим просмотр к виду редактора.
-   Область действия сужена по body[data-text-formatting]: если форматирование
-   переключат на textile или markdown, оформление Redmine останется родным.
-   Заодно селектор специфичнее исходного, поэтому не зависит от порядка
-   подключения таблиц стилей. */
+/* --- Code in view mode -----------------------------------------------------
+   Redmine renders saved code with its own rules div.wiki pre and
+   div.wiki *:not(pre)>code: a light background, a border and a 1.6em left
+   margin. The editor looks different, and the same block looked different
+   before and after saving. Here view mode is made to look like the editor.
+   The scope is narrowed by body[data-text-formatting]: if the text formatting
+   is switched to textile or markdown, Redmine keeps its native styling.
+   The selector is also more specific than the original one, so it does not
+   depend on the order in which the stylesheets are loaded. */
 body[data-text-formatting="tiptap"] div.wiki pre {
   margin: 1em 0;
   padding: 8px;
@@ -366,8 +366,8 @@ body[data-text-formatting="tiptap"] div.wiki > code {
   font-family: monospace;
 }
 
-/* У кнопки копирования отступ справа был рассчитан на margin: 1em у pre,
-   а мы правый отступ убрали — иначе кнопка уезжает внутрь блока. */
+/* The right offset of the copy button was calculated for margin: 1em on pre,
+   and we removed the right margin - otherwise the button drifts into the block. */
 body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
   inset-inline-end: 3px;
 }
@@ -376,7 +376,7 @@ body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
 .ProseMirror li { margin: 0 !important; }
 .ProseMirror li > p { margin: 0 !important; }
 
-/* Межстрочный интервал в сохранённом виде */
+/* Line spacing in the saved view */
 div.wiki p,
 div.wiki-page p {
   margin: 0 0 2px 0 !important;
@@ -405,12 +405,12 @@ div.wiki-page li > p {
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
-  /* размер меняется общей ручкой .tiptap-resizer, нативный угол textarea убираем,
-     иначе на одном поле оказывается два разных ресайзера */
+  /* the size is changed by the shared .tiptap-resizer handle; the native textarea
+     corner is removed, otherwise one field ends up with two different resizers */
   resize: none;
 }
 
-/* Список задач (чекбоксы) — редактор и просмотр */
+/* Task list (checkboxes): editor and view mode */
 ul[data-type="taskList"] {
   list-style: none;
   padding-left: 4px;
@@ -433,12 +433,12 @@ ul[data-type="taskList"] li > label input {
   cursor: pointer;
 }
 
-/* в редакторе сдвигаем чекбоксы внутрь зоны */
+/* in the editor, shift the checkboxes inside the area */
 .ProseMirror ul[data-type="taskList"] {
   padding-left: 24px;
 }
 
-/* вне редактора чекбокс некликабелен и приглушён сразу (до отработки JS) */
+/* outside the editor the checkbox is unclickable and dimmed right away (before JS runs) */
 ul[data-type="taskList"] li > label input {
   pointer-events: none;
   filter: grayscale(1);
@@ -473,7 +473,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin: 8px 0;
 }
 
-/* Collapse-блоки — сохранённый вид */
+/* Collapsible blocks: saved view */
 .wiki details,
 .wiki-page details {
   border: 1px solid #ccc;
@@ -500,7 +500,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   padding: 8px 10px;
 }
 
-/* Collapse-блоки — редактор */
+/* Collapsible blocks: editor */
 .ProseMirror details {
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -519,7 +519,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   padding: 8px 10px;
 }
 
-/* Цитата — в редакторе и в сохранённом виде */
+/* Quote: in the editor and in the saved view */
 .tiptap-quote,
 .wiki .tiptap-quote,
 .wiki-page .tiptap-quote {
@@ -549,7 +549,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin-bottom: 0;
 }
 
-/* Ресайз картинок */
+/* Image resizing */
 .tiptap-image-wrapper {
   display: inline-block;
   position: relative;
@@ -579,8 +579,8 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 .tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
 .tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }
 
-/* Ручка изменения размера области редактирования — правый нижний угол.
-   margin-left:auto прижимает её вправо, оставаясь в потоке под полем ввода. */
+/* Resize handle of the editing area: the bottom right corner.
+   margin-left:auto pushes it to the right while it stays in the flow below the input. */
 .tiptap-resizer {
   display: block;
   margin-left: auto;
@@ -602,7 +602,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   background-color: #e8e8e8;
 }
 
-/* Модалка (общая) */
+/* Modal (shared) */
 .tiptap-modal-overlay {
   position: fixed;
   top: 0;
@@ -724,7 +724,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   max-width: 90vw;
 }
 
-/* Плитка картинок */
+/* Image tiles */
 .tiptap-image-grid {
   display: flex;
   flex-wrap: wrap;
@@ -772,7 +772,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   -webkit-box-orient: vertical;
 }
 
-/* Палитра цветов */
+/* Color palette */
 .tiptap-palette {
   position: absolute;
   z-index: 10000;
@@ -845,7 +845,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 
 .tiptap-palette-reset:hover { background: #e8e8e8; }
 
-/* Таблицы — редактор */
+/* Tables: editor */
 .ProseMirror table {
   border-collapse: collapse;
   margin: 8px 0;
@@ -869,7 +869,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 
 .ProseMirror table p { margin: 0 !important; min-height: 0 !important; line-height: 1.2 !important; }
 
-/* Хендл ресайза колонки */
+/* Column resize handle */
 .ProseMirror table .column-resize-handle {
   position: absolute;
   right: -2px;
@@ -885,12 +885,12 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   cursor: col-resize;
 }
 
-/* Выделенные ячейки */
+/* Selected cells */
 .ProseMirror table .selectedCell {
   background: #d0e4ff;
 }
 
-/* Таблицы — сохранённый вид */
+/* Tables: saved view */
 .wiki table.tiptap-table,
 .wiki-page table.tiptap-table,
 .wiki table,
@@ -921,7 +921,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   font-weight: bold;
 }
 
-/* Контекстное меню таблицы */
+/* Table context menu */
 .tiptap-table-menu {
   position: absolute;
   z-index: 10001;
@@ -950,9 +950,9 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin: 4px 0;
 }
 
-/* --- Ярлык с языком в углу блока кода ------------------------------------ */
-/* В редакторе обёртку с position: relative создаёт node view. В просмотре
-   ею служит div.pre-wrapper, который добавляет сам Redmine. */
+/* --- Language badge in the corner of a code block ------------------------ */
+/* In the editor the wrapper with position: relative is created by the node view.
+   In view mode div.pre-wrapper, added by Redmine itself, serves as the wrapper. */
 
 .tiptap-code-wrapper {
   position: relative;
@@ -981,7 +981,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   color: #333;
 }
 
-/* В просмотре ярлык только подписывает блок, выбирать там нечего. */
+/* In view mode the badge only labels the block, there is nothing to pick there. */
 .tiptap-code-lang-static {
   cursor: default;
 }
@@ -991,8 +991,8 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   color: #666;
 }
 
-/* Без языка ярлык в редакторе не подписывает блок: он скрыт и появляется
-   только при наведении — чтобы язык всё-таки можно было выбрать. */
+/* Without a language the badge in the editor does not label the block: it is
+   hidden and shows up only on hover, so that a language can still be picked. */
 .tiptap-code-lang-empty {
   visibility: hidden;
   font-style: italic;
@@ -1002,9 +1002,9 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   visibility: visible;
 }
 
-/* В просмотре ярлык и кнопка «Копировать» Redmine делят один угол: оба
-   кладутся в flex-контейнер, и кнопка встаёт слева от ярлыка сама, какой
-   бы длины ни было название языка. */
+/* In view mode the badge and the Redmine "Copy" button share one corner: both
+   are put into a flex container, and the button lines up to the left of the
+   badge by itself, however long the language name is. */
 .tiptap-code-corner {
   position: absolute;
   top: 3px;
@@ -1019,14 +1019,14 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   position: static;
 }
 
-/* Специфичность выше родного div.pre-wrapper a.copy-pre-content-link,
-   иначе кнопка осталась бы позиционированной абсолютно поверх ярлыка. */
+/* Higher specificity than the native div.pre-wrapper a.copy-pre-content-link,
+   otherwise the button would stay absolutely positioned on top of the badge. */
 div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
   position: static;
 }
 
-/* Блок кода в редакторе рисует node view, поэтому внешние отступы обёртки
-   должны повторять отступы самого pre, иначе блок съедет. */
+/* In the editor the code block is rendered by the node view, so the outer margins
+   of the wrapper must repeat the margins of the pre itself, otherwise the block shifts. */
 .ProseMirror .tiptap-code-wrapper > pre {
   margin: 0;
 }
@@ -1035,8 +1035,8 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
   margin: 1em 0;
 }
 
-/* --- Панель выбора языка -------------------------------------------------- */
-/* Живёт в body: область ввода прокручивается и обрезала бы выпадашку. */
+/* --- Language picker panel ------------------------------------------------ */
+/* Lives in body: the input area scrolls and would clip the dropdown. */
 
 .tiptap-lang-panel {
   position: fixed;
@@ -1093,7 +1093,7 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
   color: #fff;
 }
 
-/* Пояснение после названия: «1С:Предприятие», «MikroTik», «nginx, apache». */
+/* Note after the name: "1C:Enterprise", "MikroTik", "nginx, apache". */
 .tiptap-lang-hint {
   margin-left: 6px;
   color: #999;
@@ -1111,10 +1111,10 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
   font-size: 12px;
 }
 
-/* --- Палитра подсветки ---------------------------------------------------- */
-/* Цвета сняты с родной схемы Redmine (.syntaxhl, pygments colorful), чтобы
-   подсвеченный код не выбивался из остального интерфейса. Классы — от
-   highlight.js, один и тот же набор в редакторе и в просмотре. */
+/* --- Highlighting palette ------------------------------------------------- */
+/* The colors are taken from the native Redmine scheme (.syntaxhl, pygments colorful),
+   so that highlighted code does not stand out from the rest of the interface. The
+   classes come from highlight.js, the same set in the editor and in view mode. */
 
 .hljs-comment,
 .hljs-quote { color: #888888; }
@@ -1159,8 +1159,8 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
 .hljs-deletion { color: #A00000; }
 .hljs-addition { color: #00A000; }
 
-/* Логи (свои грамматики log и journalctl): уровни сообщений своими цветами,
-   чтобы ошибки и предупреждения было видно, не вчитываясь. */
+/* Logs (the plugin's own log and journalctl grammars): message levels in their own
+   colors, so that errors and warnings are visible without reading closely. */
 .hljs-log-error { color: #C00000; font-weight: bold; }
 .hljs-log-warn { color: #B35C00; font-weight: bold; }
 .hljs-log-ok { color: #118811; font-weight: bold; }

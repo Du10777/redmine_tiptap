@@ -1,4 +1,4 @@
-/* Модалка (общая) */
+/* Modal (shared) */
 .tiptap-modal-overlay {
   position: fixed;
   top: 0;
@@ -120,7 +120,7 @@
   max-width: 90vw;
 }
 
-/* Плитка картинок */
+/* Image tiles */
 .tiptap-image-grid {
   display: flex;
   flex-wrap: wrap;
@@ -168,7 +168,7 @@
   -webkit-box-orient: vertical;
 }
 
-/* Палитра цветов */
+/* Color palette */
 .tiptap-palette {
   position: absolute;
   z-index: 10000;

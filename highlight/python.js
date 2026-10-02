@@ -1,4 +1,4 @@
-// python — встроенная грамматика highlight.js.
+// python: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/python';
 
 export default {

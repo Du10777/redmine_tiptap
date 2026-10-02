@@ -1,4 +1,4 @@
-// ruby — встроенная грамматика highlight.js.
+// ruby: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/ruby';
 
 export default {

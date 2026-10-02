@@ -1,4 +1,4 @@
-// dns — встроенная грамматика highlight.js.
+// dns: built-in highlight.js grammar.
 import grammar from 'highlight.js/lib/languages/dns';
 
 export default {

@@ -18,7 +18,7 @@ export const WEB_SAFE_FONTS = [
 
 export const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 72];
 
-// Расширение для размера шрифта (через style="font-size: Xpx")
+// Extension for font size (via style="font-size: Xpx")
 export const FontSize = Extension.create({
   name: 'fontSize',
 
@@ -56,7 +56,7 @@ export const FontSize = Extension.create({
   },
 });
 
-// Расширение для цвета фона (highlight через style="background-color: X")
+// Extension for background color (highlight via style="background-color: X")
 export const BackgroundColor = Extension.create({
   name: 'backgroundColor',
 

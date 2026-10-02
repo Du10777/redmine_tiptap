@@ -23,23 +23,23 @@ import {
   patchAddInlineAttachmentMarkup,
 } from './tiptap_attachments.js';
 
-// --- Ограничение высоты области ввода ---------------------------------------
-// Без ограничения редактор растёт под объём текста: тулбар уезжает вверх за
-// край экрана, а кнопки формы («Сохранить»/«Отмена») — вниз. Считаем, сколько
-// места реально остаётся по вертикали, и включаем прокрутку внутри области.
-// Всё в CSS-пикселях, поэтому смена масштаба страницы (Ctrl +/-) сама даёт
-// больше или меньше доступной высоты — достаточно пересчитать на resize.
+// --- Limiting the height of the editing area --------------------------------
+// Without a limit the editor grows to fit the text: the toolbar goes up past the
+// edge of the screen, and the form buttons ("Save"/"Cancel") go down. We compute
+// how much vertical space is really left and enable scrolling inside the area.
+// Everything is in CSS pixels, so changing the page zoom (Ctrl +/-) by itself gives
+// more or less available height - recalculating on resize is enough.
 
-var MIN_EDITOR_HEIGHT = 160;     // ниже не опускаемся даже на низком экране
-var FALLBACK_BELOW = 220;        // запас под кнопки, если форму найти не удалось
-var EDITOR_GAP = 16;             // небольшой зазор, чтобы кнопки не липли к краю
-var MIN_VIEWPORT_RATIO = 0.45;   // меньше этой доли экрана редактор не делаем
-var STICKY_FALLBACK = 50;        // Redmine сам компенсирует шапку через scroll-margin-top: 50px
+var MIN_EDITOR_HEIGHT = 160;     // never go below this, even on a short screen
+var FALLBACK_BELOW = 220;        // room for the buttons if the form could not be found
+var EDITOR_GAP = 16;             // a small gap so the buttons do not stick to the edge
+var MIN_VIEWPORT_RATIO = 0.45;   // never make the editor smaller than this share of the screen
+var STICKY_FALLBACK = 50;        // Redmine's own header compensation is scroll-margin-top: 50px
 
-// Прилипшая шапка задачи (#sticky-issue-header) — это position: fixed поверх
-// страницы: вёрстку она не сдвигает, а накрывает верх окна. Место под неё
-// резервируем всегда, даже пока она скрыта, — она появится, как только
-// страницу прокрутят к форме, и иначе спрячет под собой тулбар редактора.
+// The sticky issue header (#sticky-issue-header) is position: fixed on top of the
+// page: it does not shift the layout but covers the top of the window. Room for it
+// is always reserved, even while it is hidden - it appears as soon as the page is
+// scrolled to the form, and would otherwise hide the editor toolbar beneath it.
 function topOverlayHeight() {
   var bar = document.getElementById('sticky-issue-header');
   if (!bar) return 0;
@@ -47,7 +47,7 @@ function topOverlayHeight() {
   return h > 0 ? h : STICKY_FALLBACK;
 }
 
-// Кнопки формы («Сохранить»/«Создать»), до которых редактор должен «дотянуться».
+// The form buttons ("Save"/"Create") that the editor has to "reach".
 function submitAnchor(wrapper) {
   var form = wrapper.closest('form');
   if (!form) return null;
@@ -56,37 +56,39 @@ function submitAnchor(wrapper) {
 }
 
 function applyMaxHeight(wrapper) {
-  // Размер, выставленный ручкой, важнее автоподбора.
+  // A size set with the grip takes priority over auto-sizing.
   if (wrapper._tiptapManualHeight) return;
 
-  // У скрытого редактора (форма правки задачи до её раскрытия) все размеры
-  // нулевые — мерить нечего. Оставляем запасное значение из CSS и пересчитаем,
-  // когда редактор появится на экране.
+  // A hidden editor (the issue edit form before it is expanded) has all sizes at
+  // zero - there is nothing to measure. Keep the fallback value from CSS and
+  // recalculate once the editor shows up on screen.
   if (wrapper.getClientRects().length === 0) return;
 
   var content = wrapper.querySelector('.tiptap-content');
   var toolbar = wrapper.querySelector('.tiptap-toolbar');
   if (!content || !toolbar) return;
 
-  // На столько по вертикали мы претендуем: окно минус перекрытая сверху полоса.
+  // How much vertical space we claim: the window minus the strip covered at the top.
   var target = window.innerHeight - topOverlayHeight() - EDITOR_GAP;
   var anchorEl = submitAnchor(wrapper);
   var avail;
 
   if (anchorEl) {
-    // Не моделируем вёрстку формы, а меряем её как есть: сколько сейчас занимает
-    // всё от верха тулбара до низа кнопок. Уменьшение области ввода на N пикселей
-    // ровно на столько же поднимает кнопки, поэтому нужную высоту получаем одной
-    // арифметической поправкой — независимо от того, что ещё стоит на форме.
+    // We do not model the form layout but measure it as it is: how much space is now
+    // taken by everything from the top of the toolbar to the bottom of the buttons.
+    // Shrinking the editing area by N pixels raises the buttons by exactly as much, so
+    // the needed height is obtained with a single arithmetic correction - regardless
+    // of what else is on the form.
     var span = anchorEl.getBoundingClientRect().bottom - toolbar.getBoundingClientRect().top;
     avail = content.getBoundingClientRect().height - (span - target);
   } else {
     avail = target - toolbar.offsetHeight - FALLBACK_BELOW;
   }
 
-  // На формах, где под редактором стоит ещё много всего (правка задачи: ниже
-  // описания идут атрибуты и редактор примечаний), «дотянуться до кнопок»
-  // означало бы схлопнуть редактор почти в ноль. Ниже этой доли экрана не идём.
+  // On forms with a lot more below the editor (issue edit: the description is
+  // followed by the attributes and the notes editor), "reaching the buttons" would
+  // mean collapsing the editor almost to zero. We do not go below this fraction of
+  // the screen.
   var floorH = window.innerHeight * MIN_VIEWPORT_RATIO;
   if (avail < floorH) avail = floorH;
   if (avail < MIN_EDITOR_HEIGHT) avail = MIN_EDITOR_HEIGHT;
@@ -94,10 +96,10 @@ function applyMaxHeight(wrapper) {
   wrapper.style.setProperty('--tiptap-max-height', Math.round(avail) + 'px');
 }
 
-// Редактор может быть создан скрытым (форма правки задачи раскрывается позже).
-// display:none не порождает мутаций childList, поэтому ловим момент появления
-// через ResizeObserver и считаем высоту только на переходе «скрыт -> виден» —
-// так пересчёт не зацикливается на собственных изменениях размера.
+// The editor may be created hidden (the issue edit form is expanded later).
+// display:none produces no childList mutations, so we catch the moment it appears
+// via ResizeObserver and compute the height only on the "hidden -> visible"
+// transition - this way the recalculation does not loop on its own size changes.
 var sizeObserver = window.ResizeObserver
   ? new window.ResizeObserver(function(entries) {
       entries.forEach(function(entry) {
@@ -129,10 +131,10 @@ function refreshMaxHeights() {
   });
 }
 
-// --- Ручка изменения размера -------------------------------------------------
-// Автоподбор высоты подходит не всем и не всегда, поэтому даём утащить нижний
-// правый угол области ввода мышью. Выбранная высота запоминается и применяется
-// ко всем редакторам; двойной клик по ручке возвращает автоматический режим.
+// --- Resize grip -------------------------------------------------------------
+// Auto-sizing the height does not suit everyone or every case, so the user can drag
+// the bottom-right corner of the editing area with the mouse. The chosen height is
+// remembered and applied to all editors; double-clicking the grip restores auto mode.
 
 var HEIGHT_STORAGE_KEY = 'redmineTiptapEditorHeight';
 
@@ -141,7 +143,7 @@ function readStoredHeight() {
     var value = parseInt(window.localStorage.getItem(HEIGHT_STORAGE_KEY), 10);
     return value > 0 ? value : 0;
   } catch (e) {
-    return 0;   // localStorage может быть недоступен (приватный режим, политика)
+    return 0;   // localStorage may be unavailable (private mode, policy)
   }
 }
 
@@ -152,7 +154,7 @@ function writeStoredHeight(height) {
     } else {
       window.localStorage.removeItem(HEIGHT_STORAGE_KEY);
     }
-  } catch (e) { /* не критично: размер просто не переживёт перезагрузку */ }
+  } catch (e) { /* not critical: the size just won't survive a reload */ }
 }
 
 function setManualHeight(wrapper, height) {
@@ -175,7 +177,7 @@ function buildResizer(wrapper) {
   grip.addEventListener('pointerdown', function(event) {
     event.preventDefault();
 
-    // Тянуть могли за любую из двух областей — считаем от видимой.
+    // The user may be dragging either of the two areas - measure from the visible one.
     var box = wrapper.querySelector('.tiptap-content');
     var source = wrapper.querySelector('.tiptap-source');
     if (source && source.style.display !== 'none') box = source;
@@ -196,7 +198,7 @@ function buildResizer(wrapper) {
       writeStoredHeight(wrapper._tiptapManualHeight);
     }
 
-    // Захват указателя: события доедут до ручки, даже если курсор ушёл за её край.
+    // Pointer capture: events reach the grip even if the cursor moves past its edge.
     grip.setPointerCapture(event.pointerId);
     grip.addEventListener('pointermove', onMove);
     grip.addEventListener('pointerup', onUp);
@@ -290,9 +292,9 @@ function initTextarea(textarea) {
     ],
     content: '',
     onUpdate: function(props) {
-      // Переводы строки вокруг содержимого блока кода не добавляем: после
-      // <code> браузер их не отбрасывает (в отличие от <pre>), и в режиме
-      // просмотра они превращались в пустую строку сверху и снизу блока.
+      // No line breaks are added around the code block content: after <code> the
+      // browser does not drop them (unlike <pre>), and in view mode they turned
+      // into an empty line above and below the block.
       textarea.value = serializeAttachmentHTML(props.editor.getHTML())
         .replace(/<details open="">/g, '<details>');
     },
@@ -333,18 +335,18 @@ function initTextarea(textarea) {
   }
   watchVisibility(wrapper);
 
-  // Редактор создан для поля, на котором уже стоял курсор (Redmine сам
-  // ставит фокус в поле, раскрывая форму), — переносим фокус в редактор.
+  // The editor was created for a field that already had the cursor (Redmine
+  // itself focuses the field when expanding the form) - move focus into the editor.
   if (document.activeElement === textarea) editor.commands.focus('end');
 }
 
-// --- Ленивое создание редакторов ---------------------------------------------
-// На странице задачи редакторы описания и примечаний лежат в скрытой форме
-// правки. Создавать их сразу — значит каждый раз разбирать и раскрашивать всё
-// описание, даже если человек только читает (на задаче с логом в 3000 строк —
-// около 0,4 с на быстром ПК). Поэтому скрытое поле не трогаем, пока форма не
-// появится на экране: ResizeObserver сообщает, когда у поля появляется размер.
-// Пока редактора нет, форма отправляет исходный текст поля без изменений.
+// --- Lazy editor creation ----------------------------------------------------
+// On the issue page the description and notes editors sit in the hidden edit form.
+// Creating them right away means parsing and highlighting the whole description
+// every time, even if the user is only reading (on an issue with a 3000-line log
+// that is about 0.4 s on a fast PC). So a hidden field is left untouched until the
+// form appears on screen: ResizeObserver reports when the field gets a size.
+// Until there is an editor, the form submits the field's original text unchanged.
 var pendingFieldObserver = window.ResizeObserver
   ? new window.ResizeObserver(function(entries) {
       entries.forEach(function(entry) {
@@ -374,8 +376,8 @@ function scanAndInit() {
 }
 
 function setupSavedTaskList() {
-  // На страницах просмотра (не в редакторе) делаем чекбоксы задач
-  // некликабельными и отражаем их состояние из data-checked.
+  // On view pages (not in the editor), make task checkboxes non-clickable
+  // and reflect their state from data-checked.
   document.querySelectorAll('ul[data-type="taskList"] li').forEach(function(li) {
     if (li.closest('.ProseMirror')) return;
     var input = li.querySelector('input[type="checkbox"]');
@@ -391,11 +393,11 @@ function boot() {
   setupSavedTaskList();
   highlightSavedCodeBlocks();
   var observer = new MutationObserver(function(mutations) {
-    // Набор текста и перерисовка тулбара меняют DOM только внутри самого
-    // редактора, а структуру страницы не трогают: ни новых полей, ни новых
-    // блоков кода в просмотре, ни повода пересчитывать высоту. Без этой
-    // проверки каждое нажатие клавиши заставляло браузер заново раскладывать
-    // всю страницу — на большом документе это сотни миллисекунд.
+    // Typing and toolbar redraws change the DOM only inside the editor itself and
+    // do not touch the page structure: no new fields, no new code blocks in view
+    // mode, no reason to recalculate the height. Without this check every keystroke
+    // forced the browser to lay out the whole page again - on a large document that
+    // is hundreds of milliseconds.
     var outsideEditors = mutations.some(function(mutation) {
       var el = mutation.target.nodeType === 1 ? mutation.target : mutation.target.parentElement;
       return !(el && el.closest && el.closest('.tiptap-wrapper, .tiptap-lang-panel'));
@@ -408,23 +410,23 @@ function boot() {
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // resize срабатывает и при смене масштаба страницы (Ctrl +/-):
-  // window.innerHeight задан в CSS-пикселях, поэтому при отдалении
-  // доступная высота редактора автоматически становится больше.
+  // resize also fires when the page zoom changes (Ctrl +/-):
+  // window.innerHeight is in CSS pixels, so when zooming out
+  // the available editor height automatically becomes larger.
   window.addEventListener('resize', refreshMaxHeights);
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', refreshMaxHeights);
   }
 
-  // Редактор мог быть скрыт в момент создания (форма правки задачи
-  // раскрывается по кнопке) — к моменту фокуса размеры уже настоящие.
+  // The editor may have been hidden when it was created (the issue edit form
+  // opens via a button) - by the time it gets focus, the sizes are real.
   document.addEventListener('focusin', function(e) {
     if (e.target.closest && e.target.closest('.tiptap-wrapper')) refreshMaxHeights();
   });
 }
 
-// Бандл подключается из <head>, поэтому к моменту его выполнения document.body
-// может ещё не существовать — ждём готовности DOM.
+// The bundle is included from <head>, so by the time it runs document.body
+// may not exist yet - wait for the DOM to be ready.
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
