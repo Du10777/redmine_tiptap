@@ -1,3 +1,5 @@
+[Русская версия](README.ru.md)
+
 This is text editor for Redmine, based on TipTap https://github.com/ueberdosis/tiptap
 
 Supported Redmine versions: **6.\*** (developed and tested on 6.1.4).
