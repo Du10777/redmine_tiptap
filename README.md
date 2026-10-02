@@ -4,6 +4,69 @@ Supported Redmine versions: **6.\*** (developed and tested on 6.1.4).
 
 Editor engine: **TipTap 3.27.1**. All `@tiptap/*` packages are locked to this exact version in `package-lock.json` and must always be upgraded together, to one and the same version.
 
+## Features
+
+**Text formatting**
+- Bold, italic, underline, strikethrough, inline code.
+- Text color and background color: a 64-color palette or any hex value.
+- Font family (13 fonts) and font size (presets from 8 to 72 px, or any value).
+- Paragraph styles: headings 1–6 and normal text.
+- Alignment (left, center, right, justify) and indentation (up to 8 levels) of paragraphs and headings.
+- Links: insert, edit, remove.
+- Horizontal rule, undo and redo.
+
+**Lists**
+- Bulleted lists with disc, circle or square markers.
+- Numbered lists: 1, 01, a, A, i, I, α.
+- Task lists with checkboxes; completed tasks are struck through.
+- Nested lists (Tab / Shift+Tab).
+
+**Tables**
+- Insert a table of any size, with or without a header row.
+- Right-click menu in a cell: add and delete rows and columns, merge and split cells, header row and header column, delete the table.
+- Column widths are changed by dragging cell borders.
+- Pasting from Excel keeps column widths, alignment and font sizes; a table copied from Redmine pastes into Excel with borders.
+
+**Images and attachments**
+- Paste an image from the clipboard: it is uploaded as an attachment and appears in the text.
+- Images attached with Redmine's file field, or dropped onto it, are inserted into the text as well.
+- Insert an image from the attachments (a thumbnail picker) or a link to any attachment.
+- Resize an image by dragging its corners.
+
+**Code**
+- Code blocks with syntax highlighting in the editor and on saved pages: 52 languages, and you can add more (see [Syntax highlighting](#syntax-highlighting)).
+- The language of a block is chosen from a badge in its corner, with search, recent and frequent languages.
+
+**Blocks**
+- Collapsible block: a title with hidden content (`<details>`). Collapsed on saved pages, expanded in the editor.
+- Quote block with an author and date line.
+
+**Editing**
+- `<HTML>` mode to view and edit the HTML source.
+- Markdown-style typing: `#` for headings, `-` and `1.` for lists, `[ ]` for tasks, ```` ``` ```` for a code block, `**bold**`, `---` for a horizontal rule. Standard keyboard shortcuts: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z and others.
+- The editor never grows taller than the window: the toolbar and the form buttons stay in view, and the text scrolls inside. The height follows the window size and page zoom.
+- A resize grip in the bottom right corner sets the height by hand. The height is remembered; double-click returns to automatic height.
+
+**Redmine integration**
+- Works in all Redmine text fields with formatting: issue descriptions and notes, wiki pages, news, forum messages, documents, project descriptions, long text custom fields, including fields that appear on the page later.
+- Text is stored as HTML. To use the editor, choose *TipTap HTML* as the text formatting in Redmine settings.
+- Stays fast on large texts: editors in hidden forms are created only when the form is opened, and long code blocks are highlighted when they scroll into view.
+
+## Syntax highlighting
+
+Code blocks are highlighted in the editor and on saved pages alike. The language of a block is picked from the badge in its top right corner; the list has a search box and remembers recently and frequently used languages.
+
+52 languages come with the plugin, among them 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logs and journalctl output.
+
+You can add your own languages. Each language is one file in the `highlight/` folder. Any of the 190+ highlight.js grammars, or a third-party one, is converted into such a file with one command:
+
+```sh
+python3 highlight/README/convert_hljs_language.py erlang
+sh highlight/_compile.sh
+```
+
+Details: [highlight/README/en.md](highlight/README/en.md) (на русском: [highlight/README/ru.md](highlight/README/ru.md)).
+
 ## Installation
 
 1. Put the plugin into Redmine's `plugins` folder. The folder must be named `redmine_tiptap`. The easiest way is git, which also makes updates a single command:
