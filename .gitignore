@@ -1,0 +1,6 @@
+# npm packages: installed by the build scripts (npm install), not needed to run
+# the plugin, because the built files are committed.
+node_modules/
+
+# Python bytecode of highlight/_convert_grammar.py
+__pycache__/
