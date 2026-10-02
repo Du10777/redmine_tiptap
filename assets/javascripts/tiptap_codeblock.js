@@ -1,4 +1,6 @@
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import CodeBlock from '@tiptap/extension-code-block';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { createLowlight } from 'lowlight';
 
 // Один движок подсветки и для редактора, и для просмотра — иначе цвета
@@ -241,31 +243,141 @@ function openLanguagePanel(anchorEl, current, onPick) {
   search.focus();
 }
 
+// --- Подсветка в редакторе ---------------------------------------------------
+// Своя замена плагину CodeBlockLowlight из TipTap. Тот на каждое нажатие
+// клавиши внутри блока кода заново раскрашивал ВСЕ блоки документа: на логе в
+// 3000 строк это 140 мс на символ, а на слабом ноутбуке — больше полсекунды.
+// Здесь на нажатие готовая раскраска только сдвигается вместе с текстом, а
+// перекраска идёт после паузы в наборе и только для изменившихся блоков.
+
+var HIGHLIGHT_KEY = new PluginKey('tiptapCodeHighlight');
+var HIGHLIGHT_DELAY = 50;   // мс паузы в наборе до перекраски
+
+// Раскраска блока, привязанная к самому узлу документа. Узлы ProseMirror
+// неизменяемы: пока блок не правили, это тот же объект, и раскрашивать его
+// заново не нужно. Новый или изменённый блок — новый объект, его в кэше нет.
+var blockTokenCache = new WeakMap();
+
+function collectTokens(nodes, classes, out, offset) {
+  nodes.forEach(function(node) {
+    if (node.type === 'text') {
+      if (classes.length) {
+        out.push({ from: offset.pos, to: offset.pos + node.value.length, cls: classes.join(' ') });
+      }
+      offset.pos += node.value.length;
+      return;
+    }
+    var own = (node.properties && node.properties.className) || [];
+    collectTokens(node.children || [], classes.concat(own), out, offset);
+  });
+}
+
+function blockTokens(node) {
+  var tokens = blockTokenCache.get(node);
+  if (tokens) return tokens;
+  tokens = [];
+  var language = node.attrs.language;
+  // Незарегистрированный язык — обычный текст. Автоопределения языка нет:
+  // иначе блок раскрашивался бы наугад, а в просмотре оставался без цвета.
+  if (hasLanguage(language) && lowlight.registered(language)) {
+    try {
+      collectTokens(lowlight.highlight(language, node.textContent).children, [], tokens, { pos: 0 });
+    } catch (e) {
+      tokens = [];
+    }
+  }
+  blockTokenCache.set(node, tokens);
+  return tokens;
+}
+
+function codeDecorations(doc) {
+  var decorations = [];
+  doc.descendants(function(node, pos) {
+    if (node.type.name !== 'codeBlock') return true;
+    blockTokens(node).forEach(function(token) {
+      decorations.push(Decoration.inline(pos + 1 + token.from, pos + 1 + token.to, { class: token.cls }));
+    });
+    return false;
+  });
+  return DecorationSet.create(doc, decorations);
+}
+
+// Есть ли блок кода, которого ещё нет в кэше раскраски, — новый или изменённый.
+function hasStaleBlocks(doc) {
+  var stale = false;
+  doc.descendants(function(node) {
+    if (stale) return false;
+    if (node.type.name !== 'codeBlock') return true;
+    if (!blockTokenCache.has(node)) stale = true;
+    return false;
+  });
+  return stale;
+}
+
+function codeHighlightPlugin() {
+  return new Plugin({
+    key: HIGHLIGHT_KEY,
+    state: {
+      init: function(config, state) {
+        return { decorations: codeDecorations(state.doc), stale: false };
+      },
+      apply: function(tr, value, oldState, newState) {
+        if (tr.getMeta(HIGHLIGHT_KEY)) {
+          return { decorations: codeDecorations(newState.doc), stale: false };
+        }
+        if (!tr.docChanged) return value;
+        // На правку только сдвигаем готовую раскраску вслед за текстом.
+        return {
+          decorations: value.decorations.map(tr.mapping, tr.doc),
+          stale: value.stale || hasStaleBlocks(newState.doc),
+        };
+      },
+    },
+    props: {
+      decorations: function(state) {
+        return HIGHLIGHT_KEY.getState(state).decorations;
+      },
+    },
+    view: function() {
+      var timer = null;
+      return {
+        // Каждое новое изменение откладывает перекраску: она случится, когда
+        // в наборе наступит пауза в HIGHLIGHT_DELAY мс.
+        update: function(view) {
+          if (!HIGHLIGHT_KEY.getState(view.state).stale) return;
+          clearTimeout(timer);
+          timer = setTimeout(function() {
+            timer = null;
+            if (view.isDestroyed) return;
+            view.dispatch(view.state.tr.setMeta(HIGHLIGHT_KEY, true).setMeta('addToHistory', false));
+          }, HIGHLIGHT_DELAY);
+        },
+        destroy: function() {
+          clearTimeout(timer);
+        },
+      };
+    },
+  });
+}
+
 // --- Само расширение --------------------------------------------------------
 // Блок кода с возможностью форматирования текста внутри:
 // - marks перечислены явно БЕЗ inline-code, иначе внутренний <code> в
 //   <pre><code> при обратном парсинге даёт вложенные <code>.
-export const FormattableCodeBlock = CodeBlockLowlight.extend({
+export const FormattableCodeBlock = CodeBlock.extend({
   marks: 'bold italic strike underline link textStyle',
 
   addOptions() {
     return {
       ...this.parent?.(),
-      // Автоопределение языка выключено целиком: TipTap включает его для
-      // блоков с незарегистрированным языком (например, если файл языка
-      // убрали из highlight/), и в редакторе такой блок раскрашивался бы
-      // наугад, а в просмотре оставался обычным текстом.
-      lowlight: {
-        highlight: function(language, value, options) { return lowlight.highlight(language, value, options); },
-        highlightAuto: function(value) { return lowlight.highlight(NO_LANGUAGE, value); },
-        listLanguages: function() { return lowlight.listLanguages(); },
-        registered: function(name) { return lowlight.registered(name); },
-      },
-      // Без этого блок без языка подсвечивался бы автоопределением: ярлык
-      // показывал «нет», а текст всё равно был цветным — и в просмотре
-      // такого не происходило. «Без подсветки» должно значить ровно это.
+      // Блок без явного языка — «без подсветки». Значение попадает и в
+      // атрибут, поэтому в сохранённом HTML это видно как language-plaintext.
       defaultLanguage: 'plaintext',
     };
+  },
+
+  addProseMirrorPlugins() {
+    return (this.parent?.() || []).concat([codeHighlightPlugin()]);
   },
 
   addNodeView() {
@@ -414,23 +526,50 @@ function languageOf(codeEl) {
   return match ? match[1] : NO_LANGUAGE;
 }
 
+// Раскрашиваем сохранённый блок, только когда он оказывается на экране или
+// рядом с ним. Страница с большими логами открывается сразу, а блок внутри
+// свёрнутого Collapse не стоит ничего, пока его не раскроют (у содержимого
+// закрытого <details> нет размеров, и наблюдатель его не видит).
+var viewHighlightObserver = window.IntersectionObserver
+  ? new window.IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        viewHighlightObserver.unobserve(entry.target);
+        highlightCodeElement(entry.target);
+      });
+    }, { rootMargin: '300px 0px' })
+  : null;
+
+// Какие блоки уже отданы наблюдателю. Не флаг на элементе: Redmine подменяет
+// <pre> копией, флаг скопировался бы вместе с ним, и копию никто бы не раскрасил.
+var observedCodes = new WeakSet();
+
+function highlightCodeElement(code) {
+  if (code.dataset.tiptapHighlighted || !code.isConnected) return;
+  code.dataset.tiptapHighlighted = '1';
+  var language = languageOf(code);
+  if (!hasLanguage(language) || !lowlight.registered(language)) return;
+  try {
+    code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
+  } catch (e) { /* неизвестная грамматика — оставляем текст как есть */ }
+}
+
 export function highlightSavedCodeBlocks() {
   var blocks = document.querySelectorAll('.wiki pre > code');
 
   Array.prototype.forEach.call(blocks, function(code) {
-    if (code.closest('.ProseMirror')) return;   // в редакторе красит само расширение
+    if (code.closest('.ProseMirror')) return;   // в редакторе красит свой плагин
 
     var language = languageOf(code);
 
-    // Подсветка. Redmine, добавляя кнопку «Копировать», подменяет <pre> его
-    // копией — флаг на <code> копируется вместе с ним, поэтому повторно уже
-    // подсвеченный код не трогаем.
-    if (!code.dataset.tiptapHighlighted) {
-      code.dataset.tiptapHighlighted = '1';
-      if (hasLanguage(language) && lowlight.registered(language)) {
-        try {
-          code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
-        } catch (e) { /* неизвестная грамматика — оставляем текст как есть */ }
+    // Подсветка. Флаг tiptapHighlighted ставится уже после раскраски, и при
+    // подмене <pre> копией он копируется вместе с готовыми цветами.
+    if (!code.dataset.tiptapHighlighted && !observedCodes.has(code)) {
+      if (viewHighlightObserver) {
+        observedCodes.add(code);
+        viewHighlightObserver.observe(code);
+      } else {
+        highlightCodeElement(code);
       }
     }
 

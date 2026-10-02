@@ -332,12 +332,45 @@ function initTextarea(textarea) {
     applyMaxHeight(wrapper);
   }
   watchVisibility(wrapper);
+
+  // Редактор создан для поля, на котором уже стоял курсор (Redmine сам
+  // ставит фокус в поле, раскрывая форму), — переносим фокус в редактор.
+  if (document.activeElement === textarea) editor.commands.focus('end');
+}
+
+// --- Ленивое создание редакторов ---------------------------------------------
+// На странице задачи редакторы описания и примечаний лежат в скрытой форме
+// правки. Создавать их сразу — значит каждый раз разбирать и раскрашивать всё
+// описание, даже если человек только читает (на задаче с логом в 3000 строк —
+// около 0,4 с на быстром ПК). Поэтому скрытое поле не трогаем, пока форма не
+// появится на экране: ResizeObserver сообщает, когда у поля появляется размер.
+// Пока редактора нет, форма отправляет исходный текст поля без изменений.
+var pendingFieldObserver = window.ResizeObserver
+  ? new window.ResizeObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var textarea = entry.target;
+        if (entry.contentRect.width === 0 && entry.contentRect.height === 0) return;
+        pendingFieldObserver.unobserve(textarea);
+        delete textarea.dataset.tiptapPending;
+        initTextarea(textarea);
+      });
+    })
+  : null;
+
+function initWhenVisible(textarea) {
+  if (textarea.dataset.tiptapInit || textarea.dataset.tiptapPending) return;
+  if (!pendingFieldObserver || textarea.getClientRects().length > 0) {
+    initTextarea(textarea);
+    return;
+  }
+  textarea.dataset.tiptapPending = '1';
+  pendingFieldObserver.observe(textarea);
 }
 
 function scanAndInit() {
   if (document.body.getAttribute('data-text-formatting') !== 'tiptap') return;
   patchAddInlineAttachmentMarkup();
-  document.querySelectorAll('textarea.wiki-edit').forEach(initTextarea);
+  document.querySelectorAll('textarea.wiki-edit').forEach(initWhenVisible);
 }
 
 function setupSavedTaskList() {
@@ -357,7 +390,17 @@ function boot() {
   setupSavedTableCopy();
   setupSavedTaskList();
   highlightSavedCodeBlocks();
-  var observer = new MutationObserver(function() {
+  var observer = new MutationObserver(function(mutations) {
+    // Набор текста и перерисовка тулбара меняют DOM только внутри самого
+    // редактора, а структуру страницы не трогают: ни новых полей, ни новых
+    // блоков кода в просмотре, ни повода пересчитывать высоту. Без этой
+    // проверки каждое нажатие клавиши заставляло браузер заново раскладывать
+    // всю страницу — на большом документе это сотни миллисекунд.
+    var outsideEditors = mutations.some(function(mutation) {
+      var el = mutation.target.nodeType === 1 ? mutation.target : mutation.target.parentElement;
+      return !(el && el.closest && el.closest('.tiptap-wrapper, .tiptap-lang-panel'));
+    });
+    if (!outsideEditors) return;
     scanAndInit();
     setupSavedTaskList();
     highlightSavedCodeBlocks();
