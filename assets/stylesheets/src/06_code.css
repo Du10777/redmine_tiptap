@@ -174,7 +174,7 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
 .hljs-name { color: #008800; font-weight: bold; }
 
 .hljs-type,
-.hljs-class .hljs-title { color: #333399; font-weight: bold; }
+.hljs-class.hljs-title { color: #333399; font-weight: bold; }
 
 .hljs-string,
 .hljs-regexp,

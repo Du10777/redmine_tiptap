@@ -1,4 +1,5 @@
 import CodeBlock from '@tiptap/extension-code-block';
+import { textblockTypeInputRule } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { createLowlight } from 'lowlight';
@@ -23,9 +24,20 @@ export const lowlight = createLowlight();
 // without a label are shown under their identifier.
 var LANGUAGE_INFO = {};
 
+// Alias -> language id (js -> javascript), for ```js typed in the editor.
+// highlight.js calls a grammar once, when it is registered; the wrapper notes
+// the aliases the grammar declares.
+var LANGUAGE_ALIASES = {};
+
 LANGUAGES.forEach(function(lang) {
   try {
-    lowlight.register(lang.id, lang.grammar);
+    lowlight.register(lang.id, function(hljs) {
+      var definition = lang.grammar(hljs);
+      ((definition && definition.aliases) || []).forEach(function(alias) {
+        LANGUAGE_ALIASES[String(alias).toLowerCase()] = lang.id;
+      });
+      return definition;
+    });
     LANGUAGE_INFO[lang.id] = { label: lang.label, hint: lang.hint, keywords: lang.keywords };
   } catch (e) { /* a broken language file must not bring down the editor */ }
 });
@@ -274,21 +286,29 @@ function collectTokens(nodes, classes, out, offset) {
   });
 }
 
-function blockTokens(node) {
-  var tokens = blockTokenCache.get(node);
-  if (tokens) return tokens;
-  tokens = [];
-  var language = node.attrs.language;
-  // An unregistered language is plain text. There is no language auto-detection:
-  // otherwise the block would be colored at random, yet stay uncolored in view mode.
+// Highlighting of a text as a flat list of {from, to, cls}: offsets in the text
+// and the classes of all highlight.js spans around that piece. The editor turns
+// it into decorations, view mode into spans (paintTokens), so both get the same
+// classes. An unregistered language is plain text. There is no language
+// auto-detection: otherwise the block would be colored at random.
+function textTokens(language, text) {
+  var tokens = [];
   if (hasLanguage(language) && lowlight.registered(language)) {
     try {
-      collectTokens(lowlight.highlight(language, node.textContent).children, [], tokens, { pos: 0 });
+      collectTokens(lowlight.highlight(language, text).children, [], tokens, { pos: 0 });
     } catch (e) {
       tokens = [];
     }
   }
-  blockTokenCache.set(node, tokens);
+  return tokens;
+}
+
+function blockTokens(node) {
+  var tokens = blockTokenCache.get(node);
+  if (!tokens) {
+    tokens = textTokens(node.attrs.language, node.textContent);
+    blockTokenCache.set(node, tokens);
+  }
   return tokens;
 }
 
@@ -362,6 +382,94 @@ function codeHighlightPlugin() {
   });
 }
 
+// --- Typing in a code block --------------------------------------------------
+
+var FENCE_RULES = [
+  /^```([a-z0-9][\w+#.-]*)?[\s\n]$/i,
+  /^~~~([a-z0-9][\w+#.-]*)?[\s\n]$/i,
+];
+
+// The language for ```name: an alias (js, sh, yml) becomes the language id, so
+// the badge and the language list show the language as usual.
+function fenceLanguage(name) {
+  if (!name) return undefined;            // no name: the default language
+  name = name.toLowerCase();
+  return LANGUAGE_INFO[name] ? name : (LANGUAGE_ALIASES[name] || name);
+}
+
+var INDENT = '    ';
+
+// Tab / Shift-Tab inside a code block. Without a selection Tab inserts spaces up
+// to the next tab stop and Shift-Tab outdents the current line; with a selection
+// every line it touches is indented or outdented by INDENT (a leading tab
+// character counts as one level). Only spaces are inserted and removed, so bold,
+// links and colors inside the lines stay. TipTap's own version
+// (enableTabIndentation) would replace the selected text with plain text and
+// indent from the selection start instead of the line starts.
+function indentCodeLines(editor, outdent) {
+  var state = editor.state;
+  var $from = state.selection.$from;
+  var $to = state.selection.$to;
+  if ($from.parent.type.name !== 'codeBlock' || !$from.sameParent($to)) return false;
+
+  var text = $from.parent.textContent;
+  var start = $from.start();              // document position of the block's first character
+  var fromOff = $from.parentOffset;
+  var toOff = $to.parentOffset;
+  var tr = state.tr;
+
+  if (!outdent && fromOff === toOff) {
+    var column = fromOff - (text.lastIndexOf('\n', fromOff - 1) + 1);
+    tr.insertText(' '.repeat(INDENT.length - column % INDENT.length));
+    editor.view.dispatch(tr.scrollIntoView());
+    return true;
+  }
+
+  // The lines the selection touches; a selection that ends right at the start
+  // of a line does not touch that line.
+  var lastOff = toOff > fromOff && text[toOff - 1] === '\n' ? toOff - 1 : toOff;
+  var lineStarts = [];
+  var lineStart = text.lastIndexOf('\n', fromOff - 1) + 1;
+  for (;;) {
+    lineStarts.push(lineStart);
+    var next = text.indexOf('\n', lineStart);
+    if (next < 0 || next >= lastOff) break;
+    lineStart = next + 1;
+  }
+
+  // From the last line up, so that earlier positions do not shift.
+  for (var i = lineStarts.length - 1; i >= 0; i--) {
+    var pos = start + lineStarts[i];
+    if (outdent) {
+      var head = text.slice(lineStarts[i], lineStarts[i] + INDENT.length);
+      var remove = head[0] === '\t' ? 1 : /^ */.exec(head)[0].length;
+      if (remove) tr.delete(pos, pos + remove);
+    } else {
+      tr.insert(pos, state.schema.text(INDENT));
+    }
+  }
+  if (tr.docChanged) editor.view.dispatch(tr.scrollIntoView());
+  return true;                            // keep Tab inside the block even if there was nothing to do
+}
+
+// Taking code out of a code block: every line becomes a paragraph of its own.
+// A paragraph cannot keep line breaks as "\n" characters: the browser shows
+// them as spaces, and after saving the lines are glued into one.
+function linesToParagraphs(fragment, paragraphType) {
+  var lines = [[]];
+  fragment.forEach(function(node) {
+    if (!node.isText) {
+      lines[lines.length - 1].push(node);
+      return;
+    }
+    node.text.split('\n').forEach(function(part, i) {
+      if (i > 0) lines.push([]);
+      if (part) lines[lines.length - 1].push(node.type.schema.text(part, node.marks));
+    });
+  });
+  return lines.map(function(nodes) { return paragraphType.create(null, nodes); });
+}
+
 // --- The extension itself ---------------------------------------------------
 // A code block that allows text formatting inside:
 // - marks are listed explicitly WITHOUT inline-code, otherwise the inner <code> in
@@ -380,6 +488,30 @@ export const FormattableCodeBlock = CodeBlock.extend({
 
   addProseMirrorPlugins() {
     return (this.parent?.() || []).concat([codeHighlightPlugin()]);
+  },
+
+  // ```lang or ~~~lang and a space at the start of a line create a code block.
+  // TipTap's own rules take only a-z after the fence, so languages such as 1c,
+  // docker-compose or cisco-ios could not be set this way.
+  addInputRules() {
+    var type = this.type;
+    return FENCE_RULES.map(function(find) {
+      return textblockTypeInputRule({
+        find: find,
+        type: type,
+        getAttributes: function(match) { return { language: fenceLanguage(match[1]) }; },
+      });
+    });
+  },
+
+  // Tab and Shift-Tab indent and outdent lines inside a code block; without
+  // this, Tab moved the focus out of the editor.
+  addKeyboardShortcuts() {
+    var editor = this.editor;
+    return Object.assign({}, this.parent?.(), {
+      Tab: function() { return indentCodeLines(editor, false); },
+      'Shift-Tab': function() { return indentCodeLines(editor, true); },
+    });
   },
 
   addNodeView() {
@@ -452,9 +584,9 @@ export const FormattableCodeBlock = CodeBlock.extend({
     return {
       ...this.parent?.(),
 
-      // Lift text out of a code block into a regular paragraph.
-      // Selection -> cut the block into: code(before) + paragraph(selected) + code(after).
-      // No selection (cursor in the block) -> the whole block turns into a paragraph.
+      // Lift text out of a code block into regular paragraphs, one per line.
+      // Selection -> cut the block into: code(before) + paragraphs(selected) + code(after).
+      // No selection (cursor in the block) -> the whole block turns into paragraphs.
       liftFromCodeBlock: () => function(props) {
         var state = props.state;
         var dispatch = props.dispatch;
@@ -497,7 +629,7 @@ export const FormattableCodeBlock = CodeBlock.extend({
         var paraType = state.schema.nodes.paragraph;
         var nodes = [];
         if (fragBefore.size) nodes.push(cbNode.type.create(cbNode.attrs, fragBefore));
-        nodes.push(paraType.create(null, fragMiddle));
+        nodes = nodes.concat(linesToParagraphs(fragMiddle, paraType));
         if (fragAfter.size) nodes.push(cbNode.type.create(cbNode.attrs, fragAfter));
 
         tr.replaceWith(before, before + cbNode.nodeSize, nodes);
@@ -512,16 +644,43 @@ export const FormattableCodeBlock = CodeBlock.extend({
 // With the same engine and the same classes as in the editor, otherwise the same
 // code would look different in these modes.
 
-function escapeHtml(text) {
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
+// Colors a saved block in place. The block may hold formatting from the editor
+// (bold, links, colors), so its markup is not replaced: the text nodes are cut
+// at token boundaries and the pieces are wrapped in highlight spans inside that
+// formatting. A token that crosses a formatting boundary gets a span on each side.
+function paintTokens(code, tokens) {
+  var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT);
+  var textNodes = [];
+  for (var node = walker.nextNode(); node; node = walker.nextNode()) textNodes.push(node);
 
-function hastToHtml(node) {
-  if (node.type === 'text') return escapeHtml(node.value);
-  var inner = (node.children || []).map(hastToHtml).join('');
-  if (node.type !== 'element') return inner;
-  var classes = (node.properties && node.properties.className) || [];
-  return '<span class="' + escapeHtml(classes.join(' ')) + '">' + inner + '</span>';
+  var offset = 0;
+  var t = 0;
+  textNodes.forEach(function(textNode) {
+    var text = textNode.nodeValue;
+    var start = offset;
+    var end = offset + text.length;
+    offset = end;
+    while (t < tokens.length && tokens[t].to <= start) t++;
+    if (!text || t >= tokens.length || tokens[t].from >= end) return;
+
+    var fragment = document.createDocumentFragment();
+    var pos = start;
+    while (t < tokens.length && tokens[t].from < end) {
+      var token = tokens[t];
+      var from = Math.max(token.from, start);
+      var to = Math.min(token.to, end);
+      if (from > pos) fragment.appendChild(document.createTextNode(text.slice(pos - start, from - start)));
+      var span = document.createElement('span');
+      span.className = token.cls;
+      span.textContent = text.slice(from - start, to - start);
+      fragment.appendChild(span);
+      pos = to;
+      if (token.to > end) break;          // the token goes on in the next text node
+      t++;
+    }
+    if (pos < end) fragment.appendChild(document.createTextNode(text.slice(pos - start)));
+    textNode.parentNode.replaceChild(fragment, textNode);
+  });
 }
 
 function languageOf(codeEl) {
@@ -538,27 +697,32 @@ var viewHighlightObserver = window.IntersectionObserver
       entries.forEach(function(entry) {
         if (!entry.isIntersecting) return;
         viewHighlightObserver.unobserve(entry.target);
+        observedCodes.delete(entry.target);
         highlightCodeElement(entry.target);
       });
     }, { rootMargin: '300px 0px' })
   : null;
 
-// Which blocks have already been handed to the observer. Not a flag on the element:
-// Redmine replaces <pre> with a copy, the flag would be copied along with it, and
-// nobody would highlight the copy.
-var observedCodes = new WeakSet();
+// Which blocks the observer is watching. Not a flag on the element: Redmine
+// replaces <pre> with a copy, the flag would be copied along with it, and nobody
+// would highlight the copy. A block that Redmine replaced before it came into
+// view is dropped from the observer on the next pass (highlightSavedCodeBlocks),
+// so that the observer does not keep the detached element alive.
+var observedCodes = new Set();
 
 function highlightCodeElement(code) {
   if (code.dataset.tiptapHighlighted || !code.isConnected) return;
   code.dataset.tiptapHighlighted = '1';
-  var language = languageOf(code);
-  if (!hasLanguage(language) || !lowlight.registered(language)) return;
-  try {
-    code.innerHTML = hastToHtml(lowlight.highlight(language, code.textContent));
-  } catch (e) { /* unknown grammar - leave the text as is */ }
+  paintTokens(code, textTokens(languageOf(code), code.textContent));
 }
 
 export function highlightSavedCodeBlocks() {
+  observedCodes.forEach(function(code) {
+    if (code.isConnected) return;
+    viewHighlightObserver.unobserve(code);
+    observedCodes.delete(code);
+  });
+
   var blocks = document.querySelectorAll('.wiki pre > code');
 
   Array.prototype.forEach.call(blocks, function(code) {
@@ -566,8 +730,9 @@ export function highlightSavedCodeBlocks() {
 
     var language = languageOf(code);
 
-    // Highlighting. The tiptapHighlighted flag is set only after coloring, and when
-    // <pre> is replaced with a copy, it gets copied along with the finished colors.
+    // Highlighting. A block is flagged with tiptapHighlighted when it is colored;
+    // when Redmine replaces <pre> with a copy afterwards, the copy gets the flag
+    // together with the finished colors.
     if (!code.dataset.tiptapHighlighted && !observedCodes.has(code)) {
       if (viewHighlightObserver) {
         observedCodes.add(code);
