@@ -15,9 +15,42 @@ module Redmine
         # mode they produced an empty line above and below the block - strip them
         # here as well, so that view mode matches the editor.
         def to_html(*args)
-          @text.to_s
-               .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
-               .gsub(%r{\n(</code></pre>)}, '\1')
+          html = @text.to_s
+                      .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
+                      .gsub(%r{\n(</code></pre>)}, '\1')
+          html = unwrap_quotes(html) if html.include?('tiptap-quote')
+          html
+        end
+
+        private
+
+        # Earlier versions of the editor wrapped a quote block in one more plain
+        # <blockquote> every time a saved text was opened (see tiptap_quote.js),
+        # so texts saved with them show the quote nested several levels deep.
+        # Drop such wrappers: a plain blockquote with nothing but a quote block
+        # (or another wrapper) inside.
+        def unwrap_quotes(html)
+          fragment = Nokogiri::HTML::DocumentFragment.parse(html)
+          changed = false
+          while (wrapper = fragment.css('blockquote').find { |el| wraps_only_quote?(el) })
+            wrapper.replace(wrapper.element_children.first)
+            changed = true
+          end
+          changed ? fragment.to_html : html
+        end
+
+        def wraps_only_quote?(el)
+          return false if quote_block?(el)
+          return false if el.children.any? { |node| node.text? && node.text.strip != '' }
+
+          children = el.element_children
+          return false unless children.size == 1 && children.first.name == 'blockquote'
+
+          quote_block?(children.first) || wraps_only_quote?(children.first)
+        end
+
+        def quote_block?(el)
+          el['class'].to_s.split.include?('tiptap-quote')
         end
       end
 
