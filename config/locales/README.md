@@ -4,38 +4,48 @@
 
 The texts of the editor (tooltips of the toolbar, menus, dialogs, the code language list, the texts of blocks it inserts) are not in the JavaScript. They are in the files of this folder, one file per language.
 
-The editor shows them in the language chosen in the user's Redmine profile (My account → Language). Someone who is not logged in gets the language Redmine picks for them: that of the browser if Redmine has it, otherwise the default language of Redmine. A language that has no file here is shown in English, and so is every text missing from a file.
+The editor shows them in the language chosen in the user's Redmine profile (My account → Language). Someone who is not logged in gets the language Redmine picks for them: that of the browser if Redmine has it, otherwise the default language of Redmine. A text missing from a file is shown in English (a language with a region looks in the language without it first, see [Regional variants](#regional-variants)).
+
+Every one of the 50 languages of Redmine has a file here:
 
 | File | Language |
 |---|---|
 | `en.yml` | English. The source of all translations: every text is here. |
-| `ru.yml` | Russian. |
+| `ru.yml` | Russian, by the author of the plugin. |
+| the other 48 files | The other languages of Redmine, see the [table](#languages-of-redmine) below. |
 
-## Adding a language
+**These 48 translations are drafts.** They were made with the help of an AI model and have not been reviewed by native speakers. They keep to the wording of Redmine's own interface in each language, but expect an odd phrase here and there. Corrections are welcome.
 
-1. Find the code of the language in the [list of Redmine languages](#languages-of-redmine) below. Only these codes work: a file for any other code would never be used.
-2. Copy `en.yml` to `<code>.yml`, for example `de.yml`.
-3. Change the first line from `en:` to `<code>:` (`de:`). For Norwegian write `"no":` in quotes, because YAML reads a bare `no:` as the word "false".
-4. Translate the values and keep the keys (the words before the colon) as they are. Keep double quotes around the texts. The first characters of the list items (`☑`, `•`, `1.`, `a.`) are part of the text and may stay. The texts are plain text, HTML in them is shown as it is.
-5. Check the file, from the Redmine folder:
+## Improving a translation
+
+1. Open `<code>.yml` of the language and change the values. Keep the keys (the words before the colon) as they are, and keep double quotes around the texts. The first characters of the list items (`☑`, `•`, `1.`, `a.`) are part of the text and may stay. The texts are plain text, HTML in them is shown as it is.
+2. Check the file, from the Redmine folder:
    ```sh
    bundle exec rake redmine_tiptap:locales RAILS_ENV=production
    ```
-6. Restart Redmine.
+3. Restart Redmine to see the change.
+4. Send the file as a pull request, or open an issue with what should be changed. When a native speaker has gone through a whole file, its "draft" note is removed from the header of the file and from the table below.
 
-You do not have to translate everything at once: a text that is left out, or left empty, is shown in English. Run the check with `LOCALE=de` to list what `de.yml` still lacks:
+The check also tells about the keys that are not in `en.yml` (a typo, or a text that was removed), a file whose first line does not match its name, a code that is not a language of Redmine, and invalid YAML. It exits with an error if it finds any, so it can be run from a script. To see what a language still lacks, add `LOCALE=de`:
 
 ```sh
 bundle exec rake redmine_tiptap:locales LOCALE=de RAILS_ENV=production
 ```
 
-The check also tells about the keys that are not in `en.yml` (a typo, or a text that was removed), a file whose first line does not match its name, a code that is not a language of Redmine, and invalid YAML. It exits with an error if it finds any, so it can be run from a script.
-
 When the plugin gets a new text, it is added to `en.yml` and `ru.yml`. Until a language file has it, the text is shown in English; the check lists it.
+
+## Adding a language
+
+All languages of Redmine 6.1.4 have a file already. This is for a language that a later Redmine brings.
+
+1. Find its code in the [list of Redmine languages](#languages-of-redmine) (only such codes work: a file for any other code would never be used).
+2. Copy `en.yml` to `<code>.yml`, for example `de.yml`.
+3. Change the first line from `en:` to `<code>:` (`de:`). For Norwegian write `"no":` in quotes, because YAML reads a bare `no:` as the word "false".
+4. Translate the values as described above. You do not have to translate everything at once: a text that is left out, or left empty, is shown in English.
 
 ## Regional variants
 
-A language with a region falls back to the language without it, and then to English:
+A language with a region falls back to the language without it, and then to English, text by text:
 
 | Code | Falls back to |
 |---|---|
@@ -45,7 +55,7 @@ A language with a region falls back to the language without it, and then to Engl
 | `es-PA` | `es` |
 | `sr-YU` | `sr` |
 
-So it is enough to translate `pt` once, and `pt-BR.yml` is only needed for texts that differ in Brazil. Note that `zh-TW` (Traditional Chinese) without a file of its own shows `zh` (Simplified Chinese), not English.
+`pt-BR.yml` (Brazilian Portuguese), `zh-TW.yml` (Traditional Chinese) and `sr-YU.yml` (Serbian in Latin script) are complete translations of their own. `en-GB.yml` and `es-PA.yml` hold only the few texts that differ from `en.yml` (British spelling: colour, centre) and `es.yml`; every other text comes from the language without the region, so a fix of a common text belongs in `en.yml` or `es.yml`. `ta-IN` (Tamil) has no language to fall back to: Redmine has no plain `ta`.
 
 ## Names of syntax highlighting languages
 
@@ -61,63 +71,65 @@ de:
         keywords: "..."   # extra search words, added to the English ones
 ```
 
-All three are optional. Searching always works with the English words as well. `ru.yml` has real examples. The `id` must be the name of a file in `highlight/` (the check tells about a wrong one).
+All three are optional. Searching always works with the English words as well. `ru.yml` has real examples; the draft translations leave the names in English. The `id` must be the name of a file in `highlight/` (the check tells about a wrong one).
 
 ## Languages of Redmine
 
-These are the languages of Redmine 6.1.4. The code is the name of the file in Redmine's own `config/locales`.
+These are the languages of Redmine 6.1.4. The code is the name of the file in Redmine's own `config/locales`. "Draft" is explained above.
 
-| Code | Language |
-|---|---|
-| `sq` | Albanian (Shqip) |
-| `ar` | Arabic (عربي) (right to left) |
-| `az` | Azerbaijani (Azeri) |
-| `eu` | Basque (Euskara) |
-| `bs` | Bosnian (Bosanski) |
-| `bg` | Bulgarian (Български) |
-| `ca` | Catalan (Català) |
-| `zh` | Chinese/Simplified (简体中文) |
-| `zh-TW` | Chinese/Traditional (繁體中文) |
-| `hr` | Croatian (Hrvatski) |
-| `cs` | Czech (Čeština) |
-| `da` | Danish (Dansk) |
-| `nl` | Dutch (Nederlands) |
-| `en` | English |
-| `en-GB` | English (British) |
-| `et` | Estonian (Eesti) |
-| `fi` | Finnish (Suomi) |
-| `fr` | French (Français) |
-| `gl` | Galician (Galego) |
-| `de` | German (Deutsch) |
-| `el` | Greek (Ελληνικά) |
-| `he` | Hebrew (עברית) (right to left) |
-| `hu` | Hungarian (Magyar) |
-| `id` | Indonesian (Bahasa Indonesia) |
-| `it` | Italian (Italiano) |
-| `ja` | Japanese (日本語) |
-| `ko` | Korean (한국어) |
-| `lv` | Latvian (Latviešu) |
-| `lt` | Lithuanian (lietuvių) |
-| `mk` | Macedonian (Македонски) |
-| `mn` | Mongolian (Монгол) |
-| `no` | Norwegian (Norsk bokmål) |
-| `fa` | Persian (فارسی) (right to left) |
-| `pl` | Polish (Polski) |
-| `pt` | Portuguese (Português) |
-| `pt-BR` | Portuguese/Brazil (Português/Brasil) |
-| `ro` | Romanian (Română) |
-| `ru` | Russian (Русский) |
-| `sr-YU` | Serbian (Srpski) |
-| `sr` | Serbian Cyrillic (Српски) |
-| `sk` | Slovak (Slovenčina) |
-| `sl` | Slovene (Slovenščina) |
-| `es` | Spanish (Español) |
-| `es-PA` | Spanish/Panama (Español/Panamá) |
-| `sv` | Swedish (Svenska) |
-| `ta-IN` | Tamil (தமிழ்) |
-| `th` | Thai (ไทย) |
-| `tr` | Turkish (Türkçe) |
-| `uk` | Ukrainian (Українська) |
-| `vi` | Vietnamese (Tiếng Việt) |
+| Code | Language | Translation |
+|---|---|---|
+| `sq` | Albanian (Shqip) | draft |
+| `ar` | Arabic (عربي), right to left | draft |
+| `az` | Azerbaijani (Azeri) | draft |
+| `eu` | Basque (Euskara) | draft |
+| `bs` | Bosnian (Bosanski) | draft |
+| `bg` | Bulgarian (Български) | draft |
+| `ca` | Catalan (Català) | draft |
+| `zh` | Chinese/Simplified (简体中文) | draft |
+| `zh-TW` | Chinese/Traditional (繁體中文) | draft |
+| `hr` | Croatian (Hrvatski) | draft |
+| `cs` | Czech (Čeština) | draft |
+| `da` | Danish (Dansk) | draft |
+| `nl` | Dutch (Nederlands) | draft |
+| `en` | English | source |
+| `en-GB` | English (British) | draft, only what differs from `en` |
+| `et` | Estonian (Eesti) | draft |
+| `fi` | Finnish (Suomi) | draft |
+| `fr` | French (Français) | draft |
+| `gl` | Galician (Galego) | draft |
+| `de` | German (Deutsch) | draft |
+| `el` | Greek (Ελληνικά) | draft |
+| `he` | Hebrew (עברית), right to left | draft |
+| `hu` | Hungarian (Magyar) | draft |
+| `id` | Indonesian (Bahasa Indonesia) | draft |
+| `it` | Italian (Italiano) | draft |
+| `ja` | Japanese (日本語) | draft |
+| `ko` | Korean (한국어) | draft |
+| `lv` | Latvian (Latviešu) | draft |
+| `lt` | Lithuanian (lietuvių) | draft |
+| `mk` | Macedonian (Македонски) | draft |
+| `mn` | Mongolian (Монгол) | draft |
+| `no` | Norwegian (Norsk bokmål) | draft |
+| `fa` | Persian (فارسی), right to left | draft |
+| `pl` | Polish (Polski) | draft |
+| `pt` | Portuguese (Português) | draft |
+| `pt-BR` | Portuguese/Brazil (Português/Brasil) | draft |
+| `ro` | Romanian (Română) | draft |
+| `ru` | Russian (Русский) | by the author |
+| `sr-YU` | Serbian (Srpski) | draft |
+| `sr` | Serbian Cyrillic (Српски) | draft |
+| `sk` | Slovak (Slovenčina) | draft |
+| `sl` | Slovene (Slovenščina) | draft |
+| `es` | Spanish (Español) | draft |
+| `es-PA` | Spanish/Panama (Español/Panamá) | draft, only what differs from `es` |
+| `sv` | Swedish (Svenska) | draft |
+| `ta-IN` | Tamil (தமிழ்) | draft |
+| `th` | Thai (ไทย) | draft |
+| `tr` | Turkish (Türkçe) | draft |
+| `uk` | Ukrainian (Українська) | draft |
+| `vi` | Vietnamese (Tiếng Việt) | draft |
 
-The editor has not been checked in the languages written right to left (Arabic, Hebrew, Persian).
+## Right-to-left languages
+
+Arabic, Hebrew and Persian are written right to left. Redmine mirrors the page for them, and the editor follows it: the toolbar and the texts are laid out right to left. One flaw is known: a code block follows the direction of the page too, so the language badge in its top right corner can cover the first characters of the first line of code.
