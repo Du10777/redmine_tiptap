@@ -53,7 +53,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 **Redmine integration**
 - Works in all Redmine text fields with formatting: issue descriptions and notes, wiki pages, news, forum messages, documents, project descriptions, long text custom fields, including fields that appear on the page later.
 - Text is stored as HTML. To use the editor, choose *TipTap HTML* as the text formatting in Redmine settings.
-- The interface (tooltips, menus, dialogs) follows the language in the user's Redmine profile. All 50 languages of Redmine come with the plugin: English and Russian are complete, the other 48 are drafts made with an AI model that native speakers are welcome to correct (see [Interface language](#interface-language)).
+- The interface (tooltips, menus, dialogs) follows the language in the user's Redmine profile. 47 of the 50 languages of Redmine come with the plugin: English and Russian are complete, the other 45 are drafts made with an AI model that native speakers are welcome to correct. The three languages written right to left (Arabic, Hebrew, Persian) are deliberately not supported (see [Interface language](#interface-language)).
 - Stays fast on large texts: editors in hidden forms are created only when the form is opened, and long code blocks are highlighted when they scroll into view.
 - Saved texts are shown without unsafe HTML: scripts, event handlers and `javascript:` links are removed when a page is displayed, only what the editor itself produces is kept. This covers texts that come through the REST API or the `<HTML>` mode as well.
 
@@ -74,9 +74,11 @@ Details: [highlight/README/en.md](highlight/README/en.md) (на русском: 
 
 ## Interface language
 
-The editor speaks the language chosen in the user's Redmine profile (My account → Language). A file for each of the 50 languages of Redmine 6 comes with the plugin, in `config/locales/`. English is the source and Russian is the author's own; the other 48 are drafts made with the help of an AI model and not yet reviewed by native speakers, so expect an odd phrase here and there. A text missing from a file is shown in English.
+The editor speaks the language chosen in the user's Redmine profile (My account → Language). Files for 47 of the 50 languages of Redmine 6 come with the plugin, in `config/locales/`. English is the source and Russian is the author's own; the other 45 are drafts made with the help of an AI model and not yet reviewed by native speakers, so expect an odd phrase here and there. A text missing from a file is shown in English.
 
 To correct a translation, change its values in `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) and restart Redmine. `bundle exec rake redmine_tiptap:locales` checks the files. Pull requests with corrections are welcome.
+
+**The languages written right to left (Arabic, Hebrew, Persian) are deliberately not supported.** Supporting them takes many changes to the code base, not only a translation, and we chose not to take that on. For these languages the editor is shown in English and its layout is not adjusted. If you need one of them, make a fork: the translation mechanism is ready, and what else has to be changed is listed in [config/locales/README.md](config/locales/README.md#right-to-left-languages).
 
 Details and the list of Redmine languages: [config/locales/README.md](config/locales/README.md) (на русском: [config/locales/README.ru.md](config/locales/README.ru.md)).
 

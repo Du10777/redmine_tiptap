@@ -6,15 +6,15 @@ The texts of the editor (tooltips of the toolbar, menus, dialogs, the code langu
 
 The editor shows them in the language chosen in the user's Redmine profile (My account → Language). Someone who is not logged in gets the language Redmine picks for them: that of the browser if Redmine has it, otherwise the default language of Redmine. A text missing from a file is shown in English (a language with a region looks in the language without it first, see [Regional variants](#regional-variants)).
 
-Every one of the 50 languages of Redmine has a file here:
+47 of the 50 languages of Redmine have a file here. The other three are written right to left and are deliberately not supported, see [Right-to-left languages](#right-to-left-languages).
 
 | File | Language |
 |---|---|
 | `en.yml` | English. The source of all translations: every text is here. |
 | `ru.yml` | Russian, by the author of the plugin. |
-| the other 48 files | The other languages of Redmine, see the [table](#languages-of-redmine) below. |
+| the other 45 files | The other languages of Redmine, see the [table](#languages-of-redmine) below. |
 
-**These 48 translations are drafts.** They were made with the help of an AI model and have not been reviewed by native speakers. They keep to the wording of Redmine's own interface in each language, but expect an odd phrase here and there. Corrections are welcome.
+**These 45 translations are drafts.** They were made with the help of an AI model and have not been reviewed by native speakers. They keep to the wording of Redmine's own interface in each language, but expect an odd phrase here and there. Corrections are welcome.
 
 ## Improving a translation
 
@@ -36,7 +36,7 @@ When the plugin gets a new text, it is added to `en.yml` and `ru.yml`. Until a l
 
 ## Adding a language
 
-All languages of Redmine 6.1.4 have a file already. This is for a language that a later Redmine brings.
+All languages of Redmine 6.1.4 have a file already, except the three written right to left (see [Right-to-left languages](#right-to-left-languages)). This section is for a language that a later Redmine brings, and for a fork that adds one of those three.
 
 1. Find its code in the [list of Redmine languages](#languages-of-redmine) (only such codes work: a file for any other code would never be used).
 2. Copy `en.yml` to `<code>.yml`, for example `de.yml`.
@@ -80,7 +80,7 @@ These are the languages of Redmine 6.1.4. The code is the name of the file in Re
 | Code | Language | Translation |
 |---|---|---|
 | `sq` | Albanian (Shqip) | draft |
-| `ar` | Arabic (عربي), right to left | draft |
+| `ar` | Arabic (عربي), right to left | not supported, see below |
 | `az` | Azerbaijani (Azeri) | draft |
 | `eu` | Basque (Euskara) | draft |
 | `bs` | Bosnian (Bosanski) | draft |
@@ -100,7 +100,7 @@ These are the languages of Redmine 6.1.4. The code is the name of the file in Re
 | `gl` | Galician (Galego) | draft |
 | `de` | German (Deutsch) | draft |
 | `el` | Greek (Ελληνικά) | draft |
-| `he` | Hebrew (עברית), right to left | draft |
+| `he` | Hebrew (עברית), right to left | not supported, see below |
 | `hu` | Hungarian (Magyar) | draft |
 | `id` | Indonesian (Bahasa Indonesia) | draft |
 | `it` | Italian (Italiano) | draft |
@@ -111,7 +111,7 @@ These are the languages of Redmine 6.1.4. The code is the name of the file in Re
 | `mk` | Macedonian (Македонски) | draft |
 | `mn` | Mongolian (Монгол) | draft |
 | `no` | Norwegian (Norsk bokmål) | draft |
-| `fa` | Persian (فارسی), right to left | draft |
+| `fa` | Persian (فارسی), right to left | not supported, see below |
 | `pl` | Polish (Polski) | draft |
 | `pt` | Portuguese (Português) | draft |
 | `pt-BR` | Portuguese/Brazil (Português/Brasil) | draft |
@@ -132,4 +132,13 @@ These are the languages of Redmine 6.1.4. The code is the name of the file in Re
 
 ## Right-to-left languages
 
-Arabic, Hebrew and Persian are written right to left. Redmine mirrors the page for them, and the editor follows it: the toolbar and the texts are laid out right to left. One flaw is known: a code block follows the direction of the page too, so the language badge in its top right corner can cover the first characters of the first line of code.
+Arabic (`ar`), Hebrew (`he`) and Persian (`fa`) are written right to left. **The plugin does not support them, and this is a deliberate decision.** Supporting a language written right to left takes many changes to the code base, not only a translation file, and we chose not to take on that work and its upkeep. For a user whose Redmine language is one of the three there is no file here, so the editor is shown in English. Redmine mirrors the page, but the layout of the editor is not adjusted and not tested, and parts of it may look wrong.
+
+If you need one of these languages, make a fork. The translation side is ready: copy `en.yml` to `ar.yml`, `he.yml` or `fa.yml` and translate it, as described in [Adding a language](#adding-a-language). The rest is the layout. When it was tried, these were the places that needed work:
+
+- The styles of the editor name the left and the right side in about a dozen places: the border of a quote, the indent of lists, the corner of the language badge and the "Copy" button, the arrow of the font size box, the resize handle, the alignment of table headers. They have to be replaced with the start and the end of the line (CSS logical properties such as `padding-inline-start` and `inset-inline-end`).
+- On a right-to-left page Redmine 6 pads every paragraph of a form at the right by the width of the label column. The plugin resets only the left padding, so the text of the editor is pushed 180px from the edge and every table becomes five times wider.
+- The dropdown menus, the colour palette and the language list are placed by the left edge of their button. On a right-to-left page they have to be placed by the right edge, or they run off the page.
+- Code is better drawn left to right whatever the direction of the page. Otherwise the bidirectional text algorithm of the browser reorders the parts of a line of code (a lone `}` is shown as `{`), and the language badge covers the first characters of a line.
+- The indent buttons write `margin-left` into the saved text, so right-aligned text does not move. A fix has to change the saved format and the list of allowed styles in `lib/redmine/wiki_formatting/tiptap/sanitizer.rb`.
+- The table library drags a column border the wrong way round on a right-to-left page.

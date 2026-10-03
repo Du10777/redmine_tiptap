@@ -1,10 +1,12 @@
 # Interface strings of the TipTap editor: English, the source of all translations.
 #
 # The editor shows these texts in the language the user has chosen in their Redmine
-# profile (My account -> Language). Every language Redmine offers has a file here; all
-# of them except this one and ru.yml are drafts made with the help of an AI model, not
-# yet reviewed by native speakers. A string missing from a language file is shown in
-# English (a language with a region looks in the language without it first).
+# profile (My account -> Language). Every language Redmine offers has a file here, except
+# the three written right to left (Arabic, Hebrew, Persian), which the plugin deliberately
+# does not support (see config/locales/README.md). All the files but this one and ru.yml
+# are drafts made with the help of an AI model, not yet reviewed by native speakers. A
+# string missing from a language file is shown in English (a language with a region looks
+# in the language without it first).
 #
 # To correct a translation, edit its file. To add a language Redmine gains later, copy
 # this file to config/locales/<code>.yml, where <code> is the code of the language (see
