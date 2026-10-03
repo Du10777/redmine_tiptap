@@ -3,6 +3,7 @@ import { textblockTypeInputRule } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { createLowlight } from 'lowlight';
+import { t, tOptional } from './tiptap_i18n.js';
 
 // One highlighting engine for both the editor and the view mode - otherwise the
 // colors in these two modes drift apart.
@@ -20,8 +21,10 @@ var LANGUAGES = (window.TiptapHighlightLanguages || []).filter(function(lang) {
 export const lowlight = createLowlight();
 
 // How a language is labeled in the list and on the badge, its hint in the list, and
-// the words it can be found by - all of this is set in the language file. Languages
-// without a label are shown under their identifier.
+// the words it can be found by. The language file gives the base texts (English);
+// the locale files (config/locales) can change the label and the hint and add search
+// words for the user's language: code_languages.<id>.label / hint / keywords.
+// Languages without a label are shown under their identifier.
 var LANGUAGE_INFO = {};
 
 // Alias -> language id (js -> javascript), for ```js typed in the editor.
@@ -50,13 +53,29 @@ if (!lowlight.registered('plaintext')) {
   });
 }
 
-function labelOf(language) {
-  return (LANGUAGE_INFO[language] && LANGUAGE_INFO[language].label) || language;
+// The translation of a language's text (label, hint or keywords) from the locale
+// files, if there is one.
+function translatedInfo(language, field) {
+  return tOptional('code_languages.' + language + '.' + field);
 }
 
+function labelOf(language) {
+  return translatedInfo(language, 'label') ||
+    (LANGUAGE_INFO[language] && LANGUAGE_INFO[language].label) || language;
+}
+
+function hintOf(language) {
+  return translatedInfo(language, 'hint') || (LANGUAGE_INFO[language] && LANGUAGE_INFO[language].hint) || '';
+}
+
+// The words the search box looks in: the id, both the base and the translated label
+// and hint, and the base and the translated keywords.
 function searchTextOf(language) {
   var info = LANGUAGE_INFO[language] || {};
-  return [language, info.label || '', info.hint || '', info.keywords || ''].join(' ').toLowerCase();
+  return [
+    language, info.label, info.hint, info.keywords,
+    translatedInfo(language, 'label'), translatedInfo(language, 'hint'), translatedInfo(language, 'keywords'),
+  ].filter(Boolean).join(' ').toLowerCase();
 }
 
 export const CODE_LANGUAGES = lowlight.listLanguages().slice().sort(function(a, b) {
@@ -147,7 +166,7 @@ function openLanguagePanel(anchorEl, current, onPick) {
   var search = document.createElement('input');
   search.type = 'text';
   search.className = 'tiptap-lang-search';
-  search.placeholder = 'Поиск языка';
+  search.placeholder = t('code_block.search_language');
   panel.appendChild(search);
 
   var list = document.createElement('div');
@@ -165,7 +184,7 @@ function openLanguagePanel(anchorEl, current, onPick) {
     option.className = 'tiptap-lang-option';
     if (language === current) option.className += ' active';
     option.textContent = label || labelOf(language);
-    var hint = !label && LANGUAGE_INFO[language] && LANGUAGE_INFO[language].hint;
+    var hint = !label && hintOf(language);
     if (hint) {
       var hintEl = document.createElement('span');
       hintEl.className = 'tiptap-lang-hint';
@@ -197,7 +216,7 @@ function openLanguagePanel(anchorEl, current, onPick) {
       if (!matches.length) {
         var empty = document.createElement('div');
         empty.className = 'tiptap-lang-empty';
-        empty.textContent = 'Ничего не найдено';
+        empty.textContent = t('code_block.nothing_found');
         list.appendChild(empty);
         return;
       }
@@ -205,11 +224,11 @@ function openLanguagePanel(anchorEl, current, onPick) {
       return;
     }
 
-    addOption(NO_LANGUAGE, 'Без подсветки (plaintext)');
+    addOption(NO_LANGUAGE, t('code_block.no_highlighting'));
 
     var recent = recentLanguages();
     if (recent.length) {
-      addGroup('Недавние');
+      addGroup(t('code_block.recent'));
       recent.forEach(function(lang) { addOption(lang); });
     }
 
@@ -217,11 +236,11 @@ function openLanguagePanel(anchorEl, current, onPick) {
       return recent.indexOf(lang) === -1;
     });
     if (frequent.length) {
-      addGroup('Частые');
+      addGroup(t('code_block.frequent'));
       frequent.forEach(function(lang) { addOption(lang); });
     }
 
-    addGroup('Все языки');
+    addGroup(t('code_block.all_languages'));
     CODE_LANGUAGES.forEach(function(lang) {
       if (lang !== NO_LANGUAGE) addOption(lang);   // already shown as the first item
     });
@@ -530,7 +549,7 @@ export const FormattableCodeBlock = CodeBlock.extend({
       var badge = document.createElement('div');
       badge.className = 'tiptap-code-lang';
       badge.contentEditable = 'false';
-      badge.title = 'Язык блока кода — нажать, чтобы выбрать';
+      badge.title = t('code_block.badge_title');
 
       function syncLanguage(currentNode) {
         var language = currentNode.attrs.language || NO_LANGUAGE;
@@ -542,7 +561,7 @@ export const FormattableCodeBlock = CodeBlock.extend({
           // Without a language nothing is labeled: the badge is hidden and appears
           // only on hovering over the block - otherwise there would be nowhere to
           // pick the language.
-          badge.textContent = 'язык';
+          badge.textContent = t('code_block.badge_empty');
           badge.classList.add('tiptap-code-lang-empty');
         }
       }
@@ -654,19 +673,19 @@ function paintTokens(code, tokens) {
   for (var node = walker.nextNode(); node; node = walker.nextNode()) textNodes.push(node);
 
   var offset = 0;
-  var t = 0;
+  var ti = 0;
   textNodes.forEach(function(textNode) {
     var text = textNode.nodeValue;
     var start = offset;
     var end = offset + text.length;
     offset = end;
-    while (t < tokens.length && tokens[t].to <= start) t++;
-    if (!text || t >= tokens.length || tokens[t].from >= end) return;
+    while (ti < tokens.length && tokens[ti].to <= start) ti++;
+    if (!text || ti >= tokens.length || tokens[ti].from >= end) return;
 
     var fragment = document.createDocumentFragment();
     var pos = start;
-    while (t < tokens.length && tokens[t].from < end) {
-      var token = tokens[t];
+    while (ti < tokens.length && tokens[ti].from < end) {
+      var token = tokens[ti];
       var from = Math.max(token.from, start);
       var to = Math.min(token.to, end);
       if (from > pos) fragment.appendChild(document.createTextNode(text.slice(pos - start, from - start)));
@@ -676,7 +695,7 @@ function paintTokens(code, tokens) {
       fragment.appendChild(span);
       pos = to;
       if (token.to > end) break;          // the token goes on in the next text node
-      t++;
+      ti++;
     }
     if (pos < end) fragment.appendChild(document.createTextNode(text.slice(pos - start)));
     textNode.parentNode.replaceChild(fragment, textNode);

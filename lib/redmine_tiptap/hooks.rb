@@ -1,3 +1,5 @@
+require_relative 'translations'
+
 module RedmineTiptap
   class Hooks < Redmine::Hook::ViewListener
     # Scripts and styles are served through the Redmine asset pipeline (Propshaft). The file
@@ -9,10 +11,22 @@ module RedmineTiptap
     # application-legacy with the attachment functions) are already loaded, and strictly in
     # the order they are included. That is why the highlight languages (tiptap_highlight,
     # built from the highlight/ folder) come before the editor: it picks them up on startup.
+    #
+    # The interface strings go before them as an inline script: it runs while the page is
+    # parsed, so the dictionary is there when the deferred scripts start. It is built for
+    # the language of this request, which Redmine has taken from the user's profile.
     def view_layouts_base_html_head(context = {})
-      javascript_include_tag('tiptap_highlight', plugin: 'redmine_tiptap', defer: true) +
+      javascript_tag("window.TiptapI18n = #{dictionary_json};") +
+        javascript_include_tag('tiptap_highlight', plugin: 'redmine_tiptap', defer: true) +
         javascript_include_tag('tiptap_bundle', plugin: 'redmine_tiptap', defer: true) +
         stylesheet_link_tag('tiptap_editor', plugin: 'redmine_tiptap')
+    end
+
+    private
+
+    # json_escape makes the JSON safe inside <script> (no "</script>" or "<!--" in it).
+    def dictionary_json
+      ERB::Util.json_escape(Translations.dictionary.to_json)
     end
   end
 end

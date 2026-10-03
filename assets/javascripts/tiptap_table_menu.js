@@ -1,3 +1,5 @@
+import { t } from './tiptap_i18n.js';
+
 // Right-click menu for working with a table
 export function setupTableContextMenu(editorDiv, editor) {
   editorDiv.addEventListener('contextmenu', function(e) {
@@ -13,21 +15,21 @@ export function setupTableContextMenu(editorDiv, editor) {
     menu.id = 'tiptap-table-menu';
 
     var items = [
-      { label: 'Добавить столбец слева',  action: function() { editor.chain().focus().addColumnBefore().run(); } },
-      { label: 'Добавить столбец справа', action: function() { editor.chain().focus().addColumnAfter().run(); } },
-      { label: 'Удалить столбец',         action: function() { editor.chain().focus().deleteColumn().run(); } },
+      { label: t('table_menu.add_column_left'),  action: function() { editor.chain().focus().addColumnBefore().run(); } },
+      { label: t('table_menu.add_column_right'), action: function() { editor.chain().focus().addColumnAfter().run(); } },
+      { label: t('table_menu.delete_column'),         action: function() { editor.chain().focus().deleteColumn().run(); } },
       { sep: true },
-      { label: 'Добавить строку сверху',  action: function() { editor.chain().focus().addRowBefore().run(); } },
-      { label: 'Добавить строку снизу',   action: function() { editor.chain().focus().addRowAfter().run(); } },
-      { label: 'Удалить строку',          action: function() { editor.chain().focus().deleteRow().run(); } },
+      { label: t('table_menu.add_row_above'),  action: function() { editor.chain().focus().addRowBefore().run(); } },
+      { label: t('table_menu.add_row_below'),   action: function() { editor.chain().focus().addRowAfter().run(); } },
+      { label: t('table_menu.delete_row'),          action: function() { editor.chain().focus().deleteRow().run(); } },
       { sep: true },
-      { label: 'Объединить ячейки',       action: function() { editor.chain().focus().mergeCells().run(); } },
-      { label: 'Разделить ячейку',        action: function() { editor.chain().focus().splitCell().run(); } },
+      { label: t('table_menu.merge_cells'),       action: function() { editor.chain().focus().mergeCells().run(); } },
+      { label: t('table_menu.split_cell'),        action: function() { editor.chain().focus().splitCell().run(); } },
       { sep: true },
-      { label: 'Первая строка — заголовок',  action: function() { editor.chain().focus().toggleHeaderRow().run(); } },
-      { label: 'Первый столбец — заголовок', action: function() { editor.chain().focus().toggleHeaderColumn().run(); } },
+      { label: t('table_menu.header_row'),  action: function() { editor.chain().focus().toggleHeaderRow().run(); } },
+      { label: t('table_menu.header_column'), action: function() { editor.chain().focus().toggleHeaderColumn().run(); } },
       { sep: true },
-      { label: 'Удалить таблицу', action: function() { editor.chain().focus().deleteTable().run(); }, danger: true },
+      { label: t('table_menu.delete_table'), action: function() { editor.chain().focus().deleteTable().run(); }, danger: true },
     ];
 
     items.forEach(function(item) {

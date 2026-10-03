@@ -10,6 +10,7 @@ import {
   Table, TableRow, TableHeader, TableCell,
   FormattableCodeBlock,
 } from './tiptap_extensions.js';
+import { t } from './tiptap_i18n.js';
 import { buildToolbar } from './tiptap_toolbar.js';
 import { highlightSavedCodeBlocks } from './tiptap_codeblock.js';
 import { setupTableContextMenu } from './tiptap_table_menu.js';
@@ -172,7 +173,7 @@ function clearManualHeight(wrapper) {
 function buildResizer(wrapper) {
   var grip = document.createElement('div');
   grip.className = 'tiptap-resizer';
-  grip.title = 'Потянуть — изменить высоту редактора, двойной клик — вернуть автоматическую';
+  grip.title = t('resizer.title');
 
   grip.addEventListener('pointerdown', function(event) {
     event.preventDefault();

@@ -3,8 +3,8 @@ import grammar from 'highlight.js/lib/languages/1c';
 
 export default {
   id: '1c',
-  label: '1С',
-  hint: '1С:Предприятие',
-  keywords: '1c 1с bsl предприятие enterprise',
+  label: '1C',
+  hint: '1C:Enterprise',
+  keywords: '1c bsl enterprise',
   grammar: grammar,
 };

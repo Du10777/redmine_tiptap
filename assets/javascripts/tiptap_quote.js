@@ -1,4 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core';
+import { t } from './tiptap_i18n.js';
 
 // Whether a plain <blockquote> holds nothing but our quote block (directly or
 // through more such wrappers). Earlier versions of the plugin produced these:
@@ -79,7 +80,7 @@ export function insertQuote(editor) {
 
   var bodyNodes;
   if (sel.empty) {
-    bodyNodes = [paragraphType.create(null, schema.text('Текст цитаты'))];
+    bodyNodes = [paragraphType.create(null, schema.text(t('quote.default_text')))];
   } else {
     var slice = sel.content();
     var nodes = [];
@@ -90,11 +91,11 @@ export function insertQuote(editor) {
         nodes.push(paragraphType.create(null, node));
       }
     });
-    bodyNodes = nodes.length > 0 ? nodes : [paragraphType.create(null, schema.text('Текст цитаты'))];
+    bodyNodes = nodes.length > 0 ? nodes : [paragraphType.create(null, schema.text(t('quote.default_text')))];
   }
 
   var block = schema.nodes.quoteBlock.create(null, [
-    schema.nodes.quoteHeader.create(null, schema.text('Автор, дата')),
+    schema.nodes.quoteHeader.create(null, schema.text(t('quote.default_header'))),
     schema.nodes.quoteBody.create(null, bodyNodes),
   ]);
 

@@ -6,8 +6,8 @@ import { logMessageRules } from './_common.js';
 export default {
   id: 'log',
   label: 'log',
-  hint: 'логи сервисов Linux',
-  keywords: 'logs syslog логи журнал linux',
+  hint: 'Linux service logs',
+  keywords: 'logs syslog journal linux',
   grammar: function() {
     return {
       name: 'log',

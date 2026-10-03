@@ -7,7 +7,7 @@ export default {
   id: 'journalctl',
   label: 'journalctl',
   hint: 'systemd',
-  keywords: 'journal systemd журнал логи',
+  keywords: 'journal systemd logs',
   grammar: function() {
     var timestamp = concat('(?:', TS_WEEKDAY, '|', TS_ISO, '|', TS_SYSLOG, '|', TS_MONOTONIC, ')');
     return {

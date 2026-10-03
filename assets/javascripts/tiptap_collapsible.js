@@ -1,3 +1,5 @@
+import { t } from './tiptap_i18n.js';
+
 export function insertCollapsible(editor) {
   var state = editor.view.state;
   var sel = state.selection;
@@ -6,7 +8,7 @@ export function insertCollapsible(editor) {
   var contentNodes;
 
   if (sel.empty) {
-    contentNodes = [paragraphType.create(null, state.schema.text('Содержимое'))];
+    contentNodes = [paragraphType.create(null, state.schema.text(t('collapsible.default_content')))];
   } else {
     var slice = sel.content();
     var nodes = [];
@@ -17,7 +19,7 @@ export function insertCollapsible(editor) {
         nodes.push(paragraphType.create(null, node));
       }
     });
-    contentNodes = nodes.length > 0 ? nodes : [paragraphType.create(null, state.schema.text('Содержимое'))];
+    contentNodes = nodes.length > 0 ? nodes : [paragraphType.create(null, state.schema.text(t('collapsible.default_content')))];
   }
 
   var summaryType = state.schema.nodes.collapsibleSummary;
@@ -25,7 +27,7 @@ export function insertCollapsible(editor) {
   var block = blockType.create(
     { open: true },
     [
-      summaryType.create(null, state.schema.text('Заголовок')),
+      summaryType.create(null, state.schema.text(t('collapsible.default_title'))),
       collapsibleContentType.create(null, contentNodes),
     ]
   );

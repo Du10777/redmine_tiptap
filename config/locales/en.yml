@@ -1,0 +1,157 @@
+# Interface strings of the TipTap editor: English, the source of all translations.
+#
+# The editor shows these texts in the language the user has chosen in their Redmine
+# profile (My account -> Language). A language without a file here, and every string
+# missing from a language file, is shown in English.
+#
+# To add a language: copy this file to config/locales/<code>.yml, where <code> is the
+# code of a language Redmine offers (see config/locales/README.md), change the first
+# line to that code and translate the values. Keep the keys as they are. A string you
+# leave out or empty is shown in English. Details: config/locales/README.md.
+en:
+  redmine_tiptap:
+
+    # Tooltips of the toolbar buttons.
+    toolbar:
+      source: "Source code (HTML)"
+      paragraph_style: "Paragraph style"
+      align: "Alignment"
+      outdent: "Decrease indent"
+      indent: "Increase indent"
+      bold: "Bold"
+      italic: "Italic"
+      underline: "Underline"
+      strike: "Strikethrough"
+      font: "Font"
+      font_size: "Font size"
+      text_color: "Text color"
+      background_color: "Text background color"
+      undo: "Undo"
+      redo: "Redo"
+      collapsible: "Collapsible block"
+      code: "Code"
+      code_block: "Code block"
+      horizontal_rule: "Horizontal rule"
+      quote: "Quote"
+      link: "Link"
+      unlink: "Remove link"
+      list: "List"
+      insert_table: "Insert table"
+      insert_attachment: "Insert attachment"
+      insert_image: "Insert image from attachments"
+
+    # Items of the paragraph style menu.
+    paragraph_styles:
+      heading1: "Heading 1"
+      heading2: "Heading 2"
+      heading3: "Heading 3"
+      normal: "Normal text"
+      subheading4: "Subheading 4"
+      subheading5: "Subheading 5"
+      subheading6: "Subheading 6"
+      monospace: "Monospace"
+
+    # Tooltips of the alignment menu buttons.
+    align_options:
+      left: "Align left"
+      center: "Center"
+      right: "Align right"
+      justify: "Justify"
+
+    # The font and font size controls.
+    font_options:
+      default: "Default"
+      size_placeholder: "Size"
+
+    # The color palette.
+    color_picker:
+      reset: "Reset"
+
+    # Items of the list menu. The first characters (the marker and the examples in
+    # brackets) are part of the text.
+    list_options:
+      task: "☑ Task list"
+      bullet_disc: "• Bullets (discs)"
+      bullet_circle: "◦ Bullets (circles)"
+      bullet_square: "▪ Bullets (squares)"
+      decimal: "1. Numbering (1, 2, 3)"
+      decimal_zero: "01. Numbering (01, 02)"
+      lower_alpha: "a. Numbering (a, b, c)"
+      upper_alpha: "A. Numbering (A, B, C)"
+      lower_roman: "i. Numbering (i, ii, iii)"
+      upper_roman: "I. Numbering (I, II, III)"
+      lower_greek: "α. Numbering (α, β, γ)"
+
+    # The button shared by the link, table and attachment dialogs.
+    dialog:
+      insert: "Insert"
+
+    link_dialog:
+      title: "Insert link"
+      text: "Text"
+      text_placeholder: "Link text"
+      url: "URL"
+
+    table_dialog:
+      title: "Insert table"
+      rows: "Rows"
+      columns: "Columns"
+      header_row: "First row is a header"
+
+    attachment_dialog:
+      title: "Insert attachment"
+      empty: "No uploaded attachments"
+
+    image_dialog:
+      title: "Insert image"
+      empty: "No uploaded images"
+
+    # The menu that opens on a right click in a table cell.
+    table_menu:
+      add_column_left: "Add column on the left"
+      add_column_right: "Add column on the right"
+      delete_column: "Delete column"
+      add_row_above: "Add row above"
+      add_row_below: "Add row below"
+      delete_row: "Delete row"
+      merge_cells: "Merge cells"
+      split_cell: "Split cell"
+      header_row: "First row is a header"
+      header_column: "First column is a header"
+      delete_table: "Delete table"
+
+    # Texts the editor puts into the document when a block is inserted.
+    quote:
+      default_header: "Author, date"
+      default_text: "Quote text"
+    collapsible:
+      default_title: "Title"
+      default_content: "Content"
+
+    # The language badge of a code block and the language list.
+    code_block:
+      badge_title: "Code block language - click to choose"
+      badge_empty: "lang"
+      search_language: "Search language"
+      nothing_found: "Nothing found"
+      no_highlighting: "No highlighting (plaintext)"
+      recent: "Recent"
+      frequent: "Frequent"
+      all_languages: "All languages"
+
+    # The grip in the bottom right corner of the editor.
+    resizer:
+      title: "Drag to change the editor height, double-click to restore the automatic height"
+
+    # Optional changes to how a syntax highlighting language is shown in the language
+    # list and on the badge of a code block. They are not needed in English: the base
+    # texts (label, hint, keywords) are in the language files of the highlight/ folder.
+    # In another language, add an entry under the language id:
+    #   label:    shown instead of the base label
+    #   hint:     shown instead of the base hint (the grey note in the list)
+    #   keywords: extra words the language can be found by in the search box
+    # Example (real ones are in ru.yml):
+    #   code_languages:
+    #     routeros:
+    #       keywords: "words in your language to find RouterOS by"
+    code_languages: {}

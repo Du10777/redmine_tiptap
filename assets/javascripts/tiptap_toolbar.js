@@ -3,6 +3,7 @@ import { insertQuote } from './tiptap_quote.js';
 import { openAttachmentPicker, openImagePicker, openLinkModal, openTableModal } from './tiptap_modals.js';
 import { serializeAttachmentHTML, resolveAttachmentSrcs } from './tiptap_attachments.js';
 import { WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
+import { t } from './tiptap_i18n.js';
 
 function makeButton(label, title, action, isActive, html) {
   var btn = document.createElement('button');
@@ -106,7 +107,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
 
   var resetBtn = document.createElement('button');
   resetBtn.type = 'button';
-  resetBtn.textContent = 'Сбросить';
+  resetBtn.textContent = t('color_picker.reset');
   resetBtn.className = 'tiptap-palette-reset';
   resetBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
@@ -132,15 +133,16 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   }, 0);
 }
 
+// labelKey: the key of the item's text; short: the letters shown on the button.
 var STYLE_ITEMS = [
-  { value: 'h1',        label: 'Заголовок 1',    short: 'H1' },
-  { value: 'h2',        label: 'Заголовок 2',    short: 'H2' },
-  { value: 'h3',        label: 'Заголовок 3',    short: 'H3' },
-  { value: 'paragraph', label: 'Обычный текст',  short: 'T'  },
-  { value: 'h4',        label: 'Подзаголовок 4', short: 'H4' },
-  { value: 'h5',        label: 'Подзаголовок 5', short: 'H5' },
-  { value: 'h6',        label: 'Подзаголовок 6', short: 'H6' },
-  { value: 'codeBlock', label: 'Моноширинный',   short: 'M'  },
+  { value: 'h1',        labelKey: 'paragraph_styles.heading1',    short: 'H1' },
+  { value: 'h2',        labelKey: 'paragraph_styles.heading2',    short: 'H2' },
+  { value: 'h3',        labelKey: 'paragraph_styles.heading3',    short: 'H3' },
+  { value: 'paragraph', labelKey: 'paragraph_styles.normal',      short: 'T'  },
+  { value: 'h4',        labelKey: 'paragraph_styles.subheading4', short: 'H4' },
+  { value: 'h5',        labelKey: 'paragraph_styles.subheading5', short: 'H5' },
+  { value: 'h6',        labelKey: 'paragraph_styles.subheading6', short: 'H6' },
+  { value: 'codeBlock', labelKey: 'paragraph_styles.monospace',   short: 'M'  },
 ];
 
 var ALIGN_SVG = {
@@ -164,7 +166,7 @@ function makeRow1(editor) {
   var styleBtn = document.createElement('button');
   styleBtn.type = 'button';
   styleBtn.className = 'tiptap-btn tiptap-style-btn';
-  styleBtn.title = 'Стиль абзаца';
+  styleBtn.title = t('toolbar.paragraph_style');
   styleBtn.textContent = 'T';
 
   var styleArrow = document.createElement('span');
@@ -189,7 +191,7 @@ function makeRow1(editor) {
   STYLE_ITEMS.forEach(function(item) {
     var opt = document.createElement('div');
     opt.className = 'tiptap-style-option';
-    opt.textContent = item.label;
+    opt.textContent = t(item.labelKey);
     opt.addEventListener('mousedown', function(e) {
       e.preventDefault();
       applyStyle(item.value);
@@ -220,7 +222,7 @@ function makeRow1(editor) {
   var alignBtn = document.createElement('button');
   alignBtn.type = 'button';
   alignBtn.className = 'tiptap-btn tiptap-align-btn';
-  alignBtn.title = 'Выравнивание';
+  alignBtn.title = t('toolbar.align');
 
   var alignArrow = document.createElement('span');
   alignArrow.className = 'tiptap-style-arrow';
@@ -237,7 +239,10 @@ function makeRow1(editor) {
   alignDropdown.className = 'tiptap-align-dropdown';
   alignDropdown.style.display = 'none';
 
-  var alignTitles = { left: 'По левому краю', center: 'По центру', right: 'По правому краю', justify: 'По ширине' };
+  var alignTitles = {
+    left: t('align_options.left'), center: t('align_options.center'),
+    right: t('align_options.right'), justify: t('align_options.justify'),
+  };
   var alignOptionBtns = {};
   ['left', 'center', 'right', 'justify'].forEach(function(al) {
     var o = document.createElement('button');
@@ -269,22 +274,22 @@ function makeRow1(editor) {
   row.appendChild(alignWrapper);
 
   // --- Indentation ---
-  row.appendChild(makeButton('', 'Уменьшить отступ', function() { editor.chain().focus().outdent().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"><line x1="1" y1="3" x2="15" y2="3"/><line x1="6" y1="6.5" x2="15" y2="6.5"/><line x1="6" y1="9.5" x2="15" y2="9.5"/><line x1="1" y1="13" x2="15" y2="13"/><path d="M4 6 L1 8 L4 10" stroke-linejoin="round"/></g></svg>'));
-  row.appendChild(makeButton('', 'Увеличить отступ', function() { editor.chain().focus().indent().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"><line x1="1" y1="3" x2="15" y2="3"/><line x1="6" y1="6.5" x2="15" y2="6.5"/><line x1="6" y1="9.5" x2="15" y2="9.5"/><line x1="1" y1="13" x2="15" y2="13"/><path d="M1 6 L4 8 L1 10" stroke-linejoin="round"/></g></svg>'));
+  row.appendChild(makeButton('', t('toolbar.outdent'), function() { editor.chain().focus().outdent().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"><line x1="1" y1="3" x2="15" y2="3"/><line x1="6" y1="6.5" x2="15" y2="6.5"/><line x1="6" y1="9.5" x2="15" y2="9.5"/><line x1="1" y1="13" x2="15" y2="13"/><path d="M4 6 L1 8 L4 10" stroke-linejoin="round"/></g></svg>'));
+  row.appendChild(makeButton('', t('toolbar.indent'), function() { editor.chain().focus().indent().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"><line x1="1" y1="3" x2="15" y2="3"/><line x1="6" y1="6.5" x2="15" y2="6.5"/><line x1="6" y1="9.5" x2="15" y2="9.5"/><line x1="1" y1="13" x2="15" y2="13"/><path d="M1 6 L4 8 L1 10" stroke-linejoin="round"/></g></svg>'));
 
   row.appendChild(makeSep());
 
   // --- B I U S ---
-  row.appendChild(makeToggleButton({ title: 'Жирный', html: '<span style="font-weight:700">B</span>',
+  row.appendChild(makeToggleButton({ title: t('toolbar.bold'), html: '<span style="font-weight:700">B</span>',
     action: function() { editor.chain().focus().toggleBold().run(); },
     isActive: function() { return editor.isActive('bold'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: 'Курсив', html: '<span style="font-style:italic;font-family:Georgia,serif">I</span>',
+  row.appendChild(makeToggleButton({ title: t('toolbar.italic'), html: '<span style="font-style:italic;font-family:Georgia,serif">I</span>',
     action: function() { editor.chain().focus().toggleItalic().run(); },
     isActive: function() { return editor.isActive('italic'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: 'Подчёркнутый', html: '<span style="text-decoration:underline">U</span>',
+  row.appendChild(makeToggleButton({ title: t('toolbar.underline'), html: '<span style="text-decoration:underline">U</span>',
     action: function() { editor.chain().focus().toggleUnderline().run(); },
     isActive: function() { return editor.isActive('underline'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: 'Зачёркнутый', html: '<span style="text-decoration:line-through">S</span>',
+  row.appendChild(makeToggleButton({ title: t('toolbar.strike'), html: '<span style="text-decoration:line-through">S</span>',
     action: function() { editor.chain().focus().toggleStrike().run(); },
     isActive: function() { return editor.isActive('strike'); } }, toggles));
 
@@ -297,7 +302,7 @@ function makeRow1(editor) {
   var fontBtn = document.createElement('button');
   fontBtn.type = 'button';
   fontBtn.className = 'tiptap-btn tiptap-font-btn';
-  fontBtn.title = 'Шрифт';
+  fontBtn.title = t('toolbar.font');
   fontBtn.innerHTML = '<span class="tiptap-font-icon">Ff</span><span class="tiptap-style-arrow">▾</span>';
 
   var fontDropdown = document.createElement('div');
@@ -319,7 +324,7 @@ function makeRow1(editor) {
     fontDropdown.appendChild(opt);
     fontItems.push({ value: value, el: opt });
   }
-  addFontOption('', 'По умолчанию');
+  addFontOption('', t('font_options.default'));
   WEB_SAFE_FONTS.forEach(function(font) { addFontOption(font, font); });
 
   fontBtn.addEventListener('mousedown', function(e) {
@@ -343,8 +348,8 @@ function makeRow1(editor) {
   var sizeInput = document.createElement('input');
   sizeInput.type = 'text';
   sizeInput.className = 'tiptap-size-input';
-  sizeInput.title = 'Размер шрифта';
-  sizeInput.placeholder = 'Размер';
+  sizeInput.title = t('toolbar.font_size');
+  sizeInput.placeholder = t('font_options.size_placeholder');
 
   var sizeArrow = document.createElement('span');
   sizeArrow.className = 'tiptap-size-arrow';
@@ -407,7 +412,7 @@ function makeRow1(editor) {
   var colorBtn = document.createElement('button');
   colorBtn.type = 'button';
   colorBtn.className = 'tiptap-btn tiptap-color-btn';
-  colorBtn.title = 'Цвет текста';
+  colorBtn.title = t('toolbar.text_color');
   colorBtn.innerHTML = '<span class="tiptap-color-label">A</span>';
   colorBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
@@ -423,7 +428,7 @@ function makeRow1(editor) {
   var bgBtn = document.createElement('button');
   bgBtn.type = 'button';
   bgBtn.className = 'tiptap-btn tiptap-color-btn';
-  bgBtn.title = 'Цвет фона текста';
+  bgBtn.title = t('toolbar.background_color');
   bgBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>';
   bgBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
@@ -437,9 +442,9 @@ function makeRow1(editor) {
 
   function updateState() {
     // toggle buttons (BIUS)
-    toggles.forEach(function(t) {
-      if (t.isActive()) t.btn.classList.add('active');
-      else t.btn.classList.remove('active');
+    toggles.forEach(function(toggle) {
+      if (toggle.isActive()) toggle.btn.classList.add('active');
+      else toggle.btn.classList.remove('active');
     });
 
     // alignment: icon on the button + active in the menu
@@ -490,7 +495,7 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
   var srcBtn = document.createElement('button');
   srcBtn.type = 'button';
   srcBtn.textContent = '<HTML>';
-  srcBtn.title = 'Исходный код (HTML)';
+  srcBtn.title = t('toolbar.source');
   srcBtn.className = 'tiptap-btn';
 
   var fmt = makeRow1(editor);
@@ -542,7 +547,7 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'tiptap-btn tiptap-list-btn';
-    btn.title = 'Список';
+    btn.title = t('toolbar.list');
     btn.tabIndex = 0;
     btn.innerHTML = LIST_ICON + '<span class="tiptap-style-arrow">▾</span>';
 
@@ -551,17 +556,17 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     dropdown.style.display = 'none';
 
     var listOptions = [
-      { value: 'task',                    label: '☑ Список задач' },
-      { value: 'ul:disc',                 label: '• Маркеры (точки)' },
-      { value: 'ul:circle',               label: '◦ Маркеры (круги)' },
-      { value: 'ul:square',               label: '▪ Маркеры (квадраты)' },
-      { value: 'ol:decimal',              label: '1. Нумерация (1, 2, 3)' },
-      { value: 'ol:decimal-leading-zero', label: '01. Нумерация (01, 02)' },
-      { value: 'ol:lower-alpha',          label: 'a. Нумерация (a, b, c)' },
-      { value: 'ol:upper-alpha',          label: 'A. Нумерация (A, B, C)' },
-      { value: 'ol:lower-roman',          label: 'i. Нумерация (i, ii, iii)' },
-      { value: 'ol:upper-roman',          label: 'I. Нумерация (I, II, III)' },
-      { value: 'ol:lower-greek',          label: 'α. Нумерация (α, β, γ)' },
+      { value: 'task',                    label: t('list_options.task') },
+      { value: 'ul:disc',                 label: t('list_options.bullet_disc') },
+      { value: 'ul:circle',               label: t('list_options.bullet_circle') },
+      { value: 'ul:square',               label: t('list_options.bullet_square') },
+      { value: 'ol:decimal',              label: t('list_options.decimal') },
+      { value: 'ol:decimal-leading-zero', label: t('list_options.decimal_zero') },
+      { value: 'ol:lower-alpha',          label: t('list_options.lower_alpha') },
+      { value: 'ol:upper-alpha',          label: t('list_options.upper_alpha') },
+      { value: 'ol:lower-roman',          label: t('list_options.lower_roman') },
+      { value: 'ol:upper-roman',          label: t('list_options.upper_roman') },
+      { value: 'ol:lower-greek',          label: t('list_options.lower_greek') },
     ];
 
     function applyList(val) {
@@ -627,15 +632,15 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     row2.innerHTML = '';
 
     // undo / redo
-    row2.appendChild(makeButton('\u21a9', 'Отменить',  function() { editor.chain().focus().undo().run(); }, false));
-    row2.appendChild(makeButton('\u21aa', 'Повторить', function() { editor.chain().focus().redo().run(); }, false));
+    row2.appendChild(makeButton('\u21a9', t('toolbar.undo'),  function() { editor.chain().focus().undo().run(); }, false));
+    row2.appendChild(makeButton('\u21aa', t('toolbar.redo'), function() { editor.chain().focus().redo().run(); }, false));
 
     row2.appendChild(makeSep());
 
     // collapse / inline code / code block
-    row2.appendChild(makeButton('', 'Collapse-блок', function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
-    row2.appendChild(makeButton('<>', 'Код', function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
-    row2.appendChild(makeButton('', 'Блок кода', function() {
+    row2.appendChild(makeButton('', t('toolbar.collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
+    row2.appendChild(makeButton('<>', t('toolbar.code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
+    row2.appendChild(makeButton('', t('toolbar.code_block'), function() {
       if (editor.isActive('codeBlock')) {
         editor.chain().focus().liftFromCodeBlock().run();
       } else {
@@ -651,23 +656,23 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     row2.appendChild(makeSep());
 
     // horizontal rule / quote
-    row2.appendChild(makeButton('', 'Горизонтальная линия', function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
-    row2.appendChild(makeButton('', 'Цитата', function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
+    row2.appendChild(makeButton('', t('toolbar.horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
+    row2.appendChild(makeButton('', t('toolbar.quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
 
     row2.appendChild(makeSep());
 
     // add / remove link
-    row2.appendChild(makeButton('', 'Ссылка', function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
-    row2.appendChild(makeButton('', 'Убрать ссылку', function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
+    row2.appendChild(makeButton('', t('toolbar.link'), function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
+    row2.appendChild(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
 
     // list
     row2.appendChild(makeListSelect());
 
     // the rest
     var btns = [
-      { label: '', title: 'Вставить таблицу',        action: function() { openTableModal(editor); }, active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>' },
-      { label: '\ud83d\udcce', title: 'Вставить вложение',             action: function() { openAttachmentPicker(editor, urlMap); }, active: false },
-      { label: '\ud83c\udf04', title: 'Вставить картинку из вложений', action: function() { openImagePicker(editor, urlMap); },      active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><circle cx="5" cy="6" r="1.5"/><path d="M2 12 L6 8 L9 11 L11 9 L14 12" stroke-linejoin="round"/></g></svg>' },
+      { label: '', title: t('toolbar.insert_table'),        action: function() { openTableModal(editor); }, active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>' },
+      { label: '\ud83d\udcce', title: t('toolbar.insert_attachment'),             action: function() { openAttachmentPicker(editor, urlMap); }, active: false },
+      { label: '\ud83c\udf04', title: t('toolbar.insert_image'), action: function() { openImagePicker(editor, urlMap); },      active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><circle cx="5" cy="6" r="1.5"/><path d="M2 12 L6 8 L9 11 L11 9 L14 12" stroke-linejoin="round"/></g></svg>' },
     ];
 
     btns.forEach(function(b) {

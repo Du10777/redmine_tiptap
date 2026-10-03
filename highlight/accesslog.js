@@ -5,6 +5,6 @@ export default {
   id: 'accesslog',
   label: 'access log',
   hint: 'nginx, apache',
-  keywords: 'nginx apache access логи',
+  keywords: 'nginx apache access logs',
   grammar: grammar,
 };

@@ -5,6 +5,6 @@ export default {
   id: 'routeros',
   label: 'RouterOS',
   hint: 'MikroTik',
-  keywords: 'mikrotik микротик',
+  keywords: 'mikrotik',
   grammar: grammar,
 };

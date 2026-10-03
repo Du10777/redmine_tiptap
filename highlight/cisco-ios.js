@@ -12,7 +12,7 @@ export default {
   id: 'cisco-ios',
   label: 'Cisco IOS',
   hint: 'IOS / IOS-XE',
-  keywords: 'cisco ios ios-xe циско',
+  keywords: 'cisco ios ios-xe',
   grammar: function() {
     return {
       name: 'Cisco IOS',

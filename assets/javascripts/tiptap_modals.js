@@ -1,3 +1,5 @@
+import { t } from './tiptap_i18n.js';
+
 export function isImageFilename(filename) {
   return /\.(png|jpe?g|gif|webp|svg|bmp)$/i.test(filename);
 }
@@ -11,7 +13,9 @@ function makeModalOverlay() {
 function makeModalHeader(title, onClose) {
   var header = document.createElement('div');
   header.className = 'tiptap-modal-header';
-  header.innerHTML = '<span>' + title + '</span>';
+  var titleEl = document.createElement('span');
+  titleEl.textContent = title;
+  header.appendChild(titleEl);
 
   var closeBtn = document.createElement('button');
   closeBtn.className = 'tiptap-modal-close';
@@ -37,7 +41,7 @@ export function openAttachmentPicker(editor, urlMap) {
     overlay.remove();
   }
 
-  modal.appendChild(makeModalHeader('Вставить вложение', close));
+  modal.appendChild(makeModalHeader(t('attachment_dialog.title'), close));
 
   var list = document.createElement('div');
   list.className = 'tiptap-modal-list';
@@ -45,7 +49,7 @@ export function openAttachmentPicker(editor, urlMap) {
   if (filenames.length === 0) {
     var empty = document.createElement('div');
     empty.className = 'tiptap-modal-empty';
-    empty.textContent = 'Нет загруженных вложений';
+    empty.textContent = t('attachment_dialog.empty');
     list.appendChild(empty);
   }
 
@@ -55,7 +59,7 @@ export function openAttachmentPicker(editor, urlMap) {
   var insertBtn = document.createElement('button');
   insertBtn.className = 'tiptap-modal-insert-btn';
   insertBtn.type = 'button';
-  insertBtn.textContent = 'Вставить';
+  insertBtn.textContent = t('dialog.insert');
   insertBtn.disabled = true;
   footer.appendChild(insertBtn);
 
@@ -138,7 +142,7 @@ export function openImagePicker(editor, urlMap) {
     overlay.remove();
   }
 
-  modal.appendChild(makeModalHeader('Вставить картинку', close));
+  modal.appendChild(makeModalHeader(t('image_dialog.title'), close));
 
   var grid = document.createElement('div');
   grid.className = 'tiptap-image-grid';
@@ -146,7 +150,7 @@ export function openImagePicker(editor, urlMap) {
   if (imageFiles.length === 0) {
     var empty = document.createElement('div');
     empty.className = 'tiptap-modal-empty';
-    empty.textContent = 'Нет загруженных картинок';
+    empty.textContent = t('image_dialog.empty');
     grid.appendChild(empty);
   }
 
@@ -220,15 +224,7 @@ export function openLinkModal(editor) {
     overlay.remove();
   }
 
-  var header = document.createElement('div');
-  header.className = 'tiptap-modal-header';
-  header.innerHTML = '<span>Вставить ссылку</span>';
-  var closeBtn = document.createElement('button');
-  closeBtn.className = 'tiptap-modal-close';
-  closeBtn.type = 'button';
-  closeBtn.textContent = '\u00d7';
-  closeBtn.addEventListener('click', close);
-  header.appendChild(closeBtn);
+  var header = makeModalHeader(t('link_dialog.title'), close);
 
   // Selected text
   var state = editor.view.state;
@@ -239,16 +235,16 @@ export function openLinkModal(editor) {
   body.style.padding = '12px 16px';
 
   var textLabel = document.createElement('label');
-  textLabel.textContent = 'Текст';
+  textLabel.textContent = t('link_dialog.text');
   textLabel.style.cssText = 'display:block;font-size:12px;color:#555;margin-bottom:2px;';
   var textInput = document.createElement('input');
   textInput.type = 'text';
   textInput.className = 'tiptap-link-input';
   textInput.value = selectedText;
-  textInput.placeholder = 'Текст ссылки';
+  textInput.placeholder = t('link_dialog.text_placeholder');
 
   var urlLabel = document.createElement('label');
-  urlLabel.textContent = 'URL';
+  urlLabel.textContent = t('link_dialog.url');
   urlLabel.style.cssText = 'display:block;font-size:12px;color:#555;margin:8px 0 2px;';
   var urlInput = document.createElement('input');
   urlInput.type = 'text';
@@ -266,7 +262,7 @@ export function openLinkModal(editor) {
   var insertBtn = document.createElement('button');
   insertBtn.className = 'tiptap-modal-insert-btn';
   insertBtn.type = 'button';
-  insertBtn.textContent = 'Вставить';
+  insertBtn.textContent = t('dialog.insert');
   footer.appendChild(insertBtn);
 
   insertBtn.addEventListener('click', function() {
@@ -322,15 +318,7 @@ export function openTableModal(editor) {
     overlay.remove();
   }
 
-  var header = document.createElement('div');
-  header.className = 'tiptap-modal-header';
-  header.innerHTML = '<span>Вставить таблицу</span>';
-  var closeBtn = document.createElement('button');
-  closeBtn.className = 'tiptap-modal-close';
-  closeBtn.type = 'button';
-  closeBtn.textContent = '\u00d7';
-  closeBtn.addEventListener('click', close);
-  header.appendChild(closeBtn);
+  var header = makeModalHeader(t('table_dialog.title'), close);
 
   var body = document.createElement('div');
   body.style.padding = '12px 16px';
@@ -353,8 +341,8 @@ export function openTableModal(editor) {
     return input;
   }
 
-  var rowsInput = makeField('Строк', '3');
-  var colsInput = makeField('Столбцов', '3');
+  var rowsInput = makeField(t('table_dialog.rows'), '3');
+  var colsInput = makeField(t('table_dialog.columns'), '3');
 
   var headerWrap = document.createElement('label');
   headerWrap.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:13px;color:#555;';
@@ -362,7 +350,7 @@ export function openTableModal(editor) {
   headerCheck.type = 'checkbox';
   headerCheck.checked = true;
   headerWrap.appendChild(headerCheck);
-  headerWrap.appendChild(document.createTextNode('Первая строка — заголовок'));
+  headerWrap.appendChild(document.createTextNode(t('table_dialog.header_row')));
   body.appendChild(headerWrap);
 
   var footer = document.createElement('div');
@@ -370,7 +358,7 @@ export function openTableModal(editor) {
   var insertBtn = document.createElement('button');
   insertBtn.className = 'tiptap-modal-insert-btn';
   insertBtn.type = 'button';
-  insertBtn.textContent = 'Вставить';
+  insertBtn.textContent = t('dialog.insert');
   footer.appendChild(insertBtn);
 
   insertBtn.addEventListener('click', function() {

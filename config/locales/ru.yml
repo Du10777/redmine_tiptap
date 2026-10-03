@@ -1,0 +1,145 @@
+# Interface strings of the TipTap editor: Russian.
+# The keys are the same as in en.yml; only the values are translated.
+ru:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Исходный код (HTML)"
+      paragraph_style: "Стиль абзаца"
+      align: "Выравнивание"
+      outdent: "Уменьшить отступ"
+      indent: "Увеличить отступ"
+      bold: "Жирный"
+      italic: "Курсив"
+      underline: "Подчёркнутый"
+      strike: "Зачёркнутый"
+      font: "Шрифт"
+      font_size: "Размер шрифта"
+      text_color: "Цвет текста"
+      background_color: "Цвет фона текста"
+      undo: "Отменить"
+      redo: "Повторить"
+      collapsible: "Collapse-блок"
+      code: "Код"
+      code_block: "Блок кода"
+      horizontal_rule: "Горизонтальная линия"
+      quote: "Цитата"
+      link: "Ссылка"
+      unlink: "Убрать ссылку"
+      list: "Список"
+      insert_table: "Вставить таблицу"
+      insert_attachment: "Вставить вложение"
+      insert_image: "Вставить картинку из вложений"
+
+    paragraph_styles:
+      heading1: "Заголовок 1"
+      heading2: "Заголовок 2"
+      heading3: "Заголовок 3"
+      normal: "Обычный текст"
+      subheading4: "Подзаголовок 4"
+      subheading5: "Подзаголовок 5"
+      subheading6: "Подзаголовок 6"
+      monospace: "Моноширинный"
+
+    align_options:
+      left: "По левому краю"
+      center: "По центру"
+      right: "По правому краю"
+      justify: "По ширине"
+
+    font_options:
+      default: "По умолчанию"
+      size_placeholder: "Размер"
+
+    color_picker:
+      reset: "Сбросить"
+
+    list_options:
+      task: "☑ Список задач"
+      bullet_disc: "• Маркеры (точки)"
+      bullet_circle: "◦ Маркеры (круги)"
+      bullet_square: "▪ Маркеры (квадраты)"
+      decimal: "1. Нумерация (1, 2, 3)"
+      decimal_zero: "01. Нумерация (01, 02)"
+      lower_alpha: "a. Нумерация (a, b, c)"
+      upper_alpha: "A. Нумерация (A, B, C)"
+      lower_roman: "i. Нумерация (i, ii, iii)"
+      upper_roman: "I. Нумерация (I, II, III)"
+      lower_greek: "α. Нумерация (α, β, γ)"
+
+    dialog:
+      insert: "Вставить"
+
+    link_dialog:
+      title: "Вставить ссылку"
+      text: "Текст"
+      text_placeholder: "Текст ссылки"
+      url: "URL"
+
+    table_dialog:
+      title: "Вставить таблицу"
+      rows: "Строк"
+      columns: "Столбцов"
+      header_row: "Первая строка — заголовок"
+
+    attachment_dialog:
+      title: "Вставить вложение"
+      empty: "Нет загруженных вложений"
+
+    image_dialog:
+      title: "Вставить картинку"
+      empty: "Нет загруженных картинок"
+
+    table_menu:
+      add_column_left: "Добавить столбец слева"
+      add_column_right: "Добавить столбец справа"
+      delete_column: "Удалить столбец"
+      add_row_above: "Добавить строку сверху"
+      add_row_below: "Добавить строку снизу"
+      delete_row: "Удалить строку"
+      merge_cells: "Объединить ячейки"
+      split_cell: "Разделить ячейку"
+      header_row: "Первая строка — заголовок"
+      header_column: "Первый столбец — заголовок"
+      delete_table: "Удалить таблицу"
+
+    quote:
+      default_header: "Автор, дата"
+      default_text: "Текст цитаты"
+    collapsible:
+      default_title: "Заголовок"
+      default_content: "Содержимое"
+
+    code_block:
+      badge_title: "Язык блока кода — нажать, чтобы выбрать"
+      badge_empty: "язык"
+      search_language: "Поиск языка"
+      nothing_found: "Ничего не найдено"
+      no_highlighting: "Без подсветки (plaintext)"
+      recent: "Недавние"
+      frequent: "Частые"
+      all_languages: "Все языки"
+
+    resizer:
+      title: "Потянуть — изменить высоту редактора, двойной клик — вернуть автоматическую"
+
+    # How the syntax highlighting languages look in Russian, in the language list and on
+    # the badge of a code block. The base texts (label, hint, keywords) are English and
+    # are in the language files of the highlight/ folder. Here label and hint replace
+    # them, and keywords are extra words for the search, added to the English ones.
+    code_languages:
+      "1c":
+        label: "1С"
+        hint: "1С:Предприятие"
+        keywords: "1с предприятие"
+      accesslog:
+        keywords: "логи"
+      cisco-ios:
+        keywords: "циско"
+      journalctl:
+        keywords: "журнал логи"
+      log:
+        hint: "логи сервисов Linux"
+        keywords: "логи журнал"
+      routeros:
+        keywords: "микротик"
