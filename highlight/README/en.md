@@ -27,7 +27,7 @@ export default {
   id: 'routeros',
   label: 'RouterOS',
   hint: 'MikroTik',
-  keywords: 'mikrotik микротик',
+  keywords: 'mikrotik',
   grammar: grammar,
 };
 ```
@@ -37,8 +37,10 @@ export default {
 | `id` | yes | Language name in the saved HTML (`class="language-<id>"`). Allowed characters: `a-z`, `0-9`, `-`, `_`. **Never change it** once blocks with this language have been saved. |
 | `label` | no | Name in the language list and on the block badge. Defaults to `id`. |
 | `hint` | no | Grey note next to the name in the list. |
-| `keywords` | no | Extra words for the list search, space-separated, in any language. |
+| `keywords` | no | Extra words for the list search, space-separated. |
 | `grammar` | yes | A highlight.js grammar: a function `(hljs) => language definition`. |
+
+`label`, `hint` and `keywords` are in English. To show a language under another name in the interface language of a user, or to make it findable by words of that language, add an entry to the translation file of that language, `config/locales/<code>.yml`, under `code_languages:`. The words there are added to `keywords`; `label` and `hint` replace the ones from the language file. `config/locales/ru.yml` has examples, the rules are in [config/locales/README.md](../../config/locales/README.md).
 
 Kinds of files in the folder:
 
@@ -85,7 +87,7 @@ python3 highlight/_convert_grammar.py erlang nix fsharp
 python3 highlight/_convert_grammar.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp"
 
 # replace a short file shipped with the plugin with an editable full copy
-python3 highlight/_convert_grammar.py routeros --force --label RouterOS --hint MikroTik --keywords "mikrotik микротик"
+python3 highlight/_convert_grammar.py routeros --force --label RouterOS --hint MikroTik --keywords mikrotik
 
 # a language not yet in a released highlight.js version, from the development branch
 python3 highlight/_convert_grammar.py odin --ref main

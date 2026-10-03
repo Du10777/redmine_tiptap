@@ -27,7 +27,7 @@ export default {
   id: 'routeros',
   label: 'RouterOS',
   hint: 'MikroTik',
-  keywords: 'mikrotik микротик',
+  keywords: 'mikrotik',
   grammar: grammar,
 };
 ```
@@ -37,8 +37,10 @@ export default {
 | `id` | да | Имя языка в сохранённом HTML (`class="language-<id>"`). Допустимы `a-z`, `0-9`, `-`, `_`. **Не менять** после того, как блоки с этим языком сохранены. |
 | `label` | нет | Название в списке языков и на ярлыке блока. По умолчанию — `id`. |
 | `hint` | нет | Серая подсказка рядом с названием в списке. |
-| `keywords` | нет | Дополнительные слова для поиска в списке, через пробел, на любом языке. |
+| `keywords` | нет | Дополнительные слова для поиска в списке, через пробел. |
 | `grammar` | да | Грамматика highlight.js: функция `(hljs) => описание языка`. |
+
+`label`, `hint` и `keywords` написаны по-английски. Чтобы язык показывался под другим названием на языке интерфейса пользователя или находился по словам этого языка, добавьте запись в файл перевода нужного языка, `config/locales/<код>.yml`, в раздел `code_languages:`. Слова оттуда добавляются к `keywords`, а `label` и `hint` заменяют те, что в файле языка. Примеры — в `config/locales/ru.yml`, правила — в [config/locales/README.ru.md](../../config/locales/README.ru.md).
 
 Какие файлы бывают в папке:
 
@@ -82,10 +84,10 @@ python3 highlight/_convert_grammar.py --list sql
 python3 highlight/_convert_grammar.py erlang nix fsharp
 
 # своё название, подсказка и слова для поиска (только для одного языка за раз)
-python3 highlight/_convert_grammar.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp эрланг"
+python3 highlight/_convert_grammar.py erlang --label "Erlang/OTP" --hint BEAM --keywords "erl otp"
 
 # заменить короткий файл из комплекта полной копией, которую можно править
-python3 highlight/_convert_grammar.py routeros --force --label RouterOS --hint MikroTik --keywords "mikrotik микротик"
+python3 highlight/_convert_grammar.py routeros --force --label RouterOS --hint MikroTik --keywords mikrotik
 
 # язык, которого ещё нет в выпущенной версии highlight.js, — из ветки разработки
 python3 highlight/_convert_grammar.py odin --ref main

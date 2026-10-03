@@ -53,6 +53,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 **Redmine integration**
 - Works in all Redmine text fields with formatting: issue descriptions and notes, wiki pages, news, forum messages, documents, project descriptions, long text custom fields, including fields that appear on the page later.
 - Text is stored as HTML. To use the editor, choose *TipTap HTML* as the text formatting in Redmine settings.
+- The interface (tooltips, menus, dialogs) follows the language in the user's Redmine profile. English and Russian come with the plugin, and any other language of Redmine is one translation file away (see [Interface language](#interface-language)).
 - Stays fast on large texts: editors in hidden forms are created only when the form is opened, and long code blocks are highlighted when they scroll into view.
 - Saved texts are shown without unsafe HTML: scripts, event handlers and `javascript:` links are removed when a page is displayed, only what the editor itself produces is kept. This covers texts that come through the REST API or the `<HTML>` mode as well.
 
@@ -70,6 +71,14 @@ sh highlight/_compile.sh
 ```
 
 Details: [highlight/README/en.md](highlight/README/en.md) (на русском: [highlight/README/ru.md](highlight/README/ru.md)).
+
+## Interface language
+
+The editor speaks the language chosen in the user's Redmine profile (My account → Language). English and Russian come with the plugin; for any other language the editor is shown in English.
+
+Adding a language takes one file. Copy `config/locales/en.yml` to `config/locales/<code>.yml`, where `<code>` is the code of a Redmine language (`de`, `fr`, `pt-BR`, ...), change the first line to the same code, translate the values and restart Redmine. A text left out is shown in English, so a file can be translated in parts. `bundle exec rake redmine_tiptap:locales` checks the files.
+
+Details and the list of Redmine languages: [config/locales/README.md](config/locales/README.md) (на русском: [config/locales/README.ru.md](config/locales/README.ru.md)).
 
 ## Installation
 
