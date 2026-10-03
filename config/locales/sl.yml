@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Slovene (Slovenščina).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+sl:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Izvorna koda (HTML)"
+      paragraph_style: "Slog odstavka"
+      align: "Poravnava"
+      outdent: "Zmanjšaj zamik"
+      indent: "Povečaj zamik"
+      bold: "Krepko"
+      italic: "Ležeče"
+      underline: "Podčrtano"
+      strike: "Prečrtano"
+      font: "Pisava"
+      font_size: "Velikost pisave"
+      text_color: "Barva besedila"
+      background_color: "Barva ozadja besedila"
+      undo: "Razveljavi"
+      redo: "Uveljavi"
+      collapsible: "Zložljiv blok"
+      code: "Koda"
+      code_block: "Blok kode"
+      horizontal_rule: "Vodoravna črta"
+      quote: "Citat"
+      link: "Povezava"
+      unlink: "Odstrani povezavo"
+      list: "Seznam"
+      insert_table: "Vstavi tabelo"
+      insert_attachment: "Vstavi priponko"
+      insert_image: "Vstavi sliko iz priponk"
+
+    paragraph_styles:
+      heading1: "Naslov 1"
+      heading2: "Naslov 2"
+      heading3: "Naslov 3"
+      normal: "Navadno besedilo"
+      subheading4: "Podnaslov 4"
+      subheading5: "Podnaslov 5"
+      subheading6: "Podnaslov 6"
+      monospace: "Neproporcionalna pisava"
+
+    align_options:
+      left: "Poravnaj levo"
+      center: "Poravnaj na sredino"
+      right: "Poravnaj desno"
+      justify: "Poravnaj obojestransko"
+
+    font_options:
+      default: "Privzeto"
+      size_placeholder: "Vel."
+
+    color_picker:
+      reset: "Ponastavi"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Seznam opravil"
+      bullet_disc: "• Oznake (pike)"
+      bullet_circle: "◦ Oznake (krogci)"
+      bullet_square: "▪ Oznake (kvadratki)"
+      decimal: "1. Oštevilčevanje (1, 2, 3)"
+      decimal_zero: "01. Oštevilčevanje (01, 02)"
+      lower_alpha: "a. Oštevilčevanje (a, b, c)"
+      upper_alpha: "A. Oštevilčevanje (A, B, C)"
+      lower_roman: "i. Oštevilčevanje (i, ii, iii)"
+      upper_roman: "I. Oštevilčevanje (I, II, III)"
+      lower_greek: "α. Oštevilčevanje (α, β, γ)"
+
+    dialog:
+      insert: "Vstavi"
+
+    link_dialog:
+      title: "Vstavi povezavo"
+      text: "Besedilo"
+      text_placeholder: "Besedilo povezave"
+      url: "URL"
+
+    table_dialog:
+      title: "Vstavi tabelo"
+      rows: "Vrstice"
+      columns: "Stolpci"
+      header_row: "Prva vrstica je naslovna"
+
+    attachment_dialog:
+      title: "Vstavi priponko"
+      empty: "Ni naloženih priponk"
+
+    image_dialog:
+      title: "Vstavi sliko"
+      empty: "Ni naloženih slik"
+
+    table_menu:
+      add_column_left: "Dodaj stolpec levo"
+      add_column_right: "Dodaj stolpec desno"
+      delete_column: "Izbriši stolpec"
+      add_row_above: "Dodaj vrstico zgoraj"
+      add_row_below: "Dodaj vrstico spodaj"
+      delete_row: "Izbriši vrstico"
+      merge_cells: "Spoji celice"
+      split_cell: "Razdeli celico"
+      header_row: "Prva vrstica je naslovna"
+      header_column: "Prvi stolpec je naslovni"
+      delete_table: "Izbriši tabelo"
+
+    quote:
+      default_header: "Avtor, datum"
+      default_text: "Besedilo citata"
+
+    collapsible:
+      default_title: "Naslov"
+      default_content: "Vsebina"
+
+    code_block:
+      badge_title: "Jezik bloka kode – kliknite za izbiro"
+      badge_empty: "jezik"
+      search_language: "Iskanje jezika"
+      nothing_found: "Ni zadetkov"
+      no_highlighting: "Brez poudarjanja skladnje (plaintext)"
+      recent: "Nedavno uporabljeni"
+      frequent: "Pogosto uporabljeni"
+      all_languages: "Vsi jeziki"
+
+    resizer:
+      title: "Povlecite, da spremenite višino urejevalnika, dvokliknite, da obnovite samodejno višino"

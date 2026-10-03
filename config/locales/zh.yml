@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Chinese/Simplified (简体中文).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+zh:
+  redmine_tiptap:
+
+    toolbar:
+      source: "源代码 (HTML)"
+      paragraph_style: "段落样式"
+      align: "对齐方式"
+      outdent: "减少缩进"
+      indent: "增加缩进"
+      bold: "粗体"
+      italic: "斜体"
+      underline: "下划线"
+      strike: "删除线"
+      font: "字体"
+      font_size: "字号"
+      text_color: "文字颜色"
+      background_color: "文字背景色"
+      undo: "撤销"
+      redo: "重做"
+      collapsible: "折叠块"
+      code: "行内代码"
+      code_block: "代码块"
+      horizontal_rule: "水平线"
+      quote: "引用"
+      link: "链接"
+      unlink: "取消链接"
+      list: "列表"
+      insert_table: "插入表格"
+      insert_attachment: "插入附件"
+      insert_image: "从附件插入图片"
+
+    paragraph_styles:
+      heading1: "标题 1"
+      heading2: "标题 2"
+      heading3: "标题 3"
+      normal: "正文"
+      subheading4: "小标题 4"
+      subheading5: "小标题 5"
+      subheading6: "小标题 6"
+      monospace: "等宽文本"
+
+    align_options:
+      left: "左对齐"
+      center: "居中"
+      right: "右对齐"
+      justify: "两端对齐"
+
+    font_options:
+      default: "默认"
+      size_placeholder: "字号"
+
+    color_picker:
+      reset: "重置"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ 任务列表"
+      bullet_disc: "• 项目符号 (实心圆)"
+      bullet_circle: "◦ 项目符号 (空心圆)"
+      bullet_square: "▪ 项目符号 (方块)"
+      decimal: "1. 编号 (1, 2, 3)"
+      decimal_zero: "01. 编号 (01, 02)"
+      lower_alpha: "a. 编号 (a, b, c)"
+      upper_alpha: "A. 编号 (A, B, C)"
+      lower_roman: "i. 编号 (i, ii, iii)"
+      upper_roman: "I. 编号 (I, II, III)"
+      lower_greek: "α. 编号 (α, β, γ)"
+
+    dialog:
+      insert: "插入"
+
+    link_dialog:
+      title: "插入链接"
+      text: "文本"
+      text_placeholder: "链接文本"
+      url: "URL"
+
+    table_dialog:
+      title: "插入表格"
+      rows: "行数"
+      columns: "列数"
+      header_row: "首行为标题行"
+
+    attachment_dialog:
+      title: "插入附件"
+      empty: "暂无已上传的附件"
+
+    image_dialog:
+      title: "插入图片"
+      empty: "暂无已上传的图片"
+
+    table_menu:
+      add_column_left: "在左侧插入列"
+      add_column_right: "在右侧插入列"
+      delete_column: "删除列"
+      add_row_above: "在上方插入行"
+      add_row_below: "在下方插入行"
+      delete_row: "删除行"
+      merge_cells: "合并单元格"
+      split_cell: "拆分单元格"
+      header_row: "首行为标题行"
+      header_column: "首列为标题列"
+      delete_table: "删除表格"
+
+    quote:
+      default_header: "作者，日期"
+      default_text: "引用内容"
+
+    collapsible:
+      default_title: "标题"
+      default_content: "内容"
+
+    code_block:
+      badge_title: "代码块语言，点击可选择"
+      badge_empty: "语言"
+      search_language: "搜索语言"
+      nothing_found: "未找到结果"
+      no_highlighting: "无语法高亮 (plaintext)"
+      recent: "最近使用"
+      frequent: "常用"
+      all_languages: "所有语言"
+
+    resizer:
+      title: "拖动可调整编辑器高度，双击可恢复自动高度"

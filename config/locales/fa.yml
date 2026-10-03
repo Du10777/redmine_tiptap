@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Persian (فارسی).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+fa:
+  redmine_tiptap:
+
+    toolbar:
+      source: "کد منبع (HTML)"
+      paragraph_style: "سبک پاراگراف"
+      align: "ترازبندی"
+      outdent: "کاهش تورفتگی"
+      indent: "افزایش تورفتگی"
+      bold: "پررنگ"
+      italic: "کج"
+      underline: "زیرخط"
+      strike: "خط‌خورده"
+      font: "قلم"
+      font_size: "اندازه قلم"
+      text_color: "رنگ متن"
+      background_color: "رنگ پس‌زمینه متن"
+      undo: "واگرد"
+      redo: "ازنو"
+      collapsible: "بخش تاشو"
+      code: "کد درون‌خطی"
+      code_block: "بلوک کد"
+      horizontal_rule: "خط افقی"
+      quote: "نقل قول"
+      link: "پیوند"
+      unlink: "حذف پیوند"
+      list: "فهرست"
+      insert_table: "درج جدول"
+      insert_attachment: "درج پیوست"
+      insert_image: "درج تصویر از پیوست‌ها"
+
+    paragraph_styles:
+      heading1: "عنوان ۱"
+      heading2: "عنوان ۲"
+      heading3: "عنوان ۳"
+      normal: "متن عادی"
+      subheading4: "زیرعنوان ۴"
+      subheading5: "زیرعنوان ۵"
+      subheading6: "زیرعنوان ۶"
+      monospace: "متن با پهنای ثابت"
+
+    align_options:
+      left: "تراز چپ"
+      center: "تراز وسط"
+      right: "تراز راست"
+      justify: "تراز دوطرفه"
+
+    font_options:
+      default: "پیش‌فرض"
+      size_placeholder: "سایز"
+
+    color_picker:
+      reset: "بازنشانی"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ فهرست کارها"
+      bullet_disc: "• گلوله‌ها (دایره‌های توپر)"
+      bullet_circle: "◦ گلوله‌ها (دایره‌های توخالی)"
+      bullet_square: "▪ گلوله‌ها (مربع‌ها)"
+      decimal: "1. شماره‌گذاری (1, 2, 3)"
+      decimal_zero: "01. شماره‌گذاری (01, 02)"
+      lower_alpha: "a. شماره‌گذاری (a, b, c)"
+      upper_alpha: "A. شماره‌گذاری (A, B, C)"
+      lower_roman: "i. شماره‌گذاری (i, ii, iii)"
+      upper_roman: "I. شماره‌گذاری (I, II, III)"
+      lower_greek: "α. شماره‌گذاری (α, β, γ)"
+
+    dialog:
+      insert: "درج"
+
+    link_dialog:
+      title: "درج پیوند"
+      text: "متن"
+      text_placeholder: "متن پیوند"
+      url: "نشانی"
+
+    table_dialog:
+      title: "درج جدول"
+      rows: "تعداد ردیف‌ها"
+      columns: "تعداد ستون‌ها"
+      header_row: "ردیف اول عنوان است"
+
+    attachment_dialog:
+      title: "درج پیوست"
+      empty: "هیچ پیوستی بارگذاری نشده است"
+
+    image_dialog:
+      title: "درج تصویر"
+      empty: "هیچ تصویری بارگذاری نشده است"
+
+    table_menu:
+      add_column_left: "افزودن ستون در سمت چپ"
+      add_column_right: "افزودن ستون در سمت راست"
+      delete_column: "حذف ستون"
+      add_row_above: "افزودن ردیف در بالا"
+      add_row_below: "افزودن ردیف در پایین"
+      delete_row: "حذف ردیف"
+      merge_cells: "ادغام سلول‌ها"
+      split_cell: "تقسیم سلول"
+      header_row: "ردیف اول عنوان است"
+      header_column: "ستون اول عنوان است"
+      delete_table: "حذف جدول"
+
+    quote:
+      default_header: "نویسنده، تاریخ"
+      default_text: "متن نقل قول"
+
+    collapsible:
+      default_title: "عنوان"
+      default_content: "محتوا"
+
+    code_block:
+      badge_title: "زبان بلوک کد - برای انتخاب کلیک کنید"
+      badge_empty: "زبان"
+      search_language: "جست‌وجوی زبان"
+      nothing_found: "موردی یافت نشد"
+      no_highlighting: "بدون برجسته‌سازی (plaintext)"
+      recent: "زبان‌های اخیر"
+      frequent: "زبان‌های پرکاربرد"
+      all_languages: "همه زبان‌ها"
+
+    resizer:
+      title: "برای تغییر ارتفاع ویرایشگر بکشید و برای بازگرداندن ارتفاع خودکار دوبار کلیک کنید"

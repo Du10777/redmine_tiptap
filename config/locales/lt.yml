@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Lithuanian (lietuvių).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+lt:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Pirminis kodas (HTML)"
+      paragraph_style: "Pastraipos stilius"
+      align: "Lygiuotė"
+      outdent: "Mažinti įtrauką"
+      indent: "Didinti įtrauką"
+      bold: "Paryškinti"
+      italic: "Kursyvas"
+      underline: "Pabraukti"
+      strike: "Perbraukti"
+      font: "Šriftas"
+      font_size: "Šrifto dydis"
+      text_color: "Teksto spalva"
+      background_color: "Teksto fono spalva"
+      undo: "Anuliuoti"
+      redo: "Perdaryti"
+      collapsible: "Sutraukiamasis blokas"
+      code: "Kodas"
+      code_block: "Kodo blokas"
+      horizontal_rule: "Horizontali linija"
+      quote: "Citata"
+      link: "Nuoroda"
+      unlink: "Pašalinti nuorodą"
+      list: "Sąrašas"
+      insert_table: "Įterpti lentelę"
+      insert_attachment: "Įterpti priedą"
+      insert_image: "Įterpti paveikslėlį iš priedų"
+
+    paragraph_styles:
+      heading1: "Antraštė 1"
+      heading2: "Antraštė 2"
+      heading3: "Antraštė 3"
+      normal: "Įprastas tekstas"
+      subheading4: "Paantraštė 4"
+      subheading5: "Paantraštė 5"
+      subheading6: "Paantraštė 6"
+      monospace: "Lygiaplotis tekstas"
+
+    align_options:
+      left: "Lygiuoti kairėje"
+      center: "Centruoti"
+      right: "Lygiuoti dešinėje"
+      justify: "Lygiuoti abiejuose kraštuose"
+
+    font_options:
+      default: "Numatytasis"
+      size_placeholder: "Dydis"
+
+    color_picker:
+      reset: "Atkurti"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Užduočių sąrašas"
+      bullet_disc: "• Ženkleliai (skrituliai)"
+      bullet_circle: "◦ Ženkleliai (apskritimai)"
+      bullet_square: "▪ Ženkleliai (kvadratai)"
+      decimal: "1. Numeravimas (1, 2, 3)"
+      decimal_zero: "01. Numeravimas (01, 02)"
+      lower_alpha: "a. Numeravimas (a, b, c)"
+      upper_alpha: "A. Numeravimas (A, B, C)"
+      lower_roman: "i. Numeravimas (i, ii, iii)"
+      upper_roman: "I. Numeravimas (I, II, III)"
+      lower_greek: "α. Numeravimas (α, β, γ)"
+
+    dialog:
+      insert: "Įterpti"
+
+    link_dialog:
+      title: "Įterpti nuorodą"
+      text: "Tekstas"
+      text_placeholder: "Nuorodos tekstas"
+      url: "URL"
+
+    table_dialog:
+      title: "Įterpti lentelę"
+      rows: "Eilutės"
+      columns: "Stulpeliai"
+      header_row: "Pirmoji eilutė yra antraštė"
+
+    attachment_dialog:
+      title: "Įterpti priedą"
+      empty: "Nėra įkeltų priedų"
+
+    image_dialog:
+      title: "Įterpti paveikslėlį"
+      empty: "Nėra įkeltų paveikslėlių"
+
+    table_menu:
+      add_column_left: "Pridėti stulpelį kairėje"
+      add_column_right: "Pridėti stulpelį dešinėje"
+      delete_column: "Pašalinti stulpelį"
+      add_row_above: "Pridėti eilutę aukščiau"
+      add_row_below: "Pridėti eilutę žemiau"
+      delete_row: "Pašalinti eilutę"
+      merge_cells: "Sujungti langelius"
+      split_cell: "Skaidyti langelį"
+      header_row: "Pirmoji eilutė yra antraštė"
+      header_column: "Pirmasis stulpelis yra antraštė"
+      delete_table: "Pašalinti lentelę"
+
+    quote:
+      default_header: "Autorius, data"
+      default_text: "Citatos tekstas"
+
+    collapsible:
+      default_title: "Pavadinimas"
+      default_content: "Turinys"
+
+    code_block:
+      badge_title: "Kodo bloko kalba – spustelėkite, kad pasirinktumėte"
+      badge_empty: "kalba"
+      search_language: "Ieškoti kalbos"
+      nothing_found: "Nieko nerasta"
+      no_highlighting: "Be sintaksės paryškinimo (plaintext)"
+      recent: "Neseniai naudotos"
+      frequent: "Dažnai naudojamos"
+      all_languages: "Visos kalbos"
+
+    resizer:
+      title: "Vilkite, kad pakeistumėte redaktoriaus aukštį; dukart spustelėkite, kad atkurtumėte automatinį aukštį"

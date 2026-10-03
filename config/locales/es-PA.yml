@@ -1,0 +1,12 @@
+# Interface strings of the TipTap editor: Spanish/Panama (Español/Panamá).
+# Only the texts that differ from es.yml are here; every other text comes from es.yml.
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+es-PA:
+  redmine_tiptap:
+
+    attachment_dialog:
+      empty: "No hay archivos adjuntos cargados"
+
+    image_dialog:
+      empty: "No hay imágenes cargadas"

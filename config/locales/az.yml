@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Azerbaijani (Azeri).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+az:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Mənbə kodu (HTML)"
+      paragraph_style: "Abzas üslubu"
+      align: "Düzləndirmə"
+      outdent: "Girintini azaltmaq"
+      indent: "Girintini artırmaq"
+      bold: "Qalın"
+      italic: "Kursiv"
+      underline: "Altından xətt çəkilmiş"
+      strike: "Üstündən xətt çəkilmiş"
+      font: "Şrift"
+      font_size: "Şrift ölçüsü"
+      text_color: "Mətn rəngi"
+      background_color: "Mətnin fon rəngi"
+      undo: "Geri qaytarmaq"
+      redo: "Təkrar etmək"
+      collapsible: "Yığıla bilən bölmə"
+      code: "Sətirdaxili kod"
+      code_block: "Kod bloku"
+      horizontal_rule: "Üfüqi xətt"
+      quote: "Sitat"
+      link: "Keçid"
+      unlink: "Keçidi silmək"
+      list: "Siyahı"
+      insert_table: "Cədvəl daxil etmək"
+      insert_attachment: "Fayl daxil etmək"
+      insert_image: "Qoşulmuş fayllardan şəkil daxil etmək"
+
+    paragraph_styles:
+      heading1: "Başlıq 1"
+      heading2: "Başlıq 2"
+      heading3: "Başlıq 3"
+      normal: "Adi mətn"
+      subheading4: "Altbaşlıq 4"
+      subheading5: "Altbaşlıq 5"
+      subheading6: "Altbaşlıq 6"
+      monospace: "Sabit enli mətn"
+
+    align_options:
+      left: "Sola düzləndirmək"
+      center: "Mərkəzə düzləndirmək"
+      right: "Sağa düzləndirmək"
+      justify: "Eninə düzləndirmək"
+
+    font_options:
+      default: "Susmaya görə"
+      size_placeholder: "Ölçü"
+
+    color_picker:
+      reset: "Sıfırlamaq"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Tapşırıq siyahısı"
+      bullet_disc: "• Markerlər (dolu dairələr)"
+      bullet_circle: "◦ Markerlər (boş dairələr)"
+      bullet_square: "▪ Markerlər (kvadratlar)"
+      decimal: "1. Nömrələmə (1, 2, 3)"
+      decimal_zero: "01. Nömrələmə (01, 02)"
+      lower_alpha: "a. Nömrələmə (a, b, c)"
+      upper_alpha: "A. Nömrələmə (A, B, C)"
+      lower_roman: "i. Nömrələmə (i, ii, iii)"
+      upper_roman: "I. Nömrələmə (I, II, III)"
+      lower_greek: "α. Nömrələmə (α, β, γ)"
+
+    dialog:
+      insert: "Daxil etmək"
+
+    link_dialog:
+      title: "Keçid daxil etmək"
+      text: "Mətn"
+      text_placeholder: "Keçidin mətni"
+      url: "URL"
+
+    table_dialog:
+      title: "Cədvəl daxil etmək"
+      rows: "Sətir sayı"
+      columns: "Sütun sayı"
+      header_row: "Birinci sətir başlıqdır"
+
+    attachment_dialog:
+      title: "Fayl daxil etmək"
+      empty: "Yüklənmiş fayl yoxdur"
+
+    image_dialog:
+      title: "Şəkil daxil etmək"
+      empty: "Yüklənmiş şəkil yoxdur"
+
+    table_menu:
+      add_column_left: "Sola sütun əlavə etmək"
+      add_column_right: "Sağa sütun əlavə etmək"
+      delete_column: "Sütunu silmək"
+      add_row_above: "Yuxarıya sətir əlavə etmək"
+      add_row_below: "Aşağıya sətir əlavə etmək"
+      delete_row: "Sətri silmək"
+      merge_cells: "Xanaları birləşdirmək"
+      split_cell: "Xananı bölmək"
+      header_row: "Birinci sətir başlıqdır"
+      header_column: "Birinci sütun başlıqdır"
+      delete_table: "Cədvəli silmək"
+
+    quote:
+      default_header: "Müəllif, tarix"
+      default_text: "Sitatın mətni"
+
+    collapsible:
+      default_title: "Başlıq"
+      default_content: "Məzmun"
+
+    code_block:
+      badge_title: "Kod blokunun dili - seçmək üçün klikləyin"
+      badge_empty: "dil"
+      search_language: "Dil axtarışı"
+      nothing_found: "Heç nə tapılmadı"
+      no_highlighting: "Vurğulamasız (plaintext)"
+      recent: "Son istifadə olunanlar"
+      frequent: "Tez-tez istifadə olunanlar"
+      all_languages: "Bütün dillər"
+
+    resizer:
+      title: "Redaktorun hündürlüyünü dəyişmək üçün sürükləyin, avtomatik hündürlüyü bərpa etmək üçün iki dəfə klikləyin"

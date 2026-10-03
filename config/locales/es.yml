@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Spanish (Español).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+es:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Código fuente (HTML)"
+      paragraph_style: "Estilo de párrafo"
+      align: "Alineación"
+      outdent: "Disminuir sangría"
+      indent: "Aumentar sangría"
+      bold: "Negrita"
+      italic: "Cursiva"
+      underline: "Subrayado"
+      strike: "Tachado"
+      font: "Fuente"
+      font_size: "Tamaño de fuente"
+      text_color: "Color del texto"
+      background_color: "Color de fondo del texto"
+      undo: "Deshacer"
+      redo: "Rehacer"
+      collapsible: "Bloque desplegable"
+      code: "Código"
+      code_block: "Bloque de código"
+      horizontal_rule: "Línea horizontal"
+      quote: "Cita"
+      link: "Enlace"
+      unlink: "Quitar enlace"
+      list: "Lista"
+      insert_table: "Insertar tabla"
+      insert_attachment: "Insertar archivo adjunto"
+      insert_image: "Insertar imagen desde los archivos adjuntos"
+
+    paragraph_styles:
+      heading1: "Título 1"
+      heading2: "Título 2"
+      heading3: "Título 3"
+      normal: "Texto normal"
+      subheading4: "Subtítulo 4"
+      subheading5: "Subtítulo 5"
+      subheading6: "Subtítulo 6"
+      monospace: "Monoespaciado"
+
+    align_options:
+      left: "Alinear a la izquierda"
+      center: "Centrar"
+      right: "Alinear a la derecha"
+      justify: "Justificar"
+
+    font_options:
+      default: "Predeterminada"
+      size_placeholder: "Tam."
+
+    color_picker:
+      reset: "Restablecer"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Lista de tareas"
+      bullet_disc: "• Viñetas (puntos)"
+      bullet_circle: "◦ Viñetas (círculos)"
+      bullet_square: "▪ Viñetas (cuadrados)"
+      decimal: "1. Numeración (1, 2, 3)"
+      decimal_zero: "01. Numeración (01, 02)"
+      lower_alpha: "a. Numeración (a, b, c)"
+      upper_alpha: "A. Numeración (A, B, C)"
+      lower_roman: "i. Numeración (i, ii, iii)"
+      upper_roman: "I. Numeración (I, II, III)"
+      lower_greek: "α. Numeración (α, β, γ)"
+
+    dialog:
+      insert: "Insertar"
+
+    link_dialog:
+      title: "Insertar enlace"
+      text: "Texto"
+      text_placeholder: "Texto del enlace"
+      url: "URL"
+
+    table_dialog:
+      title: "Insertar tabla"
+      rows: "Filas"
+      columns: "Columnas"
+      header_row: "Primera fila como encabezado"
+
+    attachment_dialog:
+      title: "Insertar archivo adjunto"
+      empty: "No hay archivos adjuntos subidos"
+
+    image_dialog:
+      title: "Insertar imagen"
+      empty: "No hay imágenes subidas"
+
+    table_menu:
+      add_column_left: "Insertar columna a la izquierda"
+      add_column_right: "Insertar columna a la derecha"
+      delete_column: "Eliminar columna"
+      add_row_above: "Insertar fila encima"
+      add_row_below: "Insertar fila debajo"
+      delete_row: "Eliminar fila"
+      merge_cells: "Combinar celdas"
+      split_cell: "Dividir celda"
+      header_row: "Primera fila como encabezado"
+      header_column: "Primera columna como encabezado"
+      delete_table: "Eliminar tabla"
+
+    quote:
+      default_header: "Autor, fecha"
+      default_text: "Texto de la cita"
+
+    collapsible:
+      default_title: "Título"
+      default_content: "Contenido"
+
+    code_block:
+      badge_title: "Lenguaje del bloque de código: haga clic para elegirlo"
+      badge_empty: "lenguaje"
+      search_language: "Buscar lenguaje"
+      nothing_found: "Sin resultados"
+      no_highlighting: "Sin resaltado (plaintext)"
+      recent: "Recientes"
+      frequent: "Frecuentes"
+      all_languages: "Todos los lenguajes"
+
+    resizer:
+      title: "Arrastre para cambiar la altura del editor, haga doble clic para restablecer la altura automática"

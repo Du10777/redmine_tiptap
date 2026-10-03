@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Thai (ไทย).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+th:
+  redmine_tiptap:
+
+    toolbar:
+      source: "ซอร์สโค้ด (HTML)"
+      paragraph_style: "รูปแบบย่อหน้า"
+      align: "การจัดแนว"
+      outdent: "ลดการเยื้อง"
+      indent: "เพิ่มการเยื้อง"
+      bold: "ตัวหนา"
+      italic: "ตัวเอียง"
+      underline: "ขีดเส้นใต้"
+      strike: "ขีดทับ"
+      font: "แบบอักษร"
+      font_size: "ขนาดแบบอักษร"
+      text_color: "สีข้อความ"
+      background_color: "สีพื้นหลังข้อความ"
+      undo: "เลิกทำ"
+      redo: "ทำซ้ำ"
+      collapsible: "บล็อกที่ยุบได้"
+      code: "โค้ดในบรรทัด"
+      code_block: "บล็อกโค้ด"
+      horizontal_rule: "เส้นแนวนอน"
+      quote: "คำอ้างอิง"
+      link: "ลิงก์"
+      unlink: "นำลิงก์ออก"
+      list: "รายการ"
+      insert_table: "แทรกตาราง"
+      insert_attachment: "แทรกไฟล์แนบ"
+      insert_image: "แทรกรูปภาพจากไฟล์แนบ"
+
+    paragraph_styles:
+      heading1: "หัวเรื่อง 1"
+      heading2: "หัวเรื่อง 2"
+      heading3: "หัวเรื่อง 3"
+      normal: "ข้อความปกติ"
+      subheading4: "หัวเรื่องย่อย 4"
+      subheading5: "หัวเรื่องย่อย 5"
+      subheading6: "หัวเรื่องย่อย 6"
+      monospace: "ตัวอักษรความกว้างคงที่"
+
+    align_options:
+      left: "จัดชิดซ้าย"
+      center: "จัดกึ่งกลาง"
+      right: "จัดชิดขวา"
+      justify: "จัดชิดขอบ"
+
+    font_options:
+      default: "ค่าเริ่มต้น"
+      size_placeholder: "ขนาด"
+
+    color_picker:
+      reset: "รีเซ็ต"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ รายการงาน"
+      bullet_disc: "• สัญลักษณ์หัวข้อย่อย (วงกลมทึบ)"
+      bullet_circle: "◦ สัญลักษณ์หัวข้อย่อย (วงกลมโปร่ง)"
+      bullet_square: "▪ สัญลักษณ์หัวข้อย่อย (สี่เหลี่ยม)"
+      decimal: "1. ลำดับเลข (1, 2, 3)"
+      decimal_zero: "01. ลำดับเลข (01, 02)"
+      lower_alpha: "a. ลำดับเลข (a, b, c)"
+      upper_alpha: "A. ลำดับเลข (A, B, C)"
+      lower_roman: "i. ลำดับเลข (i, ii, iii)"
+      upper_roman: "I. ลำดับเลข (I, II, III)"
+      lower_greek: "α. ลำดับเลข (α, β, γ)"
+
+    dialog:
+      insert: "แทรก"
+
+    link_dialog:
+      title: "แทรกลิงก์"
+      text: "ข้อความ"
+      text_placeholder: "ข้อความของลิงก์"
+      url: "URL"
+
+    table_dialog:
+      title: "แทรกตาราง"
+      rows: "จำนวนแถว"
+      columns: "จำนวนคอลัมน์"
+      header_row: "แถวแรกเป็นส่วนหัว"
+
+    attachment_dialog:
+      title: "แทรกไฟล์แนบ"
+      empty: "ยังไม่มีไฟล์แนบที่อัปโหลด"
+
+    image_dialog:
+      title: "แทรกรูปภาพ"
+      empty: "ยังไม่มีรูปภาพที่อัปโหลด"
+
+    table_menu:
+      add_column_left: "แทรกคอลัมน์ทางซ้าย"
+      add_column_right: "แทรกคอลัมน์ทางขวา"
+      delete_column: "ลบคอลัมน์"
+      add_row_above: "แทรกแถวด้านบน"
+      add_row_below: "แทรกแถวด้านล่าง"
+      delete_row: "ลบแถว"
+      merge_cells: "ผสานเซลล์"
+      split_cell: "แยกเซลล์"
+      header_row: "แถวแรกเป็นส่วนหัว"
+      header_column: "คอลัมน์แรกเป็นส่วนหัว"
+      delete_table: "ลบตาราง"
+
+    quote:
+      default_header: "ผู้เขียน, วันที่"
+      default_text: "ข้อความที่อ้างอิง"
+
+    collapsible:
+      default_title: "หัวข้อ"
+      default_content: "เนื้อหา"
+
+    code_block:
+      badge_title: "ภาษาของบล็อกโค้ด - คลิกเพื่อเลือก"
+      badge_empty: "ภาษา"
+      search_language: "ค้นหาภาษา"
+      nothing_found: "ไม่พบผลลัพธ์"
+      no_highlighting: "ไม่เน้นสีไวยากรณ์ (plaintext)"
+      recent: "ใช้ล่าสุด"
+      frequent: "ใช้บ่อย"
+      all_languages: "ภาษาทั้งหมด"
+
+    resizer:
+      title: "ลากเพื่อปรับความสูงของตัวแก้ไข ดับเบิลคลิกเพื่อคืนค่าความสูงอัตโนมัติ"

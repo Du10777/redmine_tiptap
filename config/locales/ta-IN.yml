@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Tamil (தமிழ்).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+ta-IN:
+  redmine_tiptap:
+
+    toolbar:
+      source: "மூலக் குறியீடு (HTML)"
+      paragraph_style: "பத்தி நடை"
+      align: "சீரமைப்பு"
+      outdent: "உள்தள்ளலைக் குறை"
+      indent: "உள்தள்ளலை அதிகரி"
+      bold: "தடிமன்"
+      italic: "சாய்வு"
+      underline: "அடிக்கோடு"
+      strike: "நடுக்கோடு"
+      font: "எழுத்துரு"
+      font_size: "எழுத்துரு அளவு"
+      text_color: "உரையின் நிறம்"
+      background_color: "உரையின் பின்னணி நிறம்"
+      undo: "செயல்தவிர்"
+      redo: "மீண்டும் செய்"
+      collapsible: "சுருக்கக்கூடிய தொகுதி"
+      code: "குறியீடு"
+      code_block: "குறியீட்டுத் தொகுதி"
+      horizontal_rule: "கிடைமட்டக் கோடு"
+      quote: "மேற்கோள்"
+      link: "இணைப்பு"
+      unlink: "இணைப்பை அகற்று"
+      list: "பட்டியல்"
+      insert_table: "அட்டவணையைச் செருகு"
+      insert_attachment: "இணைக்கப்பட்ட கோப்பைச் செருகு"
+      insert_image: "இணைக்கப்பட்ட கோப்புகளிலிருந்து படத்தைச் செருகு"
+
+    paragraph_styles:
+      heading1: "தலைப்பு 1"
+      heading2: "தலைப்பு 2"
+      heading3: "தலைப்பு 3"
+      normal: "இயல்பான உரை"
+      subheading4: "துணைத்தலைப்பு 4"
+      subheading5: "துணைத்தலைப்பு 5"
+      subheading6: "துணைத்தலைப்பு 6"
+      monospace: "நிலையான அகல உரை"
+
+    align_options:
+      left: "இடப்புறம் சீரமை"
+      center: "மையத்தில் சீரமை"
+      right: "வலப்புறம் சீரமை"
+      justify: "இருபுறமும் சீரமை"
+
+    font_options:
+      default: "இயல்புநிலை"
+      size_placeholder: "அளவு"
+
+    color_picker:
+      reset: "மீட்டமை"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ பணிப் பட்டியல்"
+      bullet_disc: "• புள்ளிக்குறிகள் (நிரப்பப்பட்ட வட்டங்கள்)"
+      bullet_circle: "◦ புள்ளிக்குறிகள் (வெற்று வட்டங்கள்)"
+      bullet_square: "▪ புள்ளிக்குறிகள் (சதுரங்கள்)"
+      decimal: "1. எண்ணிடல் (1, 2, 3)"
+      decimal_zero: "01. எண்ணிடல் (01, 02)"
+      lower_alpha: "a. எண்ணிடல் (a, b, c)"
+      upper_alpha: "A. எண்ணிடல் (A, B, C)"
+      lower_roman: "i. எண்ணிடல் (i, ii, iii)"
+      upper_roman: "I. எண்ணிடல் (I, II, III)"
+      lower_greek: "α. எண்ணிடல் (α, β, γ)"
+
+    dialog:
+      insert: "செருகு"
+
+    link_dialog:
+      title: "இணைப்பைச் செருகு"
+      text: "உரை"
+      text_placeholder: "இணைப்பு உரை"
+      url: "URL"
+
+    table_dialog:
+      title: "அட்டவணையைச் செருகு"
+      rows: "வரிசைகள்"
+      columns: "நெடுவரிசைகள்"
+      header_row: "முதல் வரிசை தலைப்பாக"
+
+    attachment_dialog:
+      title: "இணைக்கப்பட்ட கோப்பைச் செருகு"
+      empty: "பதிவேற்றப்பட்ட கோப்புகள் எதுவும் இல்லை"
+
+    image_dialog:
+      title: "படத்தைச் செருகு"
+      empty: "பதிவேற்றப்பட்ட படங்கள் எதுவும் இல்லை"
+
+    table_menu:
+      add_column_left: "இடப்புறம் நெடுவரிசையைச் சேர்"
+      add_column_right: "வலப்புறம் நெடுவரிசையைச் சேர்"
+      delete_column: "நெடுவரிசையை நீக்கு"
+      add_row_above: "மேலே வரிசையைச் சேர்"
+      add_row_below: "கீழே வரிசையைச் சேர்"
+      delete_row: "வரிசையை நீக்கு"
+      merge_cells: "கலங்களை ஒன்றிணை"
+      split_cell: "கலத்தைப் பிரி"
+      header_row: "முதல் வரிசை தலைப்பாக"
+      header_column: "முதல் நெடுவரிசை தலைப்பாக"
+      delete_table: "அட்டவணையை நீக்கு"
+
+    quote:
+      default_header: "எழுதியவர், தேதி"
+      default_text: "மேற்கோள் உரை"
+
+    collapsible:
+      default_title: "தலைப்பு"
+      default_content: "உள்ளடக்கம்"
+
+    code_block:
+      badge_title: "குறியீட்டுத் தொகுதியின் மொழி – தேர்வுசெய்ய கிளிக் செய்யவும்"
+      badge_empty: "மொழி"
+      search_language: "மொழியைத் தேடு"
+      nothing_found: "எதுவும் கிடைக்கவில்லை"
+      no_highlighting: "தனிப்படுத்தல் இல்லை (plaintext)"
+      recent: "சமீபத்தில் பயன்படுத்தியவை"
+      frequent: "அடிக்கடி பயன்படுத்தியவை"
+      all_languages: "அனைத்து மொழிகளும்"
+
+    resizer:
+      title: "திருத்தியின் உயரத்தை மாற்ற இழுக்கவும், தானியங்கு உயரத்தை மீட்டமைக்க இருமுறை கிளிக் செய்யவும்"

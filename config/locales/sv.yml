@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Swedish (Svenska).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+sv:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Källkod (HTML)"
+      paragraph_style: "Styckeformat"
+      align: "Justering"
+      outdent: "Minska indrag"
+      indent: "Öka indrag"
+      bold: "Fet"
+      italic: "Kursiv"
+      underline: "Understruken"
+      strike: "Genomstruken"
+      font: "Teckensnitt"
+      font_size: "Teckenstorlek"
+      text_color: "Textfärg"
+      background_color: "Textens bakgrundsfärg"
+      undo: "Ångra"
+      redo: "Gör om"
+      collapsible: "Hopfällbart block"
+      code: "Kod"
+      code_block: "Kodblock"
+      horizontal_rule: "Vågrät linje"
+      quote: "Citat"
+      link: "Länk"
+      unlink: "Ta bort länk"
+      list: "Lista"
+      insert_table: "Infoga tabell"
+      insert_attachment: "Infoga bilaga"
+      insert_image: "Infoga bild från bilagor"
+
+    paragraph_styles:
+      heading1: "Rubrik 1"
+      heading2: "Rubrik 2"
+      heading3: "Rubrik 3"
+      normal: "Normal text"
+      subheading4: "Underrubrik 4"
+      subheading5: "Underrubrik 5"
+      subheading6: "Underrubrik 6"
+      monospace: "Fast teckenbredd"
+
+    align_options:
+      left: "Vänsterjustera"
+      center: "Centrera"
+      right: "Högerjustera"
+      justify: "Marginaljustera"
+
+    font_options:
+      default: "Standard"
+      size_placeholder: "Strl."
+
+    color_picker:
+      reset: "Återställ"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Uppgiftslista"
+      bullet_disc: "• Punktlista (prickar)"
+      bullet_circle: "◦ Punktlista (cirklar)"
+      bullet_square: "▪ Punktlista (kvadrater)"
+      decimal: "1. Numrering (1, 2, 3)"
+      decimal_zero: "01. Numrering (01, 02)"
+      lower_alpha: "a. Numrering (a, b, c)"
+      upper_alpha: "A. Numrering (A, B, C)"
+      lower_roman: "i. Numrering (i, ii, iii)"
+      upper_roman: "I. Numrering (I, II, III)"
+      lower_greek: "α. Numrering (α, β, γ)"
+
+    dialog:
+      insert: "Infoga"
+
+    link_dialog:
+      title: "Infoga länk"
+      text: "Text"
+      text_placeholder: "Länktext"
+      url: "URL"
+
+    table_dialog:
+      title: "Infoga tabell"
+      rows: "Rader"
+      columns: "Kolumner"
+      header_row: "Första raden som rubrik"
+
+    attachment_dialog:
+      title: "Infoga bilaga"
+      empty: "Inga uppladdade bilagor"
+
+    image_dialog:
+      title: "Infoga bild"
+      empty: "Inga uppladdade bilder"
+
+    table_menu:
+      add_column_left: "Infoga kolumn till vänster"
+      add_column_right: "Infoga kolumn till höger"
+      delete_column: "Ta bort kolumn"
+      add_row_above: "Infoga rad ovanför"
+      add_row_below: "Infoga rad nedanför"
+      delete_row: "Ta bort rad"
+      merge_cells: "Sammanfoga celler"
+      split_cell: "Dela cell"
+      header_row: "Första raden som rubrik"
+      header_column: "Första kolumnen som rubrik"
+      delete_table: "Ta bort tabell"
+
+    quote:
+      default_header: "Författare, datum"
+      default_text: "Citattext"
+
+    collapsible:
+      default_title: "Titel"
+      default_content: "Innehåll"
+
+    code_block:
+      badge_title: "Kodblockets språk – klicka för att välja"
+      badge_empty: "språk"
+      search_language: "Sök språk"
+      nothing_found: "Inget hittades"
+      no_highlighting: "Ingen syntaxmarkering (plaintext)"
+      recent: "Senast använda"
+      frequent: "Ofta använda"
+      all_languages: "Alla språk"
+
+    resizer:
+      title: "Dra för att ändra höjden på redigeringsfältet, dubbelklicka för att återställa automatisk höjd"

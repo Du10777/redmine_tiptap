@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Italian (Italiano).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+it:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Codice sorgente (HTML)"
+      paragraph_style: "Stile paragrafo"
+      align: "Allineamento"
+      outdent: "Riduci rientro"
+      indent: "Aumenta rientro"
+      bold: "Grassetto"
+      italic: "Corsivo"
+      underline: "Sottolineato"
+      strike: "Barrato"
+      font: "Carattere"
+      font_size: "Dimensione carattere"
+      text_color: "Colore del testo"
+      background_color: "Colore di sfondo del testo"
+      undo: "Annulla"
+      redo: "Ripeti"
+      collapsible: "Blocco comprimibile"
+      code: "Codice"
+      code_block: "Blocco di codice"
+      horizontal_rule: "Linea orizzontale"
+      quote: "Citazione"
+      link: "Collegamento"
+      unlink: "Rimuovi collegamento"
+      list: "Elenco"
+      insert_table: "Inserisci tabella"
+      insert_attachment: "Inserisci allegato"
+      insert_image: "Inserisci immagine dagli allegati"
+
+    paragraph_styles:
+      heading1: "Titolo 1"
+      heading2: "Titolo 2"
+      heading3: "Titolo 3"
+      normal: "Testo normale"
+      subheading4: "Sottotitolo 4"
+      subheading5: "Sottotitolo 5"
+      subheading6: "Sottotitolo 6"
+      monospace: "Monospazio"
+
+    align_options:
+      left: "Allinea a sinistra"
+      center: "Centra"
+      right: "Allinea a destra"
+      justify: "Giustifica"
+
+    font_options:
+      default: "Predefinito"
+      size_placeholder: "Dim."
+
+    color_picker:
+      reset: "Ripristina"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Elenco di attività"
+      bullet_disc: "• Punti elenco (dischi)"
+      bullet_circle: "◦ Punti elenco (cerchi)"
+      bullet_square: "▪ Punti elenco (quadrati)"
+      decimal: "1. Numerazione (1, 2, 3)"
+      decimal_zero: "01. Numerazione (01, 02)"
+      lower_alpha: "a. Numerazione (a, b, c)"
+      upper_alpha: "A. Numerazione (A, B, C)"
+      lower_roman: "i. Numerazione (i, ii, iii)"
+      upper_roman: "I. Numerazione (I, II, III)"
+      lower_greek: "α. Numerazione (α, β, γ)"
+
+    dialog:
+      insert: "Inserisci"
+
+    link_dialog:
+      title: "Inserisci collegamento"
+      text: "Testo"
+      text_placeholder: "Testo del collegamento"
+      url: "URL"
+
+    table_dialog:
+      title: "Inserisci tabella"
+      rows: "Righe"
+      columns: "Colonne"
+      header_row: "La prima riga è un'intestazione"
+
+    attachment_dialog:
+      title: "Inserisci allegato"
+      empty: "Nessun allegato caricato"
+
+    image_dialog:
+      title: "Inserisci immagine"
+      empty: "Nessuna immagine caricata"
+
+    table_menu:
+      add_column_left: "Aggiungi colonna a sinistra"
+      add_column_right: "Aggiungi colonna a destra"
+      delete_column: "Elimina colonna"
+      add_row_above: "Aggiungi riga sopra"
+      add_row_below: "Aggiungi riga sotto"
+      delete_row: "Elimina riga"
+      merge_cells: "Unisci celle"
+      split_cell: "Dividi cella"
+      header_row: "La prima riga è un'intestazione"
+      header_column: "La prima colonna è un'intestazione"
+      delete_table: "Elimina tabella"
+
+    quote:
+      default_header: "Autore, data"
+      default_text: "Testo della citazione"
+
+    collapsible:
+      default_title: "Titolo"
+      default_content: "Contenuto"
+
+    code_block:
+      badge_title: "Linguaggio del blocco di codice: fai clic per scegliere"
+      badge_empty: "linguaggio"
+      search_language: "Cerca linguaggio"
+      nothing_found: "Nessun risultato"
+      no_highlighting: "Senza evidenziazione (plaintext)"
+      recent: "Recenti"
+      frequent: "Frequenti"
+      all_languages: "Tutti i linguaggi"
+
+    resizer:
+      title: "Trascina per cambiare l'altezza dell'editor, fai doppio clic per ripristinare l'altezza automatica"

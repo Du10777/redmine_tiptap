@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Catalan (Català).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+ca:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Codi font (HTML)"
+      paragraph_style: "Estil de paràgraf"
+      align: "Alineació"
+      outdent: "Redueix el sagnat"
+      indent: "Augmenta el sagnat"
+      bold: "Negreta"
+      italic: "Cursiva"
+      underline: "Subratllat"
+      strike: "Ratllat"
+      font: "Tipus de lletra"
+      font_size: "Mida de la lletra"
+      text_color: "Color del text"
+      background_color: "Color de fons del text"
+      undo: "Desfés"
+      redo: "Refés"
+      collapsible: "Bloc plegable"
+      code: "Codi en línia"
+      code_block: "Bloc de codi"
+      horizontal_rule: "Línia horitzontal"
+      quote: "Cita"
+      link: "Enllaç"
+      unlink: "Elimina l'enllaç"
+      list: "Llista"
+      insert_table: "Insereix una taula"
+      insert_attachment: "Insereix un fitxer adjunt"
+      insert_image: "Insereix una imatge dels fitxers adjunts"
+
+    paragraph_styles:
+      heading1: "Encapçalament 1"
+      heading2: "Encapçalament 2"
+      heading3: "Encapçalament 3"
+      normal: "Text normal"
+      subheading4: "Subencapçalament 4"
+      subheading5: "Subencapçalament 5"
+      subheading6: "Subencapçalament 6"
+      monospace: "Monoespai"
+
+    align_options:
+      left: "Alinea a l'esquerra"
+      center: "Centra"
+      right: "Alinea a la dreta"
+      justify: "Justifica"
+
+    font_options:
+      default: "Per defecte"
+      size_placeholder: "Mida"
+
+    color_picker:
+      reset: "Restableix"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Llista de tasques"
+      bullet_disc: "• Pics (discs)"
+      bullet_circle: "◦ Pics (cercles)"
+      bullet_square: "▪ Pics (quadrats)"
+      decimal: "1. Numeració (1, 2, 3)"
+      decimal_zero: "01. Numeració (01, 02)"
+      lower_alpha: "a. Numeració (a, b, c)"
+      upper_alpha: "A. Numeració (A, B, C)"
+      lower_roman: "i. Numeració (i, ii, iii)"
+      upper_roman: "I. Numeració (I, II, III)"
+      lower_greek: "α. Numeració (α, β, γ)"
+
+    dialog:
+      insert: "Insereix"
+
+    link_dialog:
+      title: "Insereix un enllaç"
+      text: "Text"
+      text_placeholder: "Text de l'enllaç"
+      url: "URL"
+
+    table_dialog:
+      title: "Insereix una taula"
+      rows: "Files"
+      columns: "Columnes"
+      header_row: "La primera fila és una capçalera"
+
+    attachment_dialog:
+      title: "Insereix un fitxer adjunt"
+      empty: "No s'ha pujat cap fitxer adjunt"
+
+    image_dialog:
+      title: "Insereix una imatge"
+      empty: "No s'ha pujat cap imatge"
+
+    table_menu:
+      add_column_left: "Afegeix una columna a l'esquerra"
+      add_column_right: "Afegeix una columna a la dreta"
+      delete_column: "Suprimeix la columna"
+      add_row_above: "Afegeix una fila a sobre"
+      add_row_below: "Afegeix una fila a sota"
+      delete_row: "Suprimeix la fila"
+      merge_cells: "Combina les cel·les"
+      split_cell: "Divideix la cel·la"
+      header_row: "La primera fila és una capçalera"
+      header_column: "La primera columna és una capçalera"
+      delete_table: "Suprimeix la taula"
+
+    quote:
+      default_header: "Autor, data"
+      default_text: "Text de la cita"
+
+    collapsible:
+      default_title: "Títol"
+      default_content: "Contingut"
+
+    code_block:
+      badge_title: "Llenguatge del bloc de codi: feu clic per triar-lo"
+      badge_empty: "llenguatge"
+      search_language: "Cerca un llenguatge"
+      nothing_found: "No s'ha trobat res"
+      no_highlighting: "Sense ressaltat (plaintext)"
+      recent: "Recents"
+      frequent: "Freqüents"
+      all_languages: "Tots els llenguatges"
+
+    resizer:
+      title: "Arrossegueu per canviar l'alçada de l'editor, feu doble clic per restaurar l'alçada automàtica"

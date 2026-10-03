@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Hebrew (עברית).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+he:
+  redmine_tiptap:
+
+    toolbar:
+      source: "קוד מקור (HTML)"
+      paragraph_style: "סגנון פסקה"
+      align: "יישור"
+      outdent: "הקטנת הזחה"
+      indent: "הגדלת הזחה"
+      bold: "מודגש"
+      italic: "נטוי"
+      underline: "קו תחתון"
+      strike: "קו חוצה"
+      font: "גופן"
+      font_size: "גודל גופן"
+      text_color: "צבע טקסט"
+      background_color: "צבע רקע לטקסט"
+      undo: "ביטול פעולה"
+      redo: "ביצוע מחדש"
+      collapsible: "בלוק מתקפל"
+      code: "קוד בתוך שורה"
+      code_block: "בלוק קוד"
+      horizontal_rule: "קו אופקי"
+      quote: "ציטוט"
+      link: "קישור"
+      unlink: "הסרת קישור"
+      list: "רשימה"
+      insert_table: "הוספת טבלה"
+      insert_attachment: "הוספת קובץ מצורף"
+      insert_image: "הוספת תמונה מהקבצים המצורפים"
+
+    paragraph_styles:
+      heading1: "כותרת 1"
+      heading2: "כותרת 2"
+      heading3: "כותרת 3"
+      normal: "טקסט רגיל"
+      subheading4: "כותרת משנה 4"
+      subheading5: "כותרת משנה 5"
+      subheading6: "כותרת משנה 6"
+      monospace: "טקסט ברוחב קבוע"
+
+    align_options:
+      left: "יישור לשמאל"
+      center: "יישור למרכז"
+      right: "יישור לימין"
+      justify: "יישור לשני הצדדים"
+
+    font_options:
+      default: "ברירת מחדל"
+      size_placeholder: "גודל"
+
+    color_picker:
+      reset: "איפוס"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ רשימת משימות"
+      bullet_disc: "• תבליטים (עיגולים מלאים)"
+      bullet_circle: "◦ תבליטים (עיגולים ריקים)"
+      bullet_square: "▪ תבליטים (ריבועים)"
+      decimal: "1. מספור (1, 2, 3)"
+      decimal_zero: "01. מספור (01, 02)"
+      lower_alpha: "a. מספור (a, b, c)"
+      upper_alpha: "A. מספור (A, B, C)"
+      lower_roman: "i. מספור (i, ii, iii)"
+      upper_roman: "I. מספור (I, II, III)"
+      lower_greek: "α. מספור (α, β, γ)"
+
+    dialog:
+      insert: "הוספה"
+
+    link_dialog:
+      title: "הוספת קישור"
+      text: "טקסט"
+      text_placeholder: "טקסט הקישור"
+      url: "כתובת URL"
+
+    table_dialog:
+      title: "הוספת טבלה"
+      rows: "מספר שורות"
+      columns: "מספר עמודות"
+      header_row: "השורה הראשונה היא כותרת"
+
+    attachment_dialog:
+      title: "הוספת קובץ מצורף"
+      empty: "אין קבצים מצורפים"
+
+    image_dialog:
+      title: "הוספת תמונה"
+      empty: "אין תמונות מצורפות"
+
+    table_menu:
+      add_column_left: "הוספת עמודה משמאל"
+      add_column_right: "הוספת עמודה מימין"
+      delete_column: "מחיקת עמודה"
+      add_row_above: "הוספת שורה מעל"
+      add_row_below: "הוספת שורה מתחת"
+      delete_row: "מחיקת שורה"
+      merge_cells: "מיזוג תאים"
+      split_cell: "פיצול תא"
+      header_row: "השורה הראשונה היא כותרת"
+      header_column: "העמודה הראשונה היא כותרת"
+      delete_table: "מחיקת טבלה"
+
+    quote:
+      default_header: "מחבר, תאריך"
+      default_text: "טקסט הציטוט"
+
+    collapsible:
+      default_title: "כותרת"
+      default_content: "תוכן"
+
+    code_block:
+      badge_title: "שפת בלוק הקוד - יש ללחוץ כדי לבחור"
+      badge_empty: "שפה"
+      search_language: "חיפוש שפה"
+      nothing_found: "לא נמצאו תוצאות"
+      no_highlighting: "ללא הדגשה (plaintext)"
+      recent: "בשימוש לאחרונה"
+      frequent: "בשימוש תדיר"
+      all_languages: "כל השפות"
+
+    resizer:
+      title: "גרירה משנה את גובה העורך, לחיצה כפולה מחזירה את הגובה האוטומטי"

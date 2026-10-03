@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Serbian Cyrillic (Српски).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+sr:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Изворни код (HTML)"
+      paragraph_style: "Стил пасуса"
+      align: "Поравнање"
+      outdent: "Смањи увлачење"
+      indent: "Повећај увлачење"
+      bold: "Подебљано"
+      italic: "Курзив"
+      underline: "Подвучено"
+      strike: "Прецртано"
+      font: "Фонт"
+      font_size: "Величина фонта"
+      text_color: "Боја текста"
+      background_color: "Боја позадине текста"
+      undo: "Опозови"
+      redo: "Понови"
+      collapsible: "Блок који се склапа"
+      code: "Код"
+      code_block: "Блок кода"
+      horizontal_rule: "Хоризонтална линија"
+      quote: "Цитат"
+      link: "Веза"
+      unlink: "Уклони везу"
+      list: "Листа"
+      insert_table: "Уметни табелу"
+      insert_attachment: "Уметни прилог"
+      insert_image: "Уметни слику из прилога"
+
+    paragraph_styles:
+      heading1: "Наслов 1"
+      heading2: "Наслов 2"
+      heading3: "Наслов 3"
+      normal: "Обичан текст"
+      subheading4: "Поднаслов 4"
+      subheading5: "Поднаслов 5"
+      subheading6: "Поднаслов 6"
+      monospace: "Једнаке ширине"
+
+    align_options:
+      left: "Поравнај улево"
+      center: "Центрирај"
+      right: "Поравнај удесно"
+      justify: "Обострано поравнање"
+
+    font_options:
+      default: "Подразумевано"
+      size_placeholder: "Вел."
+
+    color_picker:
+      reset: "Ресетуј"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Листа задатака"
+      bullet_disc: "• Тачке (пуни кругови)"
+      bullet_circle: "◦ Тачке (кругови)"
+      bullet_square: "▪ Тачке (квадрати)"
+      decimal: "1. Нумерација (1, 2, 3)"
+      decimal_zero: "01. Нумерација (01, 02)"
+      lower_alpha: "a. Нумерација (a, b, c)"
+      upper_alpha: "A. Нумерација (A, B, C)"
+      lower_roman: "i. Нумерација (i, ii, iii)"
+      upper_roman: "I. Нумерација (I, II, III)"
+      lower_greek: "α. Нумерација (α, β, γ)"
+
+    dialog:
+      insert: "Уметни"
+
+    link_dialog:
+      title: "Уметни везу"
+      text: "Текст"
+      text_placeholder: "Текст везе"
+      url: "URL"
+
+    table_dialog:
+      title: "Уметни табелу"
+      rows: "Редови"
+      columns: "Колоне"
+      header_row: "Први ред је заглавље"
+
+    attachment_dialog:
+      title: "Уметни прилог"
+      empty: "Нема отпремљених прилога"
+
+    image_dialog:
+      title: "Уметни слику"
+      empty: "Нема отпремљених слика"
+
+    table_menu:
+      add_column_left: "Додај колону лево"
+      add_column_right: "Додај колону десно"
+      delete_column: "Избриши колону"
+      add_row_above: "Додај ред изнад"
+      add_row_below: "Додај ред испод"
+      delete_row: "Избриши ред"
+      merge_cells: "Споји ћелије"
+      split_cell: "Раздвој ћелију"
+      header_row: "Први ред је заглавље"
+      header_column: "Прва колона је заглавље"
+      delete_table: "Избриши табелу"
+
+    quote:
+      default_header: "Аутор, датум"
+      default_text: "Текст цитата"
+
+    collapsible:
+      default_title: "Наслов"
+      default_content: "Садржај"
+
+    code_block:
+      badge_title: "Језик блока кода: кликните да бисте изабрали"
+      badge_empty: "језик"
+      search_language: "Претражи језике"
+      nothing_found: "Ништа није пронађено"
+      no_highlighting: "Без истицања (plaintext)"
+      recent: "Недавни"
+      frequent: "Чести"
+      all_languages: "Сви језици"
+
+    resizer:
+      title: "Превуците да бисте променили висину уређивача, двапут кликните да бисте вратили аутоматску висину"

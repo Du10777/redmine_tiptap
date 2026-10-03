@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Slovak (Slovenčina).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+sk:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Zdrojový kód (HTML)"
+      paragraph_style: "Štýl odseku"
+      align: "Zarovnanie"
+      outdent: "Zmenšiť odsadenie"
+      indent: "Zväčšiť odsadenie"
+      bold: "Tučné"
+      italic: "Kurzíva"
+      underline: "Podčiarknuté"
+      strike: "Prečiarknuté"
+      font: "Písmo"
+      font_size: "Veľkosť písma"
+      text_color: "Farba textu"
+      background_color: "Farba pozadia textu"
+      undo: "Späť"
+      redo: "Znova"
+      collapsible: "Zbaliteľný blok"
+      code: "Kód"
+      code_block: "Blok kódu"
+      horizontal_rule: "Vodorovná čiara"
+      quote: "Citát"
+      link: "Odkaz"
+      unlink: "Odstrániť odkaz"
+      list: "Zoznam"
+      insert_table: "Vložiť tabuľku"
+      insert_attachment: "Vložiť prílohu"
+      insert_image: "Vložiť obrázok z príloh"
+
+    paragraph_styles:
+      heading1: "Nadpis 1"
+      heading2: "Nadpis 2"
+      heading3: "Nadpis 3"
+      normal: "Normálny text"
+      subheading4: "Podnadpis 4"
+      subheading5: "Podnadpis 5"
+      subheading6: "Podnadpis 6"
+      monospace: "Neproporcionálne písmo"
+
+    align_options:
+      left: "Zarovnať doľava"
+      center: "Zarovnať na stred"
+      right: "Zarovnať doprava"
+      justify: "Zarovnať do bloku"
+
+    font_options:
+      default: "Predvolené"
+      size_placeholder: "Veľ."
+
+    color_picker:
+      reset: "Resetovať"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Zoznam úloh"
+      bullet_disc: "• Odrážky (bodky)"
+      bullet_circle: "◦ Odrážky (krúžky)"
+      bullet_square: "▪ Odrážky (štvorčeky)"
+      decimal: "1. Číslovanie (1, 2, 3)"
+      decimal_zero: "01. Číslovanie (01, 02)"
+      lower_alpha: "a. Číslovanie (a, b, c)"
+      upper_alpha: "A. Číslovanie (A, B, C)"
+      lower_roman: "i. Číslovanie (i, ii, iii)"
+      upper_roman: "I. Číslovanie (I, II, III)"
+      lower_greek: "α. Číslovanie (α, β, γ)"
+
+    dialog:
+      insert: "Vložiť"
+
+    link_dialog:
+      title: "Vložiť odkaz"
+      text: "Text"
+      text_placeholder: "Text odkazu"
+      url: "URL"
+
+    table_dialog:
+      title: "Vložiť tabuľku"
+      rows: "Riadky"
+      columns: "Stĺpce"
+      header_row: "Prvý riadok ako hlavička"
+
+    attachment_dialog:
+      title: "Vložiť prílohu"
+      empty: "Žiadne nahrané prílohy"
+
+    image_dialog:
+      title: "Vložiť obrázok"
+      empty: "Žiadne nahrané obrázky"
+
+    table_menu:
+      add_column_left: "Pridať stĺpec vľavo"
+      add_column_right: "Pridať stĺpec vpravo"
+      delete_column: "Odstrániť stĺpec"
+      add_row_above: "Pridať riadok nad"
+      add_row_below: "Pridať riadok pod"
+      delete_row: "Odstrániť riadok"
+      merge_cells: "Zlúčiť bunky"
+      split_cell: "Rozdeliť bunku"
+      header_row: "Prvý riadok ako hlavička"
+      header_column: "Prvý stĺpec ako hlavička"
+      delete_table: "Odstrániť tabuľku"
+
+    quote:
+      default_header: "Autor, dátum"
+      default_text: "Text citátu"
+
+    collapsible:
+      default_title: "Nadpis"
+      default_content: "Obsah"
+
+    code_block:
+      badge_title: "Jazyk bloku kódu – kliknutím vyberiete"
+      badge_empty: "jazyk"
+      search_language: "Hľadať jazyk"
+      nothing_found: "Nič sa nenašlo"
+      no_highlighting: "Bez zvýraznenia syntaxe (plaintext)"
+      recent: "Nedávno použité"
+      frequent: "Často používané"
+      all_languages: "Všetky jazyky"
+
+    resizer:
+      title: "Potiahnutím zmeníte výšku editora, dvojitým kliknutím obnovíte automatickú výšku"

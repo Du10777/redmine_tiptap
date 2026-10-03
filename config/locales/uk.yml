@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Ukrainian (Українська).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+uk:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Вихідний код (HTML)"
+      paragraph_style: "Стиль абзацу"
+      align: "Вирівнювання"
+      outdent: "Зменшити відступ"
+      indent: "Збільшити відступ"
+      bold: "Жирний"
+      italic: "Курсив"
+      underline: "Підкреслений"
+      strike: "Закреслений"
+      font: "Шрифт"
+      font_size: "Розмір шрифту"
+      text_color: "Колір тексту"
+      background_color: "Колір тла тексту"
+      undo: "Скасувати"
+      redo: "Повторити"
+      collapsible: "Блок, що згортається"
+      code: "Код"
+      code_block: "Блок коду"
+      horizontal_rule: "Горизонтальна лінія"
+      quote: "Цитата"
+      link: "Посилання"
+      unlink: "Видалити посилання"
+      list: "Список"
+      insert_table: "Вставити таблицю"
+      insert_attachment: "Вставити вкладення"
+      insert_image: "Вставити зображення з вкладень"
+
+    paragraph_styles:
+      heading1: "Заголовок 1"
+      heading2: "Заголовок 2"
+      heading3: "Заголовок 3"
+      normal: "Звичайний текст"
+      subheading4: "Підзаголовок 4"
+      subheading5: "Підзаголовок 5"
+      subheading6: "Підзаголовок 6"
+      monospace: "Моноширинний"
+
+    align_options:
+      left: "За лівим краєм"
+      center: "По центру"
+      right: "За правим краєм"
+      justify: "За шириною"
+
+    font_options:
+      default: "За замовчуванням"
+      size_placeholder: "Розм."
+
+    color_picker:
+      reset: "Скинути"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Список завдань"
+      bullet_disc: "• Маркери (суцільні кола)"
+      bullet_circle: "◦ Маркери (кола)"
+      bullet_square: "▪ Маркери (квадрати)"
+      decimal: "1. Нумерація (1, 2, 3)"
+      decimal_zero: "01. Нумерація (01, 02)"
+      lower_alpha: "a. Нумерація (a, b, c)"
+      upper_alpha: "A. Нумерація (A, B, C)"
+      lower_roman: "i. Нумерація (i, ii, iii)"
+      upper_roman: "I. Нумерація (I, II, III)"
+      lower_greek: "α. Нумерація (α, β, γ)"
+
+    dialog:
+      insert: "Вставити"
+
+    link_dialog:
+      title: "Вставити посилання"
+      text: "Текст"
+      text_placeholder: "Текст посилання"
+      url: "URL"
+
+    table_dialog:
+      title: "Вставити таблицю"
+      rows: "Рядки"
+      columns: "Стовпці"
+      header_row: "Перший рядок є заголовком"
+
+    attachment_dialog:
+      title: "Вставити вкладення"
+      empty: "Немає завантажених вкладень"
+
+    image_dialog:
+      title: "Вставити зображення"
+      empty: "Немає завантажених зображень"
+
+    table_menu:
+      add_column_left: "Додати стовпець ліворуч"
+      add_column_right: "Додати стовпець праворуч"
+      delete_column: "Видалити стовпець"
+      add_row_above: "Додати рядок вище"
+      add_row_below: "Додати рядок нижче"
+      delete_row: "Видалити рядок"
+      merge_cells: "Об'єднати клітинки"
+      split_cell: "Розділити клітинку"
+      header_row: "Перший рядок є заголовком"
+      header_column: "Перший стовпець є заголовком"
+      delete_table: "Видалити таблицю"
+
+    quote:
+      default_header: "Автор, дата"
+      default_text: "Текст цитати"
+
+    collapsible:
+      default_title: "Заголовок"
+      default_content: "Вміст"
+
+    code_block:
+      badge_title: "Мова блоку коду: натисніть, щоб вибрати"
+      badge_empty: "мова"
+      search_language: "Пошук мови"
+      nothing_found: "Нічого не знайдено"
+      no_highlighting: "Без підсвічування (plaintext)"
+      recent: "Нещодавні"
+      frequent: "Часті"
+      all_languages: "Усі мови"
+
+    resizer:
+      title: "Потягніть, щоб змінити висоту редактора, двічі клацніть, щоб повернути автоматичну висоту"

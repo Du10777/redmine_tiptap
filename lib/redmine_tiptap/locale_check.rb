@@ -55,9 +55,9 @@ module RedmineTiptap
       @out.puts "Strings in en.yml: #{plain_keys(english).size}"
       strings.each do |code, translated|
         next if code == 'en'
-        check_language(code, translated, english)
+        check_language(code, translated, english, strings)
       end
-      list_untranslated(strings[@locale], english) if @locale && @locale != 'en'
+      list_untranslated(@locale, strings, english) if @locale && @locale != 'en'
       @out.puts("No translation file for #{@locale}: copy en.yml to #{@locale}.yml") if @locale && !strings.key?(@locale)
       finish
     end
@@ -117,7 +117,7 @@ module RedmineTiptap
       @out.puts "Keys used in the JavaScript: #{used.size}"
     end
 
-    def check_language(code, translated, english)
+    def check_language(code, translated, english, strings)
       known = english.keys.to_set
       extra = translated.keys.reject { |key| known.include?(key) || language_text?(key) }
       extra.sort.each { |key| error("#{code}.yml: #{key} is not in en.yml (a typo, or a string that was removed)") }
@@ -129,23 +129,40 @@ module RedmineTiptap
 
       total = plain_keys(english).size
       done = (plain_keys(translated).to_set & known).size
-      suffix = done < total ? " (#{total - done} missing, shown in English; list them with LOCALE=#{code})" : ''
-      @out.puts "#{code}: #{done} of #{total} translated#{suffix}"
+      base = base_language(code, strings)
+      if done < total && base
+        @out.puts "#{code}: #{done} of #{total} texts of its own, the rest comes from #{base}"
+      else
+        suffix = done < total ? " (#{total - done} missing, shown in English; list them with LOCALE=#{code})" : ''
+        @out.puts "#{code}: #{done} of #{total} translated#{suffix}"
+      end
     end
 
     def language_text?(key)
       key.match?(LANGUAGE_KEY)
     end
 
-    def list_untranslated(translated, english)
+    # The language that a regional one falls back to when the plugin has a file for it:
+    # pt-BR -> pt, es-PA -> es, en-GB -> en. nil for the others (ta-IN: Redmine has no ta).
+    def base_language(code, strings)
+      base = code.split('-').first
+      base != code && strings.key?(base) ? base : nil
+    end
+
+    def list_untranslated(code, strings, english)
+      translated = strings[code]
       return unless translated
+      base = base_language(code, strings)
       missing = plain_keys(english).reject { |key| translated.key?(key) }
       @out.puts
       if missing.empty?
-        @out.puts "#{@locale}: everything is translated"
+        @out.puts "#{code}: everything is translated"
       else
-        @out.puts "Not translated in #{@locale}.yml (English shown):"
-        missing.each { |key| @out.puts "  #{key}: #{english[key].inspect}" }
+        @out.puts "Not translated in #{code}.yml (#{base ? "the text of #{base}.yml is shown" : 'English shown'}):"
+        missing.each do |key|
+          shown = base && strings[base][key] ? strings[base][key] : english[key]
+          @out.puts "  #{key}: #{shown.inspect}"
+        end
       end
     end
   end

@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Polish (Polski).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+pl:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Kod źródłowy (HTML)"
+      paragraph_style: "Styl akapitu"
+      align: "Wyrównanie"
+      outdent: "Zmniejsz wcięcie"
+      indent: "Zwiększ wcięcie"
+      bold: "Pogrubienie"
+      italic: "Kursywa"
+      underline: "Podkreślenie"
+      strike: "Przekreślenie"
+      font: "Czcionka"
+      font_size: "Rozmiar czcionki"
+      text_color: "Kolor tekstu"
+      background_color: "Kolor tła tekstu"
+      undo: "Cofnij"
+      redo: "Ponów"
+      collapsible: "Blok zwijany"
+      code: "Kod"
+      code_block: "Blok kodu"
+      horizontal_rule: "Linia pozioma"
+      quote: "Cytat"
+      link: "Link"
+      unlink: "Usuń link"
+      list: "Lista"
+      insert_table: "Wstaw tabelę"
+      insert_attachment: "Wstaw załącznik"
+      insert_image: "Wstaw obraz z załączników"
+
+    paragraph_styles:
+      heading1: "Nagłówek 1"
+      heading2: "Nagłówek 2"
+      heading3: "Nagłówek 3"
+      normal: "Zwykły tekst"
+      subheading4: "Podnagłówek 4"
+      subheading5: "Podnagłówek 5"
+      subheading6: "Podnagłówek 6"
+      monospace: "Czcionka o stałej szerokości"
+
+    align_options:
+      left: "Wyrównaj do lewej"
+      center: "Wyśrodkuj"
+      right: "Wyrównaj do prawej"
+      justify: "Wyjustuj"
+
+    font_options:
+      default: "Domyślna"
+      size_placeholder: "Rozm."
+
+    color_picker:
+      reset: "Resetuj"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Lista zadań"
+      bullet_disc: "• Punktory (kropki)"
+      bullet_circle: "◦ Punktory (kółka)"
+      bullet_square: "▪ Punktory (kwadraty)"
+      decimal: "1. Numerowanie (1, 2, 3)"
+      decimal_zero: "01. Numerowanie (01, 02)"
+      lower_alpha: "a. Numerowanie (a, b, c)"
+      upper_alpha: "A. Numerowanie (A, B, C)"
+      lower_roman: "i. Numerowanie (i, ii, iii)"
+      upper_roman: "I. Numerowanie (I, II, III)"
+      lower_greek: "α. Numerowanie (α, β, γ)"
+
+    dialog:
+      insert: "Wstaw"
+
+    link_dialog:
+      title: "Wstaw link"
+      text: "Tekst"
+      text_placeholder: "Tekst linku"
+      url: "URL"
+
+    table_dialog:
+      title: "Wstaw tabelę"
+      rows: "Wiersze"
+      columns: "Kolumny"
+      header_row: "Pierwszy wiersz jako nagłówek"
+
+    attachment_dialog:
+      title: "Wstaw załącznik"
+      empty: "Brak przesłanych załączników"
+
+    image_dialog:
+      title: "Wstaw obraz"
+      empty: "Brak przesłanych obrazów"
+
+    table_menu:
+      add_column_left: "Dodaj kolumnę z lewej"
+      add_column_right: "Dodaj kolumnę z prawej"
+      delete_column: "Usuń kolumnę"
+      add_row_above: "Dodaj wiersz powyżej"
+      add_row_below: "Dodaj wiersz poniżej"
+      delete_row: "Usuń wiersz"
+      merge_cells: "Scal komórki"
+      split_cell: "Podziel komórkę"
+      header_row: "Pierwszy wiersz jako nagłówek"
+      header_column: "Pierwsza kolumna jako nagłówek"
+      delete_table: "Usuń tabelę"
+
+    quote:
+      default_header: "Autor, data"
+      default_text: "Tekst cytatu"
+
+    collapsible:
+      default_title: "Tytuł"
+      default_content: "Treść"
+
+    code_block:
+      badge_title: "Język bloku kodu – kliknij, aby wybrać"
+      badge_empty: "język"
+      search_language: "Szukaj języka"
+      nothing_found: "Nic nie znaleziono"
+      no_highlighting: "Bez podświetlania składni (plaintext)"
+      recent: "Ostatnio używane"
+      frequent: "Często używane"
+      all_languages: "Wszystkie języki"
+
+    resizer:
+      title: "Przeciągnij, aby zmienić wysokość edytora; kliknij dwukrotnie, aby przywrócić automatyczną wysokość"

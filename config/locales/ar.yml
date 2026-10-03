@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Arabic (عربي).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+ar:
+  redmine_tiptap:
+
+    toolbar:
+      source: "الشيفرة المصدرية (HTML)"
+      paragraph_style: "نمط الفقرة"
+      align: "المحاذاة"
+      outdent: "إنقاص المسافة البادئة"
+      indent: "زيادة المسافة البادئة"
+      bold: "غامق"
+      italic: "مائل"
+      underline: "تسطير"
+      strike: "يتوسطه خط"
+      font: "الخط"
+      font_size: "حجم الخط"
+      text_color: "لون النص"
+      background_color: "لون خلفية النص"
+      undo: "تراجع"
+      redo: "إعادة"
+      collapsible: "قسم قابل للطي"
+      code: "شيفرة ضمن السطر"
+      code_block: "كتلة شيفرة"
+      horizontal_rule: "خط أفقي"
+      quote: "اقتباس"
+      link: "رابط"
+      unlink: "إزالة الرابط"
+      list: "قائمة"
+      insert_table: "إدراج جدول"
+      insert_attachment: "إدراج ملف مرفق"
+      insert_image: "إدراج صورة من الملفات المرفقة"
+
+    paragraph_styles:
+      heading1: "عنوان 1"
+      heading2: "عنوان 2"
+      heading3: "عنوان 3"
+      normal: "نص عادي"
+      subheading4: "عنوان فرعي 4"
+      subheading5: "عنوان فرعي 5"
+      subheading6: "عنوان فرعي 6"
+      monospace: "نص ثابت العرض"
+
+    align_options:
+      left: "محاذاة إلى اليسار"
+      center: "توسيط"
+      right: "محاذاة إلى اليمين"
+      justify: "ضبط"
+
+    font_options:
+      default: "الافتراضي"
+      size_placeholder: "الحجم"
+
+    color_picker:
+      reset: "إعادة تعيين"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ قائمة مهام"
+      bullet_disc: "• تعداد نقطي (دوائر ممتلئة)"
+      bullet_circle: "◦ تعداد نقطي (دوائر فارغة)"
+      bullet_square: "▪ تعداد نقطي (مربعات)"
+      decimal: "1. ترقيم (1, 2, 3)"
+      decimal_zero: "01. ترقيم (01, 02)"
+      lower_alpha: "a. ترقيم (a, b, c)"
+      upper_alpha: "A. ترقيم (A, B, C)"
+      lower_roman: "i. ترقيم (i, ii, iii)"
+      upper_roman: "I. ترقيم (I, II, III)"
+      lower_greek: "α. ترقيم (α, β, γ)"
+
+    dialog:
+      insert: "إدراج"
+
+    link_dialog:
+      title: "إدراج رابط"
+      text: "النص"
+      text_placeholder: "نص الرابط"
+      url: "عنوان URL"
+
+    table_dialog:
+      title: "إدراج جدول"
+      rows: "عدد الصفوف"
+      columns: "عدد الأعمدة"
+      header_row: "الصف الأول صف عناوين"
+
+    attachment_dialog:
+      title: "إدراج ملف مرفق"
+      empty: "لا توجد ملفات مرفقة"
+
+    image_dialog:
+      title: "إدراج صورة"
+      empty: "لا توجد صور مرفقة"
+
+    table_menu:
+      add_column_left: "إضافة عمود إلى اليسار"
+      add_column_right: "إضافة عمود إلى اليمين"
+      delete_column: "حذف العمود"
+      add_row_above: "إضافة صف أعلى"
+      add_row_below: "إضافة صف أسفل"
+      delete_row: "حذف الصف"
+      merge_cells: "دمج الخلايا"
+      split_cell: "تقسيم الخلية"
+      header_row: "الصف الأول صف عناوين"
+      header_column: "العمود الأول عمود عناوين"
+      delete_table: "حذف الجدول"
+
+    quote:
+      default_header: "المؤلف، التاريخ"
+      default_text: "نص الاقتباس"
+
+    collapsible:
+      default_title: "العنوان"
+      default_content: "المحتوى"
+
+    code_block:
+      badge_title: "لغة كتلة الشيفرة - انقر للاختيار"
+      badge_empty: "لغة"
+      search_language: "البحث عن لغة"
+      nothing_found: "لا توجد نتائج"
+      no_highlighting: "بدون تمييز (plaintext)"
+      recent: "المستخدمة مؤخرًا"
+      frequent: "الأكثر استخدامًا"
+      all_languages: "جميع اللغات"
+
+    resizer:
+      title: "اسحب لتغيير ارتفاع المحرر، وانقر نقرًا مزدوجًا لاستعادة الارتفاع التلقائي"

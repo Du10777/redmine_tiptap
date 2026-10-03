@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: French (Français).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+fr:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Code source (HTML)"
+      paragraph_style: "Style de paragraphe"
+      align: "Alignement"
+      outdent: "Diminuer le retrait"
+      indent: "Augmenter le retrait"
+      bold: "Gras"
+      italic: "Italique"
+      underline: "Souligné"
+      strike: "Barré"
+      font: "Police"
+      font_size: "Taille de police"
+      text_color: "Couleur du texte"
+      background_color: "Couleur d'arrière-plan du texte"
+      undo: "Annuler"
+      redo: "Rétablir"
+      collapsible: "Bloc repliable"
+      code: "Code"
+      code_block: "Bloc de code"
+      horizontal_rule: "Ligne horizontale"
+      quote: "Citation"
+      link: "Lien"
+      unlink: "Supprimer le lien"
+      list: "Liste"
+      insert_table: "Insérer un tableau"
+      insert_attachment: "Insérer un fichier joint"
+      insert_image: "Insérer une image depuis les fichiers joints"
+
+    paragraph_styles:
+      heading1: "Titre 1"
+      heading2: "Titre 2"
+      heading3: "Titre 3"
+      normal: "Texte normal"
+      subheading4: "Sous-titre 4"
+      subheading5: "Sous-titre 5"
+      subheading6: "Sous-titre 6"
+      monospace: "Monospace"
+
+    align_options:
+      left: "Aligner à gauche"
+      center: "Centrer"
+      right: "Aligner à droite"
+      justify: "Justifier"
+
+    font_options:
+      default: "Par défaut"
+      size_placeholder: "Tail."
+
+    color_picker:
+      reset: "Réinitialiser"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Liste de tâches"
+      bullet_disc: "• Puces (disques)"
+      bullet_circle: "◦ Puces (cercles)"
+      bullet_square: "▪ Puces (carrés)"
+      decimal: "1. Numérotation (1, 2, 3)"
+      decimal_zero: "01. Numérotation (01, 02)"
+      lower_alpha: "a. Numérotation (a, b, c)"
+      upper_alpha: "A. Numérotation (A, B, C)"
+      lower_roman: "i. Numérotation (i, ii, iii)"
+      upper_roman: "I. Numérotation (I, II, III)"
+      lower_greek: "α. Numérotation (α, β, γ)"
+
+    dialog:
+      insert: "Insérer"
+
+    link_dialog:
+      title: "Insérer un lien"
+      text: "Texte"
+      text_placeholder: "Texte du lien"
+      url: "URL"
+
+    table_dialog:
+      title: "Insérer un tableau"
+      rows: "Lignes"
+      columns: "Colonnes"
+      header_row: "La première ligne est un en-tête"
+
+    attachment_dialog:
+      title: "Insérer un fichier joint"
+      empty: "Aucun fichier joint téléversé"
+
+    image_dialog:
+      title: "Insérer une image"
+      empty: "Aucune image téléversée"
+
+    table_menu:
+      add_column_left: "Ajouter une colonne à gauche"
+      add_column_right: "Ajouter une colonne à droite"
+      delete_column: "Supprimer la colonne"
+      add_row_above: "Ajouter une ligne au-dessus"
+      add_row_below: "Ajouter une ligne en dessous"
+      delete_row: "Supprimer la ligne"
+      merge_cells: "Fusionner les cellules"
+      split_cell: "Fractionner la cellule"
+      header_row: "La première ligne est un en-tête"
+      header_column: "La première colonne est un en-tête"
+      delete_table: "Supprimer le tableau"
+
+    quote:
+      default_header: "Auteur, date"
+      default_text: "Texte de la citation"
+
+    collapsible:
+      default_title: "Titre"
+      default_content: "Contenu"
+
+    code_block:
+      badge_title: "Langage du bloc de code : cliquer pour choisir"
+      badge_empty: "langage"
+      search_language: "Rechercher un langage"
+      nothing_found: "Aucun résultat"
+      no_highlighting: "Sans coloration (plaintext)"
+      recent: "Récents"
+      frequent: "Fréquents"
+      all_languages: "Tous les langages"
+
+    resizer:
+      title: "Faites glisser pour modifier la hauteur de l'éditeur, double-cliquez pour rétablir la hauteur automatique"

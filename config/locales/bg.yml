@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Bulgarian (Български).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+bg:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Изходен код (HTML)"
+      paragraph_style: "Стил на абзаца"
+      align: "Подравняване"
+      outdent: "Намаляване на отстъпа"
+      indent: "Увеличаване на отстъпа"
+      bold: "Получер"
+      italic: "Курсив"
+      underline: "Подчертан"
+      strike: "Зачертан"
+      font: "Шрифт"
+      font_size: "Размер на шрифта"
+      text_color: "Цвят на текста"
+      background_color: "Цвят на фона на текста"
+      undo: "Отмяна"
+      redo: "Повтаряне"
+      collapsible: "Сгъваем блок"
+      code: "Код"
+      code_block: "Блок с код"
+      horizontal_rule: "Хоризонтална линия"
+      quote: "Цитат"
+      link: "Връзка"
+      unlink: "Премахване на връзката"
+      list: "Списък"
+      insert_table: "Вмъкване на таблица"
+      insert_attachment: "Вмъкване на прикачен файл"
+      insert_image: "Вмъкване на изображение от прикачените файлове"
+
+    paragraph_styles:
+      heading1: "Заглавие 1"
+      heading2: "Заглавие 2"
+      heading3: "Заглавие 3"
+      normal: "Нормален текст"
+      subheading4: "Подзаглавие 4"
+      subheading5: "Подзаглавие 5"
+      subheading6: "Подзаглавие 6"
+      monospace: "Моноширинен"
+
+    align_options:
+      left: "Подравняване вляво"
+      center: "Центриране"
+      right: "Подравняване вдясно"
+      justify: "Двустранно подравняване"
+
+    font_options:
+      default: "По подразбиране"
+      size_placeholder: "Разм."
+
+    color_picker:
+      reset: "Нулиране"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Списък със задачи"
+      bullet_disc: "• Маркери (плътни кръгове)"
+      bullet_circle: "◦ Маркери (кръгове)"
+      bullet_square: "▪ Маркери (квадрати)"
+      decimal: "1. Номериране (1, 2, 3)"
+      decimal_zero: "01. Номериране (01, 02)"
+      lower_alpha: "a. Номериране (a, b, c)"
+      upper_alpha: "A. Номериране (A, B, C)"
+      lower_roman: "i. Номериране (i, ii, iii)"
+      upper_roman: "I. Номериране (I, II, III)"
+      lower_greek: "α. Номериране (α, β, γ)"
+
+    dialog:
+      insert: "Вмъкване"
+
+    link_dialog:
+      title: "Вмъкване на връзка"
+      text: "Текст"
+      text_placeholder: "Текст на връзката"
+      url: "URL"
+
+    table_dialog:
+      title: "Вмъкване на таблица"
+      rows: "Редове"
+      columns: "Колони"
+      header_row: "Първият ред е заглавен"
+
+    attachment_dialog:
+      title: "Вмъкване на прикачен файл"
+      empty: "Няма качени прикачени файлове"
+
+    image_dialog:
+      title: "Вмъкване на изображение"
+      empty: "Няма качени изображения"
+
+    table_menu:
+      add_column_left: "Добавяне на колона отляво"
+      add_column_right: "Добавяне на колона отдясно"
+      delete_column: "Изтриване на колоната"
+      add_row_above: "Добавяне на ред отгоре"
+      add_row_below: "Добавяне на ред отдолу"
+      delete_row: "Изтриване на реда"
+      merge_cells: "Сливане на клетки"
+      split_cell: "Разделяне на клетка"
+      header_row: "Първият ред е заглавен"
+      header_column: "Първата колона е заглавна"
+      delete_table: "Изтриване на таблицата"
+
+    quote:
+      default_header: "Автор, дата"
+      default_text: "Текст на цитата"
+
+    collapsible:
+      default_title: "Заглавие"
+      default_content: "Съдържание"
+
+    code_block:
+      badge_title: "Език на блока с код: щракнете за избор"
+      badge_empty: "език"
+      search_language: "Търсене на език"
+      nothing_found: "Няма резултати"
+      no_highlighting: "Без осветяване (plaintext)"
+      recent: "Скорошни"
+      frequent: "Чести"
+      all_languages: "Всички езици"
+
+    resizer:
+      title: "Плъзнете, за да промените височината на редактора, щракнете двукратно, за да възстановите автоматичната височина"

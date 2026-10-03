@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Chinese/Traditional (繁體中文).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+zh-TW:
+  redmine_tiptap:
+
+    toolbar:
+      source: "原始碼 (HTML)"
+      paragraph_style: "段落樣式"
+      align: "對齊方式"
+      outdent: "減少縮排"
+      indent: "增加縮排"
+      bold: "粗體"
+      italic: "斜體"
+      underline: "底線"
+      strike: "刪除線"
+      font: "字型"
+      font_size: "字型大小"
+      text_color: "文字顏色"
+      background_color: "文字背景顏色"
+      undo: "復原"
+      redo: "取消復原"
+      collapsible: "摺疊區塊"
+      code: "行內程式碼"
+      code_block: "程式碼區塊"
+      horizontal_rule: "水平線"
+      quote: "引文"
+      link: "連結"
+      unlink: "移除連結"
+      list: "清單"
+      insert_table: "插入表格"
+      insert_attachment: "插入附件"
+      insert_image: "從附件插入圖片"
+
+    paragraph_styles:
+      heading1: "標題 1"
+      heading2: "標題 2"
+      heading3: "標題 3"
+      normal: "內文"
+      subheading4: "小標題 4"
+      subheading5: "小標題 5"
+      subheading6: "小標題 6"
+      monospace: "等寬文字"
+
+    align_options:
+      left: "靠左對齊"
+      center: "置中"
+      right: "靠右對齊"
+      justify: "左右對齊"
+
+    font_options:
+      default: "預設"
+      size_placeholder: "大小"
+
+    color_picker:
+      reset: "重設"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ 待辦清單"
+      bullet_disc: "• 項目符號 (實心圓)"
+      bullet_circle: "◦ 項目符號 (空心圓)"
+      bullet_square: "▪ 項目符號 (方塊)"
+      decimal: "1. 編號 (1, 2, 3)"
+      decimal_zero: "01. 編號 (01, 02)"
+      lower_alpha: "a. 編號 (a, b, c)"
+      upper_alpha: "A. 編號 (A, B, C)"
+      lower_roman: "i. 編號 (i, ii, iii)"
+      upper_roman: "I. 編號 (I, II, III)"
+      lower_greek: "α. 編號 (α, β, γ)"
+
+    dialog:
+      insert: "插入"
+
+    link_dialog:
+      title: "插入連結"
+      text: "文字"
+      text_placeholder: "連結文字"
+      url: "網址"
+
+    table_dialog:
+      title: "插入表格"
+      rows: "列數"
+      columns: "欄數"
+      header_row: "第一列為標題列"
+
+    attachment_dialog:
+      title: "插入附件"
+      empty: "尚無已上傳的附件"
+
+    image_dialog:
+      title: "插入圖片"
+      empty: "尚無已上傳的圖片"
+
+    table_menu:
+      add_column_left: "在左側插入欄"
+      add_column_right: "在右側插入欄"
+      delete_column: "刪除欄"
+      add_row_above: "在上方插入列"
+      add_row_below: "在下方插入列"
+      delete_row: "刪除列"
+      merge_cells: "合併儲存格"
+      split_cell: "分割儲存格"
+      header_row: "第一列為標題列"
+      header_column: "第一欄為標題欄"
+      delete_table: "刪除表格"
+
+    quote:
+      default_header: "作者，日期"
+      default_text: "引文內容"
+
+    collapsible:
+      default_title: "標題"
+      default_content: "內容"
+
+    code_block:
+      badge_title: "程式碼區塊語言，按一下即可選擇"
+      badge_empty: "語言"
+      search_language: "搜尋語言"
+      nothing_found: "找不到結果"
+      no_highlighting: "無語法醒目提示 (plaintext)"
+      recent: "最近使用"
+      frequent: "常用"
+      all_languages: "所有語言"
+
+    resizer:
+      title: "拖曳可調整編輯器高度，按兩下可恢復自動高度"

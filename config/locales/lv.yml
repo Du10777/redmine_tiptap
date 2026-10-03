@@ -1,0 +1,127 @@
+# Interface strings of the TipTap editor: Latvian (Latviešu).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+lv:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Pirmkods (HTML)"
+      paragraph_style: "Rindkopas stils"
+      align: "Līdzinājums"
+      outdent: "Samazināt atkāpi"
+      indent: "Palielināt atkāpi"
+      bold: "Treknraksts"
+      italic: "Slīpraksts"
+      underline: "Pasvītrojums"
+      strike: "Pārsvītrojums"
+      font: "Fonts"
+      font_size: "Fonta lielums"
+      text_color: "Teksta krāsa"
+      background_color: "Teksta fona krāsa"
+      undo: "Atsaukt"
+      redo: "Atcelt atsaukšanu"
+      collapsible: "Sakļaujams bloks"
+      code: "Kods"
+      code_block: "Koda bloks"
+      horizontal_rule: "Horizontāla līnija"
+      quote: "Citāts"
+      link: "Saite"
+      unlink: "Noņemt saiti"
+      list: "Saraksts"
+      insert_table: "Ievietot tabulu"
+      insert_attachment: "Ievietot pielikumu"
+      insert_image: "Ievietot attēlu no pielikumiem"
+
+    paragraph_styles:
+      heading1: "Virsraksts 1"
+      heading2: "Virsraksts 2"
+      heading3: "Virsraksts 3"
+      normal: "Parasts teksts"
+      subheading4: "Apakšvirsraksts 4"
+      subheading5: "Apakšvirsraksts 5"
+      subheading6: "Apakšvirsraksts 6"
+      monospace: "Vienplatuma teksts"
+
+    align_options:
+      left: "Līdzināt pa kreisi"
+      center: "Centrēt"
+      right: "Līdzināt pa labi"
+      justify: "Taisnot"
+
+    font_options:
+      default: "Noklusējums"
+      size_placeholder: "Izm."
+
+    color_picker:
+      reset: "Atiestatīt"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Uzdevumu saraksts"
+      bullet_disc: "• Aizzīmes (aizpildīti apļi)"
+      bullet_circle: "◦ Aizzīmes (apļi)"
+      bullet_square: "▪ Aizzīmes (kvadrāti)"
+      decimal: "1. Numerācija (1, 2, 3)"
+      decimal_zero: "01. Numerācija (01, 02)"
+      lower_alpha: "a. Numerācija (a, b, c)"
+      upper_alpha: "A. Numerācija (A, B, C)"
+      lower_roman: "i. Numerācija (i, ii, iii)"
+      upper_roman: "I. Numerācija (I, II, III)"
+      lower_greek: "α. Numerācija (α, β, γ)"
+
+    dialog:
+      insert: "Ievietot"
+
+    link_dialog:
+      title: "Ievietot saiti"
+      text: "Teksts"
+      text_placeholder: "Saites teksts"
+      url: "URL"
+
+    table_dialog:
+      title: "Ievietot tabulu"
+      rows: "Rindas"
+      columns: "Kolonnas"
+      header_row: "Pirmā rinda ir galvene"
+
+    attachment_dialog:
+      title: "Ievietot pielikumu"
+      empty: "Nav augšupielādētu pielikumu"
+
+    image_dialog:
+      title: "Ievietot attēlu"
+      empty: "Nav augšupielādētu attēlu"
+
+    table_menu:
+      add_column_left: "Pievienot kolonnu pa kreisi"
+      add_column_right: "Pievienot kolonnu pa labi"
+      delete_column: "Dzēst kolonnu"
+      add_row_above: "Pievienot rindu augšpusē"
+      add_row_below: "Pievienot rindu apakšpusē"
+      delete_row: "Dzēst rindu"
+      merge_cells: "Sapludināt šūnas"
+      split_cell: "Sadalīt šūnu"
+      header_row: "Pirmā rinda ir galvene"
+      header_column: "Pirmā kolonna ir galvene"
+      delete_table: "Dzēst tabulu"
+
+    quote:
+      default_header: "Autors, datums"
+      default_text: "Citāta teksts"
+
+    collapsible:
+      default_title: "Virsraksts"
+      default_content: "Saturs"
+
+    code_block:
+      badge_title: "Koda bloka valoda – noklikšķiniet, lai izvēlētos"
+      badge_empty: "valoda"
+      search_language: "Meklēt valodu"
+      nothing_found: "Nekas nav atrasts"
+      no_highlighting: "Bez izcelšanas (plaintext)"
+      recent: "Nesen lietotās"
+      frequent: "Bieži lietotās"
+      all_languages: "Visas valodas"
+
+    resizer:
+      title: "Velciet, lai mainītu redaktora augstumu; veiciet dubultklikšķi, lai atjaunotu automātisko augstumu"
