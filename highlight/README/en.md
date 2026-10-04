@@ -3,9 +3,46 @@
 **Read this in other languages:**
 [English](en.md) ·
 [Русский](ru.md) ·
+[Shqip](sq.md) ·
+[Azeri](az.md) ·
+[Bosanski](bs.md) ·
+[Български](bg.md) ·
+[Català](ca.md) ·
+[简体中文](zh.md) ·
+[繁體中文](zh-TW.md) ·
+[Hrvatski](hr.md) ·
+[Čeština](cs.md) ·
+[Dansk](da.md) ·
+[Nederlands](nl.md) ·
+[Eesti](et.md) ·
+[Suomi](fi.md) ·
+[Français](fr.md) ·
+[Galego](gl.md) ·
 [Deutsch](de.md) ·
+[Ελληνικά](el.md) ·
+[Magyar](hu.md) ·
+[Bahasa Indonesia](id.md) ·
+[Italiano](it.md) ·
 [日本語](ja.md) ·
-[ไทย](th.md)
+[한국어](ko.md) ·
+[Latviešu](lv.md) ·
+[lietuvių](lt.md) ·
+[Монгол](mn.md) ·
+[Norsk bokmål](no.md) ·
+[Polski](pl.md) ·
+[Português](pt.md) ·
+[Português/Brasil](pt-BR.md) ·
+[Română](ro.md) ·
+[Srpski](sr-YU.md) ·
+[Српски](sr.md) ·
+[Slovenčina](sk.md) ·
+[Slovenščina](sl.md) ·
+[Español](es.md) ·
+[Svenska](sv.md) ·
+[ไทย](th.md) ·
+[Türkçe](tr.md) ·
+[Українська](uk.md) ·
+[Tiếng Việt](vi.md)
 
 Code blocks are highlighted both in the editor and on saved pages (issues, notes, wiki), and they look the same in both. The language of a block is chosen from the badge in its top right corner. The list of languages is defined by the files in the `highlight/` folder: one file is one language.
 

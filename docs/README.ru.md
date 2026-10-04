@@ -1,9 +1,46 @@
 **Read this in other languages:**
 [English](../README.md) ·
 [Русский](README.ru.md) ·
+[Shqip](README.sq.md) ·
+[Azeri](README.az.md) ·
+[Bosanski](README.bs.md) ·
+[Български](README.bg.md) ·
+[Català](README.ca.md) ·
+[简体中文](README.zh.md) ·
+[繁體中文](README.zh-TW.md) ·
+[Hrvatski](README.hr.md) ·
+[Čeština](README.cs.md) ·
+[Dansk](README.da.md) ·
+[Nederlands](README.nl.md) ·
+[Eesti](README.et.md) ·
+[Suomi](README.fi.md) ·
+[Français](README.fr.md) ·
+[Galego](README.gl.md) ·
 [Deutsch](README.de.md) ·
+[Ελληνικά](README.el.md) ·
+[Magyar](README.hu.md) ·
+[Bahasa Indonesia](README.id.md) ·
+[Italiano](README.it.md) ·
 [日本語](README.ja.md) ·
-[ไทย](README.th.md)
+[한국어](README.ko.md) ·
+[Latviešu](README.lv.md) ·
+[lietuvių](README.lt.md) ·
+[Монгол](README.mn.md) ·
+[Norsk bokmål](README.no.md) ·
+[Polski](README.pl.md) ·
+[Português](README.pt.md) ·
+[Português/Brasil](README.pt-BR.md) ·
+[Română](README.ro.md) ·
+[Srpski](README.sr-YU.md) ·
+[Српски](README.sr.md) ·
+[Slovenčina](README.sk.md) ·
+[Slovenščina](README.sl.md) ·
+[Español](README.es.md) ·
+[Svenska](README.sv.md) ·
+[ไทย](README.th.md) ·
+[Türkçe](README.tr.md) ·
+[Українська](README.uk.md) ·
+[Tiếng Việt](README.vi.md)
 
 Текстовый редактор для Redmine на основе TipTap: https://github.com/ueberdosis/tiptap
 

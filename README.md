@@ -1,8 +1,45 @@
 **Read this in other languages:**
 [Русский](docs/README.ru.md) ·
+[Shqip](docs/README.sq.md) ·
+[Azeri](docs/README.az.md) ·
+[Bosanski](docs/README.bs.md) ·
+[Български](docs/README.bg.md) ·
+[Català](docs/README.ca.md) ·
+[简体中文](docs/README.zh.md) ·
+[繁體中文](docs/README.zh-TW.md) ·
+[Hrvatski](docs/README.hr.md) ·
+[Čeština](docs/README.cs.md) ·
+[Dansk](docs/README.da.md) ·
+[Nederlands](docs/README.nl.md) ·
+[Eesti](docs/README.et.md) ·
+[Suomi](docs/README.fi.md) ·
+[Français](docs/README.fr.md) ·
+[Galego](docs/README.gl.md) ·
 [Deutsch](docs/README.de.md) ·
+[Ελληνικά](docs/README.el.md) ·
+[Magyar](docs/README.hu.md) ·
+[Bahasa Indonesia](docs/README.id.md) ·
+[Italiano](docs/README.it.md) ·
 [日本語](docs/README.ja.md) ·
-[ไทย](docs/README.th.md)
+[한국어](docs/README.ko.md) ·
+[Latviešu](docs/README.lv.md) ·
+[lietuvių](docs/README.lt.md) ·
+[Монгол](docs/README.mn.md) ·
+[Norsk bokmål](docs/README.no.md) ·
+[Polski](docs/README.pl.md) ·
+[Português](docs/README.pt.md) ·
+[Português/Brasil](docs/README.pt-BR.md) ·
+[Română](docs/README.ro.md) ·
+[Srpski](docs/README.sr-YU.md) ·
+[Српски](docs/README.sr.md) ·
+[Slovenčina](docs/README.sk.md) ·
+[Slovenščina](docs/README.sl.md) ·
+[Español](docs/README.es.md) ·
+[Svenska](docs/README.sv.md) ·
+[ไทย](docs/README.th.md) ·
+[Türkçe](docs/README.tr.md) ·
+[Українська](docs/README.uk.md) ·
+[Tiếng Việt](docs/README.vi.md)
 
 This is text editor for Redmine, based on TipTap https://github.com/ueberdosis/tiptap
 

@@ -1,9 +1,46 @@
 **Read this in other languages:**
 [English](../README.md) ·
 [Русский](README.ru.md) ·
+[Shqip](README.sq.md) ·
+[Azeri](README.az.md) ·
+[Bosanski](README.bs.md) ·
+[Български](README.bg.md) ·
+[Català](README.ca.md) ·
+[简体中文](README.zh.md) ·
+[繁體中文](README.zh-TW.md) ·
+[Hrvatski](README.hr.md) ·
+[Čeština](README.cs.md) ·
+[Dansk](README.da.md) ·
+[Nederlands](README.nl.md) ·
+[Eesti](README.et.md) ·
+[Suomi](README.fi.md) ·
+[Français](README.fr.md) ·
+[Galego](README.gl.md) ·
 [Deutsch](README.de.md) ·
+[Ελληνικά](README.el.md) ·
+[Magyar](README.hu.md) ·
+[Bahasa Indonesia](README.id.md) ·
+[Italiano](README.it.md) ·
 [日本語](README.ja.md) ·
-[ไทย](README.th.md)
+[한국어](README.ko.md) ·
+[Latviešu](README.lv.md) ·
+[lietuvių](README.lt.md) ·
+[Монгол](README.mn.md) ·
+[Norsk bokmål](README.no.md) ·
+[Polski](README.pl.md) ·
+[Português](README.pt.md) ·
+[Português/Brasil](README.pt-BR.md) ·
+[Română](README.ro.md) ·
+[Srpski](README.sr-YU.md) ·
+[Српски](README.sr.md) ·
+[Slovenčina](README.sk.md) ·
+[Slovenščina](README.sl.md) ·
+[Español](README.es.md) ·
+[Svenska](README.sv.md) ·
+[ไทย](README.th.md) ·
+[Türkçe](README.tr.md) ·
+[Українська](README.uk.md) ·
+[Tiếng Việt](README.vi.md)
 
 > *この翻訳は AI モデルの助けを借りて作成されたもので、ネイティブスピーカーによる確認は行われていません。誤りを見つけた場合は、[issue またはプルリクエストを作成](https://github.com/Du10777/redmine_tiptap)してください。*
 
@@ -62,6 +99,7 @@
 - テキストは HTML として保存されます。エディターを使うには、Redmine の設定の「テキスト書式」で *TipTap HTML* を選択してください。
 - インターフェース（ツールチップ、メニュー、ダイアログ）は、ユーザーの Redmine プロフィールで選択された言語に従います。Redmine の 50 言語のうち 47 言語がプラグインに同梱されています。英語とロシア語は完成しており、残りの 45 言語は AI モデルで作成した下書きで、ネイティブスピーカーによる修正を歓迎します。右から左へ書く 3 つの言語（アラビア語、ヘブライ語、ペルシア語）は、意図的にサポートしていません（[表示言語](#表示言語)を参照）。
 - 大きなテキストでも高速に動作します。非表示のフォーム内のエディターは、フォームが開かれたときにだけ作成され、長いコードブロックは、表示領域にスクロールされたときにハイライトされます。
+- CKEditor（redmine_ckeditor プラグイン）で作成されたテキストは、そのままの状態で表示され、エディターで開くと書式が保持されます。変換はされません（[CKEditor からの移行](#ckeditor-からの移行) を参照）。
 - 保存されたテキストは、安全でない HTML を除いて表示されます。ページの表示時に、スクリプト、イベントハンドラー、`javascript:` リンクが削除され、エディター自身が生成するものだけが残ります。これは、REST API や `<HTML>` モード経由で入力されたテキストにも当てはまります。
 
 ## シンタックスハイライト
@@ -133,8 +171,25 @@ docker compose restart redmine          # Docker
 ### アップデート後
 
 - エディターのスクリプトとスタイルシートは、URL にコンテンツのフィンガープリントが付いた形で配信されるため、ブラウザーは再起動の直後に新しいバージョンを読み込みます。ユーザーがブラウザーのキャッシュを消去する必要はありません。
-- Redmine の設定（管理 → 設定 → 全般）で *テキスト書式の変換結果をキャッシュ* が有効になっている場合は、HTML のサニタイズを備えたバージョンへアップデートした後に、一度だけ Redmine のキャッシュをクリアしてください。Redmine のフォルダーで `bundle exec rake tmp:cache:clear RAILS_ENV=production` を実行します。そうしないと、アップデート前に生成されたページが、テキストが変更されるまで、サニタイズされないままキャッシュから表示されることがあります。
+- Redmine の設定（管理 → 設定 → 全般）で *テキスト書式の変換結果をキャッシュ* が有効になっている場合は、テキストの表示方法が変わるバージョン（HTML のサニタイズ、CKEditor テキストのサポート）へアップデートした後に、一度だけ Redmine のキャッシュをクリアしてください。Redmine のフォルダーで `bundle exec rake tmp:cache:clear RAILS_ENV=production` を実行します。そうしないと、アップデート前に生成されたページが、テキストが変更されるまで、サニタイズされないままキャッシュから表示されることがあります。
 - 以前のバージョンのプラグインは、スクリプトを `public/tiptap_bundle.js` にコピーしていました。これらのファイルはもう使われておらず、削除できます。
   ```sh
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
+
+## CKEditor からの移行
+
+Redmine が [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) を使用していた場合でも、このプラグインに切り替えて、作成されたすべてのテキストを保持できます。チケット、コメント、Wiki ページ、ニュース、メッセージ、文書。何も変換されず、データベースも変更されません。CKEditor はテキストを HTML として保存し、このプラグインも同じため、保存されたテキストは新しいフォーマッターで単に表示されます。
+
+1. プラグインをインストール（上を参照）し、テキスト書式として *TipTap HTML* を選択します。
+2. Redmine の `public/system/rich/` フォルダーを保持します。CKEditor の画像ブラウザーで挿入された画像とファイルはそこに保存されており、データベースには保存されていません。テキストはアドレス（`/system/rich/...`）でそれらを参照しています。チケット、Wiki ページなどの添付ファイルは従来通り保存され、特に対応は不要です。
+3. 不要になったら redmine_ckeditor を削除します。
+
+古いテキストは、CKEditor がそれを表示した方法で表示されます。フォント、サイズ、色、配置、インデント、リスト、表（罫線、幅、キャプション、結合セル）、画像（サイズ、float、罫線、リンク内の画像）、リンク、コードブロック（言語とハイライト）、Redmine マクロ（`{{toc}}`、`{{collapse(Title) ... }}`、`{{thumbnail(...)}}`など）、Wiki とチケットのリンク、クリック可能にされたプレーンなウェブアドレス、埋め込み `<iframe>`（ビデオ）。CKEditor で作成されたテキストはそのマークアップで認識され、段落間のスペーシング（このエディターより広い）を保持しています。
+
+意図的な違い:
+- `<iframe>` は http(s) 経由で別のサイトを指す場合にのみ表示され、サンドボックス化されます。内部のページは独自のスクリプトを実行できますが、Redmine のページに到達したり、トップウィンドウを開いたり、フォームを送信したりすることはできません。その他の `<iframe>` はすべて削除されます。
+- リンクは同じウィンドウで開きます。リンクの `target` 属性（CKEditor の「新しいウィンドウ（_blank）」）は保持されません。
+- CKEditor が提供していたが、そのページが暗黙のうちに削除した一部の書式はここで表示されます。たとえば、「マーカー」スタイルの背景色や `<q>` の引用符です。
+
+古いテキストは、エディターで開いて再度保存すると、その書式が保持されます。Redmine マクロ（マクロはエディター内の灰色要素です。CKEditor の「ソースモード」と同じように、`<HTML>` モードで編集します）、`<iframe>`、上付き文字と下付き文字、CKEditor のインラインスタイル（big、small、keyboard、sample など）、見出し、表、表セルのスタイル、画像のサイズ、float、罫線、リンク、コードブロックの言語。編集時に保持されないもの: `<address>` と `<div>` ブロックは段落になり、表のキャプションは上記の中央揃え段落になり、表のヘッダーとフッター行は通常の行（フッターは下に留まります）になり、`<del>` は `<s>`（同じ見た目）になり、幅が設定されているときに画像の高さが削除されます（比率は保持されます）。このエディターから保存されたテキストは、このエディターの小さな段落スペーシングが得られます。

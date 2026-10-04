@@ -1,9 +1,46 @@
 **Read this in other languages:**
 [English](../README.md) ·
 [Русский](README.ru.md) ·
+[Shqip](README.sq.md) ·
+[Azeri](README.az.md) ·
+[Bosanski](README.bs.md) ·
+[Български](README.bg.md) ·
+[Català](README.ca.md) ·
+[简体中文](README.zh.md) ·
+[繁體中文](README.zh-TW.md) ·
+[Hrvatski](README.hr.md) ·
+[Čeština](README.cs.md) ·
+[Dansk](README.da.md) ·
+[Nederlands](README.nl.md) ·
+[Eesti](README.et.md) ·
+[Suomi](README.fi.md) ·
+[Français](README.fr.md) ·
+[Galego](README.gl.md) ·
 [Deutsch](README.de.md) ·
+[Ελληνικά](README.el.md) ·
+[Magyar](README.hu.md) ·
+[Bahasa Indonesia](README.id.md) ·
+[Italiano](README.it.md) ·
 [日本語](README.ja.md) ·
-[ไทย](README.th.md)
+[한국어](README.ko.md) ·
+[Latviešu](README.lv.md) ·
+[lietuvių](README.lt.md) ·
+[Монгол](README.mn.md) ·
+[Norsk bokmål](README.no.md) ·
+[Polski](README.pl.md) ·
+[Português](README.pt.md) ·
+[Português/Brasil](README.pt-BR.md) ·
+[Română](README.ro.md) ·
+[Srpski](README.sr-YU.md) ·
+[Српски](README.sr.md) ·
+[Slovenčina](README.sk.md) ·
+[Slovenščina](README.sl.md) ·
+[Español](README.es.md) ·
+[Svenska](README.sv.md) ·
+[ไทย](README.th.md) ·
+[Türkçe](README.tr.md) ·
+[Українська](README.uk.md) ·
+[Tiếng Việt](README.vi.md)
 
 > *Diese Übersetzung wurde mithilfe eines KI-Modells erstellt und noch nicht von einem Muttersprachler überprüft. Wenn Sie einen Fehler finden, [eröffnen Sie bitte ein Issue oder einen Pull Request](https://github.com/Du10777/redmine_tiptap).*
 
@@ -62,6 +99,7 @@ Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json`
 - Der Text wird als HTML gespeichert. Um den Editor zu verwenden, wählen Sie in der Redmine-Konfiguration *TipTap HTML* als Textformatierung.
 - Die Oberfläche (Tooltips, Menüs, Dialoge) richtet sich nach der Sprache im Redmine-Profil des Benutzers. 47 der 50 Sprachen von Redmine werden mit dem Plugin ausgeliefert: Englisch und Russisch sind vollständig, die übrigen 45 sind mit einem KI-Modell erstellte Entwürfe; Korrekturen durch Muttersprachler sind willkommen. Die drei Sprachen mit Schreibrichtung von rechts nach links (Arabisch, Hebräisch, Persisch) werden bewusst nicht unterstützt (siehe [Oberflächensprache](#oberflächensprache)).
 - Bleibt auch bei großen Texten schnell: Editoren in verborgenen Formularen werden erst erstellt, wenn das Formular geöffnet wird, und lange Codeblöcke werden hervorgehoben, sobald sie beim Scrollen in den sichtbaren Bereich gelangen.
+- Texte, die in CKEditor (das Plugin redmine_ckeditor) geschrieben wurden, werden so angezeigt wie dort und öffnen sich im Editor mit ihrer Formatierung: keine Konvertierung erforderlich, siehe [Migrieren von CKEditor](#migrieren-von-ckeditor).
 - Gespeicherte Texte werden ohne unsicheres HTML angezeigt: Skripte, Event-Handler und `javascript:`-Links werden beim Anzeigen einer Seite entfernt, es bleibt nur erhalten, was der Editor selbst erzeugt. Das gilt auch für Texte, die über die REST API oder den Modus `<HTML>` eingehen.
 
 ## Syntaxhervorhebung
@@ -133,8 +171,25 @@ Schritt 2 ist wichtig. Beim Start veröffentlicht Redmine die Assets der Plugins
 ### Nach der Aktualisierung
 
 - Skript und Stylesheet des Editors werden mit einem Fingerprint des Inhalts in ihren URLs ausgeliefert, sodass die Browser die neue Version direkt nach dem Neustart laden. Die Benutzer müssen ihren Browser-Cache nicht leeren.
-- Ist in der Redmine-Konfiguration *Formatierten Text im Cache speichern* aktiviert (Administration → Konfiguration → Allgemein), leeren Sie nach der Aktualisierung auf eine Version mit HTML-Bereinigung einmalig den Cache von Redmine: `bundle exec rake tmp:cache:clear RAILS_ENV=production` im Redmine-Ordner. Andernfalls können Seiten, die vor dem Update gerendert wurden, unbereinigt aus dem Cache angezeigt werden, bis sich ihr Text ändert.
+- Ist in der Redmine-Konfiguration *Formatierten Text im Cache speichern* aktiviert (Administration → Konfiguration → Allgemein), leeren Sie nach der Aktualisierung auf eine Version, die ändert, wie Texte angezeigt werden (HTML-Bereinigung, Unterstützung für CKEditor-Texte), einmalig den Cache von Redmine: `bundle exec rake tmp:cache:clear RAILS_ENV=production` im Redmine-Ordner. Andernfalls können Seiten, die vor dem Update gerendert wurden, unbereinigt aus dem Cache angezeigt werden, bis sich ihr Text ändert.
 - Frühere Versionen des Plugins haben das Skript nach `public/tiptap_bundle.js` kopiert. Diese Dateien werden nicht mehr verwendet und können gelöscht werden:
   ```sh
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
+
+## Migrieren von CKEditor
+
+Wenn Ihre Redmine [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) nutzte, können Sie zu diesem Plugin wechseln und jeden geschriebenen Text behalten: Tickets, Kommentare, Wiki-Seiten, News, Forenbeiträge, Dokumente. Es findet keine Konvertierung statt und die Datenbank wird nicht berührt. CKEditor speichert seine Texte als HTML, genauso wie dieses Plugin, daher wird ein gespeicherter Text vom neuen Formatter einfach so angezeigt.
+
+1. Installieren Sie das Plugin (siehe oben) und wählen Sie Textformatierung: *TipTap HTML*.
+2. Bewahren Sie den Ordner `public/system/rich/` Ihrer Redmine. Die Bilder und Dateien, die Benutzer mit dem Bilderbrowser von CKEditor eingefügt haben, werden dort (nicht in der Datenbank) gespeichert, und die Texte verweisen auf sie über ihre Adresse (`/system/rich/...`). Anhänge von Tickets, Wiki-Seiten usw. werden wie zuvor gespeichert und benötigen keine zusätzlichen Maßnahmen.
+3. Entfernen Sie redmine_ckeditor, wenn Sie es nicht mehr benötigen.
+
+Ein alter Text wird so angezeigt, wie CKEditor ihn zeigte: Schriftarten, Größen, Farben und Ausrichtung, Einzüge, Listen, Tabellen (Rahmen, Breiten, Beschriftungen, zusammengefügte Zellen), Bilder (Größe, Float, Rahmen, ein Bild innerhalb eines Links), Links, Codeblöcke mit ihrer Sprache (hervorgehoben), Redmine-Makros (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` usw.), Wiki- und Ticket-Links, einfache Web-Adressen in Hyperlinks umgewandelt und eingebettete `<iframe>` (Video). Ein in CKEditor geschriebener Text wird an seinen Markups erkannt und behält die Abstände zwischen den Absätzen, die er dort hatte – diese sind größer als in diesem Editor.
+
+Bewusste Unterschiede:
+- Ein `<iframe>` wird nur angezeigt, wenn es auf eine andere Website über http(s) verweist, und es ist in einer Sandbox: Die Seite darin kann ihre eigenen Skripte ausführen, kann aber nicht auf die Redmine-Seite zugreifen, das obere Fenster öffnen oder Formulare absenden. Alle anderen `<iframe>` werden entfernt.
+- Links öffnen im gleichen Fenster: Das `target`-Attribut eines Links (CKEditors „In neuem Fenster (_blank)") wird nicht beibehalten.
+- Einige Formatierungen, die CKEditor bot, aber seine Seiten stillschweigend verwarf, werden hier angezeigt: zum Beispiel die Hintergrundfarben seiner „Marker"-Stile und die Anführungszeichen von `<q>`.
+
+Ein alter Text behält seine Formatierung, wenn er im Editor geöffnet und erneut gespeichert wird: Redmine-Makros (ein Makro ist ein graues Element im Editor; bearbeiten Sie es im Modus `<HTML>`, wie im Quellcode-Modus von CKEditor), `<iframe>`, tiefgestellte und hochgestellte Zeichen, Inline-Stile von CKEditor (big, small, keyboard, sample usw.), der Stil von Überschriften, Tabellen und Tabellenzellen, die Größe, Float, Rahmen und der Link von Bildern, die Sprache von Codeblöcken. Was beim Bearbeiten nicht erhalten bleibt: `<address>`- und `<div>`-Blöcke werden zu Absätzen, die Beschriftung einer Tabelle wird zu einem zentrierten Absatz darüber, die Header- und Footer-Abschnitte einer Tabelle werden zu normalen Zeilen (die Fußzeile bleibt unten), `<del>` wird zu `<s>` (gleiches Erscheinungsbild), und die Höhe eines Bildes wird gelöscht, wenn seine Breite eingestellt ist (die Proportionen bleiben erhalten). Ein aus diesem Editor gespeicherter Text erhält das kompakte Absatzabstands-Format dieses Editors.

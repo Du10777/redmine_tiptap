@@ -1,0 +1,195 @@
+**Read this in other languages:**
+[English](../README.md) ·
+[Русский](README.ru.md) ·
+[Shqip](README.sq.md) ·
+[Azeri](README.az.md) ·
+[Bosanski](README.bs.md) ·
+[Български](README.bg.md) ·
+[Català](README.ca.md) ·
+[简体中文](README.zh.md) ·
+[繁體中文](README.zh-TW.md) ·
+[Hrvatski](README.hr.md) ·
+[Čeština](README.cs.md) ·
+[Dansk](README.da.md) ·
+[Nederlands](README.nl.md) ·
+[Eesti](README.et.md) ·
+[Suomi](README.fi.md) ·
+[Français](README.fr.md) ·
+[Galego](README.gl.md) ·
+[Deutsch](README.de.md) ·
+[Ελληνικά](README.el.md) ·
+[Magyar](README.hu.md) ·
+[Bahasa Indonesia](README.id.md) ·
+[Italiano](README.it.md) ·
+[日本語](README.ja.md) ·
+[한국어](README.ko.md) ·
+[Latviešu](README.lv.md) ·
+[lietuvių](README.lt.md) ·
+[Монгол](README.mn.md) ·
+[Norsk bokmål](README.no.md) ·
+[Polski](README.pl.md) ·
+[Português](README.pt.md) ·
+[Português/Brasil](README.pt-BR.md) ·
+[Română](README.ro.md) ·
+[Srpski](README.sr-YU.md) ·
+[Српски](README.sr.md) ·
+[Slovenčina](README.sk.md) ·
+[Slovenščina](README.sl.md) ·
+[Español](README.es.md) ·
+[Svenska](README.sv.md) ·
+[ไทย](README.th.md) ·
+[Türkçe](README.tr.md) ·
+[Українська](README.uk.md) ·
+[Tiếng Việt](README.vi.md)
+
+> *Denne oversættelse blev lavet med hjælp fra en AI-model og er ikke blevet gennemset af en modersmålstaler. Hvis du finder en fejl, bedes du [åbne et issue eller en pull request](https://github.com/Du10777/redmine_tiptap).*
+
+Dette er en teksteditor til Redmine, baseret på TipTap https://github.com/ueberdosis/tiptap
+
+Understøttede Redmine-versioner: **6.\*** (udviklet og testet på 6.1.4).
+
+Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er fastsat til denne præcise version i `package.json` og `package-lock.json` og skal altid opgraderes sammen til samme version.
+
+## Features
+
+**Text formatting**
+- Fed, kursiv, understreger, gennemstregning, inline-kode.
+- Tekstfarve og baggrundsfarve: en palet med 64 farver eller en hvilken som helst hex-værdi.
+- Skrifttype (13 skrifttyper) og skriftstørrelse (forudindstillinger fra 8 til 72 px eller en hvilken som helst værdi).
+- Afsnitstyler: overskrifter 1–6 og normal tekst.
+- Justering (venstre, center, højre, fuld) og indrykning (op til 8 niveauer) af afsnit og overskrifter.
+- Links: indsæt, rediger, fjern.
+- Vandret linje, fortryd og gentag.
+
+**Lists**
+- Punktoplistninger med prik, cirkel eller firkant-markører.
+- Nummererede lister: 1, 01, a, A, i, I, α.
+- Opgavelister med afkrydsningsfelter; afsluttede opgaver er gennemslagene.
+- Indlejrede lister (Tab / Shift+Tab).
+
+**Tables**
+- Indsæt en tabel af enhver størrelse, med eller uden header-række.
+- Genvej-menu i en celle: tilføj og slet rækker og kolonner, flet og del celler, header-række og header-kolonne, slet tabellen.
+- Kolonnebredder ændres ved at trække cellekanter.
+- Indsætning fra Excel bevarer kolonnebredder, justering og skriftstørrelser; en tabel kopieret fra Redmine indsættes i Excel med grænser.
+
+**Images and attachments**
+- Indsæt et billede fra udklipsholderen: det uploades som en vedhæftelse og vises i teksten.
+- Billeder vedhæftet med Redmines filfeld eller tabt på det indsættes også i teksten.
+- Indsæt et billede fra vedhæftelserne (en miniaturevælger) eller et link til en hvilken som helst vedhæftelse.
+- Ændring af billede ved at trække dets hjørner.
+
+**Code**
+- Kodeblokke med syntaksmarkering i editoren og på gemte sider: 52 sprog, og du kan tilføje mere (se [Syntax highlighting](#syntax-highlighting)).
+- Sproget i en blok vælges fra et badge i hjørnet, med søgning, seneste og hyppige sprog.
+- Tab og Shift+Tab indrykker og formindsk linjer inden i en kodeblok; fed, links og farver i kode bevares.
+
+**Blocks**
+- Kollapsibel blok: en titel med skjult indhold (`<details>`). Lukket på gemte sider, udvidet i editoren.
+- Citatblok med forfattar- og datolin.
+
+**Editing**
+- `<HTML>`-tilstand til visning og redigering af HTML-kilden.
+- Markdown-stilisering: `#` til overskrifter, `-` og `1.` til lister, `[ ]` til opgaver, ```` ```python ```` til en kodeblok (ethvert sproganavn eller ingen), `**bold**`, `---` til en vandret linje. Standard tastaturgenvejer: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z og andre.
+- Editoren bliver aldrig højere end vinduet: værktøjslinjen og formularknapperne forbliver synlige, og teksten ruller ind. Højden følger vinduesstørrelse og sidezoom.
+- Et ændringsgreb i nederste højre hjørne indstiller højden manuelt. Højden huskes; dobbeltklik går tilbage til automatisk højde.
+
+**Redmine integration**
+- Fungerer i alle Redmine-tekstfelter med formatering: sagsbeskrivelser og noter, wiki-sider, nyheder, forummeddelelser, dokumenter, projektbeskrivelser, lange tekst-brugerdefinerede felter, herunder felter, der vises på siden senere.
+- Tekst gemmes som HTML. For at bruge editoren skal du vælge *TipTap HTML* som tekstformatering i Redmines indstillinger.
+- Grænsefladen (værktøjstip, menuer, dialoger) følger sproget i brugerens Redmine-profil. 47 af de 50 Redmine-sprog kommer med plugin'et: engelsk og russisk er komplette, de øvrige 45 er kladder lavet med en AI-model, som modersmålstalere gerne må rette. De tre sprog skrevet fra højre til venstre (arabisk, hebraisk, persisk) understøttes bevidst ikke (se [Grænsefladesprog](#interface-language)).
+- Forbliver hurtigt på store tekster: editorer i skjulte formularer oprettes kun, når formularen åbnes, og lange kodeblokke markeres, når de ruller ind i synsfeltet.
+- Tekster skrevet i CKEditor (plugin'et redmine_ckeditor) vises, som de var, og åbnes i editoren med deres formatering: ingen konvertering, se [Migration fra CKEditor](#migrating-from-ckeditor).
+- Gemte tekster vises uden usikker HTML: scripts, event handlers og `javascript:`-links fjernes, når en side vises, kun det editoren selv producerer bevares. Dette dækker tekster, der kommer gennem REST API eller `<HTML>`-tilstand også.
+
+## Syntax highlighting
+
+Kodeblokke markeres i editoren og på gemte sider på samme måde. Sproget i en blok vælges fra badgene i dens øverste højre hjørne; listen har en søgeboks og husker for nylig og hyppigt brugte sprog.
+
+52 sprog kommer med plugin'et, herunder 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logs og journalctl output.
+
+Du kan tilføje dine egne sprog. Hvert sprog er en fil i mappen `highlight/`. En hvilken som helst af de 190+ highlight.js grammars, eller en tredjepartsgrammatik, konverteres til sådan en fil med en kommando:
+
+```sh
+python3 highlight/_convert_grammar.py erlang
+sh highlight/_compile.sh
+```
+
+Detaljer: [highlight/README/da.md](../highlight/README/da.md).
+
+## Interface language
+
+Editoren taler det sprog, der er valgt i brugerens Redmine-profil (Min konto → Sprog). Filer til 47 af de 50 Redmine 6-sprog kommer med plugin'et i `config/locales/`. Engelsk er kilden, og russisk er forfatterens eget; de øvrige 45 er kladder lavet med hjælp fra en AI-model og endnu ikke blevet gennemset af modersmålstalere, så forvent en ulige sætning her og der. En tekst, der mangler fra en fil, vises på engelsk.
+
+For at rette en oversættelse skal du ændre værdierne i `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) og genstarte Redmine. `bundle exec rake redmine_tiptap:locales` kontrollerer filerne. Pull requests med rettelser er velkomne.
+
+**Sprogene skrevet fra højre til venstre (arabisk, hebraisk, persisk) understøttes bevidst ikke.** At understøtte dem kræver mange ændringer i kodebasen, ikke kun en oversættelse, og vi valgte ikke at tage det på os. For disse sprog vises editoren på engelsk, og dens layout justeres ikke. Hvis du skal bruge et af dem, skal du lave en fork: oversættelingsmekanismen er klar, og hvad ellers skal ændres er angivet i [config/locales/README.md](../config/locales/README.md#right-to-left-languages).
+
+Detaljer og listen over Redmine-sprog: [config/locales/README.md](../config/locales/README.md).
+
+## Installation
+
+1. Sæt plugin'et ind i Redmines mappe `plugins`. Mappen skal være navngivet `redmine_tiptap`. Den nemmeste måde er git, som også gør opdateringer til en kommando:
+   ```sh
+   cd /path/to/redmine
+   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   ```
+2. Genstart Redmine.
+3. I Redmines indstillinger (redmine.selfhosted/_settings_) vælg Tekstformatering: *TipTap HTML*.
+
+## Updating
+
+Plugin'et har ingen databasemigrationer, og det bygget JavaScript-bundt og stylesheet er en del af arkivet. Opdatering kræver ikke npm eller et build på serveren: udskift plugin-filerne og genstart Redmine.
+
+Før opdatering skal du kontrollere, at den nye version understøtter din Redmine-version (se "Understøttede Redmine-versioner" ovenfor).
+
+### Installed with git (recommended)
+
+```sh
+cd /path/to/redmine/plugins/redmine_tiptap
+git pull
+```
+
+Genstart derefter Redmine, for eksempel:
+
+```sh
+sudo systemctl restart redmine          # Redmine kørende som en systemd-service
+touch /path/to/redmine/tmp/restart.txt  # Passenger
+docker compose restart redmine          # Docker
+```
+
+For at blive på en bestemt version i stedet for den seneste commit: `git fetch && git checkout <tag-or-commit>`.
+
+### Installed from an archive
+
+1. Slet den gamle mappe `plugins/redmine_tiptap` og pak den nye version ud på sin plads. Sletning først sikrer, at filer fjernet i den nye version ikke bliver tilbage.
+2. Slet `public/assets/.manifest.json` i Redmine-mappen.
+3. Genstart Redmine.
+
+Trin 2 betyder noget. Ved opstart genpublicerer Redmine plugin-aktiver kun, hvis deres filer er nyere end dette manifest. Filer pakket ud fra et arkiv beholder deres oprindelige tidsstempler, så uden trin 2 kan Redmine fortsætte med at servere den gamle editor. Manifestet genskabes automatisk ved opstart. Med `git pull` er dette trin ikke nødvendigt: git giver ændrede filer det aktuelle tidsstempel.
+
+### After updating
+
+- Editorens script og stylesheet serveres med et indholdsfingertryk i deres URL'er, så browsere indlæser den nye version lige efter genstart. Brugere behøver ikke at rydde deres browser-cache.
+- Hvis *Cache formatteret tekst* er aktiveret i Redmines indstillinger (Administration → Indstillinger → Generelt), skal du rydde Redmines cache en gang efter opdatering til en version, der ændrer, hvordan tekster vises (HTML-rengøring, support til CKEditor-tekster): `bundle exec rake tmp:cache:clear RAILS_ENV=production` i Redmine-mappen. Ellers kan sider rendereret før opdateringen blive vist fra cachen, urengørde, indtil teksten ændres.
+- Tidligere versioner af plugin'et kopierede scriptet til `public/tiptap_bundle.js`. Disse filer bruges ikke længere og kan slettes:
+  ```sh
+  rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
+  ```
+
+## Migrating from CKEditor
+
+Hvis din Redmine brugte [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), kan du skifte til dette plugin og beholde hver tekst, der er skrevet: sager, noter, wiki-sider, nyheder, meddelelser, dokumenter. Intet konverteres, og databasen berøres ikke. CKEditor lagrer sine tekster som HTML, og det gør dette plugin også, så en gemt tekst vises simpelthen af den nye formatter.
+
+1. Installer plugin'et (se ovenfor) og vælg Tekstformatering: *TipTap HTML*.
+2. Behold mappen `public/system/rich/` på din Redmine. De billeder og filer, som folk indsatte med CKEditors billedbrowser, gemmes der og ikke i databasen, og teksterne refererer til dem efter adresse (`/system/rich/...`). Vedhæftelser af sager, wiki-sider og så videre gemmes som før og skal ikke ændres.
+3. Fjern redmine_ckeditor, når du ikke længere har brug for den.
+
+En gammel tekst vises, som CKEditor viste den: skrifttyper, størrelser, farver og justering, indrykninger, lister, tabeller (grænser, bredder, beskrivelser, fusionerede celler), billeder (størrelse, flyde, grænse, et billede inden for et link), links, kodeblokke med deres sprog (fremhævet), Redmine-makroer (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` og så videre), wiki- og sagslinks, almindelige webadresser gjort klikbare og indlejret `<iframe>` (video). En tekst skrevet i CKEditor genkender af dens markup og bevarer mellemrummet mellem afsnit, den havde der, som er bredere end i denne editor.
+
+Forskellene med vilje:
+- En `<iframe>` vises kun, når den peger på et andet websted over http(s), og den er sandboxed: siden inden i kan køre sine egne scripts, men kan ikke nå siden af Redmine, åbne topvinduet eller sende formularer. Alle andre `<iframe>` fjernes.
+- Links åbnes i samme vindue: `target`-attributten for et link (CKEditors "Nyt vindue (_blank)") bevares ikke.
+- En vis formatering, som CKEditor tilbyder, men dets sider lydløst faldt er vist her: for eksempel baggrundsfarver på dets "Marker"-stilarter og citationstegnene for `<q>`.
+
+En gammel tekst bevarer sin formatering, når den åbnes i editoren og gemmes igen: Redmine-makroer (en makro er et grået element i editoren; rediger det i `<HTML>`-tilstanden, som i CKEditors kildekode-tilstand), `<iframe>`, subscript og superscript, CKEditors inline-stilarter (stor, lille, tastatur, prøve og så videre), stilarten for overskrifter, tabeller og tabelceller, størrelse, flyde, grænse og link af billeder, sproget i kodeblokke. Hvad der ikke overlever redigering: `<address>` og `<div>`-blokke bliver afsnit, tabellens billedtekst bliver et centreret afsnit over det, tabelheader og footersektioner bliver almindelige rækker (footeren forbliver i bunden), `<del>` bliver `<s>` (samme udseende), og billeds højde falder væk, når dets bredde sættes (proportionerne bevares). En tekst gemt fra denne editor får den kompakte afsnitsafstand i denne editor.
