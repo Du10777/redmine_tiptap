@@ -1,6 +1,11 @@
 # Syntax highlighting: languages
 
-[Русская версия](ru.md)
+**Read this in other languages:**
+[English](en.md) ·
+[Русский](ru.md) ·
+[Deutsch](de.md) ·
+[日本語](ja.md) ·
+[ไทย](th.md)
 
 Code blocks are highlighted both in the editor and on saved pages (issues, notes, wiki), and they look the same in both. The language of a block is chosen from the badge in its top right corner. The list of languages is defined by the files in the `highlight/` folder: one file is one language.
 

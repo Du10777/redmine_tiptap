@@ -1,4 +1,8 @@
-[Русская версия](README.ru.md)
+**Read this in other languages:**
+[Русский](docs/README.ru.md) ·
+[Deutsch](docs/README.de.md) ·
+[日本語](docs/README.ja.md) ·
+[ไทย](docs/README.th.md)
 
 This is text editor for Redmine, based on TipTap https://github.com/ueberdosis/tiptap
 
@@ -70,7 +74,7 @@ python3 highlight/_convert_grammar.py erlang
 sh highlight/_compile.sh
 ```
 
-Details: [highlight/README/en.md](highlight/README/en.md) (на русском: [highlight/README/ru.md](highlight/README/ru.md)).
+Details: [highlight/README/en.md](highlight/README/en.md).
 
 ## Interface language
 
@@ -80,7 +84,7 @@ To correct a translation, change its values in `config/locales/<code>.yml` (`de`
 
 **The languages written right to left (Arabic, Hebrew, Persian) are deliberately not supported.** Supporting them takes many changes to the code base, not only a translation, and we chose not to take that on. For these languages the editor is shown in English and its layout is not adjusted. If you need one of them, make a fork: the translation mechanism is ready, and what else has to be changed is listed in [config/locales/README.md](config/locales/README.md#right-to-left-languages).
 
-Details and the list of Redmine languages: [config/locales/README.md](config/locales/README.md) (на русском: [config/locales/README.ru.md](config/locales/README.ru.md)).
+Details and the list of Redmine languages: [config/locales/README.md](config/locales/README.md).
 
 ## Installation
 

@@ -1,4 +1,9 @@
-[English version](README.md)
+**Read this in other languages:**
+[English](../README.md) ·
+[Русский](README.ru.md) ·
+[Deutsch](README.de.md) ·
+[日本語](README.ja.md) ·
+[ไทย](README.th.md)
 
 Текстовый редактор для Redmine на основе TipTap: https://github.com/ueberdosis/tiptap
 
@@ -70,7 +75,7 @@ python3 highlight/_convert_grammar.py erlang
 sh highlight/_compile.sh
 ```
 
-Подробно: [highlight/README/ru.md](highlight/README/ru.md) (in English: [highlight/README/en.md](highlight/README/en.md)).
+Подробно: [highlight/README/ru.md](../highlight/README/ru.md).
 
 ## Язык интерфейса
 
@@ -78,9 +83,9 @@ sh highlight/_compile.sh
 
 Чтобы поправить перевод, измените значения в `config/locales/<код>.yml` (`de`, `fr`, `pt-BR`, ...) и перезапустите Redmine. Файлы проверяет `bundle exec rake redmine_tiptap:locales`. Pull request'ы с исправлениями приветствуются.
 
-**Языки с письмом справа налево (арабский, иврит, персидский) сознательно не поддерживаются.** Для этого нужно много изменений в кодовой базе, а не только перевод, и мы решили не брать это на себя. Для этих языков редактор показывается по-английски, а его вёрстка не подгонялась. Если вам нужен один из них — сделайте форк: механизм переводов готов, а что ещё придётся менять, перечислено в [config/locales/README.ru.md](config/locales/README.ru.md#языки-справа-налево).
+**Языки с письмом справа налево (арабский, иврит, персидский) сознательно не поддерживаются.** Для этого нужно много изменений в кодовой базе, а не только перевод, и мы решили не брать это на себя. Для этих языков редактор показывается по-английски, а его вёрстка не подгонялась. Если вам нужен один из них — сделайте форк: механизм переводов готов, а что ещё придётся менять, перечислено в [config/locales/README.ru.md](../config/locales/README.ru.md#языки-справа-налево).
 
-Подробно и со списком языков Redmine: [config/locales/README.ru.md](config/locales/README.ru.md) (in English: [config/locales/README.md](config/locales/README.md)).
+Подробно и со списком языков Redmine: [config/locales/README.ru.md](../config/locales/README.ru.md).
 
 ## Установка
 
