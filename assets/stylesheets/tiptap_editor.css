@@ -376,10 +376,12 @@ body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
 .ProseMirror li { margin: 0 !important; }
 .ProseMirror li > p { margin: 0 !important; }
 
-/* Line spacing in the saved view */
+/* Line spacing in the saved view. Only the vertical margins are set: a paragraph may
+   have a margin on the left (the indent) that must stay. */
 div.wiki p,
 div.wiki-page p {
-  margin: 0 0 2px 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
   line-height: 1.25 !important;
 }
 
@@ -390,6 +392,27 @@ div.wiki-page li {
 
 div.wiki li > p,
 div.wiki-page li > p {
+  margin: 0 !important;
+}
+
+/* A text written in CKEditor (the formatter wraps it in div.tiptap-legacy) keeps the
+   spacing it had there, the default of Redmine: more room between paragraphs and list
+   items than the editor of this plugin leaves. */
+div.wiki .tiptap-legacy p,
+div.wiki-page .tiptap-legacy p {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li,
+div.wiki-page .tiptap-legacy li {
+  margin-bottom: 0.125rem !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li > p,
+div.wiki-page .tiptap-legacy li > p {
   margin: 0 !important;
 }
 
@@ -899,6 +922,19 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin: 8px 0;
 }
 
+/* A table with the align attribute (CKEditor writes it) stays in the middle or at the right. */
+.wiki table[align="center"],
+.wiki-page table[align="center"] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wiki table[align="right"],
+.wiki-page table[align="right"] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 .wiki table td,
 .wiki table th,
 .wiki-page table td,
@@ -1169,3 +1205,33 @@ div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
 
 .hljs-emphasis { font-style: italic; }
 .hljs-strong { font-weight: bold; }
+
+/* Parts of a text written in CKEditor that the editor shows as one indivisible
+   element: a Redmine macro and an <iframe> (see tiptap_legacy.js). */
+.ProseMirror .tiptap-macro,
+.ProseMirror .tiptap-iframe {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0 6px;
+  border: 1px solid #c8d4e3;
+  border-radius: 3px;
+  background: #eef3f9;
+  color: #3b4a5c;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  vertical-align: baseline;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.ProseMirror .tiptap-iframe {
+  border-style: dashed;
+}
+
+.ProseMirror .ProseMirror-selectednode.tiptap-macro,
+.ProseMirror .ProseMirror-selectednode.tiptap-iframe {
+  outline: 2px solid #3d8ef8;
+}

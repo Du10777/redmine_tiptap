@@ -16,8 +16,19 @@ export { TableRow } from '@tiptap/extension-table-row';
 export { StyledTableHeader as TableHeader, StyledTableCell as TableCell } from './tiptap_table_cell.js';
 export { Indent } from './tiptap_indent.js';
 export { FormattableCodeBlock } from './tiptap_codeblock.js';
+export {
+  RedmineMacro, Subscript, Superscript, InlineTagMarks, LegacyIframe, LegacyAttributes,
+} from './tiptap_legacy.js';
 
 export const Image = BaseImage.extend({
+  // A picture is part of a line of text, as in any HTML (and in CKEditor): text
+  // around it stays in the same paragraph, and it can be a link (<a><img></a>).
+  // As a block node it split the paragraph in two every time and could not be
+  // wrapped in a link, so a text of CKEditor lost its layout when it was edited.
+  addOptions() {
+    return { ...this.parent?.(), inline: true };
+  },
+
   addAttributes() {
     return {
       ...this.parent?.(),

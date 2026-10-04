@@ -89,10 +89,12 @@ body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
 .ProseMirror li { margin: 0 !important; }
 .ProseMirror li > p { margin: 0 !important; }
 
-/* Line spacing in the saved view */
+/* Line spacing in the saved view. Only the vertical margins are set: a paragraph may
+   have a margin on the left (the indent) that must stay. */
 div.wiki p,
 div.wiki-page p {
-  margin: 0 0 2px 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
   line-height: 1.25 !important;
 }
 
@@ -103,6 +105,27 @@ div.wiki-page li {
 
 div.wiki li > p,
 div.wiki-page li > p {
+  margin: 0 !important;
+}
+
+/* A text written in CKEditor (the formatter wraps it in div.tiptap-legacy) keeps the
+   spacing it had there, the default of Redmine: more room between paragraphs and list
+   items than the editor of this plugin leaves. */
+div.wiki .tiptap-legacy p,
+div.wiki-page .tiptap-legacy p {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li,
+div.wiki-page .tiptap-legacy li {
+  margin-bottom: 0.125rem !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li > p,
+div.wiki-page .tiptap-legacy li > p {
   margin: 0 !important;
 }
 

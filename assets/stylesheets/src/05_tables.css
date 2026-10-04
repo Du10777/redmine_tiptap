@@ -52,6 +52,19 @@
   margin: 8px 0;
 }
 
+/* A table with the align attribute (CKEditor writes it) stays in the middle or at the right. */
+.wiki table[align="center"],
+.wiki-page table[align="center"] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wiki table[align="right"],
+.wiki-page table[align="right"] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 .wiki table td,
 .wiki table th,
 .wiki-page table td,

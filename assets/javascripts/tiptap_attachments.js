@@ -1,11 +1,16 @@
-export function serializeAttachmentHTML(html) {
+import { protectMacros, restoreMacros, flattenTableExtras } from './tiptap_legacy.js';
+
+// The HTML of the editor as it is stored. format, if given, reshapes the HTML
+// (the source mode puts line breaks into it) without touching the macros: they
+// are put back as text only after that.
+export function serializeAttachmentHTML(html, format) {
   var div = document.createElement('div');
   div.innerHTML = html;
   div.querySelectorAll('img[data-filename]').forEach(function(img) {
     img.setAttribute('src', img.getAttribute('data-filename'));
     img.removeAttribute('data-filename');
   });
-  return div.innerHTML;
+  return restoreMacros(div, format);
 }
 
 export function buildAttachmentUrlMap(textarea) {
@@ -34,9 +39,13 @@ export function buildAttachmentUrlMap(textarea) {
   return map;
 }
 
+// The stored text as the editor takes it: attachment names become addresses, and
+// what a text of CKEditor has that the editor's schema lacks is made ready (macros
+// are protected before the HTML is parsed: their bodies are not HTML a parser may
+// touch).
 export function resolveAttachmentSrcs(html, urlMap) {
   var div = document.createElement('div');
-  div.innerHTML = html;
+  div.innerHTML = protectMacros(html);
   div.querySelectorAll('img[src]').forEach(function(img) {
     var src = img.getAttribute('src');
     if (urlMap[src]) {
@@ -44,6 +53,7 @@ export function resolveAttachmentSrcs(html, urlMap) {
       img.setAttribute('src', urlMap[src].url);
     }
   });
+  flattenTableExtras(div);
   return div.innerHTML;
 }
 

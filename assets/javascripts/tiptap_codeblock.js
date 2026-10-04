@@ -416,6 +416,30 @@ function fenceLanguage(name) {
   return LANGUAGE_INFO[name] ? name : (LANGUAGE_ALIASES[name] || name);
 }
 
+// CKEditor's formatter wrote the language of a code block without the prefix TipTap
+// looks for: <code class="ruby">, not class="language-ruby". The names are those of
+// CodeRay (Redmine's own highlighter); the few it spells differently from
+// highlight.js are mapped. Keep this list and the formatter's
+// CODE_LANGUAGE_ALIASES (lib/redmine/wiki_formatting/tiptap/formatter.rb) alike.
+var CODERAY_LANGUAGES = {
+  java_script: 'javascript', sass: 'scss',
+  text: 'plaintext', debug: 'plaintext', raydebug: 'plaintext', scanner: 'plaintext',
+};
+
+function languageOfPre(pre) {
+  var code = pre.firstElementChild;
+  var names = Array.prototype.slice.call((code && code.classList) || []);
+  var prefixed = names.filter(function(name) { return name.indexOf('language-') === 0; });
+  if (prefixed.length) return prefixed[0].slice('language-'.length) || null;
+
+  var bare = names.filter(function(name) {
+    return /^[\w+#.-]+$/.test(name) && name !== 'syntaxhl' && name !== 'hljs';
+  })[0];
+  if (!bare) return null;
+  bare = bare.toLowerCase();
+  return fenceLanguage(CODERAY_LANGUAGES[bare] || bare);
+}
+
 var INDENT = '    ';
 
 // Tab / Shift-Tab inside a code block. Without a selection Tab inserts spaces up
@@ -503,6 +527,15 @@ export const FormattableCodeBlock = CodeBlock.extend({
       // goes into the attribute, so the saved HTML shows it as language-plaintext.
       defaultLanguage: 'plaintext',
     };
+  },
+
+  // The language is also read from a bare class name (class="ruby"), the way
+  // CKEditor wrote it.
+  addAttributes() {
+    var parent = (this.parent && this.parent()) || {};
+    return Object.assign({}, parent, {
+      language: Object.assign({}, parent.language, { parseHTML: languageOfPre }),
+    });
   },
 
   addProseMirrorPlugins() {

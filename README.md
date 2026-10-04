@@ -96,6 +96,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 - Text is stored as HTML. To use the editor, choose *TipTap HTML* as the text formatting in Redmine settings.
 - The interface (tooltips, menus, dialogs) follows the language in the user's Redmine profile. 47 of the 50 languages of Redmine come with the plugin: English and Russian are complete, the other 45 are drafts made with an AI model that native speakers are welcome to correct. The three languages written right to left (Arabic, Hebrew, Persian) are deliberately not supported (see [Interface language](#interface-language)).
 - Stays fast on large texts: editors in hidden forms are created only when the form is opened, and long code blocks are highlighted when they scroll into view.
+- Texts written in CKEditor (the redmine_ckeditor plugin) are shown the way they were and open in the editor with their formatting: no conversion, see [Migrating from CKEditor](#migrating-from-ckeditor).
 - Saved texts are shown without unsafe HTML: scripts, event handlers and `javascript:` links are removed when a page is displayed, only what the editor itself produces is kept. This covers texts that come through the REST API or the `<HTML>` mode as well.
 
 ## Syntax highlighting
@@ -167,8 +168,25 @@ Step 2 matters. At startup Redmine republishes plugin assets only if their files
 ### After updating
 
 - The editor's script and stylesheet are served with a content fingerprint in their URLs, so browsers load the new version right after the restart. Users do not need to clear their browser cache.
-- If *Cache formatted text* is enabled in Redmine settings (Administration → Settings → General), clear Redmine's cache once after updating to a version with HTML cleaning: `bundle exec rake tmp:cache:clear RAILS_ENV=production` in the Redmine folder. Otherwise pages rendered before the update can be shown from the cache, uncleaned, until their text changes.
+- If *Cache formatted text* is enabled in Redmine settings (Administration → Settings → General), clear Redmine's cache once after updating to a version that changes how texts are shown (HTML cleaning, support of CKEditor texts): `bundle exec rake tmp:cache:clear RAILS_ENV=production` in the Redmine folder. Otherwise pages rendered before the update can be shown from the cache, uncleaned, until their text changes.
 - Earlier versions of the plugin copied the script to `public/tiptap_bundle.js`. These files are no longer used and can be deleted:
   ```sh
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
+
+## Migrating from CKEditor
+
+If your Redmine used [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), you can switch to this plugin and keep every text that has been written: issues, notes, wiki pages, news, messages, documents. Nothing is converted and the database is not touched. CKEditor stores its texts as HTML and so does this plugin, so a stored text is simply shown by the new formatter.
+
+1. Install the plugin (see above) and choose Text formatting: *TipTap HTML*.
+2. Keep the folder `public/system/rich/` of your Redmine. The pictures and files that people inserted with CKEditor's image browser are stored there and not in the database, and the texts refer to them by address (`/system/rich/...`). Attachments of issues, wiki pages and so on are stored as before and need nothing.
+3. Remove redmine_ckeditor when you no longer need it.
+
+An old text is shown the way CKEditor showed it: fonts, sizes, colors and alignment, indents, lists, tables (borders, widths, captions, merged cells), pictures (size, float, border, a picture inside a link), links, code blocks with their language (highlighted), Redmine macros (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` and so on), wiki and issue links, plain web addresses made clickable, and embedded `<iframe>` (video). A text written in CKEditor is recognized by its markup and keeps the spacing between paragraphs it had there, which is wider than in this editor.
+
+Differences on purpose:
+- An `<iframe>` is shown only when it points to another site over http(s), and it is sandboxed: the page inside can run its own scripts, but cannot reach the page of Redmine, open the top window or submit forms. All other `<iframe>` are removed.
+- Links open in the same window: the `target` attribute of a link (CKEditor's "New Window (_blank)") is not kept.
+- Some formatting that CKEditor offered but its pages silently dropped is shown here: for example the background colors of its "Marker" styles and the quotation marks of `<q>`.
+
+An old text keeps its formatting when it is opened in the editor and saved again: Redmine macros (a macro is one gray element in the editor; edit it in the `<HTML>` mode, as in CKEditor's Source mode), `<iframe>`, subscript and superscript, CKEditor's inline styles (big, small, keyboard, sample and so on), the style of headings, tables and table cells, the size, float, border and link of pictures, the language of code blocks. What does not survive editing: `<address>` and `<div>` blocks become paragraphs, the caption of a table becomes a centered paragraph above it, the header and footer sections of a table become ordinary rows (the footer stays at the bottom), `<del>` becomes `<s>` (the same look), and the height of a picture is dropped when its width is set (the proportions are kept). A text saved from this editor gets the compact paragraph spacing of this editor.

@@ -3,6 +3,16 @@ import { Extension } from '@tiptap/core';
 const MAX_INDENT = 8;
 const STEP = 30; // px per level
 
+// The indent of an element in levels: its margin-left, when that is a whole number
+// of levels in pixels (what this editor writes). Any other margin (CKEditor indents
+// by 40px) is not an indent of this editor, it stays a plain style of the element
+// and is kept as it was (see tiptap_legacy.js) instead of being rounded to a level.
+export function indentOf(element) {
+  var match = /^(\d+(?:\.\d+)?)px$/.exec(element.style.marginLeft || '');
+  var margin = match ? parseFloat(match[1]) : 0;
+  return margin > 0 && margin % STEP === 0 ? margin / STEP : 0;
+}
+
 export const Indent = Extension.create({
   name: 'indent',
 
@@ -17,10 +27,7 @@ export const Indent = Extension.create({
         attributes: {
           indent: {
             default: 0,
-            parseHTML: element => {
-              var ml = parseInt(element.style.marginLeft);
-              return ml ? Math.round(ml / STEP) : 0;
-            },
+            parseHTML: element => indentOf(element),
             renderHTML: attributes => {
               if (!attributes.indent) return {};
               return { style: 'margin-left: ' + (attributes.indent * STEP) + 'px !important' };

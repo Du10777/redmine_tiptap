@@ -9,6 +9,7 @@ import {
   Underline, TextAlign, Link, Indent,
   Table, TableRow, TableHeader, TableCell,
   FormattableCodeBlock,
+  RedmineMacro, Subscript, Superscript, InlineTagMarks, LegacyIframe, LegacyAttributes,
 } from './tiptap_extensions.js';
 import { t } from './tiptap_i18n.js';
 import { buildToolbar } from './tiptap_toolbar.js';
@@ -290,7 +291,9 @@ function initTextarea(textarea) {
       TableRow,
       TableHeader,
       TableCell,
-    ],
+      // what a text written in CKEditor has that the schema above lacks
+      RedmineMacro, Subscript, Superscript, LegacyIframe, LegacyAttributes,
+    ].concat(InlineTagMarks),
     content: '',
     onUpdate: function(props) {
       // No line breaks are added around the code block content: after <code> the

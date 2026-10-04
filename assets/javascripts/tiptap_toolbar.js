@@ -516,10 +516,12 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     e.preventDefault();
     sourceMode = !sourceMode;
     if (sourceMode) {
-      sourceDiv.value = serializeAttachmentHTML(editor.getHTML())
-        .replace(/<details open="">/g, '<details>')
-        .replace(/></g, '>\n<')
-        .replace(/<br>/g, '<br>\n');
+      sourceDiv.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
+        return html
+          .replace(/<details open="">/g, '<details>')
+          .replace(/></g, '>\n<')
+          .replace(/<br>/g, '<br>\n');
+      });
       editorDiv.style.display = 'none';
       sourceDiv.style.display = 'block';
       srcBtn.classList.add('active');
