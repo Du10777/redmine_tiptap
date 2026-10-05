@@ -429,14 +429,20 @@ var UNSAFE_VALUE = /url\s*\(|expression\s*\(|javascript:|behavior|binding|@impor
 // The style of the element without the properties that other attributes of the
 // node already keep (the alignment, the indent, the width of a picture), and
 // without what is not safe to keep (see above).
+var PIXELS = /^\d+(?:\.\d+)?px$/i;
+
 function leftoverStyle(el, handled) {
   var kept = splitDeclarations(el.getAttribute('style') || '').filter(function(declaration) {
     var colon = declaration.indexOf(':');
     if (colon < 1) return false;
     var property = declaration.slice(0, colon).trim().toLowerCase();
-    return handled.indexOf(property) === -1
+    var value = declaration.slice(colon + 1).trim();
+    // The width and the height of a picture are kept by the picture itself (Image in
+    // tiptap_extensions.js), but only when they are in pixels: 50% or auto stay here.
+    var size = (property === 'width' || property === 'height') && !PIXELS.test(value.replace(/\s*!important$/i, ''));
+    return (handled.indexOf(property) === -1 || size)
       && KEPT_PROPERTIES.test(property)
-      && !UNSAFE_VALUE.test(declaration.slice(colon + 1));
+      && !UNSAFE_VALUE.test(value);
   });
   return kept.length ? kept.join('; ') : null;
 }

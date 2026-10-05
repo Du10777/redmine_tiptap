@@ -21,6 +21,23 @@ export {
   LegacyBlock, LegacyContainer, LegacyPaste,
 } from './tiptap_legacy.js';
 
+// A size of a picture in pixels, or null. A size that is not in pixels (50%, auto) is
+// not read: it stays in the style of the picture as it was (see leftoverStyle in
+// tiptap_legacy.js).
+function pictureSize(element, property) {
+  var fromStyle = element.style[property];
+  if (fromStyle) return /^\d+(?:\.\d+)?px$/.test(fromStyle) ? Math.round(parseFloat(fromStyle)) : null;
+  var attribute = element.getAttribute(property) || '';
+  return /^\d+$/.test(attribute) ? parseInt(attribute, 10) : null;
+}
+
+// The size of the picture in the editor: what the node says, nothing of its own where
+// the node says nothing (the picture has its own proportions then).
+function setSize(img, attrs) {
+  img.style.width = attrs.width ? attrs.width + 'px' : '';
+  img.style.height = attrs.height ? attrs.height + 'px' : '';
+}
+
 export const Image = BaseImage.extend({
   // A picture is part of a line of text, as in any HTML (and in CKEditor): text
   // around it stays in the same paragraph, and it can be a link (<a><img></a>).
@@ -41,20 +58,20 @@ export const Image = BaseImage.extend({
           return { 'data-filename': attributes.filename };
         },
       },
+      // The size of a picture is kept as it was written, both the width and the
+      // height (a picture may be given a size of other proportions than its own,
+      // CKEditor's image dialog does it: style="height:50px; width:200px"). It is
+      // read from the style (what this editor and CKEditor's dialog write) or from
+      // the attribute of the same name (older texts), and written to the style.
       width: {
         default: null,
-        // The width is in the style (what this editor writes, and CKEditor's image
-        // dialog) or in the width attribute (older texts); a percentage is not a
-        // width in pixels.
-        parseHTML: element => {
-          if (element.style.width) return parseInt(element.style.width) || null;
-          var attribute = element.getAttribute('width') || '';
-          return /^\d+$/.test(attribute) ? parseInt(attribute, 10) : null;
-        },
-        renderHTML: attributes => {
-          if (!attributes.width) return {};
-          return { style: 'width: ' + attributes.width + 'px' };
-        },
+        parseHTML: element => pictureSize(element, 'width'),
+        renderHTML: attributes => (attributes.width ? { style: 'width: ' + attributes.width + 'px' } : {}),
+      },
+      height: {
+        default: null,
+        parseHTML: element => pictureSize(element, 'height'),
+        renderHTML: attributes => (attributes.height ? { style: 'height: ' + attributes.height + 'px' } : {}),
       },
     };
   },
@@ -67,11 +84,14 @@ export const Image = BaseImage.extend({
       dom.style.position = 'relative';
       dom.style.userSelect = 'none';
 
+      // The node as it is now: the view is kept when the node changes (see update).
+      var current = node;
+
       var img = document.createElement('img');
       img.src = node.attrs.src;
       img.alt = node.attrs.alt || '';
-      if (node.attrs.width) img.style.width = node.attrs.width + 'px';
       if (node.attrs['data-filename']) img.setAttribute('data-filename', node.attrs['data-filename']);
+      setSize(img, node.attrs);
       dom.appendChild(img);
 
       var handles = ['nw', 'ne', 'sw', 'se'];
@@ -90,12 +110,18 @@ export const Image = BaseImage.extend({
 
           var startX = e.clientX;
           var startWidth = img.offsetWidth;
+          var startHeight = img.offsetHeight;
           var isLeft = pos === 'nw' || pos === 'sw';
+          // A picture that has a height of its own is scaled with it, its proportions
+          // stay what they are; one that has only a width gets the height of its own
+          // proportions from the browser.
+          var scalesHeight = !!current.attrs.height && startWidth > 0;
 
           function onMouseMove(e) {
             var dx = e.clientX - startX;
             var newWidth = Math.max(50, isLeft ? startWidth - dx : startWidth + dx);
             img.style.width = newWidth + 'px';
+            if (scalesHeight) img.style.height = Math.round(startHeight * newWidth / startWidth) + 'px';
           }
 
           function onMouseUp() {
@@ -106,8 +132,9 @@ export const Image = BaseImage.extend({
             if (typeof pos2 === 'number') {
               editor.view.dispatch(
                 editor.view.state.tr.setNodeMarkup(pos2, null, {
-                  ...node.attrs,
+                  ...current.attrs,
                   width: img.offsetWidth,
+                  height: scalesHeight ? img.offsetHeight : null,
                 })
               );
             }
@@ -140,9 +167,11 @@ export const Image = BaseImage.extend({
       return {
         dom,
         update(updatedNode) {
-          if (updatedNode.type !== node.type) return false;
+          if (updatedNode.type !== current.type) return false;
+          current = updatedNode;
           img.src = updatedNode.attrs.src;
-          if (updatedNode.attrs.width) img.style.width = updatedNode.attrs.width + 'px';
+          img.alt = updatedNode.attrs.alt || '';
+          setSize(img, updatedNode.attrs);
           return true;
         },
         destroy() {
