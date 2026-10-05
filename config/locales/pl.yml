@@ -10,6 +10,8 @@ pl:
       align: "Wyrównanie"
       outdent: "Zmniejsz wcięcie"
       indent: "Zwiększ wcięcie"
+      subscript: "Indeks dolny"
+      superscript: "Indeks górny"
       bold: "Pogrubienie"
       italic: "Kursywa"
       underline: "Podkreślenie"

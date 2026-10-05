@@ -10,6 +10,8 @@ ro:
       align: "Aliniere"
       outdent: "Micșorează indentarea"
       indent: "Mărește indentarea"
+      subscript: "Indice"
+      superscript: "Exponent"
       bold: "Aldin"
       italic: "Cursiv"
       underline: "Subliniat"

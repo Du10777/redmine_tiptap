@@ -10,6 +10,8 @@ vi:
       align: "Căn chỉnh"
       outdent: "Giảm thụt lề"
       indent: "Tăng thụt lề"
+      subscript: "Chỉ số dưới"
+      superscript: "Chỉ số trên"
       bold: "In đậm"
       italic: "In nghiêng"
       underline: "Gạch chân"

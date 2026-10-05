@@ -10,6 +10,8 @@ ca:
       align: "Alineació"
       outdent: "Redueix el sagnat"
       indent: "Augmenta el sagnat"
+      subscript: "Subíndex"
+      superscript: "Superíndex"
       bold: "Negreta"
       italic: "Cursiva"
       underline: "Subratllat"

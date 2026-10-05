@@ -10,6 +10,8 @@ bg:
       align: "Подравняване"
       outdent: "Намаляване на отстъпа"
       indent: "Увеличаване на отстъпа"
+      subscript: "Долен индекс"
+      superscript: "Горен индекс"
       bold: "Получер"
       italic: "Курсив"
       underline: "Подчертан"

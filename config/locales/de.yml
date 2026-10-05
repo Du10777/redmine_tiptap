@@ -10,6 +10,8 @@ de:
       align: "Ausrichtung"
       outdent: "Einzug verkleinern"
       indent: "Einzug vergrößern"
+      subscript: "Tiefgestellt"
+      superscript: "Hochgestellt"
       bold: "Fett"
       italic: "Kursiv"
       underline: "Unterstrichen"

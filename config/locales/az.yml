@@ -10,6 +10,8 @@ az:
       align: "Düzləndirmə"
       outdent: "Girintini azaltmaq"
       indent: "Girintini artırmaq"
+      subscript: "Aşağı indeks"
+      superscript: "Yuxarı indeks"
       bold: "Qalın"
       italic: "Kursiv"
       underline: "Altından xətt çəkilmiş"

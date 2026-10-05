@@ -10,6 +10,8 @@ lv:
       align: "Līdzinājums"
       outdent: "Samazināt atkāpi"
       indent: "Palielināt atkāpi"
+      subscript: "Apakšraksts"
+      superscript: "Augšraksts"
       bold: "Treknraksts"
       italic: "Slīpraksts"
       underline: "Pasvītrojums"

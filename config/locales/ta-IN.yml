@@ -10,6 +10,8 @@ ta-IN:
       align: "சீரமைப்பு"
       outdent: "உள்தள்ளலைக் குறை"
       indent: "உள்தள்ளலை அதிகரி"
+      subscript: "கீழ்க்குறியீடு"
+      superscript: "மேற்குறியீடு"
       bold: "தடிமன்"
       italic: "சாய்வு"
       underline: "அடிக்கோடு"

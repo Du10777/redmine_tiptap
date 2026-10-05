@@ -10,6 +10,8 @@ sl:
       align: "Poravnava"
       outdent: "Zmanjšaj zamik"
       indent: "Povečaj zamik"
+      subscript: "Podpisano"
+      superscript: "Nadpisano"
       bold: "Krepko"
       italic: "Ležeče"
       underline: "Podčrtano"

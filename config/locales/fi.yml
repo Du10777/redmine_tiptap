@@ -10,6 +10,8 @@ fi:
       align: "Tasaus"
       outdent: "Pienennä sisennystä"
       indent: "Suurenna sisennystä"
+      subscript: "Alaindeksi"
+      superscript: "Yläindeksi"
       bold: "Lihavointi"
       italic: "Kursivointi"
       underline: "Alleviivaus"

@@ -10,6 +10,8 @@ gl:
       align: "Aliñamento"
       outdent: "Reducir sangría"
       indent: "Aumentar sangría"
+      subscript: "Subíndice"
+      superscript: "Superíndice"
       bold: "Negra"
       italic: "Cursiva"
       underline: "Subliñado"

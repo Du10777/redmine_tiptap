@@ -10,6 +10,8 @@ eu:
       align: "Lerrokatzea"
       outdent: "Txikitu koska"
       indent: "Handitu koska"
+      subscript: "Azpiindizea"
+      superscript: "Goi-indizea"
       bold: "Lodia"
       italic: "Etzana"
       underline: "Azpimarratua"

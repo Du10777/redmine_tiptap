@@ -10,6 +10,8 @@ ko:
       align: "정렬"
       outdent: "들여쓰기 줄이기"
       indent: "들여쓰기 늘리기"
+      subscript: "아래 첨자"
+      superscript: "위 첨자"
       bold: "굵게"
       italic: "기울임꼴"
       underline: "밑줄"

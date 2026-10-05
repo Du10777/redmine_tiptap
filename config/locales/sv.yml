@@ -10,6 +10,8 @@ sv:
       align: "Justering"
       outdent: "Minska indrag"
       indent: "Öka indrag"
+      subscript: "Nedsänkt"
+      superscript: "Upphöjd"
       bold: "Fet"
       italic: "Kursiv"
       underline: "Understruken"

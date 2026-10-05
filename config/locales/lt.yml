@@ -10,6 +10,8 @@ lt:
       align: "Lygiuotė"
       outdent: "Mažinti įtrauką"
       indent: "Didinti įtrauką"
+      subscript: "Apatinis indeksas"
+      superscript: "Viršutinis indeksas"
       bold: "Paryškinti"
       italic: "Kursyvas"
       underline: "Pabraukti"

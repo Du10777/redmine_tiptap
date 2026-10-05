@@ -10,6 +10,8 @@ es:
       align: "Alineación"
       outdent: "Disminuir sangría"
       indent: "Aumentar sangría"
+      subscript: "Subíndice"
+      superscript: "Superíndice"
       bold: "Negrita"
       italic: "Cursiva"
       underline: "Subrayado"

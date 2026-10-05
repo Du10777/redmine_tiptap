@@ -10,6 +10,8 @@ mn:
       align: "Зэрэгцүүлэлт"
       outdent: "Догол зайг багасгах"
       indent: "Догол зайг нэмэгдүүлэх"
+      subscript: "Доод индекс"
+      superscript: "Дээд индекс"
       bold: "Тод"
       italic: "Налуу"
       underline: "Доогуур зураас"

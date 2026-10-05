@@ -10,6 +10,8 @@ it:
       align: "Allineamento"
       outdent: "Riduci rientro"
       indent: "Aumenta rientro"
+      subscript: "Pedice"
+      superscript: "Apice"
       bold: "Grassetto"
       italic: "Corsivo"
       underline: "Sottolineato"

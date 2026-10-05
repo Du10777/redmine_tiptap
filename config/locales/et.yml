@@ -10,6 +10,8 @@ et:
       align: "Joondus"
       outdent: "Vähenda taanet"
       indent: "Suurenda taanet"
+      subscript: "Allindeks"
+      superscript: "Ülaindeks"
       bold: "Paks"
       italic: "Kursiiv"
       underline: "Allakriipsutus"

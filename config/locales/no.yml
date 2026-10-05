@@ -10,6 +10,8 @@
       align: "Justering"
       outdent: "Reduser innrykk"
       indent: "Øk innrykk"
+      subscript: "Senket skrift"
+      superscript: "Hevet skrift"
       bold: "Fet"
       italic: "Kursiv"
       underline: "Understreking"

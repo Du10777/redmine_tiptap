@@ -10,6 +10,8 @@ zh-TW:
       align: "對齊方式"
       outdent: "減少縮排"
       indent: "增加縮排"
+      subscript: "下標"
+      superscript: "上標"
       bold: "粗體"
       italic: "斜體"
       underline: "底線"

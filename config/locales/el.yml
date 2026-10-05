@@ -10,6 +10,8 @@ el:
       align: "Στοίχιση"
       outdent: "Μείωση εσοχής"
       indent: "Αύξηση εσοχής"
+      subscript: "Δείκτης"
+      superscript: "Εκθέτης"
       bold: "Έντονα"
       italic: "Πλάγια"
       underline: "Υπογράμμιση"

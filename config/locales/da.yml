@@ -10,6 +10,8 @@ da:
       align: "Justering"
       outdent: "Formindsk indrykning"
       indent: "Forøg indrykning"
+      subscript: "Sænket skrift"
+      superscript: "Hævet skrift"
       bold: "Fed"
       italic: "Kursiv"
       underline: "Understreget"

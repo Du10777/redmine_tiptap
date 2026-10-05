@@ -10,6 +10,8 @@ nl:
       align: "Uitlijning"
       outdent: "Inspringing verkleinen"
       indent: "Inspringing vergroten"
+      subscript: "Subscript"
+      superscript: "Superscript"
       bold: "Vet"
       italic: "Cursief"
       underline: "Onderstrepen"

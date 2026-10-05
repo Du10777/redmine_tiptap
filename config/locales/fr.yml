@@ -10,6 +10,8 @@ fr:
       align: "Alignement"
       outdent: "Diminuer le retrait"
       indent: "Augmenter le retrait"
+      subscript: "Indice"
+      superscript: "Exposant"
       bold: "Gras"
       italic: "Italique"
       underline: "Souligné"

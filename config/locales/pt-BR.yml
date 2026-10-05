@@ -10,6 +10,8 @@ pt-BR:
       align: "Alinhamento"
       outdent: "Diminuir recuo"
       indent: "Aumentar recuo"
+      subscript: "Subscrito"
+      superscript: "Sobrescrito"
       bold: "Negrito"
       italic: "Itálico"
       underline: "Sublinhado"

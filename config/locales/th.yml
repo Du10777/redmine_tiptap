@@ -10,6 +10,8 @@ th:
       align: "การจัดแนว"
       outdent: "ลดการเยื้อง"
       indent: "เพิ่มการเยื้อง"
+      subscript: "ตัวห้อย"
+      superscript: "ตัวยก"
       bold: "ตัวหนา"
       italic: "ตัวเอียง"
       underline: "ขีดเส้นใต้"

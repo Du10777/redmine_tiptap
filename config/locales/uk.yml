@@ -10,6 +10,8 @@ uk:
       align: "Вирівнювання"
       outdent: "Зменшити відступ"
       indent: "Збільшити відступ"
+      subscript: "Нижній індекс"
+      superscript: "Верхній індекс"
       bold: "Жирний"
       italic: "Курсив"
       underline: "Підкреслений"

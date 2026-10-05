@@ -10,6 +10,8 @@ cs:
       align: "Zarovnání"
       outdent: "Zmenšit odsazení"
       indent: "Zvětšit odsazení"
+      subscript: "Dolní index"
+      superscript: "Horní index"
       bold: "Tučné"
       italic: "Kurzíva"
       underline: "Podtržení"

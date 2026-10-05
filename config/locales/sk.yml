@@ -10,6 +10,8 @@ sk:
       align: "Zarovnanie"
       outdent: "Zmenšiť odsadenie"
       indent: "Zväčšiť odsadenie"
+      subscript: "Dolný index"
+      superscript: "Horný index"
       bold: "Tučné"
       italic: "Kurzíva"
       underline: "Podčiarknuté"

@@ -10,6 +10,8 @@ id:
       align: "Perataan"
       outdent: "Kurangi indentasi"
       indent: "Tambah indentasi"
+      subscript: "Subskrip"
+      superscript: "Superskrip"
       bold: "Tebal"
       italic: "Miring"
       underline: "Garis bawah"

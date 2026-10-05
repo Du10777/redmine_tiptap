@@ -10,6 +10,8 @@ sq:
       align: "Rreshtim"
       outdent: "Zvogëloje kryeradhën"
       indent: "Rrite kryeradhën"
+      subscript: "Nënshkrim"
+      superscript: "Mbishkrim"
       bold: "Të trasha"
       italic: "Të pjerrëta"
       underline: "Të nënvizuara"

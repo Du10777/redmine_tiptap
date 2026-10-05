@@ -10,6 +10,8 @@ hu:
       align: "Igazítás"
       outdent: "Behúzás csökkentése"
       indent: "Behúzás növelése"
+      subscript: "Alsó index"
+      superscript: "Felső index"
       bold: "Félkövér"
       italic: "Dőlt"
       underline: "Aláhúzott"

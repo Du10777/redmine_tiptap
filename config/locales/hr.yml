@@ -10,6 +10,8 @@ hr:
       align: "Poravnanje"
       outdent: "Smanji uvlaku"
       indent: "Povećaj uvlaku"
+      subscript: "Donji indeks"
+      superscript: "Gornji indeks"
       bold: "Podebljano"
       italic: "Kurziv"
       underline: "Podcrtano"

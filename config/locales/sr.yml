@@ -10,6 +10,8 @@ sr:
       align: "Поравнање"
       outdent: "Смањи увлачење"
       indent: "Повећај увлачење"
+      subscript: "Доњи индекс"
+      superscript: "Горњи индекс"
       bold: "Подебљано"
       italic: "Курзив"
       underline: "Подвучено"

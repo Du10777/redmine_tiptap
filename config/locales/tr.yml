@@ -10,6 +10,8 @@ tr:
       align: "Hizalama"
       outdent: "Girintiyi azalt"
       indent: "Girintiyi artır"
+      subscript: "Alt simge"
+      superscript: "Üst simge"
       bold: "Kalın"
       italic: "İtalik"
       underline: "Altı çizili"

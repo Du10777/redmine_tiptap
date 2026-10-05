@@ -10,6 +10,8 @@ pt:
       align: "Alinhamento"
       outdent: "Diminuir avanço"
       indent: "Aumentar avanço"
+      subscript: "Inferior à linha"
+      superscript: "Superior à linha"
       bold: "Negrito"
       italic: "Itálico"
       underline: "Sublinhado"
