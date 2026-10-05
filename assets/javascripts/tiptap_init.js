@@ -10,6 +10,7 @@ import {
   Table, TableRow, TableHeader, TableCell,
   FormattableCodeBlock,
   RedmineMacro, Subscript, Superscript, InlineTagMarks, LegacyIframe, LegacyAttributes,
+  LegacyBlock, LegacyContainer, LegacyPaste,
 } from './tiptap_extensions.js';
 import { t } from './tiptap_i18n.js';
 import { buildToolbar } from './tiptap_toolbar.js';
@@ -293,6 +294,7 @@ function initTextarea(textarea) {
       TableCell,
       // what a text written in CKEditor has that the schema above lacks
       RedmineMacro, Subscript, Superscript, LegacyIframe, LegacyAttributes,
+      LegacyBlock, LegacyContainer, LegacyPaste,
     ].concat(InlineTagMarks),
     content: '',
     onUpdate: function(props) {

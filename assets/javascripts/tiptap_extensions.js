@@ -18,6 +18,7 @@ export { Indent } from './tiptap_indent.js';
 export { FormattableCodeBlock } from './tiptap_codeblock.js';
 export {
   RedmineMacro, Subscript, Superscript, InlineTagMarks, LegacyIframe, LegacyAttributes,
+  LegacyBlock, LegacyContainer, LegacyPaste,
 } from './tiptap_legacy.js';
 
 export const Image = BaseImage.extend({

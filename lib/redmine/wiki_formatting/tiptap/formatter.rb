@@ -8,14 +8,18 @@ module Redmine
         include Redmine::WikiFormatting::LinksHelper
 
         # How a text of CKEditor can be told from a text of this editor: CKEditor
-        # writes void tags in the XHTML way (<br />, <hr />, <img ... />) and
-        # separates blocks with a blank line (and indents list items with a tab);
-        # the editor of this plugin writes <br>, <hr>, <img ...> and no space
-        # between blocks.
+        # writes void tags in the XHTML way (<br />, <hr />, <img ... />), separates
+        # all blocks, paragraphs too, with a blank line and indents what is inside a
+        # list, a table, a quote with a tab; the editor of this plugin writes <br>,
+        # <hr>, <img ...> and no space between blocks. The source mode of the editor
+        # (the one thing of this plugin that formats the HTML, see tiptap_source.js)
+        # indents with spaces and puts a blank line only around a block of several
+        # lines, never between two paragraphs, so what it writes is not taken for a
+        # text of CKEditor.
         CKEDITOR_SIGNS = Regexp.union(
           %r{<br />}, %r{<hr />}, %r{<img\b[^>]*/>},
-          %r{</(?:p|h[1-6]|ul|ol|table|blockquote|pre|div)>[ \t]*\r?\n[ \t]*\r?\n[ \t]*<},
-          %r{<(?:ul|ol)>\r?\n\t<li>}
+          %r{</(?:p|h[1-6])>[ \t]*\r?\n[ \t]*\r?\n[ \t]*<(?:p|h[1-6])\b},
+          %r{<(?:ul|ol|table|thead|tbody|tfoot|tr|blockquote|div)\b[^>]*>[ \t]*\r?\n\t+<}
         ).freeze
 
         # The language names that CodeRay (Redmine's own highlighter, which

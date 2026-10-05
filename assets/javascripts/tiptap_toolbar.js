@@ -2,6 +2,7 @@ import { insertCollapsible } from './tiptap_collapsible.js';
 import { insertQuote } from './tiptap_quote.js';
 import { openAttachmentPicker, openImagePicker, openLinkModal, openTableModal } from './tiptap_modals.js';
 import { serializeAttachmentHTML, resolveAttachmentSrcs } from './tiptap_attachments.js';
+import { formatSourceHTML } from './tiptap_source.js';
 import { WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 import { t } from './tiptap_i18n.js';
 
@@ -530,10 +531,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     sourceMode = !sourceMode;
     if (sourceMode) {
       source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
-        return html
-          .replace(/<details open="">/g, '<details>')
-          .replace(/></g, '>\n<')
-          .replace(/<br>/g, '<br>\n');
+        return formatSourceHTML(html).replace(/<details open="">/g, '<details>');
       });
       editorDiv.style.display = 'none';
       source.show(true);

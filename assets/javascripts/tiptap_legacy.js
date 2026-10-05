@@ -1,4 +1,5 @@
 import { Extension, Node, Mark, mergeAttributes } from '@tiptap/core';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { indentOf } from './tiptap_indent.js';
 
 // Texts written in CKEditor (the redmine_ckeditor plugin) hold HTML that this
@@ -268,6 +269,118 @@ export function convertSpecialContainers(container) {
   });
 }
 
+// --- <div> and <address> -------------------------------------------------------
+// A <div> (CKEditor's "Normal (DIV)" format, its "Create Div Container", the block
+// styles with a frame or a background) and an <address> used to turn into paragraphs
+// as soon as a text was opened in the editor. They are kept now, as two nodes that
+// write the very tag they read: one that holds text (LegacyBlock) and one that holds
+// blocks (LegacyContainer); the style and the other attributes stay, like those of
+// the other legacy elements. There is no button for them, they exist for the texts
+// that have them.
+//
+// What comes from outside the editor (pasted or dropped: a web page, Word, a mail
+// are full of <div>s that mean nothing here) is not given these nodes, its <div>s
+// become paragraphs as they always did; text copied inside the editor keeps them.
+var BLOCK_TAGS = /^(?:address|blockquote|details|div|figure|h[1-6]|hr|ol|p|pre|table|ul)$/;
+
+function hasBlockChild(el) {
+  return Array.prototype.some.call(el.children, function(child) { return BLOCK_TAGS.test(child.localName); });
+}
+
+// The <div>s that other nodes of the editor write for themselves: the content of a
+// task item, of a collapsible block, the header and the body of a quote.
+function ownedByNode(el) {
+  var parent = el.parentElement;
+  return el.hasAttribute('data-type') || /(?:^|\s)tiptap-/.test(el.className || '')
+    || !!(parent && parent.getAttribute('data-type') === 'taskItem');
+}
+
+// A list item starts with a paragraph, so a <div> that is the first thing in an <li>
+// has no place there (the parser would put it after the list): it stays what it
+// was before, its content goes into the item.
+function startsListItem(el) {
+  var parent = el.parentElement;
+  if (!parent || parent.localName !== 'li') return false;
+  for (var node = el.previousSibling; node; node = node.previousSibling) {
+    if (node.nodeType === 1 || (node.nodeType === 3 && /\S/.test(node.nodeValue))) return false;
+  }
+  return true;
+}
+
+function divNode(name, content, withBlocks) {
+  return Node.create({
+    name: name,
+    group: 'block',
+    content: content,
+    defining: true,
+
+    addAttributes() {
+      return {
+        tag: {
+          default: 'div',
+          parseHTML: function(el) { return el.localName; },
+          renderHTML: function() { return {}; },
+        },
+      };
+    },
+
+    parseHTML() {
+      return ['div', 'address'].map(function(tag) {
+        return {
+          tag: tag,
+          priority: 10,   // below the rules of the nodes that take a <div> for theirs
+          getAttrs: function(el) {
+            return (ownedByNode(el) || startsListItem(el) || hasBlockChild(el) !== withBlocks) ? false : null;
+          },
+        };
+      });
+    },
+
+    renderHTML({ node, HTMLAttributes }) { return [node.attrs.tag, HTMLAttributes, 0]; },
+  });
+}
+
+export const LegacyBlock = divNode('legacyBlock', 'inline*', false);
+export const LegacyContainer = divNode('legacyContainer', 'block+', true);
+
+// The <div>s and <address>es of a foreign text as the editor read them before: a
+// block with blocks in it is taken apart, a block with text in it is a paragraph.
+export function flattenForeignDivs(container) {
+  // innermost first
+  Array.prototype.slice.call(container.querySelectorAll('div, address')).reverse().forEach(function(el) {
+    if (hasBlockChild(el)) {
+      while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
+      el.remove();
+    } else {
+      var paragraph = document.createElement('p');
+      while (el.firstChild) paragraph.appendChild(el.firstChild);
+      el.replaceWith(paragraph);
+    }
+  });
+}
+
+export const LegacyPaste = Extension.create({
+  name: 'legacyPaste',
+
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        key: new PluginKey('legacyPaste'),
+        props: {
+          transformPastedHTML(html) {
+            // ProseMirror marks what was copied inside the editor
+            if (html.indexOf('data-pm-slice') !== -1 || !/<(?:div|address)\b/i.test(html)) return html;
+            var holder = document.createElement('div');
+            holder.innerHTML = html;
+            flattenForeignDivs(holder);
+            return holder.innerHTML;
+          },
+        },
+      }),
+    ];
+  },
+});
+
 // --- Attributes of known elements ----------------------------------------------
 // What CKEditor puts on elements the editor knows already, but whose attributes
 // it has no place for: the style of a heading (color), of a table, of a cell
@@ -388,6 +501,11 @@ export const LegacyAttributes = Extension.create({
       {
         types: ['paragraph', 'heading'],
         attributes: legacyAttrs(['text-align'], [], true),
+      },
+      {
+        // nothing of their style is kept by another attribute: all of it stays as it was
+        types: ['legacyBlock', 'legacyContainer'],
+        attributes: legacyAttrs([], ['align', 'dir', 'lang', 'title'], false),
       },
       {
         types: ['table'],

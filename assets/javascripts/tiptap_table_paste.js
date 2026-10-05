@@ -1,3 +1,5 @@
+import { flattenForeignDivs } from './tiptap_legacy.js';
+
 // Cleans up tables pasted from Excel/Word: strips junk styles,
 // screenshot images, fixed widths
 export function setupTablePaste(editorDiv, editor) {
@@ -83,6 +85,8 @@ function cleanPastedTables(html) {
   var tables = div.querySelectorAll('table');
   if (!tables.length) return html;
   tables.forEach(function(table) { cleanTable(table, classRules, baseFontSize); });
+  // This text bypasses the paste rules of the editor (it is put in as content).
+  flattenForeignDivs(div);
 
   // Leftovers of the clipboard document (<head> contents, Office XML).
   div.querySelectorAll('style, meta, link, title, script, xml').forEach(function(el) { el.remove(); });
