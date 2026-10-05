@@ -53,7 +53,7 @@ Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json
 ## Zmožnosti
 
 **Oblikovanje besedila**
-- Krepko, ležeče, podčrtano, prečrtano, vgrajeni kod.
+- Krepko, ležeče, podčrtano, prečrtano, spodnji in zgornji indeks (Ctrl+, in Ctrl+.), vgrajeni kod.
 - Barva besedila in barva ozadja: 64-barvna paleta ali poljubna heksadecimalna vrednost.
 - Pisava (13 pisav) in velikost pisave (prednastavke od 8 do 72 px ali poljubno vrednost).
 - Slogi odstavkov: naslovi 1–6 in običajno besedilo.
@@ -89,7 +89,7 @@ Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json
 - Blok navedka z avtorsko in datumsko vrstico.
 
 **Urejanje**
-- Način `<HTML>` za prikaz in urejanje vira HTML.
+- Način `<HTML>` za prikaz in urejanje vira HTML: ugnezdeni bloki so zamaknjeni, prazna vrstica ločuje bloke, ki zavzemajo več vrstic, skladnja je obarvana po istih pravilih kot v bloku kode HTML, Enter pa ohranja zamik vrstice.
 - Tipkanje v slogu Markdown: `#` za naslove, `-` in `1.` za sezname, `[ ]` za naloge, ```` ```python ```` za blok kode (katero koli ime jezika ali ne), `**bold**`, `---` za vodoravno črto. Standardni tipkovni bližnjici: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z in drugi.
 - Urejevalnik nikoli ne postane višji od okna: orodna vrstica in gumbi obrazca ostanejo na vidiku, besedilo pa se pomika znotraj. Višina sledi velikosti okna in povečavi strani.
 - Ročica za spreminjanje velikosti v spodnjem desnem kotu nastavi višino ročno. Višina se zapomni; dvojni klik se vrne na samodejno višino.
@@ -106,7 +106,7 @@ Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json
 
 Bloki kode so osvetljeni v urejevalniku in na shranjenih straneh. Jezik bloka je izbran iz značke v njegovem zgornjem desnem kotu; seznam ima iskalno polje in se zapomni nedavne in pogosto uporabljane jezike.
 
-Plaginom je priloženo 52 jezikov, med njimi 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dnevniki Linux storitve in izhod journalctl.
+Plaginom je priloženo 52 jezikov, med njimi HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dnevniki Linux storitve in izhod journalctl.
 
 Dodati lahko lastne jezike. Vsak jezik je ena datoteka v mapi `highlight/`. Katero koli od več kot 190 slovnic highlight.js ali tretje osebe se pretvori v tako datoteko z enim ukazom:
 
@@ -182,7 +182,7 @@ Korak 2 je važen. Pri zagonu Redmine ponovno objavi sredstva plaga samo, če so
 Če je vaš Redmine uporabil [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), se lahko preklopite na ta plagi in obdržite vse besedilo, ki je bilo napisano: zahtevki, zabeležke, predstavitvene strani, novice, sporočila, dokumenti. Ničesar se ne pretvori in baza podatkov se ne dotakne. CKEditor shranjuje svoje besedile kot HTML in prav tako ta plagi, zato je shranjeno besedilo preprosto prikazano s novo formatrico.
 
 1. Namestite plagi (glejte zgoraj) in izberite Oblikovanje besedila: *TipTap HTML*.
-2. Obdržite mapo `public/system/rich/` vašega Redmineja. Slike in datoteke, ki jih je vstavil Preglednik slik urejevalnika CKEditor, so shranjene tam in ne v bazi podatkov, in besedila se nanje sklicujejo po naslovu (`/system/rich/...`). Priložene datoteke zahtevkov, predstavitvenih strani in tako naprej so shranjene kot prej in ne potrebujejo ničesar.
+2. Obdržite mapo `public/system/rich/` vašega Redmineja. Če so ljudje vstavili slike in datoteke s preglednikom slik urejevalnika CKEditor, so shranjene tam, ne v bazi podatkov in ne med priloženimi datotekami, besedila pa se nanje sklicujejo po naslovu (`/system/rich/...`). **Če Redmine prestavite na drug strežnik ali ga namestite na novo, prenesite tudi to mapo**, skupaj z bazo podatkov in mapo `files/`: nobena od njiju teh datotek ne vsebuje, brez te mape pa slike v starih besedilih vrnejo napako 404. Priložene datoteke zahtevkov, predstavitvenih strani in tako naprej so shranjene kot prej in ne potrebujejo ničesar. Slike, vstavljene v tem urejevalniku, so navadne priložene datoteke. Mapa ostane potrebna tudi po odstranitvi redmine_ckeditor.
 3. Odstranite redmine_ckeditor, ko ga ne potrebujete več.
 
 Staro besedilo je prikazano tako, kot ga je prikazal urejevalnik CKEditor: pisave, velikosti, barve in poravnava, zamiki, seznami, tabele (področja, širine, podpisi, združene celice), slike (velikost, plavajoče, področje, slika znotraj povezave), povezave, bloki kode s svojim jezikom (osvetljeni), makroji Redmineja (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` in tako naprej), wiki in povezave na zahtevke, navadni spletni naslovi, ki jih je mogoče klikniti, in vgrajena `<iframe>` (video). Besedilo, napisano v urejevalniku CKEditor, je prepoznano po njegovi kodi in obdrži razmik med odstavki, ki ga je imelo tam, kar je večje kot v tem urejevalniku.
@@ -191,5 +191,6 @@ Razlike namenoma:
 - `<iframe>` se prikaže le, če kaže na drugo spletno mesto preko http(s), in je v peskovniku: stran znotraj lahko zažene svoje skripte, vendar ne more dostoči do strani Redmineja, odpre vrhnje okno ali predloži obrazce. Vse drugo `<iframe>` so odstranjeni.
 - Povezave se odpro v istem oknu: atribut `target` povezave (»Novo okno (_blank)« urejevalnika CKEditor) se ne obdrži.
 - Nekatera oblikovanja, ki ga je urejevalnik CKEditor ponudil, vendar njegove strani tiho ni izgubile, je prikazano tu: na primer barve ozadja njegovih slogov "Marker" in narekovaji `<q>`.
+- Slog »Special Container« urejevalnika CKEditor (blok s sivim okvirjem) je prikazan kot blok kode brez poudarjanja, v urejevalniku pa je prav tako blok kode.
 
-Staro besedilo obdrži svojo oblikovanje, ko se odpre v urejevalniku in ponovno shrani: makroji Redmineja (makro je ena siva prvina v urejevalniku; uredite ga v načinu `<HTML>`, kot v načinu Source urejevalnika CKEditor), `<iframe>`, subscripts in superscripts, vgrajeni slogi urejevalnika CKEditor (veliki, majhni, tipkovnica, vzorec in tako naprej), slog naslovov, tabel in celic tabele, velikost, lebdeči, področje in povezava slik, jezik blokov kode. Kaj ne preživi urejanja: `<address>` in `<div>` bloki postanejo odstavki, naslov tabele postane osrednji odstavek zgoraj, glava in noga tabel postanejo navadne vrstice (noga ostane na dnu), `<del>` postane `<s>` (enaka videz), in višina slike se izgubi, ko je nastavljena njena širina (razmerje je ohranjeno). Besedilo, shranjeno iz tega urejevalnika, dobi kompakten razmik odstavkov tega urejevalnika.
+Staro besedilo obdrži svojo oblikovanje, ko se odpre v urejevalniku in ponovno shrani: makroji Redmineja (makro je ena siva prvina v urejevalniku; uredite ga v načinu `<HTML>`, kot v načinu Source urejevalnika CKEditor), `<iframe>`, bloki `<div>` in `<address>` s svojim slogom (`<div>`, prilepljen s spletne strani, še vedno postane odstavek), spodnji in zgornji indeks, vgrajeni slogi urejevalnika CKEditor (veliki, majhni, tipkovnica, vzorec in tako naprej), slog naslovov, tabel in celic tabele, velikost, lebdeči, področje in povezava slik, jezik blokov kode. Kaj ne preživi urejanja: naslov tabele postane osrednji odstavek zgoraj, glava in noga tabel postanejo navadne vrstice (noga ostane na dnu), `<del>` postane `<s>` (enaka videz), in višina slike se izgubi, ko je nastavljena njena širina (razmerje je ohranjeno). Besedilo, shranjeno iz tega urejevalnika, dobi kompakten razmik odstavkov tega urejevalnika.

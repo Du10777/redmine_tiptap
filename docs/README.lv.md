@@ -53,7 +53,7 @@ Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `packag
 ## Iespējas
 
 **Teksta formatēšana**
-- Treknraksts, slīpraksts, pasvītrojums, pārsvītrojums, iekļautais kods.
+- Treknraksts, slīpraksts, pasvītrojums, pārsvītrojums, apakšraksts un augšraksts (Ctrl+, un Ctrl+.), iekļautais kods.
 - Teksta krāsa un fona krāsa: 64 krāsu palete vai jebkura hex vērtība.
 - Fonts (13 fonti) un fonta lielums (gatavie lielumi no 8 līdz 72 px vai jebkura vērtība).
 - Rindkopu stili: virsraksti 1–6 un parasts teksts.
@@ -89,7 +89,7 @@ Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `packag
 - Citāta bloks ar autora un datuma rindu.
 
 **Rediģēšana**
-- `<HTML>` režīms HTML pirmkoda skatīšanai un rediģēšanai.
+- `<HTML>` režīms HTML pirmkoda skatīšanai un rediģēšanai: ligzdotie bloki tiek attēloti ar atkāpēm; bloki, kas aizņem vairākas rindas, tiek atdalīti ar tukšu rindu; sintakse tiek iekrāsota pēc tiem pašiem noteikumiem kā HTML koda blokā; Enter saglabā rindas atkāpi.
 - Rakstīšana Markdown stilā: `#` virsrakstiem, `-` un `1.` sarakstiem, `[ ]` uzdevumiem, ```` ```python ```` koda blokam (jebkurš valodas nosaukums vai bez tā), `**bold**`, `---` horizontālai līnijai. Standarta īsinājumtaustiņi: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z un citi.
 - Redaktors nekad nekļūst augstāks par logu: rīkjosla un veidlapas pogas paliek redzamas, bet teksts ritinās iekšpusē. Augstums pielāgojas loga izmēram un lapas tālummaiņai.
 - Izmēra maiņas rokturis apakšējā labajā stūrī ļauj iestatīt augstumu ar roku. Augstums tiek atcerēts; dubultklikšķis atjauno automātisko augstumu.
@@ -106,7 +106,7 @@ Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `packag
 
 Koda bloki tiek izcelti vienādi gan redaktorā, gan saglabātajās lapās. Bloka valodu izvēlas no nozīmītes tā augšējā labajā stūrī; sarakstā ir meklēšanas lodziņš, un tas atceras nesen un bieži lietotās valodas.
 
-Kopā ar spraudni tiek piegādātas 52 valodas, to vidū 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux pakalpojumu žurnāli un journalctl izvade.
+Kopā ar spraudni tiek piegādātas 52 valodas, to vidū HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux pakalpojumu žurnāli un journalctl izvade.
 
 Varat pievienot savas valodas. Katra valoda ir viens fails mapē `highlight/`. Jebkuru no 190+ highlight.js gramatikām vai trešās puses gramatiku ar vienu komandu var pārveidot par šādu failu:
 
@@ -182,7 +182,7 @@ Otrais solis ir svarīgs. Startējot Redmine no jauna publicē spraudņu resursu
 Ja jūsu Redmine izmantoja [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), varat pāriet uz šo spraudni un saglabāt visus jau uzrakstītos tekstus: uzdevumus, piezīmes, viki lapas, ziņas, ziņojumus, dokumentus. Nekas netiek pārveidots, un datubāze netiek aiztikta. CKEditor glabā savus tekstus kā HTML, un tāpat dara arī šis spraudnis, tāpēc saglabāto tekstu jaunais formatētājs vienkārši attēlo.
 
 1. Instalējiet spraudni (skatiet iepriekš) un kā Teksta formatēšanu izvēlieties *TipTap HTML*.
-2. Saglabājiet sava Redmine mapi `public/system/rich/`. Attēli un faili, ko cilvēki ievietoja ar CKEditor attēlu pārlūku, tiek glabāti tur, nevis datubāzē, un teksti uz tiem atsaucas pēc adreses (`/system/rich/...`). Uzdevumu, viki lapu un citu objektu pielikumi tiek glabāti kā iepriekš, un tiem nekas nav jādara.
+2. Saglabājiet sava Redmine mapi `public/system/rich/`. Ja cilvēki ar CKEditor attēlu pārlūku ir ievietojuši attēlus un failus, tie tiek glabāti tur, nevis datubāzē vai pielikumos, un teksti uz tiem atsaucas pēc adreses (`/system/rich/...`). **Ja pārceļat Redmine uz citu serveri vai instalējat to no jauna, pārnesiet līdzi arī šo mapi**, kopā ar datubāzi un mapi `files/`: nevienā no tām šo failu nav, un bez šīs mapes attēli vecajos tekstos atgriež kļūdu 404. Uzdevumu, viki lapu un citu objektu pielikumi tiek glabāti kā iepriekš, un tiem nekas nav jādara. Ar šo redaktoru ievietotie attēli ir parastie pielikumi. Mape ir vajadzīga arī pēc redmine_ckeditor noņemšanas.
 3. Noņemiet redmine_ckeditor, kad tas vairs nav vajadzīgs.
 
 Vecs teksts tiek rādīts tā, kā to rādīja CKEditor: fonti, izmēri, krāsas un līdzinājums, atkāpes, saraksti, tabulas (apmales, platumi, paraksti, apvienotās šūnas), attēli (izmērs, teksta aplaušana, apmale, attēls saitē), saites, koda bloki ar to valodu (izcelti), Redmine makro (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` un tā tālāk), viki un uzdevumu saites, vienkāršas tīmekļa adreses, kas padarītas par klikšķināmām, un iegulti `<iframe>` (video). Ar CKEditor uzrakstīts teksts tiek atpazīts pēc tā marķējuma un saglabā tur bijušo atstarpi starp rindkopām, kas ir platāka nekā šajā redaktorā.
@@ -191,5 +191,6 @@ Apzināti ieviestās atšķirības:
 - `<iframe>` tiek rādīts tikai tad, ja tas norāda uz citu vietni, izmantojot http(s), un tas darbojas smilškastē: iekšpusē esošā lapa var izpildīt savus skriptus, bet nevar piekļūt Redmine lapai, atvērt augšējo logu vai iesniegt veidlapas. Visi pārējie `<iframe>` tiek noņemti.
 - Saites tiek atvērtas tajā pašā logā: saites atribūts `target` (CKEditor „Jauns logs (_blank)“) netiek saglabāts.
 - Daļa formatējuma, ko CKEditor piedāvāja, bet ko tā lapas klusējot zaudēja, šeit tiek rādīta: piemēram, tā stilu „Marķieris“ fona krāsas un `<q>` pēdiņas.
+- CKEditor stils „Special Container“ (bloks ar pelēku rāmi) tiek rādīts kā koda bloks bez sintakses izcelšanas, un redaktorā tas arī ir koda bloks.
 
-Vecs teksts saglabā savu formatējumu, kad to atver redaktorā un saglabā vēlreiz: Redmine makro (makro redaktorā ir viens pelēks elements; to rediģē `<HTML>` režīmā, tāpat kā CKEditor pirmkoda režīmā), `<iframe>`, apakšraksts un augšraksts, CKEditor rindas stili (liels, mazs, tastatūra, paraugs un tā tālāk), virsrakstu, tabulu un tabulas šūnu stils, attēlu izmērs, teksta aplaušana, apmale un saite, koda bloku valoda. Kas rediģējot nesaglabājas: `<address>` un `<div>` bloki kļūst par rindkopām, tabulas paraksts kļūst par centrētu rindkopu virs tabulas, tabulas galvenes un kājenes sadaļas kļūst par parastām rindām (kājene paliek apakšā), `<del>` kļūst par `<s>` (izskats tāds pats), un attēla augstums tiek atmests, ja ir iestatīts tā platums (proporcijas tiek saglabātas). Ar šo redaktoru saglabātam tekstam tiek piemērota šī redaktora kompaktā atstarpe starp rindkopām.
+Vecs teksts saglabā savu formatējumu, kad to atver redaktorā un saglabā vēlreiz: Redmine makro (makro redaktorā ir viens pelēks elements; to rediģē `<HTML>` režīmā, tāpat kā CKEditor pirmkoda režīmā), `<iframe>`, `<div>` un `<address>` bloki ar savu stilu (`<div>`, kas ielīmēts no tīmekļa lapas, joprojām tiek pārveidots par rindkopu), apakšraksts un augšraksts, CKEditor rindas stili (liels, mazs, tastatūra, paraugs un tā tālāk), virsrakstu, tabulu un tabulas šūnu stils, attēlu izmērs, teksta aplaušana, apmale un saite, koda bloku valoda. Kas rediģējot nesaglabājas: tabulas paraksts kļūst par centrētu rindkopu virs tabulas, tabulas galvenes un kājenes sadaļas kļūst par parastām rindām (kājene paliek apakšā), `<del>` kļūst par `<s>` (izskats tāds pats), un attēla augstums tiek atmests, ja ir iestatīts tā platums (proporcijas tiek saglabātas). Ar šo redaktoru saglabātam tekstam tiek piemērota šī redaktora kompaktā atstarpe starp rindkopām.

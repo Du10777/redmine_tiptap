@@ -53,7 +53,7 @@ Motor do editor: **TipTap 3.31.4**. Todos os paquetes `@tiptap/*` están fixados
 ## Características
 
 **Formato de texto**
-- Negra, cursiva, subliñado, tachado, código en liña.
+- Negra, cursiva, subliñado, tachado, subíndice e superíndice (Ctrl+, e Ctrl+.), código en liña.
 - Cor do texto e cor de fondo: paleta de 64 cores ou calquera valor hexadecimal.
 - Familia de fontes (13 fontes) e tamaño de fonte (predefinidos de 8 a 72 px, ou calquera valor).
 - Estilos de parágrafo: títulos 1–6 e texto normal.
@@ -89,7 +89,7 @@ Motor do editor: **TipTap 3.31.4**. Todos os paquetes `@tiptap/*` están fixados
 - Bloque de cita cun autor e liña de data.
 
 **Edición**
-- Modo `<HTML>` para ver e editar o código fonte HTML.
+- Modo `<HTML>` para ver e editar o código fonte HTML: os bloques aniñados levan sangría, unha liña en branco separa os bloques que ocupan varias liñas, a sintaxe coloréase coas mesmas regras que nun bloque de código HTML, e Enter mantén a sangría da liña.
 - Escritura ao estilo Markdown: `#` para títulos, `-` e `1.` para listas, `[ ]` para tarefas, ```` ```python ```` para un bloque de código (calquera nome de idioma ou ningún), `**bold**`, `---` para unha liña horizontal. Atallos estándar de teclado: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z e outros.
 - O editor nunca crece máis alto que a xanela: a barra de ferramentas e os botóns do formulario permanecen á vista, e o texto desplazase no interior. A altura segue o tamaño da xanela e o zoom da páxina.
 - Un mando de redimensionamento na esquina inferior dereita establece a altura manualmente. A altura recórdase; facer doble clic volve á altura automática.
@@ -106,7 +106,7 @@ Motor do editor: **TipTap 3.31.4**. Todos os paquetes `@tiptap/*` están fixados
 
 Os bloques de código realcanse no editor e nas páxinas gardadas. O idioma dun bloque escóllese no distintivo da súa esquina superior dereita; a lista ten un cadro de busca e recorda idiomas recentes e frecuentemente usados.
 
-52 idiomas veñen co complemento, entre eles 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, rexistros de servizo Linux e saída de journalctl.
+52 idiomas veñen co complemento, entre eles HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, rexistros de servizo Linux e saída de journalctl.
 
 Podes engadir os teus propios idiomas. Cada idioma é un ficheiro na carpeta `highlight/`. Calquera das 190+ gramáticas de highlight.js, ou unha de terceros, convirte nun ficheiro así cun comando:
 
@@ -182,7 +182,7 @@ O paso 2 importa. No inicio Redmine vuelve a publicar os activos do complemento 
 Se o teu Redmine usou [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), podes cambiar a este complemento e manter cada texto que se escribiu: peticións, notas, páxinas wiki, noticias, mensaxes, documentos. Nada se converte e a base de datos non se toca. CKEditor almacena os seus textos como HTML e este complemento tamén, polo que un texto almacenado simplemente se mostra polo novo formateador.
 
 1. Instala o complemento (ver arriba) e escolle Formato de texto: *TipTap HTML*.
-2. Manten a carpeta `public/system/rich/` do teu Redmine. As imaxes e ficheiros que a xente inseriu co navegador de imaxes de CKEditor están almacenados alí e non na base de datos, e os textos refírense a eles por enderezo (`/system/rich/...`). Os ficheiros adxuntos de peticións, páxinas wiki e similares almacénanse como antes e non necesitan nada.
+2. Mantén a carpeta `public/system/rich/` do teu Redmine. Se a xente inseriu imaxes e ficheiros co navegador de imaxes de CKEditor, están almacenados alí, non na base de datos nin entre os ficheiros adxuntos, e os textos refírense a eles polo seu enderezo (`/system/rich/...`). **Se Redmine se move a outro servidor ou se instala de novo, move tamén esta carpeta**, xunto coa base de datos e a carpeta `files/`: ningunha delas contén estes ficheiros, e sen a carpeta as imaxes dos textos antigos dan un erro 404. Os ficheiros adxuntos de peticións, páxinas wiki e similares almacénanse como antes e non necesitan nada. As imaxes inseridas neste editor son ficheiros adxuntos ordinarios. A carpeta segue sendo necesaria despois de eliminar redmine_ckeditor.
 3. Elimina redmine_ckeditor cando xa non o necesites.
 
 Un texto antigo móstrase do xeito que CKEditor o amosaba: fontes, tamaños, cores e aliñación, sangría, listas, táboas (bordes, anchos, pés de páxina, celas fusionadas), imaxes (tamaño, flotante, bordes, imaxe dentro dunha ligazón), ligazóns, bloques de código coa súa lingua (realcados), macros de Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` e similares), ligazóns wiki e de peticións, enderezos web simples feitos clicables e `<iframe>` embebido (vídeo). Un texto escrito en CKEditor recoñécese pola súa marcaxe e mantén o espazo entre parágrafos que tiña alí, que é máis ancho que neste editor.
@@ -191,5 +191,6 @@ Diferenzas propósito:
 - Unha `<iframe>` móstrase só cando apunta a outro sitio en http(s), e está en caixa de area: a páxina dentro pode executar os seus propios scripts, pero non pode alcanzar a páxina de Redmine, abrir a xanela superior ou enviar formularios. Todos os outros `<iframe>` elimínanse.
 - As ligazóns abren na mesma xanela: o atributo `target` dunha ligazón (o "Xanela nova (_blank)" de CKEditor) non se conserva.
 - Algún formato que CKEditor ofrecía pero as súas páxinas silenciosamente deixaban caer móstrase aquí: por exemplo os colores de fondo dos seus estilos "Marcador" e as aspas de `<q>`.
+- O estilo «Special Container» de CKEditor (un bloque cun marco gris) móstrase como un bloque de código sen realce, e no editor tamén é un bloque de código.
 
-Un texto antigo mantén a súa formatación cando se abre no editor e se garda de novo: macros de Redmine (un macro é un elemento gris no editor; edítao no modo `<HTML>`, como no modo Fonte de CKEditor), `<iframe>`, subíndice e superíndice, estilos en liña de CKEditor (grande, pequeno, teclado, mostra e similares), o estilo dos títulos, táboas e celas de táboa, o tamaño, flotante, bordes e ligazón de imaxes, o idioma de bloques de código. O que non sobrevive á edición: bloques `<address>` e `<div>` convértense en parágrafos, o pé de páxina dunha táboa convértese nun parágrafo centrado encima, as seccións de encabezado e pé de páxina dunha táboa convértense en filas ordinarias (o pé permanece na parte inferior), `<del>` convértese en `<s>` (o mesmo aspecto), e a altura dunha imaxe elimínase cando se establece o seu ancho (as proporcións se mantén). Un texto gardado deste editor obtén o espazo de parágrafo compacto deste editor.
+Un texto antigo mantén a súa formatación cando se abre no editor e se garda de novo: macros de Redmine (unha macro é un só elemento gris no editor; edítaa no modo `<HTML>`, como no modo Fonte de CKEditor), `<iframe>`, bloques `<div>` e `<address>` co seu estilo (un `<div>` que se pega desde unha páxina web segue a converterse nun parágrafo), subíndice e superíndice, estilos en liña de CKEditor (grande, pequeno, teclado, mostra e similares), o estilo dos títulos, táboas e celas de táboa, o tamaño, flotante, bordes e ligazón de imaxes, o idioma de bloques de código. O que non sobrevive á edición: a lenda dunha táboa convértese nun parágrafo centrado encima, as seccións de encabezado e de pé dunha táboa convértense en filas ordinarias (o pé permanece na parte inferior), `<del>` convértese en `<s>` (o mesmo aspecto), e a altura dunha imaxe elimínase cando se establece o seu ancho (as proporcións mantéñense). Un texto gardado deste editor obtén o espazo de parágrafo compacto deste editor.

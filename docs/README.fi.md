@@ -53,7 +53,7 @@ Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty 
 ## Ominaisuudet
 
 **Tekstin muotoilu**
-- Lihavointi, kursivointi, alleviivaustus, yliviivaus, rivinsisäinen koodi.
+- Lihavointi, kursivointi, alleviivaus, yliviivaus, alaindeksi ja yläindeksi (Ctrl+, ja Ctrl+.), rivinsisäinen koodi.
 - Tekstin väri ja taustaväri: 64 värin paneeli tai mikä tahansa hex-arvo.
 - Kirjasimen perhe (13 kirjasinta) ja koko (esiasetukset 8-72 pikseliä tai mikä tahansa arvo).
 - Kappaleen tyylit: otsikot 1–6 ja normaali teksti.
@@ -89,7 +89,7 @@ Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty 
 - Lainaustaulukko, jossa on kirjoittaja- ja päivämäärärivi.
 
 **Muokkaus**
-- `<HTML>`-tila HTML-lähteen katselemiseen ja muokkaamiseen.
+- `<HTML>`-tila HTML-lähteen katselemiseen ja muokkaamiseen: sisäkkäiset lohkot sisennetään, usealle riville ulottuvat lohkot erotetaan toisistaan tyhjällä rivillä, syntaksi väritetään samoilla säännöillä kuin HTML-koodilohkossa, ja Enter säilyttää rivin sisennyksen.
 - Markdown-tyylinen kirjoitus: `#` otsikoille, `-` ja `1.` luetteloille, `[ ]` tehtäville, ```` ```python ```` koodilohkolle (mikä tahansa kielentunnus tai ei mitään), `**bold**`, `---` vaakasuoralle viivalle. Vakiokiilentäppäimistön pikakuvakkeet: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z ja muut.
 - Editor ei ole koskaan korkeampi kuin ikkuna: työkalupalkki ja lomakkeen painikkeet pysyvät näkyvissä ja teksti vierittää sisällä. Korkeus seuraa ikkunan kokoa ja sivun zoomausta.
 - Koon muuttamisen kahva oikeassa alakulmassa asettaa korkeuden käsin. Korkeus muistetaan; kaksoisnapsautus palaa automaattiseen korkeuteen.
@@ -106,7 +106,7 @@ Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty 
 
 Koodilohkot korostetaan sekä editorissa että tallennetuissa sivuissa samalla tavalla. Lohkon kieli valitaan sen yläoikeassa kulmassa olevasta merkistä; lista sisältää hakuruudun ja muistaa viime aikojen ja usein käytetyt kielet.
 
-52 kieltä tulee liitännäisen kanssa, mukaan lukien 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux-palvelun lokit ja journalctl-ulostulo.
+52 kieltä tulee liitännäisen kanssa, mukaan lukien HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux-palvelun lokit ja journalctl-ulostulo.
 
 Voit lisätä omia kieliä. Jokainen kieli on yksi tiedosto `highlight/`-kansiossa. Mikä tahansa 190+ highlight.js-kieliopista tai kolmansien osapuolien kielioppi voidaan muuntaa sellaiseksi tiedostoksi yhdellä komennolla:
 
@@ -182,7 +182,7 @@ Vaihe 2 on tärkeä. Käynnistyksen yhteydessä Redmine julkaisee liitännäisen
 Jos Redmine käytti [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor)-ohjelmaa, voit vaihtaa tähän liitännäiseen ja säilyttää kaiken kirjoitetun tekstin: tehtävät, huomautukset, wikisivut, uutiset, viestit, asiakirjat. Mitään ei muunneta ja tietokantaa ei kosketa. CKEditor tallentaa tekstit HTML-muodossa kuten tämä liitännäinen, joten tallennettu teksti näytetään yksinkertaisesti uuden muotoilijan toimesta.
 
 1. Asenna liitännäinen (katso yllä) ja valitse Tekstin muotoilu: *TipTap HTML*.
-2. Pidä Redminen `public/system/rich/`-kansio. Kuvat ja tiedostot, joita ihmiset lisäsivät CKEditorin kuvaselaimen kautta, tallennetaan sinne, ei tietokantaan, ja tekstit viittaavat niihin osoitteella (`/system/rich/...`). Tehtävien, wikisivujen ja niin edelleen liitetiedostot tallennetaan kuten ennenkin eikä vaadi mitään.
+2. Säilytä Redminen `public/system/rich/`-kansio. Jos ihmiset ovat lisänneet kuvia ja tiedostoja CKEditorin kuvaselaimen kautta, ne tallennetaan sinne, ei tietokantaan eikä liitetiedostoihin, ja tekstit viittaavat niihin osoitteella (`/system/rich/...`). **Jos Redmine siirretään toiselle palvelimelle tai asennetaan uudelleen, siirrä myös tämä kansio**, tietokannan ja `files/`-kansion mukana: kumpikaan niistä ei sisällä näitä tiedostoja, ja ilman kansiota vanhojen tekstien kuvat antavat 404-virheen. Tehtävien, wikisivujen ja niin edelleen liitetiedostot tallennetaan kuten ennenkin eikä vaadi mitään. Tässä editorissa lisätyt kuvat ovat tavallisia liitetiedostoja. Kansio on tarpeen myös sen jälkeen, kun redmine_ckeditor on poistettu.
 3. Poista redmine_ckeditor, kun et enää tarvitse sitä.
 
 Vanha teksti näytetään sillä tavalla, jolla CKEditor näytti sen: fontit, koot, värit ja tasaus, sisennykset, luettelot, taulukot (rajat, leveydet, kuvatekstit, yhdistetyt solut), kuvat (koko, float, raja, kuva linkin sisällä), linkit, koodilohkot niiden kielellä (korostettuna), Redminen makrot (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` ja niin edelleen), wiki- ja tehtävälinkit, tavallisten verkko-osoitteiden tekeminen klikkikelpoisiksi ja upotettua `<iframe>` (video). CKEditorissa kirjoitettu teksti tunnistetaan merkintöjen avulla ja säilyttää siinä olleet kappaleiden väliset välit, jotka ovat suuremmat kuin tässä editorissa.
@@ -191,5 +191,6 @@ Tarkoituksella tehdyt erot:
 - `<iframe>` näytetään vain, kun se osoittaa toiselle sivustolle http(s)-osoitteen kautta ja se on hiekkalaatikko: sivulla voi olla omia skriptejä, mutta se ei voi saavuttaa Redmine-sivua, avata ylimmän tason ikkunaa tai lähettää lomakkeita. Kaikki muut `<iframe>` poistetaan.
 - Linkit avautuvat samassa ikkunassa: linkin `target`-attribuutti (CKEditorin "Uusi ikkuna (_blank)") ei säily.
 - Joitain muotoiluja, joita CKEditor tarjosi, mutta sen sivut hiljaa pudottivat, näytetään täällä: esimerkiksi sen "Merkitsin" tyylien taustavärit ja `<q>`:n lainausmerkit.
+- CKEditorin tyyli "Special Container" (lohko, jossa on harmaa kehys) näytetään koodilohkona ilman korostusta, ja se on koodilohko myös editorissa.
 
-Vanha teksti säilyttää muotoiluansa, kun se avataan editorissa ja tallennetaan uudelleen: Redminen makrot (makro on yksi harmaa elementti editorissa; muokkaa sitä `<HTML>`-tilassa, kuten CKEditorin lähdetilassa), `<iframe>`, alaindeksi ja yläindeksi, CKEditorin sisäiset tyylit (iso, pieni, näppäimistö, näyte ja niin edelleen), otsikoiden, taulukoiden ja taulukkosolun tyylittely, kuvien koko, float, raja ja linkki, koodilohkojen kieli. Mikä ei selviä muokkauksesta: `<address>`- ja `<div>`-lohkosta tulevat kappaleet, taulukon kuvausteksti tulee keskitetyksi kappaleeksi sen yläpuolelle, taulukon ylä- ja alatunniste tulevat tavallisiksi riveiksi (alatunniste pysyy alhaalla), `<del>` tulee `<s>` (sama ulkonäkö), ja kuvan korkeus pudotetaan, kun sen leveys on asetettu (mittasuhde säilyy). Tästä editorista tallennettu teksti saa tämän editorin kompaktin kappaleen välilyönnin.
+Vanha teksti säilyttää muotoiluansa, kun se avataan editorissa ja tallennetaan uudelleen: Redminen makrot (makro on yksi harmaa elementti editorissa; muokkaa sitä `<HTML>`-tilassa, kuten CKEditorin lähdetilassa), `<iframe>`, `<div>`- ja `<address>`-lohkot tyyleineen (verkkosivulta liitetty `<div>` muutetaan edelleen kappaleeksi), alaindeksi ja yläindeksi, CKEditorin sisäiset tyylit (iso, pieni, näppäimistö, näyte ja niin edelleen), otsikoiden, taulukoiden ja taulukkosolun tyylittely, kuvien koko, float, raja ja linkki, koodilohkojen kieli. Mikä ei selviä muokkauksesta: taulukon kuvausteksti tulee keskitetyksi kappaleeksi sen yläpuolelle, taulukon ylä- ja alatunniste tulevat tavallisiksi riveiksi (alatunniste pysyy alhaalla), `<del>` tulee `<s>` (sama ulkonäkö), ja kuvan korkeus pudotetaan, kun sen leveys on asetettu (mittasuhde säilyy). Tästä editorista tallennettu teksti saa tämän editorin kompaktin kappaleen välilyönnin.

@@ -53,7 +53,7 @@ Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `packa
 ## Xüsusiyyətlər
 
 **Mətnin formatlaşdırılması**
-- Qalın, kursiv, altından xətt çəkilmiş, üstündən xətt çəkilmiş mətn, sətirdaxili kod.
+- Qalın, kursiv, altından xətt çəkilmiş, üstündən xətt çəkilmiş mətn, alt və üst indekslər (Ctrl+, və Ctrl+.), sətirdaxili kod.
 - Mətn rəngi və fon rəngi: 64 rəngli palitra və ya istənilən hex dəyəri.
 - Şrift ailəsi (13 şrift) və şrift ölçüsü (8-dən 72 px-ə qədər hazır dəyərlər və ya istənilən dəyər).
 - Abzas üslubları: 1–6-cı səviyyə başlıqları və adi mətn.
@@ -89,7 +89,7 @@ Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `packa
 - Müəllif və tarix sətri olan sitat bloku.
 
 **Redaktə**
-- HTML mənbə kodunu görmək və redaktə etmək üçün `<HTML>` rejimi.
+- HTML mənbə kodunu görmək və redaktə etmək üçün `<HTML>` rejimi: iç-içə bloklar girintili yazılır, bir neçə sətir tutan blokları boş sətir ayırır, sintaksis HTML kod bloku ilə eyni qaydalar üzrə rənglənir və Enter sətrin girintisini saxlayır.
 - Markdown üslubunda yazma: başlıqlar üçün `#`, siyahılar üçün `-` və `1.`, tapşırıqlar üçün `[ ]`, kod bloku üçün ```` ```python ```` (istənilən dil adı ilə və ya dil adı olmadan), `**bold**`, üfüqi xətt üçün `---`. Standart klaviatura qısayolları: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z və digərləri.
 - Redaktor heç vaxt pəncərədən hündür olmur: alətlər paneli və formanın düymələri görünən qalır, mətn isə redaktorun daxilində sürüşdürülür. Hündürlük pəncərənin ölçüsünə və səhifənin miqyasına uyğun dəyişir.
 - Aşağı sağ küncdəki ölçü dəyişdirmə tutacağı hündürlüyü əl ilə təyin etməyə imkan verir. Hündürlük yadda saxlanılır; iki dəfə klik avtomatik hündürlüyə qaytarır.
@@ -106,7 +106,7 @@ Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `packa
 
 Kod blokları həm redaktorda, həm də saxlanmış səhifələrdə eyni cür vurğulanır. Blokun dili yuxarı sağ küncdəki nişandan seçilir; siyahıda axtarış sahəsi var və o, son istifadə olunan və tez-tez istifadə olunan dilləri yadda saxlayır.
 
-Plaginlə birlikdə 52 dil gəlir, o cümlədən 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux xidmət jurnalları və journalctl çıxışı.
+Plaginlə birlikdə 52 dil gəlir, o cümlədən HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux xidmət jurnalları və journalctl çıxışı.
 
 Öz dillərinizi əlavə edə bilərsiniz. Hər dil `highlight/` qovluğunda bir fayldır. highlight.js-in 190+ qrammatikasından istənilən biri və ya üçüncü tərəfin qrammatikası bir əmrlə belə fayla çevrilir:
 
@@ -182,7 +182,7 @@ Son commit əvəzinə müəyyən bir versiyada qalmaq üçün: `git fetch && git
 Redmine-inizdə [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) istifadə olunurdusa, bu plagindən istifadəyə keçib yazılmış bütün mətnləri saxlaya bilərsiniz: tapşırıqlar, qeydlər, wiki səhifələri, xəbərlər, mesajlar, sənədlər. Heç nə çevrilmir və verilənlər bazasına toxunulmur. CKEditor mətnlərini HTML şəklində saxlayır, bu plagin də eyni qaydada saxlayır, ona görə də saxlanmış mətn sadəcə yeni formatlayıcı tərəfindən göstərilir.
 
 1. Plagini quraşdırın (yuxarıya bax) və Mətnin formatlaşdırılması üçün *TipTap HTML* seçin.
-2. Redmine-inizin `public/system/rich/` qovluğunu saxlayın. İnsanların CKEditor-un şəkil brauzeri ilə daxil etdikləri şəkillər və fayllar verilənlər bazasında deyil, orada saxlanılır və mətnlər onlara ünvanla (`/system/rich/...`) istinad edir. Tapşırıqlara, wiki səhifələrinə və s. qoşulmuş fayllar əvvəlki kimi saxlanılır və heç bir əməliyyat tələb etmir.
+2. Redmine-inizin `public/system/rich/` qovluğunu saxlayın. İnsanlar CKEditor-un şəkil brauzeri ilə şəkillər və fayllar daxil etmişlərsə, onlar verilənlər bazasında da, qoşulmuş fayllar arasında da deyil, orada saxlanılır və mətnlər onlara ünvanla (`/system/rich/...`) istinad edir. **Redmine başqa serverə köçürülürsə və ya yenidən quraşdırılırsa, bu qovluğu da köçürün**, verilənlər bazası və `files/` qovluğu ilə birlikdə: onların heç birində bu fayllar yoxdur və bu qovluq olmadan köhnə mətnlərdəki şəkillər 404 xətası verir. Tapşırıqlara, wiki səhifələrinə və s. qoşulmuş fayllar əvvəlki kimi saxlanılır və heç bir əməliyyat tələb etmir. Bu redaktorda daxil edilən şəkillər adi qoşulmuş fayllardır. redmine_ckeditor silindikdən sonra da bu qovluq lazım qalır.
 3. redmine_ckeditor artıq lazım olmadıqda onu silin.
 
 Köhnə mətn CKEditor-un göstərdiyi kimi göstərilir: şriftlər, ölçülər, rənglər və düzləndirmə, girintilər, siyahılar, cədvəllər (haşiyələr, enlər, cədvəl başlıqları, birləşdirilmiş xanalar), şəkillər (ölçü, float, haşiyə, keçid daxilində şəkil), keçidlər, öz dili ilə kod blokları (vurğulanmış), Redmine makroları (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` və s.), wiki və tapşırıq keçidləri, keçidə çevrilmiş sadə veb ünvanlar və yerləşdirilmiş `<iframe>` (video). CKEditor-da yazılmış mətn öz işarələməsinə görə tanınır və orada olan abzaslararası məsafəni saxlayır, bu məsafə bu redaktordakından daha genişdir.
@@ -191,5 +191,6 @@ Qəsdən edilən fərqlər:
 - `<iframe>` yalnız http(s) üzərindən başqa sayta yönəldikdə göstərilir və sandbox-da işləyir: içindəki səhifə öz skriptlərini icra edə bilər, lakin Redmine səhifəsinə çıxış əldə edə, üst pəncərəni aça və ya formaları göndərə bilməz. Bütün digər `<iframe>` elementləri silinir.
 - Keçidlər eyni pəncərədə açılır: keçidin `target` atributu (CKEditor-dakı "Yeni pəncərə (_blank)" seçimi) saxlanılmır.
 - CKEditor-un təklif etdiyi, lakin səhifələrində səssizcə buraxılan bəzi formatlaşdırma burada göstərilir: məsələn, onun "Marker" üslublarının fon rəngləri və `<q>` elementinin dırnaq işarələri.
+- CKEditor-un «Special Container» üslubu (boz çərçivəli blok) vurğulanmadan kod bloku kimi göstərilir və redaktorda da kod blokudur.
 
-Köhnə mətn redaktorda açılıb yenidən saxlanılanda öz formatlaşdırmasını saxlayır: Redmine makroları (makro redaktorda bir boz elementdir; onu CKEditor-un Mənbə rejimində olduğu kimi `<HTML>` rejimində redaktə edin), `<iframe>`, alt və üst indekslər, CKEditor-un sətirdaxili üslubları (iri, kiçik, klaviatura, nümunə və s.), başlıqların, cədvəllərin və cədvəl xanalarının üslubu, şəkillərin ölçüsü, float xassəsi, haşiyəsi və keçidi, kod bloklarının dili. Redaktə zamanı qorunmayanlar: `<address>` və `<div>` blokları abzaslara çevrilir, cədvəl başlığı onun üstündə mərkəzləşdirilmiş abzasa çevrilir, cədvəlin başlıq və altlıq bölmələri adi sətirlərə çevrilir (altlıq aşağıda qalır), `<del>` `<s>` elementinə çevrilir (görünüşü eynidir), şəklin eni təyin ediləndə onun hündürlüyü atılır (nisbətlər saxlanılır). Bu redaktordan saxlanılan mətn bu redaktorun yığcam abzas aralığını alır.
+Köhnə mətn redaktorda açılıb yenidən saxlanılanda öz formatlaşdırmasını saxlayır: Redmine makroları (makro redaktorda bir boz elementdir; onu CKEditor-un Mənbə rejimində olduğu kimi `<HTML>` rejimində redaktə edin), `<iframe>`, öz üslubları ilə `<div>` və `<address>` blokları (veb səhifədən yapışdırılan `<div>` yenə də abzasa çevrilir), alt və üst indekslər, CKEditor-un sətirdaxili üslubları (iri, kiçik, klaviatura, nümunə və s.), başlıqların, cədvəllərin və cədvəl xanalarının üslubu, şəkillərin ölçüsü, float xassəsi, haşiyəsi və keçidi, kod bloklarının dili. Redaktə zamanı qorunmayanlar: cədvəl başlığı onun üstündə mərkəzləşdirilmiş abzasa çevrilir, cədvəlin başlıq və altlıq bölmələri adi sətirlərə çevrilir (altlıq aşağıda qalır), `<del>` `<s>` elementinə çevrilir (görünüşü eynidir), şəklin eni təyin ediləndə onun hündürlüyü atılır (nisbətlər saxlanılır). Bu redaktordan saxlanılan mətn bu redaktorun yığcam abzas aralığını alır.

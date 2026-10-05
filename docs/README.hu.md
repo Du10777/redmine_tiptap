@@ -53,7 +53,7 @@ Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` 
 ## Funkciók
 
 **Szöveg formázás**
-- Félkövér, dőlt, aláhúzott, áthúzott, soron belüli kód.
+- Félkövér, dőlt, aláhúzott, áthúzott, alsó és felső index (Ctrl+, és Ctrl+.), soron belüli kód.
 - Szövegszín és háttérszín: 64 szín palettája vagy tetszőleges hex érték.
 - Betűtípus családja (13 betűtípus) és betűméret (8–72 px közötti előbeállítások vagy tetszőleges érték).
 - Bekezdésstílusok: 1–6-os fejlécek és normál szöveg.
@@ -89,7 +89,7 @@ Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` 
 - Idézet blokk szerzővel és dátum sorral.
 
 **Szerkesztés**
-- `<HTML>` mód a HTML forrás megtekintéséhez és szerkesztéséhez.
+- `<HTML>` mód a HTML forrás megtekintéséhez és szerkesztéséhez: a beágyazott blokkok be vannak húzva, a több sorból álló blokkokat üres sor választja el egymástól, a szintaxist ugyanazok a szabályok színezik, mint egy HTML kódblokkban, és az Enter megtartja a sor behúzását.
 - Markdown stílusú gépelés: `#` fejlécekhez, `-` és `1.` listákhoz, `[ ]` feladatokhoz, ```` ```python ```` kódblokk (tetszőleges nyelvnév vagy semmi), `**bold**` félkövetéshez, `---` vízszintes vonalhoz. Szabványos billentyűparancsok: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z és mások.
 - A szerkesztő soha nem nő meg nagyobbá, mint az ablak: az eszköztár és a formgombok láthatók maradnak, és a szöveg belül görget. A magasság követi az ablak méretét és az oldal nagyítását.
 - A jobb alsó sarokban egy átméretezési fogantyú kézzel állítja a magasságot. A magasság megjegyzésre kerül; kettős kattintás az automatikus magasságra való visszatéréshez.
@@ -106,7 +106,7 @@ Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` 
 
 A kódblokkok a szerkesztőben és a mentett oldalakon egyaránt kiemelkednek. Egy blokk nyelvét a jobb felső sarkában lévő jelvényből választjuk ki; a listában van egy keresőmező, és megjegyzi a nemrég és gyakran használt nyelveket.
 
-52 nyelv van a bővítményben, köztük az 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux szolgáltatásnaplók és journalctl kimenet.
+52 nyelv van a bővítményben, köztük a HTML, az 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux szolgáltatásnaplók és journalctl kimenet.
 
 Saját nyelveket adhat hozzá. Minden nyelv egy fájl a `highlight/` mappában. A 190+ highlight.js nyelvtanból vagy egy harmadik féltől származóból tetszőleges egy paranccsal konvertálható ilyen fájllá:
 
@@ -182,7 +182,7 @@ A 2. lépés fontos. Indításkor a Redmine csak akkor teszi újra közzé a bő
 Ha a Redmine a [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) használatban volt, erre a bővítményre válthat és megtarthat minden szöveget: feladatok, feljegyzések, wiki oldalak, hírek, üzenetek, dokumentumok. Semmi sem konvertálódik, és az adatbázis nem érinti. A CKEditor HTML formátumban tárolja a szövegeket, és ez a bővítmény is, ezért a tárolt szöveg egyszerűen megjelenik az új formázóban.
 
 1. Telepítse a bővítményt (lásd fent), és válassza a Szöveg formázás: *TipTap HTML*.
-2. Tartsa meg a Redmine `public/system/rich/` mappáját. A CKEditor képmegjelenítővel beszúrt képek és fájlok ott vannak tárolva, nem az adatbázisban, és a szövegek címmel vonatkoznak rájuk (`/system/rich/...`). Az ügyletek, wiki oldalak és így tovább csatolmányai az előzőhöz hasonlóan vannak tárolva, és nem szükséges semmi.
+2. Tartsa meg a Redmine `public/system/rich/` mappáját. Ha a CKEditor képböngészőjével képeket és fájlokat szúrtak be, azok ott vannak tárolva, nem az adatbázisban és nem a csatolmányok között, a szövegek pedig a címük alapján hivatkoznak rájuk (`/system/rich/...`). **Ha a Redmine-t másik szerverre költözteti vagy újratelepíti, ezt a mappát is vigye át**, az adatbázissal és a `files/` mappával együtt: egyik sem tartalmazza ezeket a fájlokat, és a mappa nélkül a régi szövegek képei 404-es hibát adnak. A feladatok, wiki oldalak és így tovább csatolmányai a korábbiak szerint tárolódnak, és nincs velük semmi teendő. Az ebben a szerkesztőben beszúrt képek közönséges csatolmányok. A mappára a redmine_ckeditor eltávolítása után is szükség van.
 3. Távolítsa el a redmine_ckeditor-t, ha már nincs rá szüksége.
 
 Egy régi szöveg a módszer szerint jelenik meg, ahogy a CKEditor mutatta: betűtípusok, méretek, színek és igazítás, behúzások, listák, táblázatok (szegélyek, szélesség, képletek, egyesített cellák), képek (méret, úszó, szegély, kép egy hivatkozásban), hivatkozások, kódblokkok a nyelvükkel (kiemelve), Redmine makrók (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` és így tovább), wiki és feladat hivatkozások, egyszerű webes címek, amelyek kattinthatóvá válnak, és beágyazott `<iframe>` (videó). A CKEditor-ban írt szöveg a jelölésével felismerhető, és megtartja a bekezdések közötti szóközt, amely nagyobb volt, mint ebben a szerkesztőben.
@@ -191,5 +191,6 @@ Szándékos különbségek:
 - Egy `<iframe>` csak akkor jelenik meg, ha egy másik helyre http(s) szempontjából mutat, és homokozóba kerül: az oldal futtathat saját parancsfájlokat, de nem érheti el a Redmine oldalt, nyithatja meg a felső ablakot, vagy elküldheti az űrlapokat. Az összes többi `<iframe>` eltávolítódik.
 - A hivatkozások ugyanabban az ablakban nyílnak meg: egy hivatkozás `target` attribútuma (CKEditor-nak "New Window (_blank)") nem marad meg.
 - Bizonyos formázás, amelyet a CKEditor kínált, de az oldalai nem tartottak, itt jelenik meg: például a "Marker" stílusok háttérszínei és a `<q>` által idézőjele.
+- A CKEditor „Special Container” stílusa (szürke keretű blokk) kiemelés nélküli kódblokként jelenik meg, és a szerkesztőben is kódblokk.
 
-Egy régi szöveg megőrzi formázását, ha megnyitja a szerkesztőben, és ismét mentve van: Redmine makrók (egy makró egy szürke elem a szerkesztőben; szerkessze a `<HTML>` módban, mint a CKEditor forrásmódjában), `<iframe>`, index és felső index, CKEditor soron belüli stílusok (big, small, keyboard, sample stb.), a stílus fejlécek, táblázatok és táblázat cellák, a méret, úszó, szegély és hivatkozás képeket, kódblokkok nyelve. Mi nem éli túl a szerkesztést: `<address>` és `<div>` blokk bekezdésekké válnak, a táblázat fejléce az alatta lévő centrális bekezdés lesz, a táblázat fejléc- és lábléc szakaszai szokásos sorokká válnak (a lábléc az alján marad), `<del>` lesz `<s>` (ugyanaz az ábra), és egy kép magassága akkor szakad, ha a szélessége be van állítva (az arányok megtartottak). Egy szöveg, amelyet ebből a szerkesztőből mentett, az szerkesztő szöveg tömör bekezdés közötti szóköz kerül.
+Egy régi szöveg megőrzi a formázását, amikor megnyitják a szerkesztőben, majd újra elmentik: Redmine makrók (a makró egyetlen szürke elem a szerkesztőben; szerkessze a `<HTML>` módban, mint a CKEditor Forrás módjában), `<iframe>`, `<div>` és `<address>` blokkok a stílusukkal (egy weboldalról beillesztett `<div>` továbbra is bekezdéssé alakul), alsó és felső index, a CKEditor soron belüli stílusai (big, small, keyboard, sample stb.), a fejlécek, táblázatok és táblázatcellák stílusa, a képek mérete, úsztatása, szegélye és hivatkozása, a kódblokkok nyelve. Ami nem éli túl a szerkesztést: a táblázat felirata egy fölötte lévő, középre igazított bekezdés lesz, a táblázat fejléc- és láblécszakaszai szokásos sorokká válnak (a lábléc alul marad), a `<del>` `<s>` lesz (ugyanaz a megjelenés), és a kép magassága törlődik, ha be van állítva a szélessége (az arányok megmaradnak). Az ebből a szerkesztőből mentett szöveg ennek a szerkesztőnek a kompakt bekezdésközét kapja.

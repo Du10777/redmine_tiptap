@@ -53,7 +53,7 @@ Editor: **TipTap 3.31.4**. Všechny balíčky `@tiptap/*` jsou v `package.json` 
 ## Funkce
 
 **Formátování textu**
-- Tučný, kurzíva, podtržení, přeškrtnutí, vložený kód.
+- Tučný, kurzíva, podtržení, přeškrtnutí, dolní a horní index (Ctrl+, a Ctrl+.), vložený kód.
 - Barva textu a barva pozadí: paleta 64 barev nebo libovolná hex hodnota.
 - Rodina písma (13 písem) a velikost písma (přednastavení od 8 do 72 px, nebo libovolná hodnota).
 - Styly odstavce: nadpisy 1–6 a normální text.
@@ -89,7 +89,7 @@ Editor: **TipTap 3.31.4**. Všechny balíčky `@tiptap/*` jsou v `package.json` 
 - Citační blok s řádkem autora a data.
 
 **Úpravy**
-- Režim `<HTML>` pro prohlížení a úpravy zdrojového kódu HTML.
+- Režim `<HTML>` pro prohlížení a úpravy zdrojového kódu HTML: vnořené bloky jsou odsazeny, prázdný řádek odděluje bloky, které zabírají více řádků, syntaxe se barevně zvýrazňuje podle stejných pravidel jako v bloku kódu HTML a Enter zachovává odsazení řádku.
 - Psaní ve stylu Markdown: `#` pro nadpisy, `-` a `1.` pro seznamy, `[ ]` pro úkoly, ```` ```python ```` pro blok kódu (jakýkoli název jazyka nebo žádný), `**bold**`, `---` pro vodorovnou čáru. Standardní klávesové zkratky: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z a další.
 - Editor nikdy není vyšší než okno: panel nástrojů a tlačítka formuláře zůstávají v zobrazení a text se posunuje uvnitř. Výška se přizpůsobuje velikosti okna a přiblížení stránky.
 - Úchytka pro změnu velikosti v pravém dolním rohu nastavuje výšku ručně. Výška se pamatuje; dvojklik se vrací k automatické výšce.
@@ -106,7 +106,7 @@ Editor: **TipTap 3.31.4**. Všechny balíčky `@tiptap/*` jsou v `package.json` 
 
 Bloky kódu se zvýrazňují v editoru i na uložených stránkách. Jazyk bloku se vybírá z odznáčku v pravém horním rohu; seznam má vyhledávací pole a pamatuje si nedávno a často používané jazyky.
 
-52 jazyků přichází s pluginem, mezi nimi 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, protokoly linuxových služeb a výstup journalctl.
+52 jazyků přichází s pluginem, mezi nimi HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, protokoly linuxových služeb a výstup journalctl.
 
 Můžete přidat své vlastní jazyky. Každý jazyk je jeden soubor ve složce `highlight/`. Libovolná ze 190+ gramatik highlight.js nebo třetí straně se převede na takový soubor jedním příkazem:
 
@@ -182,7 +182,7 @@ Krok 2 je důležitý. Při spuštění Redmine znovu publikuje prostředky plug
 Pokud váš Redmine používal [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), můžete přepnout na tento plugin a zachovat všechny texty, které byly napsány: úkoly, poznámky, wiki stránky, novinky, příspěvky, dokumenty. Nic se nepřevádí a databáze se nedotýká. CKEditor ukládá své texty jako HTML a stejně tak tento plugin, takže uložený text je jednoduše zobrazen novým formátovačem.
 
 1. Nainstalujte plugin (viz výše) a zvolte Formátování textu: *TipTap HTML*.
-2. Ponechte složku `public/system/rich/` vaší Redmine. Obrázky a soubory, které lidé vložili pomocí prohlížeče obrázků CKEditoru, jsou tam uloženy a ne v databázi, a texty se na ně odkazují adresou (`/system/rich/...`). Přílohy úkolů, wiki stránek atd. se ukládají jako dříve a nepotřebují nic.
+2. Ponechte složku `public/system/rich/` vašeho Redmine. Pokud lidé vložili obrázky a soubory pomocí prohlížeče obrázků CKEditoru, jsou uloženy tam, nikoli v databázi ani mezi přílohami, a texty na ně odkazují adresou (`/system/rich/...`). **Při přesunu Redmine na jiný server nebo při jeho nové instalaci přesuňte i tuto složku** spolu s databází a složkou `files/`: ani jedna z nich tyto soubory neobsahuje a bez této složky budou obrázky ve starých textech končit chybou 404. Přílohy úkolů, wiki stránek atd. se ukládají jako dříve a nepotřebují nic. Obrázky vložené v tomto editoru jsou běžné přílohy. Složka zůstává potřebná i po odstranění redmine_ckeditor.
 3. Odstraňte redmine_ckeditor, když jej již nebudete potřebovat.
 
 Starý text se zobrazuje tak, jak jej zobrazoval CKEditor: písma, velikosti, barvy a zarovnání, odsazení, seznamy, tabulky (okraje, šířky, popisky, sloučené buňky), obrázky (velikost, plovoucí, okraj, obrázek v odkazu), odkazy, bloky kódu s jejich jazykem (zvýrazněné), makra Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` atd.), wiki a linkuje na úkoly, prosté webové adresy, které jsou kliknutelné, a vložené `<iframe>` (video). Text napsaný v CKEditoru se rozpozná podle jeho značky a zachovává si odstup mezi odstavci, které tam měl, což je větší než v tomto editoru.
@@ -191,5 +191,6 @@ Rozdíly záměrně:
 - `<iframe>` se zobrazuje pouze v případě, že ukazuje na jinou lokalitu přes http(s), a je v sandbox: stránka uvnitř může spouštět své vlastní skripty, ale nemůže dosáhnout stránky Redmine, otevřít horní okno nebo odeslat formuláře. Všechny ostatní `<iframe>` jsou odstraněny.
 - Odkazy se otevírají ve stejném okně: atribut `target` odkazu (CKEditor "Nové okno (_blank)") se nezachováva.
 - Část formátování, kterou CKEditor nabízel, ale jeho stránky tiše opustila, se zde zobrazuje: například barvy pozadí jeho stylů "Značka" a uvozovky `<q>`.
+- Styl „Special Container“ z CKEditoru (blok se šedým rámečkem) se zobrazuje jako blok kódu bez zvýraznění a v editoru je to také blok kódu.
 
-Starý text si zachovává formátování, když se otevře v editoru a uloží znovu: makra Redmine (makro je jeden šedý prvek v editoru; upravte jej v režimu `<HTML>`, jako v CKEditor Source mode), `<iframe>`, horní index a dolní index, inline styly CKEditoru (velký, malý, klávesnice, vzorek atd.), styl nadpisů, tabulek a buněk tabulky, velikost, plovoucí, okraj a odkaz obrázků, jazyk bloků kódu. Co neprožívá úpravy: `<address>` a bloky `<div>` se stanou odstavci, titulek tabulky se stane středem-zarovnaným odstavcem výše, záhlaví a zápatí tabulky se stanou běžnými řádky (zápatí zůstane na dně), `<del>` se stane `<s>` (stejný vzhled) a výška obrázku se vynechá, když je nastavena jeho šířka (proporce se zachovávají). Text uložený z tohoto editoru získá kompaktní rozestup odstavce tohoto editoru.
+Starý text si zachovává formátování, když se otevře v editoru a uloží znovu: makra Redmine (makro je jeden šedý prvek v editoru; upravte jej v režimu `<HTML>`, jako v režimu Source v CKEditoru), `<iframe>`, bloky `<div>` a `<address>` s jejich stylem (`<div>` vložený z webové stránky se i nadále mění na odstavec), dolní a horní index, inline styly CKEditoru (velký, malý, klávesnice, vzorek atd.), styl nadpisů, tabulek a buněk tabulky, velikost, plovoucí, okraj a odkaz obrázků, jazyk bloků kódu. Co se při úpravách nezachová: popisek tabulky se změní na odstavec zarovnaný na střed nad tabulkou, sekce záhlaví a zápatí tabulky se změní na běžné řádky (zápatí zůstane dole), `<del>` se změní na `<s>` (stejný vzhled) a výška obrázku se odstraní, když je nastavena jeho šířka (proporce se zachovají). Text uložený z tohoto editoru získá kompaktní odstup mezi odstavci, jaký má tento editor.

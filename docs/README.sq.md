@@ -53,7 +53,7 @@ Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë f
 ## Veçoritë
 
 **Formatimi i tekstit**
-- Të trasha, të pjerrëta, të nënvizuara, me vijë në mes, kod brenda rreshtit.
+- Të trasha, të pjerrëta, të nënvizuara, me vijë në mes, indeks i poshtëm dhe i sipërm (Ctrl+, dhe Ctrl+.), kod brenda rreshtit.
 - Ngjyra e tekstit dhe ngjyra e sfondit: një paletë me 64 ngjyra ose çdo vlerë heksadecimale.
 - Familja e shkronjave (13 fonte) dhe madhësia e shkronjave (vlera të paracaktuara nga 8 deri në 72 px, ose çdo vlerë).
 - Stilet e paragrafit: titujt 1–6 dhe teksti normal.
@@ -89,7 +89,7 @@ Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë f
 - Bllok citimi me një rresht për autorin dhe datën.
 
 **Përpunimi**
-- Mënyra `<HTML>` për të parë dhe përpunuar kodin burimor HTML.
+- Mënyra `<HTML>` për të parë dhe përpunuar kodin burimor HTML: blloqet brenda blloqeve shfaqen me kryeradhë, një rresht bosh i ndan blloqet që zënë disa rreshta, sintaksa ngjyroset sipas të njëjtave rregulla si në një bllok kodi HTML dhe Enter e ruan kryeradhën e rreshtit.
 - Shkrim në stilin Markdown: `#` për tituj, `-` dhe `1.` për lista, `[ ]` për detyra, ```` ```python ```` për një bllok kodi (me emrin e çfarëdo gjuhe ose pa emër), `**bold**`, `---` për vijë horizontale. Shkurtesa standarde të tastierës: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z dhe të tjera.
 - Përpunuesi nuk bëhet kurrë më i lartë se dritarja: shiriti i veglave dhe butonat e formularit mbeten të dukshëm, ndërsa teksti rrëshqet brenda tij. Lartësia ndjek madhësinë e dritares dhe zmadhimin e faqes.
 - Një dorezë ndryshimi të madhësisë në cepin e poshtëm djathtas e vendos lartësinë me dorë. Lartësia mbahet mend; me dyklikim kthehet te lartësia automatike.
@@ -106,7 +106,7 @@ Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë f
 
 Blloqet e kodit theksohen njëlloj në përpunues dhe në faqet e ruajtura. Gjuha e një blloku zgjidhet nga etiketa në cepin e tij lart djathtas; lista ka një kuti kërkimi dhe i mban mend gjuhët e përdorura së fundi dhe më shpesh.
 
-Me shtojcën vijnë 52 gjuhë, ndër to 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, ditarët e shërbimeve të Linux-it dhe dalja e journalctl.
+Me shtojcën vijnë 52 gjuhë, ndër to HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, ditarët e shërbimeve të Linux-it dhe dalja e journalctl.
 
 Mund të shtoni gjuhët tuaja. Çdo gjuhë është një kartelë në dosjen `highlight/`. Cilado nga gramatikat e highlight.js (190+), ose një gramatikë e palës së tretë, konvertohet në një kartelë të tillë me një komandë të vetme:
 
@@ -182,7 +182,7 @@ Hapi 2 ka rëndësi. Gjatë nisjes Redmine i publikon sërish asetet e shtojcave
 Nëse Redmine-i juaj përdorte [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), mund të kaloni te kjo shtojcë dhe të ruani çdo tekst që është shkruar: çështje, shënime, faqe wiki, lajme, mesazhe, dokumente. Asgjë nuk konvertohet dhe baza e të dhënave nuk preket. CKEditor i ruan tekstet e tij si HTML dhe po kështu bën edhe kjo shtojcë, prandaj një tekst i ruajtur thjesht shfaqet nga formatuesi i ri.
 
 1. Instaloni shtojcën (shihni më sipër) dhe zgjidhni Formatim tekstesh: *TipTap HTML*.
-2. Mbani dosjen `public/system/rich/` të Redmine-it tuaj. Figurat dhe kartelat që njerëzit i kanë futur me shfletuesin e figurave të CKEditor ruhen aty e jo në bazën e të dhënave, dhe tekstet i referojnë me adresë (`/system/rich/...`). Bashkëngjitjet e çështjeve, të faqeve wiki e kështu me radhë ruhen si më parë dhe nuk kanë nevojë për asgjë.
+2. Mbani dosjen `public/system/rich/` të Redmine-it tuaj. Nëse njerëzit kanë futur figura dhe kartela me shfletuesin e figurave të CKEditor, ato ruhen aty, jo në bazën e të dhënave e as mes bashkëngjitjeve, dhe tekstet i referojnë me adresë (`/system/rich/...`). **Nëse Redmine-i zhvendoset në një server tjetër ose instalohet nga e para, zhvendoseni edhe këtë dosje**, bashkë me bazën e të dhënave dhe dosjen `files/`: asnjëra prej tyre nuk i përmban këto kartela, dhe pa këtë dosje figurat në tekstet e vjetra japin gabimin 404. Bashkëngjitjet e çështjeve, të faqeve wiki e kështu me radhë ruhen si më parë dhe nuk kanë nevojë për asgjë. Figurat e futura në këtë përpunues janë bashkëngjitje të zakonshme. Dosja mbetet e nevojshme edhe pasi të hiqet redmine_ckeditor.
 3. Hiqni redmine_ckeditor kur nuk ju duhet më.
 
 Një tekst i vjetër shfaqet ashtu siç e shfaqte CKEditor: shkronjat, madhësitë, ngjyrat dhe rreshtimi, kryeradhët, listat, tabelat (kufijtë, gjerësitë, titujt, qelizat e bashkuara), figurat (madhësia, float, kufiri, një figurë brenda një lidhjeje), lidhjet, blloqet e kodit me gjuhën e tyre (të theksuara), makrot e Redmine-it (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` e kështu me radhë), lidhjet e wiki-t dhe të çështjeve, adresat e thjeshta web të bëra të klikueshme, dhe korniza `<iframe>` të ngulitura (video). Një tekst i shkruar në CKEditor njihet nga shënjimi i tij dhe e ruan hapësirën midis paragrafëve që kishte aty, e cila është më e gjerë se në këtë përpunues.
@@ -191,5 +191,6 @@ Dallime të qëllimshme:
 - Një kornizë `<iframe>` shfaqet vetëm kur drejton te një sajt tjetër përmes http(s), dhe është e izoluar me sandbox: faqja brenda saj mund të ekzekutojë skriptet e veta, por nuk mund të arrijë faqen e Redmine-it, të hapë dritaren e sipërme apo të dërgojë formularë. Çdo kornizë tjetër `<iframe>` hiqet.
 - Lidhjet hapen në të njëjtën dritare: atributi `target` i një lidhjeje (opsioni «Dritare e re (_blank)» i CKEditor) nuk ruhet.
 - Disa formatime që CKEditor i ofronte, por faqet e tij i hidhnin heshturazi, shfaqen këtu: për shembull ngjyrat e sfondit të stileve të tij «Marker» dhe thonjëzat e `<q>`.
+- Stili «Special Container» i CKEditor (një bllok me kornizë gri) shfaqet si bllok kodi pa theksim, dhe në përpunues është gjithashtu bllok kodi.
 
-Një tekst i vjetër e ruan formatimin kur hapet në përpunues dhe ruhet sërish: makrot e Redmine-it (një makro është një element gri në përpunues; përpunojeni në mënyrën `<HTML>`, si në mënyrën Source të CKEditor), korniza `<iframe>`, indeksi i poshtëm dhe i sipërm, stilet brenda rreshtit të CKEditor (të mëdha, të vogla, tastierë, shembull e kështu me radhë), stili i titujve, i tabelave dhe i qelizave të tabelave, madhësia, float, kufiri dhe lidhja e figurave, gjuha e blloqeve të kodit. Ajo që nuk mbijeton përpunimin: blloqet `<address>` dhe `<div>` bëhen paragrafë, titulli i tabelës bëhet një paragraf i qendërzuar mbi të, seksionet e kreut dhe të këmbës së tabelës bëhen rreshta të zakonshëm (këmba mbetet poshtë), `<del>` bëhet `<s>` (e njëjta pamje), dhe lartësia e figurës hiqet kur caktohet gjerësia e saj (raporti i përmasave ruhet). Një tekst i ruajtur nga ky përpunues merr hapësirën kompakte midis paragrafëve të këtij përpunuesi.
+Një tekst i vjetër e ruan formatimin kur hapet në përpunues dhe ruhet sërish: makrot e Redmine-it (një makro është një element gri në përpunues; përpunojeni në mënyrën `<HTML>`, si në mënyrën Source të CKEditor), korniza `<iframe>`, blloqet `<div>` dhe `<address>` me stilin e tyre (një `<div>` i ngjitur nga një faqe web prapë bëhet paragraf), indeksi i poshtëm dhe i sipërm, stilet brenda rreshtit të CKEditor (të mëdha, të vogla, tastierë, shembull e kështu me radhë), stili i titujve, i tabelave dhe i qelizave të tabelave, madhësia, float, kufiri dhe lidhja e figurave, gjuha e blloqeve të kodit. Ajo që nuk mbijeton përpunimin: titulli i tabelës bëhet një paragraf i qendërzuar mbi të, seksionet e kreut dhe të këmbës së tabelës bëhen rreshta të zakonshëm (këmba mbetet poshtë), `<del>` bëhet `<s>` (e njëjta pamje), dhe lartësia e figurës hiqet kur caktohet gjerësia e saj (raporti i përmasave ruhet). Një tekst i ruajtur nga ky përpunues merr hapësirën kompakte midis paragrafëve të këtij përpunuesi.

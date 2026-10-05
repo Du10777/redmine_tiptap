@@ -53,7 +53,7 @@ Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti
 ## Funkcijos
 
 **Teksto formatavimas**
-- Pusjuodis, kursyvas, pabraukimas, perbraukimas, vidinis kodas.
+- Pusjuodis, kursyvas, pabraukimas, perbraukimas, apatinis ir viršutinis indeksas (Ctrl+, ir Ctrl+.), vidinis kodas.
 - Teksto spalva ir fono spalva: 64 spalvų paletė arba bet kokia šešioliktainė reikšmė.
 - Šrifto šeima (13 šriftų) ir šrifto dydis (iš 8 iki 72 pikselių arba bet kokia reikšmė).
 - Pastraipos stiliai: antraštės 1–6 ir normalus tekstas.
@@ -89,7 +89,7 @@ Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti
 - Citatos blokas su autoriaus ir datos eilute.
 
 **Redagavimas**
-- `<HTML>` režimas HTML šaltinio peržiūrai ir redagavimui.
+- `<HTML>` režimas HTML šaltinio peržiūrai ir redagavimui: įdėtieji blokai rodomi su įtrauka, tuščia eilutė atskiria blokus, užimančius kelias eilutes, sintaksė spalvinama pagal tas pačias taisykles kaip HTML kodų bloke, o Enter išsaugo eilutės įtrauką.
 - Žymeklio stiliaus rašymas: `#` antraštėms, `-` ir `1.` sąrašams, `[ ]` užduotims, ```` ```python ```` kodų blokui (bet kokia kalba arba nė viena), `**bold**`, `---` horizontaliai linijai. Standartiniai klaviatūros nuotolinat: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z ir kiti.
 - Redaktorius niekada neauga aukščiau nei langas: įrankių juosta ir formos mygtukai lieka akivaizdūs, ir tekstas slenka viduje. Aukštis keičiasi pagal lango dydį ir puslapio mastelio keitimą.
 - Dydžio rankena apatiniame dešiniajame kampe nustato aukštį rankiniu būdu. Aukštis yra įsimenamas; dvigubas spustelėjimas grąžina automatinį aukštį.
@@ -106,7 +106,7 @@ Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti
 
 Kodų blokai yra paryškinami redaktoriuje ir išsaugotose puslapiuose. Bloko kalba pasirenkama iš ženklelio jo viršutiniame dešiniajame kampe; sąrašas turi paieškos laukelį ir prisimena neseniai ir dažnai naudojamas kalbas.
 
-52 kalbos yra kartu su įskiepiu, tarp jų 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux paslaugų žurnalai ir journalctl išvestis.
+52 kalbos yra kartu su įskiepiu, tarp jų HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux paslaugų žurnalai ir journalctl išvestis.
 
 Galite pridėti savo kalbas. Kiekviena kalba yra vienas failas `highlight/` aplanke. Bet kuris iš daugiau nei 190 highlight.js gramatikų arba trečiosios šalies gramatika konvertuojama į tokį failą viena komanda:
 
@@ -182,7 +182,7 @@ Norint likti konkrečioje versijoje vietoj naujausio įsipareigojimo: `git fetch
 Jei jūsų „Redmine" naudojo [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), galite perjungti į šį įskiepį ir išsaugoti kiekvieną parašytą tekstą: darbus, pastabas, wiki puslapius, naujienas, žinutes, dokumentus. Nieko neiš verčiama ir duomenų bazė nėra liečiama. „CKEditor" saugo savo tekstus kaip HTML, ir šis įskiepis taip pat, todėl saugomas tekstas yra paprasčiausiai rodomas naujo formatoriaus.
 
 1. Diezkite įskiepį (žr. aukščiau) ir pasirinkite Teksto formatavimas: *TipTap HTML*.
-2. Išsaugokite „Redmine" `public/system/rich/` aplanką. Paveikslai ir failai, kuriuos žmonės įterpė naudodami „CKEditor" paveikslų naršyklę, saugomi ten, o ne duomenų bazėje, ir tekstai juos rodo pagal adresą (`/system/rich/...`). Darbų, wiki puslapių priedai saugomi, kaip anksčiau, ir nedarbo nieko.
+2. Išsaugokite „Redmine" `public/system/rich/` aplanką. Jei žmonės įterpė paveikslus ir failus naudodami „CKEditor" paveikslų naršyklę, jie saugomi ten, o ne duomenų bazėje ir ne tarp priedų, ir tekstai juos rodo pagal adresą (`/system/rich/...`). **Jei „Redmine" perkeliamas į kitą serverį arba diegiamas iš naujo, perkelkite ir šį aplanką**, kartu su duomenų baze ir aplanku `files/`: nė vienoje iš jų šių failų nėra, o be šio aplanko paveikslai senuose tekstuose rodo 404 klaidą. Darbų, wiki puslapių priedai saugomi, kaip anksčiau, ir nedarbo nieko. Šiame redaktoriuje įterpti paveikslai yra paprasti priedai. Aplankas lieka reikalingas ir pašalinus redmine_ckeditor.
 3. Nuimkite redmine_ckeditor, kai jums to jau nebereikia.
 
 Senasis tekstas rodomas taip, kaip jį rodė „CKEditor": šriftai, dydžiai, spalvos ir lygiavimas, indentacija, sąrašai, lentelės (ribos, plotis, antraštės, sulieti langeliai), paveikslai (dydis, plūdimas, riba, paveikslą viduje nuorodos), nuorodos, kodų blokai su jų kalba (paryškinimas), „Redmine" makrosai (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` ir pan.), wiki ir darbų nuorodos, paprasti žiniatinklio adresai, padaryti kliklabais, ir su sąmata `<iframe>` (vaizdo). Tekstas, parašytas naudojant „CKEditor", yra atpažintas pagal jo žymę ir išsaugo paraštę tarp pastraipų, kurias jis turėjo ten, kuris yra platesnis nei šiame redaktoriuje.
@@ -191,5 +191,6 @@ Skirtumai sąmoningai:
 - `<iframe>` rodomas tik tada, kai jis rodomas į kitą svetainę per http(s), ir jis yra su smėliu: puslapis viduje gali paleisti savo scenarijus, bet negali pasiekti „Redmine" puslapio, atidaryti viršaus lango arba pateikti formas. Visi kiti `<iframe>` pašalinami.
 - Nuorodos atsidaro tame pačiame lange: `target` atributas nuorodos („CKEditor" „Naujas langas (_blank)") nėra išsaugotas.
 - Kai kuris formatavimas, kurį pasiūlė „CKEditor", bet jo puslapiai tyliai nubraukė, čia rodomas: pavyzdžiui, jo „Žymeklis" stilių fono spalvos ir `<q>` kabutės.
+- „CKEditor" stilius „Special Container" (blokas su pilku rėmeliu) rodomas kaip kodų blokas be paryškinimo, ir redaktoriuje jis taip pat yra kodų blokas.
 
-Senasis tekstas išsaugo formatavimą, kai jis atidarytas redaktoriuje ir išsaugotas iš naujo: „Redmine" makrosai (makrosas yra vienas pilkas elementas redaktoriuje; redaguokite jį `<HTML>` režime, kaip „CKEditor" šaltinio režime), `<iframe>`, padinis ir viršutinis indeksas, „CKEditor" vidutinio tipo stiliai (didelis, mažas, klaviatūra, mėginys ir pan.), antraščių, lentelių ir lentelių langelių stilius, paveikslų dydis, plūdimas, riba ir nuoroda, kodų blokų kalba. Kas neišgyvena redagavimo: `<address>` ir `<div>` blokai tampa pastraipomis, lentelės antraštė tampa centruota parastraipa aukščiau jos, lentelės antraštės ir poraštės sekcijos tampa paprastomis eilutėmis (poraštė lieka apačioje), `<del>` tampa `<s>` (tas pats pavidala), ir paveikslų aukštis yra nubrauktas, kai nustatytas jo plotis (proporcijos išsaugotos). Tekstas, išsaugotas iš šio redaktoriaus, gauna kompaktišką paragrafo tiesiką šio redaktoriaus.
+Senasis tekstas išsaugo formatavimą, kai jis atidarytas redaktoriuje ir išsaugotas iš naujo: „Redmine" makrosai (makrosas yra vienas pilkas elementas redaktoriuje; redaguokite jį `<HTML>` režime, kaip „CKEditor" šaltinio režime), `<iframe>`, `<div>` ir `<address>` blokai su jų stiliumi (`<div>`, įklijuotas iš žiniatinklio puslapio, vis tiek paverčiamas pastraipa), apatinis ir viršutinis indeksas, „CKEditor" vidutinio tipo stiliai (didelis, mažas, klaviatūra, mėginys ir pan.), antraščių, lentelių ir lentelių langelių stilius, paveikslų dydis, plūdimas, riba ir nuoroda, kodų blokų kalba. Kas neišgyvena redagavimo: lentelės antraštė tampa centruota parastraipa aukščiau jos, lentelės antraštės ir poraštės sekcijos tampa paprastomis eilutėmis (poraštė lieka apačioje), `<del>` tampa `<s>` (tas pats pavidala), ir paveikslų aukštis yra nubrauktas, kai nustatytas jo plotis (proporcijos išsaugotos). Tekstas, išsaugotas iš šio redaktoriaus, gauna kompaktišką paragrafo tiesiką šio redaktoriaus.

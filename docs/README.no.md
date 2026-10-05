@@ -53,7 +53,7 @@ Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksa
 ## Features
 
 **Text formatting**
-- Fet, kursiv, understreket, gjennomstrek, inline-kode.
+- Fet, kursiv, understreket, gjennomstreket, subscript og superscript (Ctrl+, og Ctrl+.), inline-kode.
 - Tekstfarge og bakgrunnsfarge: en palett med 64 farger eller en hvilken som helst heksverdi.
 - Skrifttype (13 skrifttyper) og skriftstørrelse (forhåndsinnstillinger fra 8 til 72 piksler eller en hvilken som helst verdi).
 - Avsnittsstiler: overskrifter 1–6 og normal tekst.
@@ -89,7 +89,7 @@ Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksa
 - Sitatblokk med forfatter- og datolin.
 
 **Editing**
-- `<HTML>`-modus for å vise og redigere HTML-kilden.
+- `<HTML>`-modus for å vise og redigere HTML-kilden: nestede blokker er rykket inn, en tom linje skiller blokkene som går over flere linjer, syntaksen farges etter de samme reglene som i en HTML-kodeblokk, og Enter beholder innrykket på linjen.
 - Markdown-stil skrivstil: `#` for overskrifter, `-` og `1.` for lister, `[ ]` for gjøremål, ```` ```python ```` for en kodeblokk (alle språknavn eller ingen), `**bold**`, `---` for en vannrett linje. Standardtastatursnarvei: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z og andre.
 - Editoren blir aldri høyere enn vinduet: verktøylinjen og skjemaknappene forblir synlige, og teksten ruller innenfor. Høyden følger vinduesstørrelse og sideskalering.
 - Et endringsgreb i nederste høyre hjørne stiller høyden manuelt inn. Høyden huskes; dobbeltklikk går tilbake til automatisk høyde.
@@ -106,7 +106,7 @@ Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksa
 
 Kodeblokkjer fremheves i editoren og på lagrede sider på samme måte. Språket i en blokk velges fra badgene i det øverste høyre hjørnet; listen har en søkeboks og husker nylig og hyppig brukte språk.
 
-52 språk kommer med programtillegget, inkludert 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logs og journalctl output.
+52 språk kommer med programtillegget, inkludert HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux-tjenestelogger og journalctl-utdata.
 
 Du kan legge til dine egne språk. Hvert språk er en fil i mappen `highlight/`. En hvilken som helst av 190+-highlight.js grammars, eller en tredjepartsgrammatikk, konverteres til slik en fil med en kommando:
 
@@ -182,7 +182,7 @@ Trinn 2 betyr noe. Ved oppstart gjenleggs Redmine-programtilleggets eiendeler ba
 Hvis din Redmine brukte [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), kan du bytte til dette programtillegget og beholde hver tekst som er skrevet: sager, notater, wiki-sider, nyheter, meldinger, dokumenter. Ingenting konverteres og databasen berøres ikke. CKEditor lagrer tekstene som HTML, og det gjør dette programtillegget også, så en lagret tekst vises ganske enkelt av den nye formatteren.
 
 1. Installer programtillegget (se ovenfor) og velg Tekstformatering: *TipTap HTML*.
-2. Behold mappen `public/system/rich/` på din Redmine. Bildene og filene som folk satte inn med CKEditors bildeblokk lagres der og ikke i databasen, og tekstene refererer til dem etter adresse (`/system/rich/...`). Vedlegg av sager, wiki-sider osv. lagres som før og trenger ingenting.
+2. Behold mappen `public/system/rich/` på din Redmine. Hvis folk satte inn bilder og filer med CKEditors bildevelger, lagres de der, ikke i databasen og ikke blant vedleggene, og tekstene refererer til dem etter adresse (`/system/rich/...`). **Hvis Redmine flyttes til en annen server eller settes opp på nytt, flytt også denne mappen**, sammen med databasen og mappen `files/`: ingen av dem inneholder disse filene, og uten mappen gir bildene i gamle tekster en 404-feil. Vedlegg av sager, wiki-sider osv. lagres som før og trenger ingenting. Bilder som settes inn i denne editoren, er vanlige vedlegg. Mappen er fortsatt nødvendig etter at redmine_ckeditor er fjernet.
 3. Fjern redmine_ckeditor når du ikke lenger trenger det.
 
 En gammel tekst vises som CKEditor viste den: skrifttyper, størrelser, farger og justering, innrykk, lister, tabeller (kanter, bredder, bildetekster, sammenslåtte celler), bilder (størrelse, flyte, kant, et bilde innenfor en lenke), lenker, kodeblokkjer med språket (fremhevet), Redmine-makroer (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` og så videre), wiki- og sagslenker, rene webadresser gjort klikbare og innebygd `<iframe>` (video). En tekst skrevet i CKEditor gjenkjennes av oppsettet og beholder avstanden mellom avsnitter som den hadde der, som er bredere enn i denne editoren.
@@ -191,5 +191,6 @@ Forskjeller med hensikt:
 - En `<iframe>` vises bare når den peker på et annet nettsted over http(s), og den er sandboxet: siden innenfor kan kjøre sine egne skript, men kan ikke nå Redmine-siden, åpne toppvinduet eller sende skjemaer. Alle andre `<iframe>` fjernes.
 - Lenker åpnes i samme vindu: `target`-attributten for en lenke (CKEditors "Nytt vindu (_blank)") beholdes ikke.
 - En viss formatering som CKEditor tilbød men sidene taust droppet vises her: for eksempel bakgrunnsfarger på "Merke"-stilene og sitattegnene for `<q>`.
+- Stilen "Special Container" i CKEditor (en blokk med grå ramme) vises som en kodeblokk uten syntaksmarkering, og i editoren er den også en kodeblokk.
 
-En gammel tekst beholder formatteringen når den åpnes i editoren og lagres på nytt: Redmine-makroer (en makro er ett grått element i editoren; rediger det i `<HTML>`-modus som i CKEditors kildekode-modus), `<iframe>`, subscript og superscript, CKEditors inline-stiler (stor, liten, tastatur, prøve osv.), stilen på overskrifter, tabeller og tabelceller, størrelse, flyte, kant og lenke av bilder, språket i kodeblokkjer. Hva som ikke overlever redigering: `<address>` og `<div>`-blokkjer blir avsnitt, tabellens bildetekst blir et sentralt avsnitt over den, tabellhodet og footerseksjoner blir ordinære rader (foteren forblir på bunnen), `<del>` blir `<s>` (samme utseende), og bildedhøyden faller når bredden er satt (proporsjonene beholdes). En tekst lagret fra denne editoren får det kompakte avsnittsavstanden i denne editoren.
+En gammel tekst beholder formatteringen når den åpnes i editoren og lagres på nytt: Redmine-makroer (en makro er ett grått element i editoren; rediger det i `<HTML>`-modus som i CKEditors kildekode-modus), `<iframe>`, `<div>`- og `<address>`-blokker med stilen sin (en `<div>` som limes inn fra en nettside, blir fortsatt til et avsnitt), subscript og superscript, CKEditors inline-stiler (stor, liten, tastatur, prøve osv.), stilen på overskrifter, tabeller og tabellceller, størrelse, flyte, kant og lenke av bilder, språket i kodeblokker. Hva som ikke overlever redigering: tabellens bildetekst blir et sentrert avsnitt over den, tabellhodet og footerseksjoner blir ordinære rader (foteren forblir på bunnen), `<del>` blir `<s>` (samme utseende), og bildehøyden faller når bredden er satt (proporsjonene beholdes). En tekst lagret fra denne editoren får den kompakte avsnittsavstanden i denne editoren.

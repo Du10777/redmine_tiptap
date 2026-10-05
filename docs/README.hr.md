@@ -53,7 +53,7 @@ Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu
 ## Značajke
 
 **Oblikovanje teksta**
-- Podebljano, kurzivno, podcrtano, precrtano, tekst sa inline kodom.
+- Podebljano, kurzivno, podcrtano, precrtano, donji i gornji indeks (Ctrl+, i Ctrl+.), tekst sa inline kodom.
 - Boja teksta i boja pozadine: paleta od 64 boje ili bilo koja heksadecimalna vrijednost.
 - Obitelj fontova (13 fontova) i veličina fonta (unaprijed postavljene vrijednosti od 8 do 72 px, ili bilo koja vrijednost).
 - Stilovi odlomaka: naslovi 1–6 i normalan tekst.
@@ -89,7 +89,7 @@ Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu
 - Blok citata sa linijom autora i datuma.
 
 **Uređivanje**
-- `<HTML>` mod za prikaz i uređivanje HTML izvora.
+- `<HTML>` mod za prikaz i uređivanje HTML izvora: ugniježđeni blokovi su uvučeni, prazna linija odvaja blokove koji zauzimaju više linija, sintaksa je obojena po istim pravilima kao u HTML bloku koda, a Enter zadržava uvlaku linije.
 - Pisanje u Markdown stilu: `#` za naslove, `-` i `1.` za popise, `[ ]` za zadatke, ```` ```python ```` za blok koda (bilo koji naziv jezika ili ništa), `**bold**`, `---` za vodoravnu crtu. Standardne tipkovničke prečice: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i ostale.
 - Editor nikada ne raste viši od prozora: alatna traka i gumbi formi ostaju vidljivi, a tekst se klizi unutar. Visina slijedi veličinu prozora i razinu zuma stranice.
 - Ručica za promjenu veličine u donjem desnom kutu postavlja visinu ručno. Visina se pamti; dvostruki klik vraća automatsku visinu.
@@ -106,7 +106,7 @@ Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu
 
 Blokovi koda su isticanjem obrade u editoru i na spremljenim stranicama podjednako. Jezik bloka odabire se iz znaka u njegovom gornjem desnom kutu; popis ima polje za pretraživanje i pamti nedavno i često korišćene jezike.
 
-52 jezika dolaze sa dodatkom, između ostalog 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logovi i journalctl izlaz.
+52 jezika dolaze sa dodatkom, između ostalog HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logovi i journalctl izlaz.
 
 Možete dodati svoje jezike. Svaki jezik je jedna datoteka u `highlight/` mapi. Bilo koja od 190+ highlight.js gramatike, ili gramatika treće strane, pretvara se u takvu datoteku sa jednom naredbom:
 
@@ -182,7 +182,7 @@ Korak 2 je bitan. Pri pokretanju Redmine ponovo objavljuje datoteke dodatka samo
 Ako je vaš Redmine koristio [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), možete preći na ovaj dodatak i zadržati sve tekstove koji su napisani: predmete, napomene, wiki stranice, novosti, poruke, dokumente. Ništa se ne pretvara i baza podataka se ne dotakne. CKEditor sprema svoje tekstove kao HTML i tako i ovaj dodatak, tako da se spremljeni tekst jednostavno prikazuje od strane novog formatera.
 
 1. Instalirajte dodatak (vidi gore) i odaberite Oblikovanje teksta: *TipTap HTML*.
-2. Zadržite `public/system/rich/` mapu vašeg Redminea. Slike i datoteke koje su ljudi umetnuli sa CKEditorom preglednikom slika sprema se tamo i ne u bazi podataka, a tekstovi se na njih referiraju po adresi (`/system/rich/...`). Prilozi predmeta, wiki stranica i tako dalje sprema se kao prije i trebat će ništa.
+2. Zadržite `public/system/rich/` mapu vašeg Redminea. Ako su ljudi umetnuli slike i datoteke CKEditorovim preglednikom slika, one su spremljene tamo, ne u bazi podataka i ne među prilozima, a tekstovi na njih upućuju po adresi (`/system/rich/...`). **Ako se Redmine preseli na drugi server ili se ponovno postavi, preselite i ovu mapu**, zajedno s bazom podataka i mapom `files/`: nijedna od njih ne sadrži te datoteke, a bez te mape slike u starim tekstovima daju grešku 404. Prilozi predmeta, wiki stranica i tako dalje spremaju se kao prije i ne treba im ništa. Slike umetnute u ovaj editor obični su prilozi. Mapa je i dalje potrebna nakon što se ukloni redmine_ckeditor.
 3. Uklonite redmine_ckeditor kada ga više ne trebate.
 
 Stari tekst prikazuje se kao što ga je prikazao CKEditor: fontovi, veličine, boje i poravnanja, uvlakanja, popisi, tablice (granice, širine, naslovi, spojene ćelije), slike (veličina, plutanje, granica, slika unutar veze), veze, blokovi koda sa njihovim jezikom (isticanjem obrade), Redmine makroi (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` i tako dalje), wiki i veze predmeta, obični web adrese učinjene klikabilnima, i ugnježđeni `<iframe>` (video). Tekst napisan u CKEditorsu se prepoznaje po njegovoj oznaci i čuva razmak između odlomaka koji je imao tamo, što je veće nego u ovom editoru.
@@ -191,5 +191,6 @@ Namjerne razlike:
 - `<iframe>` prikazuje se samo kada pokazuje na drugo mjesto preko http(s), i sandiboxan je: stranica unutar može pokrenuti svoje skripte, ali ne može dosegnuti Redmine stranicu, otvoriti gornji prozor ili poslati forme. Svi ostali `<iframe>` se uklanjaju.
 - Veze se otvaraju u istom prozoru: `target` atribut veze (CKEditorov "Novi prozor (_blank)") se ne čuva.
 - Neko oblikovanje koji je CKEditor nudao ali su njegove stranice tiho odbacile prikazuje se ovdje: na primjer boje pozadine njegovih "Marker" stilova i navodnici od `<q>`.
+- CKEditorov stil „Special Container“ (blok sa sivim okvirom) prikazuje se kao blok koda bez isticanja sintakse, a i u editoru je blok koda.
 
-Stari tekst čuva svoje oblikovanje kada se otvori u editoru i ponovo spremi: Redmine makroi (makro je jedan sivi element u editoru; uredite ga u `<HTML>` modu, kao u CKEditorovom Source modu), `<iframe>`, podskript i nadskript, CKEditorovi inline stilovi (veliki, mali, tipkovnica, uzorak i tako dalje), stil naslova, tablica i ćelija tablica, veličina, plutanje, granica i veza slika, jezik blokova koda. Što se ne preživije uređivanjem: `<address>` i `<div>` blokovi postaju odlomci, naslov tablice postaje centriran odlomak iznad njega, zaglavlje i podnožje sekcije tablice postaju obični redovi (podnožje ostaje na dnu), `<del>` postaje `<s>` (isti izgled), a visina slike se odbacuje kada je postavljena njena širina (proporcije se čuvaju). Tekst spremljen iz ovog editora dobija kompaktan razmak odlomaka ovog editora.
+Stari tekst čuva svoje oblikovanje kada se otvori u editoru i ponovo spremi: Redmine makroi (makro je jedan sivi element u editoru; uredite ga u `<HTML>` modu, kao u CKEditorovom Source modu), `<iframe>`, `<div>` i `<address>` blokovi sa svojim stilom (`<div>` koji se zalijepi s web stranice i dalje se pretvara u odlomak), donji i gornji indeks, CKEditorovi inline stilovi (veliki, mali, tipkovnica, uzorak i tako dalje), stil naslova, tablica i ćelija tablica, veličina, plutanje, granica i veza slika, jezik blokova koda. Ono što ne preživi uređivanje: naslov tablice postaje centriran odlomak iznad nje, sekcije zaglavlja i podnožja tablice postaju obični redovi (podnožje ostaje na dnu), `<del>` postaje `<s>` (isti izgled), a visina slike se odbacuje kada se postavi njena širina (proporcije se čuvaju). Tekst spremljen iz ovog editora dobiva kompaktan razmak odlomaka ovog editora.

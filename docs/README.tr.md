@@ -53,7 +53,7 @@ Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json
 ## Özellikler
 
 **Metin biçimi**
-- Kalın, italik, altı çizili, üstü çizili, satır içi kod.
+- Kalın, italik, altı çizili, üstü çizili, alt simge ve üst simge (Ctrl+, ve Ctrl+.), satır içi kod.
 - Metin rengi ve arka plan rengi: 64 renkli palet veya herhangi bir hex değeri.
 - Font ailesi (13 yazı tipi) ve font boyutu (8'den 72 px'e kadar ön ayarlar veya herhangi bir değer).
 - Paragraf stilleri: başlıklar 1–6 ve normal metin.
@@ -89,7 +89,7 @@ Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json
 - Yazar ve tarih satırı olan alıntı bloğu.
 
 **Düzenleme**
-- `<HTML>` modu HTML kaynağını görmek ve düzenlemek için.
+- `<HTML>` modu HTML kaynağını görmek ve düzenlemek içindir: iç içe bloklar girintilenir, birden çok satır kaplayan bloklar boş bir satırla ayrılır, söz dizimi bir HTML kod bloğuyla aynı kurallara göre renklendirilir ve Enter satırın girintisini korur.
 - Markdown benzeri yazma: başlıklar için `#`, listeler için `-` ve `1.`, görevler için `[ ]`, kod bloğu için ```` ```python ````, `**bold**`, yatay çizgi için `---`. Standart klavye kısayolları: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z vb.
 - Düzenleyici hiçbir zaman pencerenin ötesinde büyümez: araç çubuğu ve form düğmeleri görünür kalır, metin içinde kaydırılır. Yükseklik, pencere boyutunu ve sayfa yakınlaştırmasını takip eder.
 - Sağ alt köşedeki yeniden boyutlandırma tutacağı yüksekliği elle ayarlar. Yükseklik hatırlanır; çift tıklama otomatik yüksekliğe döner.
@@ -106,7 +106,7 @@ Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json
 
 Kod blokları düzenleyicide ve kaydedilen sayfalarda eşit şekilde vurgulanır. Bir bloğun dili, sağ üst köşesindeki rozetten seçilir; listede bir arama kutusu vardır ve son kullanılan ve sık kullanılan dilleri hatırlar.
 
-Eklenti 52 dil ile birlikte gelir; bunlar arasında 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux hizmet günlükleri ve journalctl çıktısı vardır.
+Eklenti 52 dil ile birlikte gelir; bunlar arasında HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux hizmet günlükleri ve journalctl çıktısı vardır.
 
 Kendi dillerinizi ekleyebilirsiniz. Her dil `highlight/` klasöründe bir dosyadır. 190'dan fazla highlight.js gramerini veya üçüncü taraf grameri tek bir komutla böyle bir dosyaya dönüştürebilirsiniz:
 
@@ -182,7 +182,7 @@ Adım 2 önemlidir. Redmine başlatmada eklenti varlıklarını yalnızca dosyal
 Redmine'niz [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) kullanıyorsa, bu eklentiye geçebilir ve yazılan her metni tutabilirsiniz: görevler, notlar, wiki sayfaları, haberler, iletiler, belgeler. Hiçbir şey dönüştürülmez ve veritabanı değiştirilmez. CKEditor metinleri HTML olarak depolar ve bu eklenti de öyle yapar, bu nedenle depolanan metin yeni biçimci tarafından gösterilir.
 
 1. Eklentiyi kurun (yukarıya bakın) ve metin biçimini seçin: *TipTap HTML*.
-2. Redmine'nizin `public/system/rich/` klasörünü tutun. CKEditor'un resim tarayıcısı ile eklediği resimler ve dosyalar veritabanında değil orada depolanır ve metinler adresle referans verir (`/system/rich/...`). Görevler, wiki sayfaları vb. ekler önceden depolanır ve hiçbir şey gerektirmez.
+2. Redmine'nizin `public/system/rich/` klasörünü tutun. CKEditor'un resim tarayıcısıyla resim ve dosya eklenmişse, bunlar veritabanında veya ekler arasında değil, orada depolanır ve metinler bunlara adresle referans verir (`/system/rich/...`). **Redmine başka bir sunucuya taşınırsa veya yeniden kurulursa bu klasörü de taşıyın**, veritabanı ve `files/` klasörüyle birlikte: bunların hiçbiri bu dosyaları içermez ve klasör olmadan eski metinlerdeki resimler 404 hatası verir. Görevlerin, wiki sayfalarının vb. ekleri eskisi gibi depolanır ve hiçbir şey gerektirmez. Bu düzenleyiciyle eklenen resimler sıradan eklerdir. Klasör, redmine_ckeditor kaldırıldıktan sonra da gereklidir.
 3. Artık ihtiyacınız olmadığında redmine_ckeditor'u kaldırın.
 
 Eski metin, CKEditor'un gösterdiği şekilde gösterilir: yazı tipleri, boyutlar, renkler ve hizalama, girintiler, listeler, tablolar (sınırlar, genişlikler, yazlıklar, birleştirilmiş hücreler), resimler (boyut, float, sınır, bağlantı içindeki resim), bağlantılar, dili vurgulanmış kod blokları, Redmine makroları (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` vb.), wiki ve görev bağlantıları, düz web adresleri tıklanabilir yapılmış ve gömülü `<iframe>` (video). CKEditor'da yazılan metin işareti tarafından tanınır ve paragraflar arasında orada olduğu boşluğu tutar, bu da bu düzenleyicide olduğundan daha geniştir.
@@ -191,5 +191,6 @@ Amaçlı farklar:
 - `<iframe>` yalnızca başka bir siteyi http(s) üzerinden işaret ettiğinde gösterilir ve korumalı hale getirilir: sayfa içindeki sayfa kendi komut dosyalarını çalıştırabilir, ancak Redmine sayfasına erişemez, üst pencereyi açamaz veya formları gönderemez. Diğer tüm `<iframe>` kaldırılır.
 - Bağlantılar aynı pencerede açılır: bağlantının `target` niteliği (CKEditor'un "Yeni Pencere (_blank)") tutulmaz.
 - CKEditor tarafından sunulan ancak sayfaları sessizce bıraktığı bazı biçimlendirmeler burada gösterilir: örneğin, "İşaretçi" stillerinin arka plan renkleri ve `<q>` alıntı işaretleri.
+- CKEditor'un “Special Container” stili (gri çerçeveli bir blok) söz dizimi vurgulaması olmayan bir kod bloğu olarak gösterilir ve düzenleyicide de bir kod bloğudur.
 
-Eski metin, düzenleyicide açıldığında ve tekrar kaydedildiğinde biçimlendirmesini tutar: Redmine makroları (makro düzenleyicide bir gri öğedir; `<HTML>` modunda CKEditor'un Kaynak modunda olduğu gibi düzenleyin), `<iframe>`, alt simgeler ve üst simgeler, CKEditor satır içi stilleri (büyük, küçük, klavye, örnek vb.), başlık stilleri, tablolar ve tablo hücreleri, resim boyutu, float, sınır ve bağlantısı, kod bloklarının dili. Düzenleme bitmediğinde kalıcı: `<address>` ve `<div>` blokları paragrafa dönüşür, tablo başlığı onun üstündeki ortalanmış paragrafa dönüşür, tablo üst bilgisi ve alt bilgisi bölümleri sıradan satırlara dönüşür (alt bilgi altta kalır), `<del>` `<s>` olur (aynı görünüş), ve resim yüksekliği genişlik ayarlandığında düşer (oranlar tutulur). Bu düzenleyiciden kaydedilen metin bu düzenleyicinin kompakt paragraf aralığını alır.
+Eski metin, düzenleyicide açıldığında ve tekrar kaydedildiğinde biçimlendirmesini tutar: Redmine makroları (makro düzenleyicide bir gri öğedir; `<HTML>` modunda CKEditor'un Kaynak modunda olduğu gibi düzenleyin), `<iframe>`, stilleriyle birlikte `<div>` ve `<address>` blokları (bir web sayfasından yapıştırılan `<div>` yine de paragrafa dönüştürülür), alt simgeler ve üst simgeler, CKEditor satır içi stilleri (büyük, küçük, klavye, örnek vb.), başlık stilleri, tablolar ve tablo hücreleri, resim boyutu, float, sınır ve bağlantısı, kod bloklarının dili. Düzenlemeden sonra korunmayanlar: tablo başlığı onun üstündeki ortalanmış paragrafa dönüşür, tablo üst bilgisi ve alt bilgisi bölümleri sıradan satırlara dönüşür (alt bilgi altta kalır), `<del>` `<s>` olur (aynı görünüş), ve resim yüksekliği genişlik ayarlandığında düşer (oranlar tutulur). Bu düzenleyiciden kaydedilen metin bu düzenleyicinin kompakt paragraf aralığını alır.

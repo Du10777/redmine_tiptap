@@ -53,7 +53,7 @@ Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont �
 ## Fonctionnalités
 
 **Formatage du texte**
-- Gras, italique, souligné, barré, code en ligne.
+- Gras, italique, souligné, barré, indice et exposant (Ctrl+, et Ctrl+.), code en ligne.
 - Couleur du texte et couleur d’arrière-plan : une palette de 64 couleurs ou n’importe quelle valeur hexadécimale.
 - Police (13 polices) et taille de police (valeurs prédéfinies de 8 à 72 px, ou n’importe quelle valeur).
 - Styles de paragraphe : titres 1 à 6 et texte normal.
@@ -89,7 +89,7 @@ Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont �
 - Bloc de citation avec une ligne pour l’auteur et la date.
 
 **Édition**
-- Mode `<HTML>` pour afficher et modifier le code source HTML.
+- Mode `<HTML>` pour afficher et modifier le code source HTML : les blocs imbriqués sont mis en retrait, une ligne vide sépare les blocs qui occupent plusieurs lignes, la syntaxe est colorée selon les mêmes règles que dans un bloc de code HTML, et Enter conserve le retrait de la ligne.
 - Saisie de type Markdown : `#` pour les titres, `-` et `1.` pour les listes, `[ ]` pour les tâches, ```` ```python ```` pour un bloc de code (n’importe quel nom de langage, ou aucun), `**bold**`, `---` pour une ligne horizontale. Raccourcis clavier standard : Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z et d’autres.
 - L’éditeur ne devient jamais plus haut que la fenêtre : la barre d’outils et les boutons du formulaire restent visibles, et le texte défile à l’intérieur. La hauteur suit la taille de la fenêtre et le zoom de la page.
 - Une poignée de redimensionnement dans le coin inférieur droit permet de régler la hauteur à la main. La hauteur est mémorisée ; un double-clic rétablit la hauteur automatique.
@@ -106,7 +106,7 @@ Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont �
 
 Les blocs de code sont colorés aussi bien dans l’éditeur que sur les pages enregistrées. Le langage d’un bloc se choisit depuis le badge situé dans son coin supérieur droit ; la liste dispose d’un champ de recherche et mémorise les langages utilisés récemment et fréquemment.
 
-52 langages sont fournis avec le plugin, dont 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, les journaux des services Linux et la sortie de journalctl.
+52 langages sont fournis avec le plugin, dont HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, les journaux des services Linux et la sortie de journalctl.
 
 Vous pouvez ajouter vos propres langages. Chaque langage est un fichier du dossier `highlight/`. N’importe laquelle des plus de 190 grammaires de highlight.js, ou une grammaire tierce, se convertit en un tel fichier avec une seule commande :
 
@@ -182,7 +182,7 @@ L’étape 2 est importante. Au démarrage, Redmine ne republie les assets des p
 Si votre Redmine utilisait [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), vous pouvez passer à ce plugin et conserver tous les textes écrits : demandes, notes, pages wiki, annonces, messages, documents. Rien n'est converti et la base de données n'est pas modifiée. CKEditor stocke ses textes en HTML, comme ce plugin le fait aussi, de sorte qu'un texte stocké est simplement affiché par le nouveau formateur.
 
 1. Installez le plugin (voir ci-dessus) et choisissez Formatage du texte : *TipTap HTML*.
-2. Conservez le dossier `public/system/rich/` de votre Redmine. Les images et les fichiers que les utilisateurs ont insérés avec le navigateur d'images de CKEditor y sont stockés, et non dans la base de données ; les textes s'y réfèrent par adresse (`/system/rich/...`). Les fichiers joints des demandes, pages wiki et autres sont stockés comme avant et ne nécessitent rien.
+2. Conservez le dossier `public/system/rich/` de votre Redmine. Si des utilisateurs ont inséré des images et des fichiers avec le navigateur d'images de CKEditor, ils y sont stockés, et non dans la base de données ni parmi les fichiers joints ; les textes s'y réfèrent par adresse (`/system/rich/...`). **Si Redmine est déplacé vers un autre serveur ou réinstallé, déplacez aussi ce dossier**, avec la base de données et le dossier `files/` : ni l'un ni l'autre ne contient ces fichiers, et sans ce dossier les images des textes anciens renvoient une erreur 404. Les fichiers joints des demandes, pages wiki et autres sont stockés comme avant et ne nécessitent rien. Les images insérées dans cet éditeur sont des fichiers joints ordinaires. Le dossier reste nécessaire après la suppression de redmine_ckeditor.
 3. Supprimez redmine_ckeditor quand vous n'en avez plus besoin.
 
 Un texte ancien s'affiche comme CKEditor l'affichait : polices, tailles, couleurs et alignement, retraits, listes, tableaux (bordures, largeurs, légendes, cellules fusionnées), images (taille, positionnement, bordure, image dans un lien), liens, blocs de code avec leur langage (colorés), macros Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` et autres), liens wiki et demandes, adresses web simples rendues cliquables, et `<iframe>` intégrés (vidéo). Un texte écrit avec CKEditor est reconnu par son balisage et conserve l'espacement entre paragraphes qu'il avait là, lequel est plus large que dans cet éditeur.
@@ -191,5 +191,6 @@ Différences intentionnelles :
 - Une `<iframe>` n'est affichée que si elle pointe vers un autre site via http(s), et elle est cloisonnée : la page qu'elle contient peut exécuter ses propres scripts, mais ne peut pas accéder à la page de Redmine, ouvrir la fenêtre supérieure ou soumettre des formulaires. Toutes les autres `<iframe>` sont supprimées.
 - Les liens s'ouvrent dans la même fenêtre : l'attribut `target` d'un lien (« Nouvelle fenêtre (_blank) » dans CKEditor) n'est pas conservé.
 - Certains formatages que CKEditor proposait mais que ses pages supprimaient silencieusement s'affichent ici : par exemple, les couleurs d'arrière-plan de ses styles « Marqueur » et les guillemets de `<q>`.
+- Le style « Special Container » de CKEditor (un bloc avec un cadre gris) s'affiche comme un bloc de code sans coloration syntaxique, et c'est aussi un bloc de code dans l'éditeur.
 
-Un texte ancien conserve son formatage quand il est ouvert dans l'éditeur et enregistré à nouveau : macros Redmine (une macro est un élément gris dans l'éditeur ; modifiez-la en mode `<HTML>`, comme en mode Source de CKEditor), `<iframe>`, indice et exposant, styles en ligne de CKEditor (big, small, keyboard, sample et autres), le style des titres, tableaux et cellules de tableau, la taille, le positionnement, la bordure et le lien des images, le langage des blocs de code. Ce qui ne survivra pas à l'édition : les blocs `<address>` et `<div>` deviennent des paragraphes, la légende d'un tableau devient un paragraphe centré au-dessus, les sections d'en-tête et de pied de tableau deviennent des lignes ordinaires (le pied reste en bas), `<del>` devient `<s>` (même aspect), et la hauteur d'une image est perdue quand sa largeur est définie (les proportions sont conservées). Un texte enregistré depuis cet éditeur obtient l'espacement compact des paragraphes de cet éditeur.
+Un texte ancien conserve son formatage quand il est ouvert dans l'éditeur et enregistré à nouveau : macros Redmine (une macro est un élément gris dans l'éditeur ; modifiez-la en mode `<HTML>`, comme en mode Source de CKEditor), `<iframe>`, les blocs `<div>` et `<address>` avec leur style (un `<div>` collé depuis une page web est tout de même transformé en paragraphe), indice et exposant, styles en ligne de CKEditor (big, small, keyboard, sample et autres), le style des titres, tableaux et cellules de tableau, la taille, le positionnement, la bordure et le lien des images, le langage des blocs de code. Ce qui ne survivra pas à l'édition : la légende d'un tableau devient un paragraphe centré au-dessus, les sections d'en-tête et de pied de tableau deviennent des lignes ordinaires (le pied reste en bas), `<del>` devient `<s>` (même aspect), et la hauteur d'une image est perdue quand sa largeur est définie (les proportions sont conservées). Un texte enregistré depuis cet éditeur obtient l'espacement compact des paragraphes de cet éditeur.

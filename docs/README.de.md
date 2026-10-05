@@ -53,7 +53,7 @@ Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json`
 ## Funktionen
 
 **Textformatierung**
-- Fett, kursiv, unterstrichen, durchgestrichen, Inline-Code.
+- Fett, kursiv, unterstrichen, durchgestrichen, tiefgestellt und hochgestellt (Ctrl+, und Ctrl+.), Inline-Code.
 - Textfarbe und Hintergrundfarbe: eine Palette mit 64 Farben oder ein beliebiger Hex-Wert.
 - Schriftart (13 Schriften) und Schriftgröße (Voreinstellungen von 8 bis 72 px oder ein beliebiger Wert).
 - Absatzformate: Überschriften 1–6 und normaler Text.
@@ -89,7 +89,7 @@ Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json`
 - Zitatblock mit einer Zeile für Autor und Datum.
 
 **Bearbeitung**
-- Modus `<HTML>` zum Anzeigen und Bearbeiten des HTML-Quellcodes.
+- Modus `<HTML>` zum Anzeigen und Bearbeiten des HTML-Quellcodes: Verschachtelte Blöcke werden eingerückt, eine Leerzeile trennt Blöcke, die sich über mehrere Zeilen erstrecken, die Syntax wird nach denselben Regeln eingefärbt wie in einem HTML-Codeblock, und mit Enter bleibt der Einzug der Zeile erhalten.
 - Eingabe im Markdown-Stil: `#` für Überschriften, `-` und `1.` für Listen, `[ ]` für Aufgaben, ```` ```python ```` für einen Codeblock (beliebiger Sprachname oder keiner), `**bold**`, `---` für eine horizontale Linie. Gängige Tastenkombinationen: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z und weitere.
 - Der Editor wird nie höher als das Fenster: Die Symbolleiste und die Schaltflächen des Formulars bleiben sichtbar, und der Text wird innerhalb des Editors gescrollt. Die Höhe folgt der Fenstergröße und dem Seitenzoom.
 - Mit dem Ziehpunkt in der unteren rechten Ecke lässt sich die Höhe von Hand einstellen. Die Höhe wird gespeichert; ein Doppelklick stellt die automatische Höhe wieder her.
@@ -106,7 +106,7 @@ Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json`
 
 Codeblöcke werden im Editor und auf gespeicherten Seiten gleichermaßen hervorgehoben. Die Sprache eines Blocks wird über das Badge in seiner oberen rechten Ecke ausgewählt; die Liste hat ein Suchfeld und merkt sich die zuletzt und die häufig verwendeten Sprachen.
 
-Das Plugin enthält 52 Sprachen, darunter 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Protokolle von Linux-Diensten und die Ausgabe von journalctl.
+Das Plugin enthält 52 Sprachen, darunter HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Protokolle von Linux-Diensten und die Ausgabe von journalctl.
 
 Sie können eigene Sprachen hinzufügen. Jede Sprache ist eine Datei im Ordner `highlight/`. Jede der mehr als 190 Grammatiken von highlight.js oder eine Grammatik von Drittanbietern lässt sich mit einem einzigen Befehl in eine solche Datei konvertieren:
 
@@ -182,7 +182,7 @@ Schritt 2 ist wichtig. Beim Start veröffentlicht Redmine die Assets der Plugins
 Wenn Ihre Redmine [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) nutzte, können Sie zu diesem Plugin wechseln und jeden geschriebenen Text behalten: Tickets, Kommentare, Wiki-Seiten, News, Forenbeiträge, Dokumente. Es findet keine Konvertierung statt und die Datenbank wird nicht berührt. CKEditor speichert seine Texte als HTML, genauso wie dieses Plugin, daher wird ein gespeicherter Text vom neuen Formatter einfach so angezeigt.
 
 1. Installieren Sie das Plugin (siehe oben) und wählen Sie Textformatierung: *TipTap HTML*.
-2. Bewahren Sie den Ordner `public/system/rich/` Ihrer Redmine. Die Bilder und Dateien, die Benutzer mit dem Bilderbrowser von CKEditor eingefügt haben, werden dort (nicht in der Datenbank) gespeichert, und die Texte verweisen auf sie über ihre Adresse (`/system/rich/...`). Anhänge von Tickets, Wiki-Seiten usw. werden wie zuvor gespeichert und benötigen keine zusätzlichen Maßnahmen.
+2. Bewahren Sie den Ordner `public/system/rich/` Ihrer Redmine auf. Wenn Benutzer mit dem Bilderbrowser von CKEditor Bilder und Dateien eingefügt haben, werden diese dort und nicht in der Datenbank oder unter den Anhängen gespeichert, und die Texte verweisen auf sie über ihre Adresse (`/system/rich/...`). **Wird Redmine auf einen anderen Server umgezogen oder neu eingerichtet, übertragen Sie auch diesen Ordner**, zusammen mit der Datenbank und dem Ordner `files/`: Keines von beiden enthält diese Dateien, und ohne diesen Ordner liefern die Bilder in alten Texten einen 404-Fehler. Anhänge von Tickets, Wiki-Seiten usw. werden wie zuvor gespeichert und benötigen keine zusätzlichen Maßnahmen. Bilder, die in diesem Editor eingefügt werden, sind gewöhnliche Anhänge. Der Ordner wird auch nach dem Entfernen von redmine_ckeditor weiterhin benötigt.
 3. Entfernen Sie redmine_ckeditor, wenn Sie es nicht mehr benötigen.
 
 Ein alter Text wird so angezeigt, wie CKEditor ihn zeigte: Schriftarten, Größen, Farben und Ausrichtung, Einzüge, Listen, Tabellen (Rahmen, Breiten, Beschriftungen, zusammengefügte Zellen), Bilder (Größe, Float, Rahmen, ein Bild innerhalb eines Links), Links, Codeblöcke mit ihrer Sprache (hervorgehoben), Redmine-Makros (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` usw.), Wiki- und Ticket-Links, einfache Web-Adressen in Hyperlinks umgewandelt und eingebettete `<iframe>` (Video). Ein in CKEditor geschriebener Text wird an seinen Markups erkannt und behält die Abstände zwischen den Absätzen, die er dort hatte – diese sind größer als in diesem Editor.
@@ -191,5 +191,6 @@ Bewusste Unterschiede:
 - Ein `<iframe>` wird nur angezeigt, wenn es auf eine andere Website über http(s) verweist, und es ist in einer Sandbox: Die Seite darin kann ihre eigenen Skripte ausführen, kann aber nicht auf die Redmine-Seite zugreifen, das obere Fenster öffnen oder Formulare absenden. Alle anderen `<iframe>` werden entfernt.
 - Links öffnen im gleichen Fenster: Das `target`-Attribut eines Links (CKEditors „In neuem Fenster (_blank)") wird nicht beibehalten.
 - Einige Formatierungen, die CKEditor bot, aber seine Seiten stillschweigend verwarf, werden hier angezeigt: zum Beispiel die Hintergrundfarben seiner „Marker"-Stile und die Anführungszeichen von `<q>`.
+- Der Stil „Special Container“ von CKEditor (ein Block mit grauem Rahmen) wird als Codeblock ohne Hervorhebung angezeigt und ist auch im Editor ein Codeblock.
 
-Ein alter Text behält seine Formatierung, wenn er im Editor geöffnet und erneut gespeichert wird: Redmine-Makros (ein Makro ist ein graues Element im Editor; bearbeiten Sie es im Modus `<HTML>`, wie im Quellcode-Modus von CKEditor), `<iframe>`, tiefgestellte und hochgestellte Zeichen, Inline-Stile von CKEditor (big, small, keyboard, sample usw.), der Stil von Überschriften, Tabellen und Tabellenzellen, die Größe, Float, Rahmen und der Link von Bildern, die Sprache von Codeblöcken. Was beim Bearbeiten nicht erhalten bleibt: `<address>`- und `<div>`-Blöcke werden zu Absätzen, die Beschriftung einer Tabelle wird zu einem zentrierten Absatz darüber, die Header- und Footer-Abschnitte einer Tabelle werden zu normalen Zeilen (die Fußzeile bleibt unten), `<del>` wird zu `<s>` (gleiches Erscheinungsbild), und die Höhe eines Bildes wird gelöscht, wenn seine Breite eingestellt ist (die Proportionen bleiben erhalten). Ein aus diesem Editor gespeicherter Text erhält das kompakte Absatzabstands-Format dieses Editors.
+Ein alter Text behält seine Formatierung, wenn er im Editor geöffnet und erneut gespeichert wird: Redmine-Makros (ein Makro ist ein graues Element im Editor; bearbeiten Sie es im Modus `<HTML>`, wie im Quellcode-Modus von CKEditor), `<iframe>`, `<div>`- und `<address>`-Blöcke mit ihrem Stil (ein `<div>`, das aus einer Webseite eingefügt wird, wird weiterhin zu einem Absatz), tiefgestellte und hochgestellte Zeichen, Inline-Stile von CKEditor (big, small, keyboard, sample usw.), der Stil von Überschriften, Tabellen und Tabellenzellen, Größe, Float, Rahmen und Link von Bildern, die Sprache von Codeblöcken. Was beim Bearbeiten nicht erhalten bleibt: Die Beschriftung einer Tabelle wird zu einem zentrierten Absatz darüber, die Header- und Footer-Abschnitte einer Tabelle werden zu normalen Zeilen (die Fußzeile bleibt unten), `<del>` wird zu `<s>` (gleiches Erscheinungsbild), und die Höhe eines Bildes wird gelöscht, wenn seine Breite eingestellt ist (die Proportionen bleiben erhalten). Ein aus diesem Editor gespeicherter Text erhält den kompakten Absatzabstand dieses Editors.

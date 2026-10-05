@@ -53,7 +53,7 @@ Editor-engine: **TipTap 3.31.4**. Alle `@tiptap/*`-pakketten zijn in `package.js
 ## Functies
 
 **Tekstopmaak**
-- Vet, cursief, onderstreept, doorgehaald, inline-code.
+- Vet, cursief, onderstreept, doorgehaald, subscript en superscript (Ctrl+, en Ctrl+.), inline-code.
 - Tekstkleur en achtergrondkleur: een palet met 64 kleuren of een willekeurige hexadecimale waarde.
 - Lettertype (13 lettertypen) en lettergrootte (standaardinstellingen van 8 tot 72 px of een willekeurige waarde).
 - Alineastijlen: koppelingen 1–6 en normale tekst.
@@ -89,7 +89,7 @@ Editor-engine: **TipTap 3.31.4**. Alle `@tiptap/*`-pakketten zijn in `package.js
 - Citaatblok met een auteur- en datumregel.
 
 **Bewerking**
-- Modus `<HTML>` om HTML-broncode weer te geven en te bewerken.
+- Modus `<HTML>` om HTML-broncode weer te geven en te bewerken: geneste blokken zijn ingesprongen, een lege regel scheidt de blokken die meerdere regels beslaan, de syntaxis wordt op dezelfde manier gekleurd als in een HTML-codeblok, en Enter behoudt de inspringing van de regel.
 - Markdown-stijltekstinvoer: `#` voor koppelingen, `-` en `1.` voor lijsten, `[ ]` voor taken, ```` ```python ```` voor een codeblok (elke taalname of geen), `**bold**`, `---` voor een horizontale lijn. Standaardtoetscombinaties: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z en anderen.
 - De editor wordt nooit hoger dan het venster: de werkbalk en de formulierknoppen blijven zichtbaar, en de tekst schuift binnenin. De hoogte volgt de venstergrootte en pagina's zoomfactor.
 - Een sleepgreep in de rechterbenedenhoek stelt de hoogte handmatig in. De hoogte wordt onthouden; dubbelklikken geeft de automatische hoogte terug.
@@ -106,7 +106,7 @@ Editor-engine: **TipTap 3.31.4**. Alle `@tiptap/*`-pakketten zijn in `package.js
 
 Codeblokken worden in de editor en op opgeslagen pagina's op dezelfde manier gemarkeerd. De taal van een blok wordt gekozen via de badge in de rechterbovenhoek; de lijst heeft een zoekvak en herinnert zich onlangs en veelgebruikte talen.
 
-De plugin bevat 52 talen, waaronder 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux-servicelogboeken en journalctl-uitvoer.
+De plugin bevat 52 talen, waaronder HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux-servicelogboeken en journalctl-uitvoer.
 
 U kunt uw eigen talen toevoegen. Elke taal is één bestand in de map `highlight/`. Elke 190+ highlight.js-grammatica's of een grammatica van derden kan met één commando in zo'n bestand worden omgezet:
 
@@ -182,7 +182,7 @@ Stap 2 is belangrijk. Bij het opstarten republiceert Redmine plugin-assets allee
 Als uw Redmine [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor) gebruikte, kunt u naar deze plugin overschakelen en alle geschreven tekst behouden: issues, notities, wikipagina's, nieuws, berichten, documenten. Er wordt niets omgezet en de database wordt niet aangeraakt. CKEditor slaat de teksten op als HTML en dit gebeurt net als met deze plugin, dus een opgeslagen tekst wordt eenvoudigweg door de nieuwe formatter weergegeven.
 
 1. Installeer de plugin (zie hierboven) en kies Tekstformaat: *TipTap HTML*.
-2. Bewaar de map `public/system/rich/` van uw Redmine. De afbeeldingen en bestanden die mensen met de afbeeldingsbrowser van CKEditor hebben ingevoegd, worden daar (niet in de database) opgeslagen, en de teksten verwijzen ernaar op adres (`/system/rich/...`). Bijlagen van issues, wikipagina's enzovoort worden als voorheen opgeslagen en hebben niets nodig.
+2. Bewaar de map `public/system/rich/` van uw Redmine. Als mensen met de afbeeldingsbrowser van CKEditor afbeeldingen en bestanden hebben ingevoegd, worden deze daar opgeslagen, niet in de database en niet tussen de bijlagen, en de teksten verwijzen ernaar op adres (`/system/rich/...`). **Als Redmine naar een andere server wordt verplaatst of opnieuw wordt opgezet, verplaats dan ook deze map**, samen met de database en de map `files/`: geen van beide bevat deze bestanden, en zonder de map geven de afbeeldingen in oude teksten een 404-fout. Bijlagen van issues, wikipagina's enzovoort worden als voorheen opgeslagen en hebben niets nodig. Afbeeldingen die in deze editor zijn ingevoegd, zijn gewone bijlagen. De map blijft nodig nadat redmine_ckeditor is verwijderd.
 3. Verwijder redmine_ckeditor wanneer u dit niet meer nodig hebt.
 
 Een oude tekst wordt zo weergegeven als CKEditor het deed: lettertypen, grootten, kleuren en uitlijning, inspringing, lijsten, tabellen (randen, breedtes, bijschriften, samengevoegde cellen), afbeeldingen (grootte, zweven, rand, een afbeelding in een koppeling), koppelingen, codeblokken met hun taal (gemarkeerd), Redmine-macro's (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` enzovoort), wiki- en issuekoppelingen, gewone webaddressen omgezet in hyperlinks en ingebedde `<iframe>` (video). Een in CKEditor geschreven tekst wordt herkend aan zijn opmaak en behoudt de afstand tussen alinea's zoals die daar was – dit is groter dan in deze editor.
@@ -191,5 +191,6 @@ Opzettelijke verschillen:
 - Een `<iframe>` wordt alleen weergegeven als het verwijst naar een ander site over http(s), en het is in een sandbox: de pagina erin kan zijn eigen scripts uitvoeren, maar kan de Redmine-pagina niet bereiken, het topvenster niet openen of formulieren niet indienen. Alle andere `<iframe>` worden verwijderd.
 - Koppelingen openen in hetzelfde venster: het `target`-kenmerk van een koppeling (CKEditor's "Nieuw venster (_blank)") wordt niet behouden.
 - Enkele opmaak die CKEditor aanbood maar zijn pagina's geruisloos verwierpen, worden hier weergegeven: bijvoorbeeld de achtergrondkleuren van de "Marker"-stijlen en de aanhalingstekens van `<q>`.
+- De stijl "Special Container" van CKEditor (een blok met een grijs kader) wordt weergegeven als een codeblok zonder syntaxmarkering, en in de editor is het ook een codeblok.
 
-Een oude tekst behoudt de opmaak wanneer deze in de editor wordt geopend en opnieuw wordt opgeslagen: Redmine-macro's (een macro is één grijs element in de editor; bewerk het in de modus `<HTML>`, zoals in de bronmodus van CKEditor), `<iframe>`, subscript en superscript, inline-stijlen van CKEditor (big, small, keyboard, sample enzovoort), de stijl van koppelingen, tabellen en tabelcellen, de grootte, zweven, rand en koppeling van afbeeldingen, de taal van codeblokken. Wat niet behouden blijft bij bewerking: `<address>`- en `<div>`-blokken worden alinea's, het bijschrift van een tabel wordt een gecentreerde alinea erboven, de kop- en voetabdellingen van een tabel worden normale rijen (de voettekst blijft onderaan), `<del>` wordt `<s>` (dezelfde look), en de hoogte van een afbeelding wordt verwijderd wanneer de breedte is ingesteld (verhoudingen worden behouden). Tekst opgeslagen vanuit deze editor krijgt de compacte alinea-afstand van deze editor.
+Een oude tekst behoudt de opmaak wanneer deze in de editor wordt geopend en opnieuw wordt opgeslagen: Redmine-macro's (een macro is één grijs element in de editor; bewerk het in de modus `<HTML>`, zoals in de bronmodus van CKEditor), `<iframe>`, `<div>`- en `<address>`-blokken met hun stijl (een `<div>` die uit een webpagina wordt geplakt, wordt nog steeds een alinea), subscript en superscript, inline-stijlen van CKEditor (big, small, keyboard, sample enzovoort), de stijl van koppelingen, tabellen en tabelcellen, de grootte, zweven, rand en koppeling van afbeeldingen, de taal van codeblokken. Wat niet behouden blijft bij bewerking: het bijschrift van een tabel wordt een gecentreerde alinea erboven, de kop- en voetgedeelten van een tabel worden normale rijen (de voettekst blijft onderaan), `<del>` wordt `<s>` (dezelfde look), en de hoogte van een afbeelding wordt verwijderd wanneer de breedte is ingesteld (verhoudingen worden behouden). Tekst opgeslagen vanuit deze editor krijgt de compacte alinea-afstand van deze editor.

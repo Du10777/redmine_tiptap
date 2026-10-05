@@ -53,7 +53,7 @@ Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tipta
 ## Tính năng
 
 **Định dạng văn bản**
-- Đậm, in nghiêng, gạch chân, gạch bỏ, mã nội tuyến.
+- Đậm, in nghiêng, gạch chân, gạch bỏ, chỉ số dưới và chỉ số trên (Ctrl+, và Ctrl+.), mã nội tuyến.
 - Màu văn bản và màu nền: bảng màu 64 màu hoặc bất kỳ giá trị hex nào.
 - Họ phông chữ (13 phông) và kích thước phông chữ (các kích thước từ 8 đến 72 px hoặc bất kỳ giá trị nào).
 - Kiểu đoạn: tiêu đề 1–6 và văn bản thông thường.
@@ -89,7 +89,7 @@ Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tipta
 - Khối trích dẫn có dòng tác giả và ngày tháng.
 
 **Biên tập**
-- Chế độ `<HTML>` để xem và chỉnh sửa mã nguồn HTML.
+- Chế độ `<HTML>` để xem và chỉnh sửa mã nguồn HTML: các khối lồng nhau được thụt lề, một dòng trống ngăn cách các khối chiếm nhiều dòng, cú pháp được tô màu theo cùng quy tắc như khối mã HTML, và phím Enter giữ nguyên thụt lề của dòng.
 - Gõ kiểu Markdown: `#` cho tiêu đề, `-` và `1.` cho danh sách, `[ ]` cho tác vụ, ```` ```python ```` cho khối mã (bất kỳ tên ngôn ngữ nào hoặc không), `**bold**`, `---` cho đường nằm ngang. Các phím tắt tiêu chuẩn: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z và các phím khác.
 - Trình soạn thảo không bao giờ cao hơn cửa sổ: thanh công cụ và nút biểu mẫu luôn trong tầm nhìn, và văn bản cuộn bên trong. Chiều cao tuân theo kích thước cửa sổ và mức độ phóng to của trang.
 - Tay cầm thay đổi kích thước ở góc dưới cùng bên phải đặt chiều cao theo cách thủ công. Chiều cao được ghi nhớ; nhấp đôi lần sẽ trở lại chiều cao tự động.
@@ -106,7 +106,7 @@ Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tipta
 
 Các khối mã được tô sáng giống nhau cả trong trình soạn thảo và trên các trang đã lưu. Ngôn ngữ của khối được chọn từ huy hiệu ở góc trên cùng bên phải; danh sách có hộp tìm kiếm và ghi nhớ các ngôn ngữ gần đây và thường xuyên.
 
-52 ngôn ngữ đi kèm với plugin, bao gồm 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, nhật ký dịch vụ Linux và đầu ra journalctl.
+52 ngôn ngữ đi kèm với plugin, bao gồm HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, nhật ký dịch vụ Linux và đầu ra journalctl.
 
 Bạn có thể thêm các ngôn ngữ của riêng mình. Mỗi ngôn ngữ là một tệp trong thư mục `highlight/`. Bất kỳ một trong hơn 190 ngữ pháp highlight.js hoặc của bên thứ ba nào cũng có thể được chuyển đổi thành tệp như vậy bằng một lệnh:
 
@@ -182,7 +182,7 @@ Bước 2 rất quan trọng. Khi khởi động, Redmine chỉ xuất bản cá
 Nếu Redmine của bạn đã sử dụng [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), bạn có thể chuyển sang plugin này và giữ lại mọi văn bản đã được viết: vấn đề, ghi chú, trang wiki, tin tức, tin nhắn, tài liệu. Không có chuyển đổi nào và cơ sở dữ liệu sẽ không bị chạm vào. CKEditor lưu trữ các văn bản của nó dưới dạng HTML và plugin này cũng vậy, vì vậy một văn bản được lưu trữ chỉ được hiển thị bởi định dạng mới.
 
 1. Cài đặt plugin (xem ở trên) và chọn Định dạng bài viết: *TipTap HTML*.
-2. Giữ lại thư mục `public/system/rich/` của Redmine. Các hình ảnh và tệp mà mọi người chèn bằng trình duyệt hình ảnh của CKEditor được lưu trữ ở đó chứ không phải trong cơ sở dữ liệu, và các văn bản tham chiếu chúng theo địa chỉ (`/system/rich/...`). Các tệp đính kèm của vấn đề, trang wiki, v.v. được lưu trữ như trước đây và không cần gì thêm.
+2. Giữ lại thư mục `public/system/rich/` của Redmine. Nếu mọi người đã chèn hình ảnh và tệp bằng trình duyệt hình ảnh của CKEditor, chúng được lưu trữ ở đó, không phải trong cơ sở dữ liệu và cũng không nằm trong số các tệp đính kèm, và các văn bản tham chiếu chúng theo địa chỉ (`/system/rich/...`). **Nếu Redmine được chuyển sang máy chủ khác hoặc được cài đặt lại từ đầu, hãy chuyển cả thư mục này**, cùng với cơ sở dữ liệu và thư mục `files/`: cả hai đều không chứa các tệp này, và nếu thiếu thư mục này, hình ảnh trong các văn bản cũ sẽ báo lỗi 404. Các tệp đính kèm của vấn đề, trang wiki, v.v. được lưu trữ như trước đây và không cần gì thêm. Hình ảnh được chèn trong trình soạn thảo này là các tệp đính kèm thông thường. Thư mục này vẫn cần thiết sau khi redmine_ckeditor bị xóa.
 3. Xóa redmine_ckeditor khi bạn không còn cần nó.
 
 Một văn bản cũ được hiển thị theo cách CKEditor đã hiển thị nó: phông chữ, kích thước, màu sắc và căn chỉnh, thụt lề, danh sách, bảng (đường viền, độ rộng, chú thích, ô hợp nhất), hình ảnh (kích thước, float, đường viền, hình ảnh trong liên kết), liên kết, khối mã với ngôn ngữ của chúng (tô sáng), macro Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` v.v.), liên kết wiki và vấn đề, địa chỉ web thuần được làm có thể nhấp vào, và `<iframe>` nhúng (video). Một văn bản được viết trong CKEditor được công nhận bằng cách đánh dấu của nó và giữ lại khoảng cách giữa các đoạn mà nó có ở đó, rộng hơn trong trình soạn thảo này.
@@ -191,5 +191,6 @@ Sự khác biệt có mục đích:
 - Một `<iframe>` chỉ được hiển thị khi nó trỏ đến một trang web khác qua http(s) và nó được cách ly: trang bên trong có thể chạy các tập lệnh của riêng nó nhưng không thể truy cập trang Redmine, mở cửa sổ trên cùng hoặc gửi biểu mẫu. Tất cả `<iframe>` khác sẽ bị xóa.
 - Các liên kết sẽ mở trong cùng một cửa sổ: thuộc tính `target` của một liên kết (CKEditor's "New Window (_blank)") không được giữ lại.
 - Một số định dạng mà CKEditor cung cấp nhưng các trang của nó tự động loại bỏ được hiển thị ở đây: ví dụ như màu nền của kiểu "Marker" của nó và dấu ngoặc kép của `<q>`.
+- Kiểu “Special Container” của CKEditor (khối có khung màu xám) được hiển thị dưới dạng khối mã không có tô sáng cú pháp, và trong trình soạn thảo nó cũng là khối mã.
 
-Một văn bản cũ giữ lại định dạng của nó khi được mở trong trình soạn thảo và lưu lại: macro Redmine (một macro là một phần tử xám trong trình soạn thảo; chỉnh sửa nó trong chế độ `<HTML>`, như trong chế độ Nguồn của CKEditor), `<iframe>`, chỉ số dưới và chỉ số trên, kiểu nội tuyến của CKEditor (big, small, keyboard, sample, v.v.), kiểu của tiêu đề, bảng và ô bảng, kích thước, float, đường viền và liên kết của hình ảnh, ngôn ngữ của khối mã. Những gì không tồn tại sau khi chỉnh sửa: các khối `<address>` và `<div>` trở thành đoạn, chú thích của bảng trở thành một đoạn căn giữa phía trên nó, các phần đầu và chân của bảng trở thành các hàng thông thường (chân ở dưới cùng), `<del>` trở thành `<s>` (giao diện tương tự), và chiều cao của hình ảnh bị loại bỏ khi độ rộng được đặt (tỷ lệ được giữ lại). Một văn bản được lưu từ trình soạn thảo này có khoảng cách đoạn gọn gàng của trình soạn thảo này.
+Một văn bản cũ giữ lại định dạng của nó khi được mở trong trình soạn thảo và lưu lại: macro Redmine (một macro là một phần tử xám trong trình soạn thảo; chỉnh sửa nó trong chế độ `<HTML>`, như trong chế độ Nguồn của CKEditor), `<iframe>`, các khối `<div>` và `<address>` cùng kiểu của chúng (một `<div>` được dán từ trang web vẫn bị chuyển thành đoạn), chỉ số dưới và chỉ số trên, kiểu nội tuyến của CKEditor (big, small, keyboard, sample, v.v.), kiểu của tiêu đề, bảng và ô bảng, kích thước, float, đường viền và liên kết của hình ảnh, ngôn ngữ của khối mã. Những gì không tồn tại sau khi chỉnh sửa: chú thích của bảng trở thành một đoạn căn giữa phía trên nó, các phần đầu và chân của bảng trở thành các hàng thông thường (chân ở dưới cùng), `<del>` trở thành `<s>` (giao diện tương tự), và chiều cao của hình ảnh bị loại bỏ khi độ rộng được đặt (tỷ lệ được giữ lại). Một văn bản được lưu từ trình soạn thảo này có khoảng cách đoạn gọn gàng của trình soạn thảo này.

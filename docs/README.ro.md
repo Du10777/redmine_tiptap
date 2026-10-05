@@ -53,7 +53,7 @@ Motor editor: **TipTap 3.31.4**. Toate pachetele `@tiptap/*` sunt fixate la acea
 ## Funcționalități
 
 **Formatare text**
-- Îngroșat, cursiv, subliniat, tăiat, cod inline.
+- Îngroșat, cursiv, subliniat, tăiat, indice și exponent (Ctrl+, și Ctrl+.), cod inline.
 - Culoarea textului și culoarea de fundal: o paletă de 64 de culori sau orice valoare hex.
 - Familie de fonturi (13 fonturi) și dimensiune de font (presetări de la 8 la 72 px, sau orice valoare).
 - Stiluri de paragrafe: titluri 1–6 și text normal.
@@ -89,7 +89,7 @@ Motor editor: **TipTap 3.31.4**. Toate pachetele `@tiptap/*` sunt fixate la acea
 - Bloc de citat cu o linie de autor și dată.
 
 **Editare**
-- Modul `<HTML>` pentru vizualizare și editare a sursei HTML.
+- Modul `<HTML>` pentru vizualizare și editare a sursei HTML: blocurile imbricate sunt indentate, o linie goală separă blocurile care ocupă mai multe linii, sintaxa este colorată după aceleași reguli ca într-un bloc de cod HTML, iar Enter păstrează indentarea liniei.
 - Tastare în stil Markdown: `#` pentru titluri, `-` și `1.` pentru liste, `[ ]` pentru sarcini, ```` ```python ```` pentru un bloc de cod (orice nume de limbă sau niciunul), `**bold**`, `---` pentru o linie orizontală. Scurtături de tastatură standard: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z și altele.
 - Editorul nu crește niciodată mai înalt decât fereastra: bara de instrumente și butoanele formularului rămân în vedere, iar textul se derulează în interior. Înălțimea urmează dimensiunea ferestrei și zoom-ul paginii.
 - O apucătură de redimensionare în colțul din dreapta jos stabilește înălțimea manual. Înălțimea este reținută; dublu-clic revine la înălțime automată.
@@ -106,7 +106,7 @@ Motor editor: **TipTap 3.31.4**. Toate pachetele `@tiptap/*` sunt fixate la acea
 
 Blocurile de cod sunt evidențiate atât în editor, cât și pe paginile salvate. Limba unui bloc este preluată din insigna din colțul din dreapta sus; lista are o casetă de căutare și reține limbile utilizate recent și frecvent.
 
-52 de limbi sunt incluse în plugin, inclusiv 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, jurnale de servicii Linux și ieșire journalctl.
+52 de limbi sunt incluse în plugin, inclusiv HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, jurnale de servicii Linux și ieșire journalctl.
 
 Puteți adăuga propriile dvs. limbi. Fiecare limbă este un fișier în dosarul `highlight/`. Orice dintre cele 190+ gramatici highlight.js, sau una terță, este convertită într-un astfel de fișier cu o singură comandă:
 
@@ -182,7 +182,7 @@ Pasul 2 este important. La pornire Redmine republică resursele plugin-ului doar
 Dacă Redmine dvs. a folosit [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), puteți comuta la acest plugin și păstrați orice text care a fost scris: tichete, note, pagini wiki, știri, mesaje, documente. Nimic nu este convertit și baza de date nu este atinsă. CKEditor stochează textele sale ca HTML și la fel și acest plugin, deci un text stocat este pur și simplu afișat de formatorului nou.
 
 1. Instalați plugin-ul (consultați mai sus) și alegeți Formatare text: *TipTap HTML*.
-2. Păstrați dosarul `public/system/rich/` al Redmine dvs. Pozele și fișierele pe care le-au inserat oamenii cu browserul de imagini al CKEditor sunt stocate acolo și nu în baza de date, iar textele le referă prin adresă (`/system/rich/...`). Fișierele atașate de tichete, pagini wiki și așa mai departe sunt stocate ca înainte și nu au nevoie de nimic.
+2. Păstrați dosarul `public/system/rich/` al Redmine dvs. Dacă oamenii au inserat poze și fișiere cu browserul de imagini al CKEditor, acestea sunt stocate acolo, nu în baza de date și nu printre fișierele atașate, iar textele le referă prin adresă (`/system/rich/...`). **Dacă Redmine este mutat pe alt server sau instalat din nou, mutați și acest dosar**, împreună cu baza de date și dosarul `files/`: niciuna dintre ele nu conține aceste fișiere, iar fără acest dosar pozele din textele vechi returnează eroarea 404. Fișierele atașate de tichete, pagini wiki și așa mai departe sunt stocate ca înainte și nu au nevoie de nimic. Pozele inserate în acest editor sunt fișiere atașate obișnuite. Dosarul rămâne necesar și după eliminarea redmine_ckeditor.
 3. Eliminați redmine_ckeditor când nu mai aveți nevoie de el.
 
 Un text vechi este afișat cum l-a afișat CKEditor: fonturi, dimensiuni, culori și aliniere, indentări, liste, tabele (margini, lățimi, texte descriptive, celule fuzionate), poze (dimensiune, plutire, margine, o poză în interiorul unui link), linkuri, blocuri de cod cu limba lor (evidențiate), macrocomenzi Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` și așa mai departe), linkuri wiki și de tichete, adrese web simple făcute clicabile, și `<iframe>` încorporate (video). Un text scris în CKEditor este recunoscut prin marcajul său și păstrează distanța dintre paragrafe pe care a avut-o acolo, care este mai largă decât în acest editor.
@@ -191,5 +191,6 @@ Diferențe cu intenție:
 - Un `<iframe>` este afișat doar când se referă la un alt site prin http(s), și este în sandbox: pagina din interior poate rula propriile scripturi, dar nu poate accesa pagina Redmine, deschide fereastra de sus sau trimite formulare. Toate celelalte `<iframe>` sunt eliminate.
 - Link-urile se deschid în aceeași fereastră: atributul `target` al unui link (opțiunea CKEditor "New Window (_blank)") nu este păstrat.
 - O parte din formatare pe care CKEditor a oferit-o, dar paginile sale au eliminat în tăcere, este afișată aici: de exemplu culorile de fundal ale stilurilor sale "Marker" și ghilimele din `<q>`.
+- Stilul „Special Container” din CKEditor (un bloc cu un chenar gri) este afișat ca bloc de cod fără evidențiere de sintaxă, iar în editor este, de asemenea, un bloc de cod.
 
-Un text vechi și-păstrează formatarea atunci când este deschis în editor și salvat din nou: macrocomenzi Redmine (o macrocomandă este un element gri în editor; editați-o în modul `<HTML>`, ca în modul Source al CKEditor), `<iframe>`, indice și exponent, stiluri inline CKEditor (big, small, keyboard, sample și așa mai departe), stilul titlurilor, tabelelor și celulelor tabelelor, dimensiunea, plutirea, marginea și linkul pozelor, limba blocurilor de cod. Ce nu supraviețuiește editării: blocurile `<address>` și `<div>` devin paragrafe, textul descriptiv al unui tabel devine o paragrafă centrată deasupra acestuia, secțiunile de antet și footer ale unui tabel devin rânduri obișnuite (footer-ul rămâne la bază), `<del>` devine `<s>` (același aspect), și înălțimea unei poze este omisă atunci când lățimea sa este stabilită (proporțiile sunt păstrate). Un text salvat din acest editor primește spațierea compactă a paragrafelor acestui editor.
+Un text vechi își păstrează formatarea atunci când este deschis în editor și salvat din nou: macrocomenzi Redmine (o macrocomandă este un element gri în editor; editați-o în modul `<HTML>`, ca în modul Source al CKEditor), `<iframe>`, blocurile `<div>` și `<address>` cu stilul lor (un `<div>` lipit dintr-o pagină web este în continuare transformat într-un paragraf), indice și exponent, stiluri inline CKEditor (big, small, keyboard, sample și așa mai departe), stilul titlurilor, tabelelor și celulelor tabelelor, dimensiunea, plutirea, marginea și linkul pozelor, limba blocurilor de cod. Ce nu supraviețuiește editării: textul descriptiv al unui tabel devine un paragraf centrat deasupra acestuia, secțiunile de antet și footer ale unui tabel devin rânduri obișnuite (footer-ul rămâne la bază), `<del>` devine `<s>` (același aspect), și înălțimea unei poze este omisă atunci când lățimea sa este stabilită (proporțiile sunt păstrate). Un text salvat din acest editor primește spațierea compactă a paragrafelor acestui editor.

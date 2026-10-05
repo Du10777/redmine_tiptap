@@ -53,7 +53,7 @@ Silnik edytora: **TipTap 3.31.4**. Wszystkie pakiety `@tiptap/*` są przypięte 
 ## Funkcje
 
 **Formatowanie tekstu**
-- Pogrubienie, kursywa, podkreślenie, przekreślenie, kod wstawiony.
+- Pogrubienie, kursywa, podkreślenie, przekreślenie, indeks dolny i górny (Ctrl+, i Ctrl+.), kod wstawiony.
 - Kolor tekstu i kolor tła: paleta 64 kolorów lub dowolna wartość szesnastkowa.
 - Rodzina czcionek (13 czcionek) i rozmiar czcionki (predefiniowane wartości od 8 do 72 px lub dowolna wartość).
 - Style akapitów: nagłówki 1–6 i tekst normalny.
@@ -89,7 +89,7 @@ Silnik edytora: **TipTap 3.31.4**. Wszystkie pakiety `@tiptap/*` są przypięte 
 - Cytat bloku z linią autora i daty.
 
 **Edycja**
-- Tryb `<HTML>` do przeglądania i edycji źródła HTML.
+- Tryb `<HTML>` do przeglądania i edycji źródła HTML: bloki zagnieżdżone są wcięte, pusta linia oddziela bloki zajmujące kilka linii, składnia jest kolorowana według tych samych reguł co w bloku kodu HTML, a Enter zachowuje wcięcie linii.
 - Wpisywanie w stylu Markdown: `#` dla nagłówków, `-` i `1.` dla list, `[ ]` dla zadań, ```` ```python ```` dla bloku kodu (dowolna nazwa języka lub brak), `**bold**`, `---` dla linii poziomej. Standardowe skróty klawiszowe: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i inne.
 - Edytor nigdy nie rośnie wyżej niż okno: pasek narzędzi i przyciski formularza pozostają widoczne, a tekst przewija się wewnątrz. Wysokość zmienia się wraz z rozmiarem okna i powiększeniem strony.
 - Uchwyt zmiany rozmiaru w dolnym prawym rogu ustawia wysokość ręcznie. Wysokość jest pamiętana; podwójne kliknięcie przywraca automatyczną wysokość.
@@ -106,7 +106,7 @@ Silnik edytora: **TipTap 3.31.4**. Wszystkie pakiety `@tiptap/*` są przypięte 
 
 Bloki kodu są wyróżniane w edytorze i na zapisanych stronach. Język bloku jest wybierany z plakietki w jego górnym prawym rogu; lista ma pole wyszukiwania i pamięta ostatnio i często używane języki.
 
-52 języki są dostarczane z wtyczką, w tym 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dzienniki usług Linux i wyjście journalctl.
+52 języki są dostarczane z wtyczką, w tym HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dzienniki usług Linux i wyjście journalctl.
 
 Możesz dodawać własne języki. Każdy język to jeden plik w folderze `highlight/`. Dowolna z ponad 190 gramatyk highlight.js lub gramatyka innej firmy jest konwertowana na taki plik jedną komendą:
 
@@ -182,7 +182,7 @@ Krok 2 jest ważny. Przy starcie Redmine ponownie publikuje zasoby wtyczki tylko
 Jeśli twój Redmine używał [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), możesz przełączyć się na tę wtyczkę i zachować każdy napisany tekst: problemy, notatki, strony wiki, wiadomości, posty, dokumenty. Nic nie jest konwertowane, a baza danych nie jest dotykana. CKEditor przechowuje swoje teksty jako HTML, a ta wtyczka również, więc przechowywany tekst jest po prostu wyświetlany przez nowy formatter.
 
 1. Zainstaluj wtyczkę (patrz wyżej) i wybierz Formatowanie tekstu: *TipTap HTML*.
-2. Zachowaj folder `public/system/rich/` twojego Redmine. Obrazy i pliki, które ludzie wstawili za pomocą przeglądarki obrazów CKEditor, są przechowywane tam, a nie w bazie danych, a teksty odwołują się do nich przez adres (`/system/rich/...`). Załączniki problemów, stron wiki itp. są przechowywane jak poprzednio i nic nie wymaga.
+2. Zachowaj folder `public/system/rich/` twojego Redmine. Jeśli ludzie wstawiali obrazy i pliki za pomocą przeglądarki obrazów CKEditor, są one przechowywane tam, a nie w bazie danych ani wśród załączników, a teksty odwołują się do nich przez adres (`/system/rich/...`). **Jeśli Redmine zostanie przeniesiony na inny serwer lub zainstalowany od nowa, przenieś też ten folder**, razem z bazą danych i folderem `files/`: żadne z nich nie zawiera tych plików, a bez tego folderu obrazy w starych tekstach będą zwracać błąd 404. Załączniki problemów, stron wiki itp. są przechowywane jak poprzednio i nic nie wymagają. Obrazy wstawione w tym edytorze są zwykłymi załącznikami. Folder pozostaje potrzebny także po usunięciu redmine_ckeditor.
 3. Usuń redmine_ckeditor, gdy go już nie potrzebujesz.
 
 Stary tekst jest wyświetlany w taki sposób, jaki pokazał CKEditor: czcionki, rozmiary, kolory i wyrównanie, wcięcia, listy, tabele (obramowania, szerokości, napisy, scalone komórki), obrazy (rozmiar, przepływ, obramowanie, obraz wewnątrz łącza), łącza, bloki kodu z ich językiem (wyróżnione), makra Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` itp.), linki wiki i problemy, zwykłe adresy internetowe uczyniające je klikalnym, a wbudowane `<iframe>` (wideo). Tekst napisany w CKEditor jest rozpoznawany po jego znacznikach i zachowuje rozstaw między akapitami, które miał tam, który jest szerszy niż w tym edytorze.
@@ -191,5 +191,6 @@ Różnice celowe:
 - `<iframe>` jest wyświetlany tylko wtedy, gdy wskazuje na inną witrynę poprzez http(s), i jest w piaskownicy: strona wewnątrz może uruchamiać swoje własne skrypty, ale nie może uzyskać dostępu do strony Redmine, otworzyć górnego okna lub przesłać formularze. Wszystkie inne `<iframe>` są usuwane.
 - Linki otwierają się w tym samym oknie: atrybut `target` łącza (CKEditor „Nowe okno (_blank)") nie jest zachowywany.
 - Niektóre formatowanie, które oferował CKEditor, ale jego strony po cichu odrzuciły, jest tutaj wyświetlane: na przykład kolory tła jego stylów „Marker" i cudzysłowy `<q>`.
+- Styl „Special Container” z CKEditor (blok z szarą ramką) jest wyświetlany jako blok kodu bez wyróżniania składni, a w edytorze również jest blokiem kodu.
 
-Stary tekst zachowuje swoje formatowanie, gdy jest otwarty w edytorze i ponownie zapisany: makra Redmine (makro to jeden szary element w edytorze; edytuj go w trybie `<HTML>`, jak w trybie Źródło CKEditor), `<iframe>`, indeks dolny i górny, wbudowane style CKEditor (duży, mały, klawiatura, próbka itp.), styl nagłówków, tabel i komórek tabeli, rozmiar, przepływ, obramowanie i łącze obrazów, język bloków kodu. Co nie przetrwa edycji: bloki `<address>` i `<div>` stają się akapitami, napis tabeli staje się wyśrodkowanym akapitem powyżej niego, sekcje nagłówka i stopki tabeli stają się zwykłymi wierszami (stopka pozostaje na dole), `<del>` staje się `<s>` (ten sam wygląd), a wysokość obrazu jest upuszczana, gdy ustawiana jest jego szerokość (proporcje są zachowywane). Tekst zapisany z tego edytora otrzymuje kompaktowy odstęp akapitu tego edytora.
+Stary tekst zachowuje swoje formatowanie, gdy jest otwarty w edytorze i ponownie zapisany: makra Redmine (makro to jeden szary element w edytorze; edytuj go w trybie `<HTML>`, jak w trybie Źródło CKEditor), `<iframe>`, bloki `<div>` i `<address>` z ich stylem (`<div>` wklejony ze strony internetowej nadal jest zamieniany na akapit), indeks dolny i górny, wbudowane style CKEditor (duży, mały, klawiatura, próbka itp.), styl nagłówków, tabel i komórek tabeli, rozmiar, przepływ, obramowanie i łącze obrazów, język bloków kodu. Co nie przetrwa edycji: napis tabeli staje się wyśrodkowanym akapitem powyżej niego, sekcje nagłówka i stopki tabeli stają się zwykłymi wierszami (stopka pozostaje na dole), `<del>` staje się `<s>` (ten sam wygląd), a wysokość obrazu jest upuszczana, gdy ustawiana jest jego szerokość (proporcje są zachowywane). Tekst zapisany z tego edytora otrzymuje kompaktowy odstęp akapitu tego edytora.

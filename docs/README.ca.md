@@ -53,7 +53,7 @@ Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen 
 ## Funcionalitats
 
 **Format del text**
-- Negreta, cursiva, subratllat, ratllat, codi en línia.
+- Negreta, cursiva, subratllat, ratllat, subíndex i superíndex (Ctrl+, i Ctrl+.), codi en línia.
 - Color del text i color de fons: una paleta de 64 colors o qualsevol valor hexadecimal.
 - Tipus de lletra (13 tipus) i mida de lletra (presets de 8 a 72 px, o qualsevol valor).
 - Estilos de paràgraf: encapçalaments 1–6 i text normal.
@@ -89,7 +89,7 @@ Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen 
 - Bloc de cita amb una línia per a autor i data.
 
 **Edició**
-- Mode `<HTML>` per veure i editar el codi HTML font.
+- Mode `<HTML>` per veure i editar el codi HTML font: els blocs imbricats estan sagnats, una línia en blanc separa els blocs que ocupen diverses línies, la sintaxi es colora amb les mateixes regles que en un bloc de codi HTML, i Enter manté el sagnat de la línia.
 - Escriptura d'estil Markdown: `#` per a encapçalaments, `-` i `1.` per a llistes, `[ ]` per a tasques, ```` ```python ```` per a un bloc de codi (qualsevol nom de llenguatge o cap), `**bold**`, `---` per a una línia horitzontal. Dreceres de teclat estàndard: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i altres.
 - L'editor mai es fa més alt que la finestra: la barra d'eines i els botons del formulari romanen visibles, i el text es desplaça dins. L'altura segueix la mida de la finestra i el zoom de la pàgina.
 - Una nansa de redimensionament a la cantonada inferior dreta estableix l'altura manualment. L'altura es recorda; fer doble clic torna a l'altura automàtica.
@@ -106,7 +106,7 @@ Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen 
 
 Els blocs de codi es ressalten tant a l'editor com a les pàgines guardades. El llenguatge d'un bloc es tria desde la insígnia a la seva cantonada superior dreta; la llista té un quadre de cerca i recorda els llenguatges utilitzats recentment i amb freqüència.
 
-52 llenguatges s'inclouen al complement, entre ells 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, registres de serveis Linux i sortida de journalctl.
+52 llenguatges s'inclouen al complement, entre ells HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, registres de serveis Linux i sortida de journalctl.
 
 Podeu afegir els vostres propis llenguatges. Cada llenguatge és un fitxer a la carpeta `highlight/`. Qualsevol de les 190+ gramàtiques de highlight.js, o una de tercers, es converteix en un fitxer d'aquest tipus amb una sola comanda:
 
@@ -182,7 +182,7 @@ El pas 2 és important. A l'inici, Redmine republicar els elements del complemen
 Si el vostre Redmine va usar [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), podeu canviar a aquest complement i mantenir tots els textos que s'han escrit: demandes, notes, pàgines wiki, noticies, missatges, documents. Res no es converteix i la base de dades no es toca. CKEditor guarda els seus textos com a HTML i igual fa aquest complement, de manera que un text guardat simplement es mostra pel nou formador.
 
 1. Instal·leu el complement (veieu anteriorment) i trieu Format del text: *TipTap HTML*.
-2. Conserveu la carpeta `public/system/rich/` del vostre Redmine. Les imatges i els fitxers que la gent va inserir amb el navegador d'imatges de CKEditor es guarden allà i no a la base de dades, i els textos s'hi refereixen per adreça (`/system/rich/...`). Els fitxers adjunts de les demandes, pàgines wiki i similars es guarden com fins ara i no necessiten res.
+2. Conserveu la carpeta `public/system/rich/` del vostre Redmine. Si la gent ha inserit imatges i fitxers amb el navegador d'imatges de CKEditor, es guarden allà i no a la base de dades ni entre els fitxers adjunts, i els textos s'hi refereixen per adreça (`/system/rich/...`). **Si Redmine es trasllada a un altre servidor o es torna a instal·lar, traslladeu també aquesta carpeta**, juntament amb la base de dades i la carpeta `files/`: cap de les dues conté aquests fitxers, i sense la carpeta les imatges dels textos antics donen un error 404. Els fitxers adjunts de les demandes, pàgines wiki i similars es guarden com fins ara i no necessiten res. Les imatges inserides en aquest editor són fitxers adjunts ordinaris. La carpeta continua sent necessària després d'eliminar redmine_ckeditor.
 3. Supprimiu redmine_ckeditor quan ja no ho necessiteu.
 
 Un text antic es mostra de la manera que ho feia CKEditor: tipus de lletra, mides, colors i alineació, sagnat, llistes, taules (vores, amplades, epígrafs, cel·les fusionades), imatges (mida, flotació, vora, imatge dins d'un enllaç), enllaços, blocs de codi amb el seu llenguatge (ressaltat), macros de Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` i similars), enllaços wiki i demandes, adreces web simples fetes cliquables, i `<iframe>` incrustats (vídeo). Un text escrit a CKEditor es reconeix pel seu marcat i conserva l'espaiat entre paràgrafs que hi havia, que és més gran que en aquest editor.
@@ -191,5 +191,6 @@ Diferències intencionades:
 - Un `<iframe>` es mostra només si apunta a un altre lloc sobre http(s), i està aïllat: la pàgina dins pot executar els seus propis scripts, però no pot arribar a la pàgina de Redmine, obrir la finestra superior o enviar formularis. Tots els altres `<iframe>` es treuen.
 - Els enllaços s'obren a la mateixa finestra: l'atribut `target` d'un enllaç (la "Finestra nova (_blank)" de CKEditor) no es conserva.
 - Alguns formats que CKEditor ofereia però que les seves pàgines silenciosament trigaven es mostren aquí: per exemple, els colors de fons dels seus estils "Marcador" i les cometes de `<q>`.
+- L'estil «Special Container» de CKEditor (un bloc amb un marc gris) es mostra com un bloc de codi sense ressaltat, i a l'editor també és un bloc de codi.
 
-Un text antic conserva el seu format quan s'obri a l'editor i es guardi novament: macros de Redmine (una macro és un element gris a l'editor; editeu-la en mode `<HTML>`, com en el mode Font de CKEditor), `<iframe>`, subíndex i superíndex, estils en línia de CKEditor (big, small, keyboard, sample i similars), l'estil de titulars, taules i cel·les de taula, la mida, flotació, vora i enllaç de les imatges, el llenguatge dels blocs de codi. Allò que no sobreviu l'edició: els blocs `<address>` i `<div>` es converteixen en paràgrafs, l'epígraf d'una taula es converteix en un paràgraf centrat a sobre, les seccions de capçalera i peu de taula es converteixen en files ordinàries (el peu es manté a la part inferior), `<del>` esdevé `<s>` (el mateix aspecte), i l'altura d'una imatge es deixa caure quan s'estableix l'amplada (les proporcions es conserven). Un text guardat desde aquest editor obté l'espaiat compact dels paràgrafs d'aquest editor.
+Un text antic conserva el seu format quan s'obri a l'editor i es guardi novament: macros de Redmine (una macro és un element gris a l'editor; editeu-la en mode `<HTML>`, com en el mode Font de CKEditor), `<iframe>`, blocs `<div>` i `<address>` amb el seu estil (un `<div>` enganxat des d'una pàgina web encara es converteix en un paràgraf), subíndex i superíndex, estils en línia de CKEditor (big, small, keyboard, sample i similars), l'estil d'encapçalaments, taules i cel·les de taula, la mida, flotació, vora i enllaç de les imatges, el llenguatge dels blocs de codi. Allò que no sobreviu a l'edició: l'epígraf d'una taula es converteix en un paràgraf centrat a sobre, les seccions de capçalera i peu de taula es converteixen en files ordinàries (el peu es manté a la part inferior), `<del>` esdevé `<s>` (el mateix aspecte), i l'altura d'una imatge es descarta quan s'estableix l'amplada (les proporcions es conserven). Un text guardat des d'aquest editor obté l'espaiat compacte dels paràgrafs d'aquest editor.

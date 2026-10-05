@@ -53,7 +53,7 @@ Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud sel
 ## Funktsioonid
 
 **Teksti vormindamine**
-- Paks, kaldkiri, allajoon, läbijoonitud, tekstisisese koodi.
+- Paks, kaldkiri, allajoon, läbijoonitud, alaindeks ja ülaindeks (Ctrl+, ja Ctrl+.), tekstisisene kood.
 - Teksti värvus ja tausta värvus: 64-värvine palett või mis tahes kuueteistkümnendsüsteemi väärtus.
 - Kirjatüüp (13 fonti) ja kirjasuuruse (eelseadistused 8 kuni 72 px või mis tahes väärtus).
 - Lõigu stiilid: pealkirjad 1–6 ja tavaline tekst.
@@ -89,7 +89,7 @@ Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud sel
 - Tsitaat-plokk koos autori ja kuupäeva reaga.
 
 **Redigeerimine**
-- `<HTML>` režiim HTML-i allika vaatamiseks ja redigeerimiseks.
+- `<HTML>` režiim HTML-i allika vaatamiseks ja redigeerimiseks: pesastatud plokid taandatakse, mitmest reast koosnevad plokid eraldatakse tühja reaga, süntaksit värvitakse samade reeglite järgi nagu HTML-koodiplokis ning Enter säilitab rea taande.
 - Markdown-stiilis sisestus: `#` pealkirjade jaoks, `-` ja `1.` loendite jaoks, `[ ]` ülesannete jaoks, ```` ```python ```` koodiplokkide jaoks (mis tahes keele nimi või mitte), `**bold**`, `---` horisontaalse joone jaoks. Standardsed klaviatuurikäsud: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z ja teised.
 - Redaktor ei kasva kunagi aknasoole kõrgemale: tööriistariба ja vormi nupud jäävad nähtavaks ning tekst skrollub sisemises. Kõrgus järgib akna suurust ja lehe suumi.
 - Redaktori parempoolses alumises nurgas on suuruse muutmise käepide. Kõrgus jäetakse meelde; topeltklõps naaseb automaatsele kõrgusele.
@@ -106,7 +106,7 @@ Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud sel
 
 Koodiblokid on esiletõstetud redaktoris ja salvestatud lehtedel. Ploki keel valitakse selle parempoolsest ülaosast olevaast märgist; loendis on otsinguväli ja see mäletab hiljuti ja sageli kasutatud keeli.
 
-52 keelt käivad pistikuga, nende hulgas 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linuxi teenuste logid ja journalctl väljund.
+52 keelt käivad pistikuga, nende hulgas HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linuxi teenuste logid ja journalctl väljund.
 
 Te võite lisada oma keeli. Iga keel on üks fail `highlight/` kaustas. Mis tahes 190+ highlight.js grammatikast või kolmandale osapoolele kuuluva saab teisendada selliseks failiks ühe käsuga:
 
@@ -182,7 +182,7 @@ Teine samm on oluline. Käivitamisel avaldab Redmine pistiku varad ainult siis, 
 Kui teie Redmine kasutas [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), saate vahetada selle pistikule ja hoida iga teksti, mis on kirjutatud: teemad, märkused, viki lehed, uudised, sõnumid, dokumendid. Midagi ei teisendita ja andmebaas ei puuduta. CKEditor salvestab oma tekstid HTML-ina ja nii teeb see pistik, seega salvestatud tekst kuvatakse lihtsalt uue vormindaja poolt.
 
 1. Paigaldage pistik (vt ülal) ja valige Teksti vormindamine: *TipTap HTML*.
-2. Hoida Redmine'i kausta `public/system/rich/`. Pildid ja failid, mille inimesed sisestasid CKEditori pildisirvijaga, salvestatakse sinna ja mitte andmebaasi, ning tekstid viitavad neile aadressi järgi (`/system/rich/...`). Teemade, viki lehtede jne manustamised salvestatakse nagu varem ja ei vaja midagi.
+2. Säilitage oma Redmine'i kaust `public/system/rich/`. Kui inimesed on CKEditori pildisirvijaga pilte ja faile sisestanud, salvestatakse need sinna, mitte andmebaasi ega manustamiste hulka, ning tekstid viitavad neile aadressi järgi (`/system/rich/...`). **Kui Redmine viiakse üle teise serverisse või paigaldatakse uuesti, viige ka see kaust üle**, koos andmebaasi ja `files/` kaustaga: kumbki neist neid faile ei sisalda ja ilma selle kaustata annavad vanade tekstide pildid vea 404. Teemade, viki lehtede jne manustamised salvestatakse nagu varem ja ei vaja midagi. Selles redaktoris sisestatud pildid on tavalised manustamised. Kaust jääb vajalikuks ka siis, kui redmine_ckeditor on eemaldatud.
 3. Eemaldage redmine_ckeditor, kui te seda enam ei vaja.
 
 Vana tekst kuvatakse nii, nagu CKEditor seda näitas: fondid, suurused, värvid ja joondamine, taandamised, loendid, tabelid (piirid, laiused, pealkirjad, ühendatud lahtrid), pildid (suurus, ujumine, piir, pilt lingis), lingid, koodiblokid nende keelega (esile tõstetud), Redmine'i makrod (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` jne), viki ja teemade lingid, tavalised veebiaadressid klikkavad ja manustatud `<iframe>` (video). Tekst, mis on kirjutatud CKEditoris, tunnetatakse selle märgistuse järgi ja säilitab paragraafide vahel tühikute, mis tal oli seal, mis on selles redaktoris suurem.
@@ -191,5 +191,6 @@ Erinevused tahtlikult:
 - `<iframe>` kuvatakse ainult siis, kui see osutab teisele saidile http(s) üle ja see on liivakastis: lehe sise saab käivitada oma skriptid, kuid ei saa jõuda Redmine'i lehele, avada ülemist akent ega esitada vorme. Kõik muud `<iframe>` eemaldatakse.
 - Lingid avatakse samas aknas: lingi `target` atributi (CKEditori "Uus aken (_blank)") ei säilitata.
 - Mõningaid vormindamist, mille CKEditor pakkus, kuid selle lehed vaikimisi langesid, kuvatakse siin: näiteks tema "Marker" stiilide tausta värvid ja `<q>` tsitaatide märgid.
+- CKEditori stiil "Special Container" (halli raamiga plokk) kuvatakse koodiplokina ilma süntaksivärvituseta ning redaktoris on see samuti koodiplokk.
 
-Vana tekst säilitab oma vormindamise, kui see avatakse redaktoris ja salvestatakse uuesti: Redmine'i makrod (makro on üks hall element redaktoris; redigeerige seda `<HTML>` režiimis, nagu CKEditori lähtekoodi režiimis), `<iframe>`, alaindeks ja üleindeks, CKEditori sisese stiili (suur, väike, klaviatuuri, näidis jne), pealkirjade, tabelite ja tabeli lahtrite stiil, piltide suurus, ujumine, piir ja link, koodiploki keel. Mis ei ole ülekandeline redigeerimisele: `<address>` ja `<div>` plokid muutuvad lõikudeks, tabeli pealkiri muutub keskele joondatud lõiguks, tabeli päis ja jalus muutuvad tavaliseks ridadeks (jalus jääb alumisele), `<del>` muutub `<s>` (sama vaade) ja pildi kõrgus langetatakse, kui selle laius määratakse (proportsioonid säilitatakse). See redaktori poolt salvestatud tekst saab selle redaktori kompaktse paragraafide vahega.
+Vana tekst säilitab oma vormindamise, kui see avatakse redaktoris ja salvestatakse uuesti: Redmine'i makrod (makro on üks hall element redaktoris; redigeerige seda `<HTML>` režiimis, nagu CKEditori lähtekoodi režiimis), `<iframe>`, `<div>` ja `<address>` plokid koos nende stiiliga (veebilehelt kleebitud `<div>` muudetakse siiski lõiguks), alaindeks ja ülaindeks, CKEditori sisese stiili (suur, väike, klaviatuuri, näidis jne), pealkirjade, tabelite ja tabeli lahtrite stiil, piltide suurus, ujumine, piir ja link, koodiploki keel. Mis redigeerimisel ei säili: tabeli pealkiri muutub keskele joondatud lõiguks, tabeli päis ja jalus muutuvad tavaliseks ridadeks (jalus jääb alumisele), `<del>` muutub `<s>` (sama vaade) ja pildi kõrgus langetatakse, kui selle laius määratakse (proportsioonid säilitatakse). See redaktori poolt salvestatud tekst saab selle redaktori kompaktse paragraafide vahega.

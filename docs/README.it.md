@@ -53,7 +53,7 @@ Motore dell’editor: **TipTap 3.31.4**. Tutti i pacchetti `@tiptap/*` sono fiss
 ## Funzionalità
 
 **Formattazione testo**
-- Grassetto, corsivo, sottolineato, barrato, codice inline.
+- Grassetto, corsivo, sottolineato, barrato, pedice e apice (Ctrl+, e Ctrl+.), codice inline.
 - Colore del testo e colore di sfondo: una tavolozza di 64 colori o qualsiasi valore esadecimale.
 - Carattere (13 tipi) e dimensione del carattere (valori predefiniti da 8 a 72 px, oppure qualsiasi valore).
 - Stili di paragrafo: titoli da 1 a 6 e testo normale.
@@ -89,7 +89,7 @@ Motore dell’editor: **TipTap 3.31.4**. Tutti i pacchetti `@tiptap/*` sono fiss
 - Blocco di citazione con una riga per autore e data.
 
 **Modifica**
-- Modalità `<HTML>` per visualizzare e modificare il sorgente HTML.
+- Modalità `<HTML>` per visualizzare e modificare il sorgente HTML: i blocchi annidati hanno un rientro, una riga vuota separa i blocchi che occupano più righe, la sintassi viene colorata con le stesse regole di un blocco di codice HTML e Enter mantiene il rientro della riga.
 - Digitazione in stile Markdown: `#` per i titoli, `-` e `1.` per gli elenchi, `[ ]` per le attività, ```` ```python ```` per un blocco di codice (qualsiasi nome di linguaggio oppure nessuno), `**bold**`, `---` per una linea orizzontale. Scorciatoie da tastiera standard: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z e altre.
 - L’editor non diventa mai più alto della finestra: la barra degli strumenti e i pulsanti del modulo restano visibili e il testo scorre al suo interno. L’altezza segue le dimensioni della finestra e lo zoom della pagina.
 - Una maniglia di ridimensionamento nell’angolo in basso a destra permette di impostare l’altezza manualmente. L’altezza viene memorizzata; con un doppio clic si torna all’altezza automatica.
@@ -106,7 +106,7 @@ Motore dell’editor: **TipTap 3.31.4**. Tutti i pacchetti `@tiptap/*` sono fiss
 
 I blocchi di codice vengono evidenziati sia nell’editor sia nelle pagine salvate. Il linguaggio di un blocco si sceglie dal badge nell’angolo in alto a destra; l’elenco dispone di un campo di ricerca e ricorda i linguaggi usati di recente e quelli usati più spesso.
 
-Con il plugin sono forniti 52 linguaggi, tra cui 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, i log dei servizi Linux e l’output di journalctl.
+Con il plugin sono forniti 52 linguaggi, tra cui HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, i log dei servizi Linux e l’output di journalctl.
 
 È possibile aggiungere linguaggi propri. Ogni linguaggio è un file nella cartella `highlight/`. Una qualsiasi delle oltre 190 grammatiche di highlight.js, o una grammatica di terze parti, viene convertita in un file di questo tipo con un solo comando:
 
@@ -182,7 +182,7 @@ Il passaggio 2 è importante. All’avvio Redmine ripubblica gli asset dei plugi
 Se Redmine ha utilizzato [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), è possibile passare a questo plugin e conservare ogni testo che è stato scritto: segnalazioni, note, pagine wiki, notizie, messaggi, documenti. Nulla viene convertito e il database non viene toccato. CKEditor memorizza i suoi testi come HTML e così fa anche questo plugin, quindi un testo memorizzato viene semplicemente mostrato dal nuovo formattatore.
 
 1. Installare il plugin (vedere sopra) e scegliere Formattazione testo: *TipTap HTML*.
-2. Conservare la cartella `public/system/rich/` di Redmine. Le immagini e i file che le persone hanno inserito con il browser immagini di CKEditor sono archiviati lì e non nel database, e i testi vi si riferiscono per indirizzo (`/system/rich/...`). Gli allegati di segnalazioni, pagine wiki e così via vengono archiviati come prima e non richiedono nulla.
+2. Conservare la cartella `public/system/rich/` di Redmine. Le immagini e i file eventualmente inseriti con il browser immagini di CKEditor sono archiviati lì, non nel database e non tra gli allegati, e i testi vi si riferiscono per indirizzo (`/system/rich/...`). **Se Redmine viene spostato su un altro server o installato di nuovo, spostare anche questa cartella**, insieme al database e alla cartella `files/`: nessuno dei due contiene questi file, e senza la cartella le immagini nei vecchi testi restituiscono un errore 404. Gli allegati di segnalazioni, pagine wiki e così via vengono archiviati come prima e non richiedono nulla. Le immagini inserite in questo editor sono normali allegati. La cartella resta necessaria anche dopo la rimozione di redmine_ckeditor.
 3. Rimuovere redmine_ckeditor quando non lo si usa più.
 
 Un testo precedente viene mostrato nel modo in cui CKEditor lo ha mostrato: caratteri, dimensioni, colori e allineamento, rientri, elenchi, tabelle (bordi, larghezze, didascalie, celle unite), immagini (dimensioni, float, bordo, un'immagine all'interno di un collegamento), collegamenti, blocchi di codice con il loro linguaggio (evidenziati), macro di Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` e così via), collegamenti wiki e segnalazione, indirizzi web normali resi cliccabili e `<iframe>` incorporati (video). Un testo scritto in CKEditor viene riconosciuto dal suo markup e conserva la spaziatura tra i paragrafi che aveva lì, che è maggiore rispetto a questo editor.
@@ -191,5 +191,6 @@ Differenze intenzionali:
 - Un `<iframe>` viene mostrato solo quando punta a un altro sito su http(s) e viene sottoposto a sandbox: la pagina al suo interno può eseguire i propri script, ma non può raggiungere la pagina di Redmine, aprire la finestra principale o inviare moduli. Tutti gli altri `<iframe>` vengono rimossi.
 - I collegamenti si aprono nella stessa finestra: l'attributo `target` di un collegamento (opzione "Nuova finestra (_blank)" di CKEditor) non viene conservato.
 - Alcuni formattamenti che CKEditor offriva ma le cui pagine hanno silenziosamente eliminato vengono mostrati qui: ad esempio i colori di sfondo degli stili "Marker" di CKEditor e le virgolette di `<q>`.
+- Lo stile «Special Container» di CKEditor (un blocco con una cornice grigia) viene mostrato come blocco di codice senza evidenziazione, e anche nell'editor è un blocco di codice.
 
-Un testo precedente mantiene la sua formattazione quando viene aperto nell'editor e salvato di nuovo: macro di Redmine (una macro è un elemento grigio nell'editor; modificarla nella modalità `<HTML>`, come nella modalità Sorgente di CKEditor), `<iframe>`, apice e pedice, stili inline di CKEditor (big, small, keyboard, sample e così via), lo stile di titoli, tabelle e celle di tabella, la dimensione, il float, il bordo e il collegamento delle immagini, il linguaggio dei blocchi di codice. Ciò che non sopravvive alla modifica: i blocchi `<address>` e `<div>` diventano paragrafi, la didascalia di una tabella diventa un paragrafo centrato sopra di essa, le sezioni intestazione e piè di pagina di una tabella diventano righe ordinarie (il piè di pagina rimane in fondo), `<del>` diventa `<s>` (lo stesso aspetto), e l'altezza di un'immagine viene eliminata quando la larghezza è impostata (le proporzioni sono conservate). Un testo salvato da questo editor ottiene lo spazio compatto tra i paragrafi di questo editor.
+Un testo precedente mantiene la sua formattazione quando viene aperto nell'editor e salvato di nuovo: macro di Redmine (una macro è un elemento grigio nell'editor; modificarla nella modalità `<HTML>`, come nella modalità Sorgente di CKEditor), `<iframe>`, i blocchi `<div>` e `<address>` con il loro stile (un `<div>` incollato da una pagina web viene comunque trasformato in un paragrafo), apice e pedice, stili inline di CKEditor (big, small, keyboard, sample e così via), lo stile di titoli, tabelle e celle di tabella, la dimensione, il float, il bordo e il collegamento delle immagini, il linguaggio dei blocchi di codice. Ciò che non sopravvive alla modifica: la didascalia di una tabella diventa un paragrafo centrato sopra di essa, le sezioni intestazione e piè di pagina di una tabella diventano righe ordinarie (il piè di pagina rimane in fondo), `<del>` diventa `<s>` (lo stesso aspetto), e l'altezza di un'immagine viene eliminata quando la larghezza è impostata (le proporzioni sono conservate). Un testo salvato da questo editor ottiene lo spazio compatto tra i paragrafi di questo editor.

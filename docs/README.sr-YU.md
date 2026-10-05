@@ -53,7 +53,7 @@ Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na
 ## Mogućnosti
 
 **Oblikovanje teksta**
-- Podebljano, kurziv, podvučeno, precrtano, kod unutar teksta.
+- Podebljano, kurziv, podvučeno, precrtano, donji i gornji indeks (Ctrl+, i Ctrl+.), kod unutar teksta.
 - Boja teksta i boja pozadine: paleta od 64 boje ili bilo koja heksadecimalna vrednost.
 - Font (13 fontova) i veličina fonta (unapred zadati vrednosti od 8 do 72 px ili bilo koja vrednost).
 - Stilovi pasusa: naslovi 1–6 i običan tekst.
@@ -89,7 +89,7 @@ Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na
 - Blok citata sa redom za autora i datum.
 
 **Uređivanje**
-- Režim `<HTML>` za pregled i izmenu HTML izvornog koda.
+- Režim `<HTML>` za pregled i izmenu HTML izvornog koda: ugneždeni blokovi su uvučeni, prazan red razdvaja blokove koji zauzimaju više redova, sintaksa je obojena po istim pravilima kao u HTML bloku koda, a Enter zadržava uvlačenje reda.
 - Kuсanje u stilu Markdown-а: `#` za naslove, `-` i `1.` za liste, `[ ]` za zadatke, ```` ```python ```` za blok koda (bilo koje ime jezika ili bez njega), `**bold**`, `---` za horizontalnu liniju. Standardne prečice na tastaturi: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i druge.
 - Uređivač nikada ne postaje viši od prozora: traka sa alatama i dugmad obrasca ostaju u vidnom polju, a tekst se pomera unutar uređivača. Visina prati veličinu prozora i zum stranice.
 - Ručica za promenu veličine u donjem desnom uglu služi za ručno podešavanje visine. Visina se pamti; dvostruki klik vraća automatsku visinu.
@@ -106,7 +106,7 @@ Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na
 
 Sintaksa u blokovima koda istakuje se podjednako i u uređivaču i na sačuvanim stranicama. Jezik bloka bira se pomoću znački u njegovu gornjem desnom uglu; lista ima polje za pretragu i pamti nedavno i često korišćene jezike.
 
-Sa dodatnom komponentom dolazi 52 jezika, među kojima su 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dnevnici Linux servisa i izlaz komande journalctl.
+Sa dodatnom komponentom dolazi 52 jezika, među kojima su HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dnevnici Linux servisa i izlaz komande journalctl.
 
 Možete dodati sopstvene jezike. Svaki jezik je jedna datoteka u faskikli `highlight/`. Bilo koja od 190+ gramatika highlight.js, ili gramatika treće strane, konvertuje se u takvu datoteku jednom komandom:
 
@@ -182,7 +182,7 @@ Korak 2 je važan. Pri pokretanju Redmine ponovo objavljuje resurse dodatnih kom
 Ako vaš Redmine koristi [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), možete preći na ovu dodatnu komponentu i zadržati svaki tekst koji je napisan: problemi, beleške, wiki stranice, vesti, poruke, dokumenti. Ništa se ne konvertuje i baza podataka se ne dodiruje. CKEditor čuva svoje tekstove kao HTML i takodje i ova dodatna komponenta, pa se čuvani tekst jednostavno prikazuje novim oblikivačem.
 
 1. Inštalirajte dodatnu komponentu (videti iznad) i izaberite Oblikovanje teksta: *TipTap HTML*.
-2. Zadržite fasciklu `public/system/rich/` vaše Redmine instalacije. Slike i datoteke koje su ljudi umetuli putim CKEditor-ovog pregledača datoteka čuvaju se tamo i ne u bazi podataka, a tekstovi ih navode po adresi (`/system/rich/...`). Priložene datoteke problema, wiki stranica i slično čuvaju se kao i ranije i ne zahtevaјu ništa.
+2. Zadržite fasciklu `public/system/rich/` vaše Redmine instalacije. Ako su ljudi umetali slike i datoteke pomoću CKEditor-ovog pregledača slika, one se čuvaju tamo, a ne u bazi podataka niti među priloženim datotekama, dok tekstovi na njih upućuju po adresi (`/system/rich/...`). **Ako se Redmine premesti na drugi server ili ponovo postavi, premestite i ovu fasciklu**, zajedno sa bazom podataka i fasciklom `files/`: nijedna od njih ne sadrži ove datoteke, a bez ove fascikle slike u starim tekstovima vraćaju grešku 404. Priložene datoteke problema, wiki stranica i slično čuvaju se kao i ranije i ne zahtevaju ništa. Slike umetnute pomoću ovog uređivača su obične priložene datoteke. Fascikla ostaje potrebna i kada se redmine_ckeditor ukloni.
 3. Uklonite redmine_ckeditor kada vam više nije potrebna.
 
 Stari tekst prikazuje se onako kako ga je prikazivao CKEditor: fontovi, veličine, boje i poravnanje, uvlačenja, liste, tabele (ivice, širine, naslovi, spojene ćelije), slike (veličina, plutanje, ivica, slika unutar veze), veze, blokovi koda sa svojim jezikom (istaknuty), Redmine makroi (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` i slično), wiki i problem veze, obične veb adrese učinjene klikabilnim i ugneždeni `<iframe>` (video). Tekst napisan u CKEditor-u prepoznaje se po svojoj razmetki i zadržava razmak između pasusa koji je imao tamo, što je veći nego u ovom uređivaču.
@@ -191,5 +191,6 @@ Razlike namerno:
 - `<iframe>` se prikazuje samo kada pokazuje na drugi sajt preko http(s), i on je izolovan u pesku: stranica unutar može pokrenuti svoje skripte, ali ne može dostići stranicu Redmine-a, otvoriti glavni prozor ili poslati obriesce. Svi ostali `<iframe>` uklanjaju se.
 - Veze se otvaraju u istom prozoru: `target` atribut veze (CKEditor-ovo "New Window (_blank)") se ne zadržava.
 - Neko oblikovanje koje je CKEditor nudio ali njegove stranice su šćutljivo izbacili prikazuje se ovde: na primer pozadinske boje njegovih "Marker" stilova i navodnika `<q>`.
+- Stil „Special Container“ iz CKEditor-a (blok sa sivim okvirom) prikazuje se kao blok koda bez ističanja sintakse, a i u uređivaču je blok koda.
 
-Stari tekst zadržava svoje oblikovanje kada se otvori u uređivaču i ponovo sačuva: Redmine makroi (makro je jedan sivy element u uređivaču; izmenite ga u režimu `<HTML>`, kao u CKEditor-ovom režimu Source), `<iframe>`, potpisі i nadписи, CKEditor-ovi unutrašnji stilovi (big, small, keyboard, sample i slično), stil naslova, tabela i ćelija tabele, veličina, plutanje, ivica i veza slike, jezik blokova koda. Šta ne preživi izmenu: `<address>` i `<div>` blokovi postaju pasusi, naslov tabele postaje centriran pasas iznad nje, zaglavlje i podnožje tabele postaju obični redovi (podnožje ostaje na dnu), `<del>` postaje `<s>` (isti izgled), i visina slike se opušta kada je njena širina postavljena (proporciјe se zadržavaju). Tekst sačuvan iz ovog uređivača dobija kompaktan razmak između pasusa ovog uređivača.
+Stari tekst zadržava svoje oblikovanje kada se otvori u uređivaču i ponovo sačuva: Redmine makroi (makro je jedan siv element u uređivaču; izmenite ga u režimu `<HTML>`, kao u CKEditor-ovom režimu Source), `<iframe>`, blokovi `<div>` i `<address>` sa svojim stilom (`<div>` nalepljen sa veb stranice i dalje se pretvara u pasus), donji i gornji indeks, CKEditor-ovi unutrašnji stilovi (big, small, keyboard, sample i slično), stil naslova, tabela i ćelija tabele, veličina, plutanje, ivica i veza slike, jezik blokova koda. Šta ne preživi izmenu: naslov tabele postaje centriran pasus iznad nje, zaglavlje i podnožje tabele postaju obični redovi (podnožje ostaje na dnu), `<del>` postaje `<s>` (isti izgled), i visina slike se ispušta kada je njena širina postavljena (proporcije se zadržavaju). Tekst sačuvan iz ovog uređivača dobija kompaktan razmak između pasusa ovog uređivača.

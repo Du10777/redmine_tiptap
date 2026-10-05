@@ -53,7 +53,7 @@ Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yan
 ## Fitur
 
 **Format teks**
-- Tebal, miring, garis bawah, coretan, kode dalam baris.
+- Tebal, miring, garis bawah, coretan, subscript dan superscript (Ctrl+, dan Ctrl+.), kode dalam baris.
 - Warna teks dan warna latar belakang: palet 64 warna atau nilai heksadesimal apa pun.
 - Keluarga font (13 font) dan ukuran font (preset dari 8 hingga 72 px, atau nilai apa pun).
 - Gaya paragraf: tajuk 1–6 dan teks normal.
@@ -89,7 +89,7 @@ Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yan
 - Blok kutipan dengan baris penulis dan tanggal.
 
 **Penyuntingan**
-- Mode `<HTML>` untuk melihat dan menyunting sumber HTML.
+- Mode `<HTML>` untuk melihat dan menyunting sumber HTML: blok bersarang diberi indentasi, satu baris kosong memisahkan blok yang terdiri dari beberapa baris, sintaks diwarnai dengan aturan yang sama seperti blok kode HTML, dan Enter mempertahankan indentasi baris.
 - Pengetikan gaya Markdown: `#` untuk tajuk, `-` dan `1.` untuk daftar, `[ ]` untuk tugas, ```` ```python ```` untuk blok kode (nama bahasa apa pun atau tidak ada), `**bold**`, `---` untuk garis horizontal. Pintasan papan ketik standar: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z dan lainnya.
 - Editor tidak pernah tumbuh lebih tinggi dari jendela: bilah alat dan tombol formulir tetap terlihat, dan teks bergulir di dalamnya. Tinggi mengikuti ukuran jendela dan perbesar halaman.
 - Gagang pengubah ukuran di sudut kanan bawah mengatur tinggi dengan tangan. Tinggi diingat; klik ganda kembali ke tinggi otomatis.
@@ -106,7 +106,7 @@ Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yan
 
 Blok kode disorot di editor dan di halaman yang disimpan. Bahasa blok dipilih dari badge di sudut kanan atasnya; daftar memiliki kotak pencarian dan mengingat bahasa yang baru-baru ini dan sering digunakan.
 
-52 bahasa disertakan dengan plugin, termasuk 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, log layanan Linux dan output journalctl.
+52 bahasa disertakan dengan plugin, termasuk HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, log layanan Linux dan output journalctl.
 
 Anda dapat menambahkan bahasa Anda sendiri. Setiap bahasa adalah satu file dalam folder `highlight/`. Salah satu dari 190+ tata bahasa highlight.js, atau tata bahasa pihak ketiga, dikonversi menjadi file seperti itu dengan satu perintah:
 
@@ -182,7 +182,7 @@ Langkah 2 penting. Saat startup Redmine menerbitkan ulang aset plugin hanya jika
 Jika Redmine Anda menggunakan [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), Anda dapat beralih ke plugin ini dan menyimpan setiap teks yang telah ditulis: masalah, catatan, halaman wiki, berita, pesan, dokumen. Tidak ada yang dikonversi dan database tidak disentuh. CKEditor menyimpan teksnya sebagai HTML dan begitu juga plugin ini, jadi teks yang disimpan hanya ditampilkan oleh pemformat baru.
 
 1. Pasang plugin (lihat di atas) dan pilih Format teks: *TipTap HTML*.
-2. Simpan folder `public/system/rich/` dari Redmine Anda. Gambar dan file yang orang masukkan dengan browser gambar CKEditor disimpan di sana dan bukan di database, dan teksnya merujuk ke mereka berdasarkan alamat (`/system/rich/...`). Lampiran masalah, halaman wiki, dan sebagainya disimpan seperti sebelumnya dan tidak perlu apa-apa.
+2. Simpan folder `public/system/rich/` dari Redmine Anda. Jika orang memasukkan gambar dan file dengan browser gambar CKEditor, semuanya disimpan di sana, bukan di database dan bukan sebagai lampiran, dan teks merujuk ke sana berdasarkan alamat (`/system/rich/...`). **Jika Redmine dipindahkan ke server lain atau dipasang ulang, pindahkan juga folder ini**, bersama database dan folder `files/`: keduanya tidak berisi file-file ini, dan tanpa folder tersebut gambar di teks lama menampilkan kesalahan 404. Lampiran masalah, halaman wiki, dan sebagainya disimpan seperti sebelumnya dan tidak perlu apa-apa. Gambar yang disisipkan di editor ini adalah lampiran biasa. Folder ini tetap diperlukan setelah redmine_ckeditor dihapus.
 3. Hapus redmine_ckeditor ketika Anda tidak lagi membutuhkannya.
 
 Teks lama ditampilkan seperti yang ditampilkan CKEditor: font, ukuran, warna dan penyelarasan, indentasi, daftar, tabel (batas, lebar, captions, sel yang digabung), gambar (ukuran, mengapung, batas, gambar dalam tautan), tautan, blok kode dengan bahasa mereka (disorot), makro Redmine (`{{toc}}`, `{{collapse(Title) ... }}`, `{{thumbnail(...)}}` dan sebagainya), wiki dan tautan masalah, alamat web biasa yang dapat diklik, dan `<iframe>` yang tertanam (video). Teks yang ditulis di CKEditor dikenali oleh markup-nya dan mempertahankan jarak antara paragraf yang dimilikinya di sana, yang lebih lebar daripada di editor ini.
@@ -191,5 +191,6 @@ Perbedaan dengan sengaja:
 - `<iframe>` hanya ditampilkan jika menunjuk ke situs lain melalui http(s), dan disandboxkan: halaman di dalam dapat menjalankan skrip sendiri, tetapi tidak dapat menjangkau halaman Redmine, membuka jendela atas atau mengirimkan formulir. Semua `<iframe>` lainnya dihapus.
 - Tautan terbuka di jendela yang sama: atribut `target` tautan (CKEditor's "New Window (_blank)") tidak dipertahankan.
 - Beberapa pemformatan yang CKEditor tawarkan tetapi halaman-halamannya diam-diam dijatuhkan ditampilkan di sini: misalnya warna latar belakang gaya "Marker" dan tanda kutip dari `<q>`.
+- Gaya "Special Container" dari CKEditor (blok dengan bingkai abu-abu) ditampilkan sebagai blok kode tanpa penyorotan, dan di editor juga berupa blok kode.
 
-Teks lama mempertahankan pemformatannya ketika dibuka di editor dan disimpan kembali: makro Redmine (makro adalah satu elemen abu-abu di editor; sunting dalam mode `<HTML>`, seperti dalam mode Sumber CKEditor), `<iframe>`, subscript dan superscript, gaya inline CKEditor (besar, kecil, papan ketik, sampel dan sebagainya), gaya tajuk, tabel dan sel tabel, ukuran, mengapung, batas dan tautan gambar, bahasa blok kode. Apa yang tidak bertahan penyuntingan: blok `<address>` dan `<div>` menjadi paragraf, captions tabel menjadi paragraf berpusat di atasnya, bagian header dan footer tabel menjadi baris biasa (footer tetap di bawah), `<del>` menjadi `<s>` (tampilan yang sama), dan tinggi gambar dijatuhkan ketika lebarnya diatur (proporsi dipertahankan). Teks yang disimpan dari editor ini mendapatkan jarak paragraf kompak dari editor ini.
+Teks lama mempertahankan pemformatannya ketika dibuka di editor dan disimpan kembali: makro Redmine (makro adalah satu elemen abu-abu di editor; sunting dalam mode `<HTML>`, seperti dalam mode Sumber CKEditor), `<iframe>`, blok `<div>` dan `<address>` beserta gayanya (`<div>` yang ditempel dari halaman web tetap diubah menjadi paragraf), subscript dan superscript, gaya inline CKEditor (besar, kecil, papan ketik, sampel dan sebagainya), gaya tajuk, tabel dan sel tabel, ukuran, mengapung, batas dan tautan gambar, bahasa blok kode. Apa yang tidak bertahan setelah penyuntingan: caption tabel menjadi paragraf berpusat di atasnya, bagian header dan footer tabel menjadi baris biasa (footer tetap di bawah), `<del>` menjadi `<s>` (tampilan yang sama), dan tinggi gambar dihapus ketika lebarnya diatur (proporsi dipertahankan). Teks yang disimpan dari editor ini mendapatkan jarak paragraf kompak dari editor ini.
