@@ -310,7 +310,7 @@ function collectTokens(nodes, classes, out, offset) {
 // it into decorations, view mode into spans (paintTokens), so both get the same
 // classes. An unregistered language is plain text. There is no language
 // auto-detection: otherwise the block would be colored at random.
-function textTokens(language, text) {
+export function textTokens(language, text) {
   var tokens = [];
   if (hasLanguage(language) && lowlight.registered(language)) {
     try {
@@ -700,7 +700,7 @@ export const FormattableCodeBlock = CodeBlock.extend({
 // (bold, links, colors), so its markup is not replaced: the text nodes are cut
 // at token boundaries and the pieces are wrapped in highlight spans inside that
 // formatting. A token that crosses a formatting boundary gets a span on each side.
-function paintTokens(code, tokens) {
+export function paintTokens(code, tokens) {
   var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT);
   var textNodes = [];
   for (var node = walker.nextNode(); node; node = walker.nextNode()) textNodes.push(node);

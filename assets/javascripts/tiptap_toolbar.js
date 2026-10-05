@@ -279,6 +279,18 @@ function makeRow1(editor) {
 
   row.appendChild(makeSep());
 
+  // --- Subscript and superscript: x with a small 2 below / above the line ---
+  row.appendChild(makeToggleButton({ title: t('toolbar.subscript'),
+    html: '<span>x<span style="font-size:9px;position:relative;top:4px">2</span></span>',
+    action: function() { editor.chain().focus().toggleSubscript().run(); },
+    isActive: function() { return editor.isActive('subscript'); } }, toggles));
+  row.appendChild(makeToggleButton({ title: t('toolbar.superscript'),
+    html: '<span>x<span style="font-size:9px;position:relative;top:-4px">2</span></span>',
+    action: function() { editor.chain().focus().toggleSuperscript().run(); },
+    isActive: function() { return editor.isActive('superscript'); } }, toggles));
+
+  row.appendChild(makeSep());
+
   // --- B I U S ---
   row.appendChild(makeToggleButton({ title: t('toolbar.bold'), html: '<span style="font-weight:700">B</span>',
     action: function() { editor.chain().focus().toggleBold().run(); },
@@ -483,7 +495,8 @@ function makeRow1(editor) {
 }
 
 
-export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
+// source: the source mode (see tiptap_source.js): source.area is the textarea with the HTML.
+export function buildToolbar(editor, editorDiv, source, urlMap) {
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
   var sourceMode = false;
@@ -516,19 +529,19 @@ export function buildToolbar(editor, editorDiv, sourceDiv, urlMap) {
     e.preventDefault();
     sourceMode = !sourceMode;
     if (sourceMode) {
-      sourceDiv.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
+      source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
         return html
           .replace(/<details open="">/g, '<details>')
           .replace(/></g, '>\n<')
           .replace(/<br>/g, '<br>\n');
       });
       editorDiv.style.display = 'none';
-      sourceDiv.style.display = 'block';
+      source.show(true);
       srcBtn.classList.add('active');
     } else {
-      editor.commands.setContent(resolveAttachmentSrcs(sourceDiv.value || '', urlMap));
+      editor.commands.setContent(resolveAttachmentSrcs(source.area.value || '', urlMap));
       editorDiv.style.display = 'block';
-      sourceDiv.style.display = 'none';
+      source.show(false);
       srcBtn.classList.remove('active');
     }
     // hide all row 1 controls (except srcBtn) and all of row 2

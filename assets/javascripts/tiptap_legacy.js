@@ -100,10 +100,10 @@ export const RedmineMacro = Node.create({
 });
 
 // --- Inline tags ------------------------------------------------------------
-// <sub> and <sup>, and the tags of CKEditor's "Styles" list (big, small,
-// typewriter, keyboard, sample, variable, inserted text, cited work, quotation,
-// abbreviation). The toolbar of this editor has no buttons for them; they are
-// here so that a text that has them keeps them.
+// <sub> and <sup> (they have buttons in the toolbar), and the tags of CKEditor's
+// "Styles" list (big, small, typewriter, keyboard, sample, variable, inserted text,
+// cited work, quotation, abbreviation). The toolbar of this editor has no buttons
+// for the latter; they are here so that a text that has them keeps them.
 function tagMark(name, tag, attributes, extra) {
   return Mark.create(Object.assign({
     name: name,
@@ -127,8 +127,32 @@ function tagMark(name, tag, attributes, extra) {
   }, extra || {}));
 }
 
-export const Subscript = tagMark('subscript', 'sub', [], { excludes: 'superscript' });
-export const Superscript = tagMark('superscript', 'sup', [], { excludes: 'subscript' });
+// A mark of the toolbar: it has a toggle command and a key, the button does the
+// same as the key. Subscript and superscript exclude each other (a letter cannot
+// be both).
+function toggledTagMark(name, tag, command, shortcut, excludes) {
+  return tagMark(name, tag, [], {
+    excludes: excludes,
+
+    addCommands() {
+      var commands = {};
+      commands[command] = function() {
+        return function(props) { return props.commands.toggleMark(name); };
+      };
+      return commands;
+    },
+
+    addKeyboardShortcuts() {
+      var editor = this.editor;
+      var shortcuts = {};
+      shortcuts[shortcut] = function() { return editor.commands[command](); };
+      return shortcuts;
+    },
+  });
+}
+
+export const Subscript = toggledTagMark('subscript', 'sub', 'toggleSubscript', 'Mod-,', 'superscript');
+export const Superscript = toggledTagMark('superscript', 'sup', 'toggleSuperscript', 'Mod-.', 'subscript');
 
 export const InlineTagMarks = [
   tagMark('htmlBig', 'big'),
@@ -194,6 +218,55 @@ export const LegacyIframe = Node.create({
     };
   },
 });
+
+// --- Special container ----------------------------------------------------------
+// CKEditor's Styles list has a "Special Container": a <div> with a gray frame
+//   <div style="background:#eeeeee;border:1px solid #cccccc;padding:5px 10px;">text</div>
+// It is shown as a code block without highlighting, the very same one as
+//   <pre><code class="language-plaintext">text</code></pre>
+// does: the gray frame is what such a block looks like here. The server does the
+// same when it shows a saved text (SPECIAL_CONTAINER_RE in the formatter, keep both
+// alike). Only the style of exactly these three declarations counts, a <div> that
+// has anything else in its style is an ordinary one, and so is one with another
+// <div> or a macro inside (a code block cannot hold a macro, its text would be lost
+// on the way).
+function styleSignature(text) {
+  var probe = document.createElement('div');
+  probe.style.cssText = text;
+  var parts = [];
+  for (var i = 0; i < probe.style.length; i++) {
+    parts.push(probe.style[i] + ':' + probe.style.getPropertyValue(probe.style[i]));
+  }
+  return parts.sort().join(';');
+}
+
+// The browser parses the style, so #eee, #eeeeee and rgb(238,238,238) are one value.
+var SPECIAL_CONTAINER_SIGNATURE = styleSignature('background:#eeeeee;border:1px solid #cccccc;padding:5px 10px');
+
+// The content of the container as the text of a code block: a line break and the
+// end of a block begin a new line, spaces are collapsed the way a browser shows
+// them, the inline formatting (bold, links, colors) stays, the block tags go.
+function containerCode(html) {
+  return html
+    .replace(/[ \t\r\n\f]+/g, ' ')
+    .replace(/ ?<br\b[^>]*> ?/gi, '\n')
+    .replace(/ ?<\/(?:p|div|h[1-6]|li|blockquote|address|pre)> ?/gi, '\n')
+    .replace(/ ?<\/?(?:p|div|h[1-6]|ul|ol|li|blockquote|address|pre)\b[^>]*> ?/gi, '')
+    .replace(/^[ \n]+|[ \n]+$/g, '');
+}
+
+export function convertSpecialContainers(container) {
+  container.querySelectorAll('div[style]').forEach(function(div) {
+    if (div.querySelector('div, [data-redmine-macro]')) return;
+    if (styleSignature(div.getAttribute('style')) !== SPECIAL_CONTAINER_SIGNATURE) return;
+    var code = document.createElement('code');
+    code.className = 'language-plaintext';
+    code.innerHTML = containerCode(div.innerHTML);
+    var pre = document.createElement('pre');
+    pre.appendChild(code);
+    div.replaceWith(pre);
+  });
+}
 
 // --- Attributes of known elements ----------------------------------------------
 // What CKEditor puts on elements the editor knows already, but whose attributes

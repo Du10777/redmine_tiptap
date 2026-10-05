@@ -1,4 +1,4 @@
-import { protectMacros, restoreMacros, flattenTableExtras } from './tiptap_legacy.js';
+import { protectMacros, restoreMacros, flattenTableExtras, convertSpecialContainers } from './tiptap_legacy.js';
 
 // The HTML of the editor as it is stored. format, if given, reshapes the HTML
 // (the source mode puts line breaks into it) without touching the macros: they
@@ -54,6 +54,7 @@ export function resolveAttachmentSrcs(html, urlMap) {
     }
   });
   flattenTableExtras(div);
+  convertSpecialContainers(div);
   return div.innerHTML;
 }
 

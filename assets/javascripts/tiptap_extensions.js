@@ -42,7 +42,14 @@ export const Image = BaseImage.extend({
       },
       width: {
         default: null,
-        parseHTML: element => element.style.width ? parseInt(element.style.width) : null,
+        // The width is in the style (what this editor writes, and CKEditor's image
+        // dialog) or in the width attribute (older texts); a percentage is not a
+        // width in pixels.
+        parseHTML: element => {
+          if (element.style.width) return parseInt(element.style.width) || null;
+          var attribute = element.getAttribute('width') || '';
+          return /^\d+$/.test(attribute) ? parseInt(attribute, 10) : null;
+        },
         renderHTML: attributes => {
           if (!attributes.width) return {};
           return { style: 'width: ' + attributes.width + 'px' };

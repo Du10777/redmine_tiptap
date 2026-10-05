@@ -50,7 +50,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 ## Features
 
 **Text formatting**
-- Bold, italic, underline, strikethrough, inline code.
+- Bold, italic, underline, strikethrough, subscript and superscript (Ctrl+, and Ctrl+.), inline code.
 - Text color and background color: a 64-color palette or any hex value.
 - Font family (13 fonts) and font size (presets from 8 to 72 px, or any value).
 - Paragraph styles: headings 1–6 and normal text.
@@ -86,7 +86,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 - Quote block with an author and date line.
 
 **Editing**
-- `<HTML>` mode to view and edit the HTML source.
+- `<HTML>` mode to view and edit the HTML source; its syntax is colored by the same rules as an HTML code block.
 - Markdown-style typing: `#` for headings, `-` and `1.` for lists, `[ ]` for tasks, ```` ```python ```` for a code block (any language name or none), `**bold**`, `---` for a horizontal rule. Standard keyboard shortcuts: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z and others.
 - The editor never grows taller than the window: the toolbar and the form buttons stay in view, and the text scrolls inside. The height follows the window size and page zoom.
 - A resize grip in the bottom right corner sets the height by hand. The height is remembered; double-click returns to automatic height.
@@ -103,7 +103,7 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 
 Code blocks are highlighted in the editor and on saved pages alike. The language of a block is picked from the badge in its top right corner; the list has a search box and remembers recently and frequently used languages.
 
-52 languages come with the plugin, among them 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logs and journalctl output.
+52 languages come with the plugin, among them HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, Linux service logs and journalctl output.
 
 You can add your own languages. Each language is one file in the `highlight/` folder. Any of the 190+ highlight.js grammars, or a third-party one, is converted into such a file with one command:
 
@@ -188,5 +188,6 @@ Differences on purpose:
 - An `<iframe>` is shown only when it points to another site over http(s), and it is sandboxed: the page inside can run its own scripts, but cannot reach the page of Redmine, open the top window or submit forms. All other `<iframe>` are removed.
 - Links open in the same window: the `target` attribute of a link (CKEditor's "New Window (_blank)") is not kept.
 - Some formatting that CKEditor offered but its pages silently dropped is shown here: for example the background colors of its "Marker" styles and the quotation marks of `<q>`.
+- The "Special Container" style of CKEditor (a block with a gray frame) is shown as a code block without highlighting, and it is a code block in the editor too.
 
 An old text keeps its formatting when it is opened in the editor and saved again: Redmine macros (a macro is one gray element in the editor; edit it in the `<HTML>` mode, as in CKEditor's Source mode), `<iframe>`, subscript and superscript, CKEditor's inline styles (big, small, keyboard, sample and so on), the style of headings, tables and table cells, the size, float, border and link of pictures, the language of code blocks. What does not survive editing: `<address>` and `<div>` blocks become paragraphs, the caption of a table becomes a centered paragraph above it, the header and footer sections of a table become ordinary rows (the footer stays at the bottom), `<del>` becomes `<s>` (the same look), and the height of a picture is dropped when its width is set (the proportions are kept). A text saved from this editor gets the compact paragraph spacing of this editor.

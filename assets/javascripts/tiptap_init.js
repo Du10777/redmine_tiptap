@@ -14,6 +14,7 @@ import {
 import { t } from './tiptap_i18n.js';
 import { buildToolbar } from './tiptap_toolbar.js';
 import { highlightSavedCodeBlocks } from './tiptap_codeblock.js';
+import { createSourceBox } from './tiptap_source.js';
 import { setupTableContextMenu } from './tiptap_table_menu.js';
 import { setupTablePaste, setupSavedTableCopy } from './tiptap_table_paste.js';
 import {
@@ -181,7 +182,7 @@ function buildResizer(wrapper) {
 
     // The user may be dragging either of the two areas - measure from the visible one.
     var box = wrapper.querySelector('.tiptap-content');
-    var source = wrapper.querySelector('.tiptap-source');
+    var source = wrapper.querySelector('.tiptap-source-box');
     if (source && source.style.display !== 'none') box = source;
 
     var startY = event.clientY;
@@ -226,12 +227,11 @@ function initTextarea(textarea) {
   var editorDiv = document.createElement('div');
   editorDiv.className = 'tiptap-content';
 
-  var sourceDiv = document.createElement('textarea');
-  sourceDiv.className = 'tiptap-source';
-  sourceDiv.style.display = 'none';
+  // The source mode: the HTML in a textarea (source.area), colored.
+  var source = createSourceBox();
 
   wrapper.appendChild(editorDiv);
-  wrapper.appendChild(sourceDiv);
+  wrapper.appendChild(source.box);
 
   var jstBlock = textarea.closest('.jstBlock');
   if (jstBlock) {
@@ -317,11 +317,11 @@ function initTextarea(textarea) {
     });
   }
 
-  sourceDiv.addEventListener('input', function() {
-    textarea.value = sourceDiv.value;
+  source.area.addEventListener('input', function() {
+    textarea.value = source.area.value;
   });
 
-  var toolbar = buildToolbar(editor, editorDiv, sourceDiv, urlMap);
+  var toolbar = buildToolbar(editor, editorDiv, source, urlMap);
   wrapper.insertBefore(toolbar, editorDiv);
 
   setupTablePaste(editorDiv, editor);

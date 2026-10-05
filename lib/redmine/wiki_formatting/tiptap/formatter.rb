@@ -25,6 +25,17 @@ module Redmine
           'text' => 'plaintext', 'debug' => 'plaintext', 'raydebug' => 'plaintext', 'scanner' => 'plaintext'
         }.freeze
 
+        # CKEditor's "Special Container" (its Styles list): a <div> with a gray frame.
+        # It is shown as a code block without highlighting, see convert_special_containers.
+        # Only a <div> whose style is exactly these declarations counts; the same rule
+        # is in tiptap_legacy.js (convertSpecialContainers), keep both alike.
+        SPECIAL_CONTAINER_STYLE = [
+          'background:#eeeeee', 'border:1px solid #cccccc', 'padding:5px 10px'
+        ].freeze
+
+        # <div style="..."> with no other <div> inside (an innermost one).
+        SPECIAL_CONTAINER_RE = %r{<div\s+style\s*=\s*(["'])(.*?)\1\s*>((?:(?!</?div\b).)*)</div>}mi
+
         # Redmine 7 calls the formatter as new(text, options),
         # Redmine 6 as new(text). The second argument is optional.
         def initialize(text, options = {})
@@ -43,13 +54,15 @@ module Redmine
         # (<code class="ruby">), plain addresses become links, and such a text is
         # wrapped in div.tiptap-legacy, whose styles give the paragraphs the spacing
         # that CKEditor texts have (the paragraphs of this plugin's editor are
-        # closer together).
+        # closer together). Its "Special Container" (a <div> with a gray frame) is
+        # shown as a code block.
         def to_html(*args)
           html = @text.to_s
                       .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
                       .gsub(%r{\n(</code></pre>)}, '\1')
           html = unwrap_quotes(html) if html.include?('tiptap-quote')
           legacy = ckeditor_text?(html)
+          html = convert_special_containers(html)
           html = name_code_languages(html)
           html = auto_link_addresses(Sanitizer.call(html))
           legacy ? %(<div class="tiptap-legacy">#{html}</div>) : html
@@ -59,6 +72,51 @@ module Redmine
 
         def ckeditor_text?(html)
           html.match?(CKEDITOR_SIGNS)
+        end
+
+        # <div style="background:#eee; ...">text</div> becomes
+        # <pre><code class="language-plaintext">text</code></pre>. A container that
+        # holds another <div> or a macro stays as it is (a code block shows no macros).
+        def convert_special_containers(html)
+          return html unless html.match?(/<div\b/i)
+
+          html.gsub(SPECIAL_CONTAINER_RE) do
+            whole, style, inner = Regexp.last_match(0), Regexp.last_match(2), Regexp.last_match(3)
+            next whole if inner.include?('{{macro_') || !special_container_style?(style)
+
+            %(<pre><code class="language-plaintext">#{container_code(inner)}</code></pre>)
+          end
+        end
+
+        def special_container_style?(style)
+          declarations = style.split(';').filter_map do |declaration|
+            property, value = declaration.split(':', 2)
+            "#{property.strip.downcase}:#{css_value(value)}" if value
+          end
+          declarations.sort == SPECIAL_CONTAINER_STYLE.sort
+        end
+
+        # #eee, #eeeeee and rgb(238, 238, 238) are one value.
+        def css_value(value)
+          value = value.downcase.sub(/\s*!important\s*\z/, '').gsub(/\s+/, ' ').strip
+          value = value.gsub(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/) do
+            format('#%02x%02x%02x', Regexp.last_match(1).to_i, Regexp.last_match(2).to_i, Regexp.last_match(3).to_i)
+          end
+          value.gsub(/#([0-9a-f])([0-9a-f])([0-9a-f])(?![0-9a-f])/) do
+            "##{Regexp.last_match(1) * 2}#{Regexp.last_match(2) * 2}#{Regexp.last_match(3) * 2}"
+          end
+        end
+
+        # The content of the container as the text of a code block: a line break and the
+        # end of a block begin a new line, spaces are collapsed the way a browser shows
+        # them, the inline formatting (bold, links, colors) stays, the block tags go.
+        # Same as containerCode in tiptap_legacy.js.
+        def container_code(html)
+          html.gsub(/[ \t\r\n\f]+/, ' ')
+              .gsub(/ ?<br\b[^>]*> ?/i, "\n")
+              .gsub(%r{ ?</(?:p|div|h[1-6]|li|blockquote|address|pre)> ?}i, "\n")
+              .gsub(%r{ ?</?(?:p|div|h[1-6]|ul|ol|li|blockquote|address|pre)\b[^>]*> ?}i, '')
+              .gsub(/\A[ \n]+|[ \n]+\z/, '')
         end
 
         # <pre><code class="ruby"> (CKEditor) becomes <pre><code class="language-ruby">,

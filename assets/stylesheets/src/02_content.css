@@ -129,21 +129,95 @@ div.wiki-page .tiptap-legacy li > p {
   margin: 0 !important;
 }
 
+/* Source mode (tiptap_source.js): the textarea with the HTML lies over a copy of its
+   text that is colored; the textarea's own text is transparent. The two must lay
+   the text out exactly alike - the least difference here moves the colors off the
+   letters. */
+.tiptap-source-box {
+  position: relative;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tiptap-source,
+.tiptap-source-mirror {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 19px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-indent: 0;
+  text-transform: none;
+  tab-size: 4;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
 .tiptap-source {
+  display: block;
+  position: relative;
+  z-index: 1;
   width: 100%;
   min-height: 150px;
   height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
-  padding: 8px;
-  font-family: monospace;
-  font-size: 13px;
+  overflow: auto;
   border: 1px solid #ccc !important;
   border-radius: 3px;
   outline: none;
-  box-sizing: border-box;
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #333;
   /* the size is changed by the shared .tiptap-resizer handle; the native textarea
      corner is removed, otherwise one field ends up with two different resizers */
   resize: none;
+}
+
+/* The selection must not hide the colored letters under it. */
+.tiptap-source::selection {
+  background: rgba(98, 141, 182, 0.35);
+  color: transparent;
+}
+
+.tiptap-source-mirror {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  color: #333;
+  pointer-events: none;
+}
+
+.tiptap-source-mirror code {
+  all: unset;
+}
+
+/* Bold and italic letters are not always as wide as the usual ones: they would
+   push the rest of the line off the textarea's text. The colors say enough. */
+.tiptap-source-mirror * {
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+/* No colors (a huge text, or no highlight languages): the textarea shows its text. */
+.tiptap-source-plain .tiptap-source-mirror {
+  display: none;
+}
+
+.tiptap-source-plain .tiptap-source {
+  color: inherit !important;
+}
+
+.tiptap-source-plain .tiptap-source::selection {
+  background: Highlight;
+  color: HighlightText;
 }
 
 /* Task list (checkboxes): editor and view mode */

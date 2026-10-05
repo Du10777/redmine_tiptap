@@ -23,6 +23,8 @@ en:
       align: "Alignment"
       outdent: "Decrease indent"
       indent: "Increase indent"
+      subscript: "Subscript"
+      superscript: "Superscript"
       bold: "Bold"
       italic: "Italic"
       underline: "Underline"
