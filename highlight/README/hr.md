@@ -189,7 +189,7 @@ sh highlight/_compile.sh
 ```
 
 - Trebat će Docker (gradnja se radi u `node:20-alpine` kontejneru) ili, ako nema Dockera, Node.js 18+ na istoj mašini. Na prvoj pokretanju skript instalira npm pakete u `node_modules/` mapu dodatka.
-- Prvo skript provjerava svaki jezik: gradi ga odvojeno, učitava ga, registrira ga u istom engineu koji se radi u pretraživaču, i isticanjem obrade tekst uzorka. Ako je jezik sломljen (greška u kodu, neisправлива redovna izraza, `id` već korišten), skript imenuje datoteku i razlog i zaustavlja se; prethodni `tiptap_highlight.js` ostaje na mjestu.
+- Prvo skript provjerava svaki jezik: gradi ga odvojeno, učitava ga, registrira ga u istom engineu koji se radi u pretraživaču, i isticanjem obrade tekst uzorka. Ako je jezik slomljen (greška u kodu, neispravan regularni izraz, `id` već korišten), skript imenuje datoteku i razlog i zaustavlja se; prethodni `tiptap_highlight.js` ostaje na mjestu.
 - Zatim skript paketira sve jezike u `assets/javascripts/tiptap_highlight.js`.
 
 Nakon gradnje, restartujte Redmine: objavljuje datoteke dodatka pri pokretanju (vidi "Ažuriranje" u [glavnoj README](../../docs/README.hr.md#ažuriranje) za naredbe). Pretraživači dobijaju novu datoteku odmah, jer njen URL sadrži otisk sadržaja.

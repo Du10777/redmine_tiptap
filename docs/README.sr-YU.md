@@ -90,7 +90,7 @@ Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na
 
 **Uređivanje**
 - Režim `<HTML>` za pregled i izmenu HTML izvornog koda: ugneždeni blokovi su uvučeni, prazan red razdvaja blokove koji zauzimaju više redova, sintaksa je obojena po istim pravilima kao u HTML bloku koda, a Enter zadržava uvlačenje reda.
-- Kuсanje u stilu Markdown-а: `#` za naslove, `-` i `1.` za liste, `[ ]` za zadatke, ```` ```python ```` za blok koda (bilo koje ime jezika ili bez njega), `**bold**`, `---` za horizontalnu liniju. Standardne prečice na tastaturi: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i druge.
+- Kucanje u stilu Markdown-а: `#` za naslove, `-` i `1.` za liste, `[ ]` za zadatke, ```` ```python ```` za blok koda (bilo koje ime jezika ili bez njega), `**bold**`, `---` za horizontalnu liniju. Standardne prečice na tastaturi: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i druge.
 - Uređivač nikada ne postaje viši od prozora: traka sa alatama i dugmad obrasca ostaju u vidnom polju, a tekst se pomera unutar uređivača. Visina prati veličinu prozora i zum stranice.
 - Ručica za promenu veličine u donjem desnom uglu služi za ručno podešavanje visine. Visina se pamti; dvostruki klik vraća automatsku visinu.
 
@@ -129,7 +129,7 @@ Detalji i lista jezika Redmine-a: [config/locales/README.md](../config/locales/R
 
 ## Instalacija
 
-1. Stavite dodatnu komponentu u Redmine-ovu fasciklu `plugins`. Fasciқla mora da se zove `redmine_tiptap`. Najlakši način je git, koji i ažuriranja svodi na jednu komandu:
+1. Stavite dodatnu komponentu u Redmine-ovu fasciklu `plugins`. Fascikla mora da se zove `redmine_tiptap`. Najlakši način je git, koji i ažuriranja svodi na jednu komandu:
    ```sh
    cd /path/to/redmine
    git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
@@ -139,7 +139,7 @@ Detalji i lista jezika Redmine-a: [config/locales/README.md](../config/locales/R
 
 ## Ažuriranje
 
-Dodatna komponenta nema migracije baze podataka, a izgrađeni JavaScript paket i stilski list dio su repozitorijuma. Za ažuriranje na serveru nisu potrebni ni npm ni izgradnja: zamените datoteke dodatne komponente i ponovo pokrenite Redmine.
+Dodatna komponenta nema migracije baze podataka, a izgrađeni JavaScript paket i stilski list dio su repozitorijuma. Za ažuriranje na serveru nisu potrebni ni npm ni izgradnja: zamenite datoteke dodatne komponente i ponovo pokrenite Redmine.
 
 Pre ažuriranja proverite da li nova verzija podrržava vašu verziju Redmine-a (pogledajte "Podržane verzije Redmine-a" iznad).
 
@@ -162,7 +162,7 @@ Da biste ostali na određenoj verziji umesto na najnovijem komitu: `git fetch &&
 
 ### Inštalirano iz arhive
 
-1. Izbrišite staru fasciklu `plugins/redmine_tiptap` i na njeno mjesto raspaкujte novu verziju. Prethodno brisanje obezbeđuje da datoteke uklonjene u novoj verziji ne zaostanu.
+1. Izbrišite staru fasciklu `plugins/redmine_tiptap` i na njeno mjesto raspakujte novu verziju. Prethodno brisanje obezbeđuje da datoteke uklonjene u novoj verziji ne zaostanu.
 2. Izbrišite `public/assets/.manifest.json` u faskikli Redmine-a.
 3. Ponovo pokrenite Redmine.
 
@@ -193,4 +193,4 @@ Razlike namerno:
 - Neko oblikovanje koje je CKEditor nudio ali njegove stranice su šćutljivo izbacili prikazuje se ovde: na primer pozadinske boje njegovih "Marker" stilova i navodnika `<q>`.
 - Stil „Special Container“ iz CKEditor-a (blok sa sivim okvirom) prikazuje se kao blok koda bez ističanja sintakse, a i u uređivaču je blok koda.
 
-Stari tekst zadržava svoje oblikovanje kada se otvori u uređivaču i ponovo sačuva: Redmine makroi (makro je jedan siv element u uređivaču; izmenite ga u režimu `<HTML>`, kao u CKEditor-ovom režimu Source), `<iframe>`, blokovi `<div>` i `<address>` sa svojim stilom (`<div>` nalepljen sa veb stranice i dalje se pretvara u pasus), donji i gornji indeks, CKEditor-ovi unutrašnji stilovi (big, small, keyboard, sample i slično), stil naslova, tabela i ćelija tabele, veličina, plutanje, ivica i veza slike, jezik blokova koda. Šta ne preživi izmenu: naslov tabele postaje centriran pasus iznad nje, zaglavlje i podnožje tabele postaju obični redovi (podnožje ostaje na dnu), `<del>` postaje `<s>` (isti izgled), i visina slike se ispušta kada je njena širina postavljena (proporcije se zadržavaju). Tekst sačuvan iz ovog uređivača dobija kompaktan razmak između pasusa ovog uređivača.
+Stari tekst zadržava svoje oblikovanje kada se otvori u uređivaču i ponovo sačuva: Redmine makroi (makro je jedan siv element u uređivaču; izmenite ga u režimu `<HTML>`, kao u CKEditor-ovom režimu Source), `<iframe>`, blokovi `<div>` i `<address>` sa svojim stilom (`<div>` nalepljen sa veb stranice i dalje se pretvara u pasus), donji i gornji indeks, CKEditor-ovi unutrašnji stilovi (big, small, keyboard, sample i slično), stil naslova, tabela i ćelija tabele, veličina (širina i visina), plutanje, ivica i veza slike, jezik blokova koda. Šta ne preživi izmenu: naslov tabele postaje centriran pasus iznad nje, zaglavlje i podnožje tabele postaju obični redovi (podnožje ostaje na dnu) i `<del>` postaje `<s>` (isti izgled). Tekst sačuvan iz ovog uređivača dobija kompaktan razmak između pasusa ovog uređivača.
