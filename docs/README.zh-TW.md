@@ -46,7 +46,7 @@
 
 這是用於 Redmine 的文字編輯器，基於 TipTap https://github.com/ueberdosis/tiptap
 
-支援的 Redmine 版本：**6.\***（開發與測試基於 6.1.4）。
+支援的 Redmine 版本：**6.\*** 與 **7.\***（已在 6.1.4、6.1.5、7.0.2 上測試）。
 
 編輯器引擎：**TipTap 3.31.4**。所有 `@tiptap/*` 套件在 `package.json` 和 `package-lock.json` 中都固定為此精確版本，並且必須始終一起升級至同一版本。
 
@@ -119,7 +119,7 @@ sh highlight/_compile.sh
 
 ## 介面語言
 
-編輯器使用使用者在 Redmine 帳戶（我的帳戶 → 語言）中選擇的語言。Redmine 6 的 50 種語言中，有 47 種的語言檔案隨外掛程式一起提供，位於 `config/locales/`。英語是原始語言，俄語由作者本人翻譯；其餘 45 種是借助 AI 模型產生的草稿，尚未經過母語人士審校，因此個別地方可能會出現不自然的措辭。檔案中缺少的文字會以英語顯示。
+編輯器使用使用者在 Redmine 帳戶（我的帳戶 → 語言）中選擇的語言。Redmine 的 50 種語言中，有 47 種的語言檔案隨外掛程式一起提供，位於 `config/locales/`。英語是原始語言，俄語由作者本人翻譯；其餘 45 種是借助 AI 模型產生的草稿，尚未經過母語人士審校，因此個別地方可能會出現不自然的措辭。檔案中缺少的文字會以英語顯示。
 
 要修正翻譯，請修改 `config/locales/<code>.yml`（`de`、`fr`、`pt-BR` 等）中的值，然後重新啟動 Redmine。`bundle exec rake redmine_tiptap:locales` 用於檢查這些檔案。歡迎提交包含修正的 pull request。
 

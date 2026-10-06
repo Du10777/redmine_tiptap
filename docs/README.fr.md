@@ -46,7 +46,7 @@
 
 Il s’agit d’un éditeur de texte pour Redmine, basé sur TipTap https://github.com/ueberdosis/tiptap
 
-Versions de Redmine prises en charge : **6.\*** (développé et testé sur la version 6.1.4).
+Versions de Redmine prises en charge : **6.\*** et **7.\*** (testé sur les versions 6.1.4, 6.1.5 et 7.0.2).
 
 Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont épinglés à cette version exacte dans `package.json` et `package-lock.json` et doivent toujours être mis à jour ensemble, vers une seule et même version.
 
@@ -119,7 +119,7 @@ Détails : [highlight/README/fr.md](../highlight/README/fr.md).
 
 ## Langue de l’interface
 
-L’éditeur s’affiche dans la langue choisie dans le profil Redmine de l’utilisateur (Mon compte → Langue). Les fichiers de 47 des 50 langues de Redmine 6 sont fournis avec le plugin, dans `config/locales/`. L’anglais est la langue source et le russe est l’œuvre de l’auteur lui-même ; les 45 autres sont des ébauches réalisées avec l’aide d’un modèle d’IA et pas encore relues par des locuteurs natifs : attendez-vous donc à une tournure étrange çà et là. Un texte absent d’un fichier s’affiche en anglais.
+L’éditeur s’affiche dans la langue choisie dans le profil Redmine de l’utilisateur (Mon compte → Langue). Les fichiers de 47 des 50 langues de Redmine sont fournis avec le plugin, dans `config/locales/`. L’anglais est la langue source et le russe est l’œuvre de l’auteur lui-même ; les 45 autres sont des ébauches réalisées avec l’aide d’un modèle d’IA et pas encore relues par des locuteurs natifs : attendez-vous donc à une tournure étrange çà et là. Un texte absent d’un fichier s’affiche en anglais.
 
 Pour corriger une traduction, modifiez ses valeurs dans `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) puis redémarrez Redmine. La commande `bundle exec rake redmine_tiptap:locales` vérifie les fichiers. Les pull requests contenant des corrections sont les bienvenues.
 

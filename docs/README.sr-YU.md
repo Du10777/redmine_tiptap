@@ -46,7 +46,7 @@
 
 Ovo je uređivač teksta za Redmine, zasnovan na TipTap-u https://github.com/ueberdosis/tiptap
 
-Podržane verzije Redmine-a: **6.\*** (razvijeno i testirano na 6.1.4).
+Podržane verzije Redmine-a: **6.\*** i **7.\*** (testirano na 6.1.4, 6.1.5 i 7.0.2).
 
 Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
 
@@ -119,7 +119,7 @@ Detalji: [highlight/README/sr-YU.md](../highlight/README/sr-YU.md).
 
 ## Jezik interfejsa
 
-Uređivač se prikazuje na jeziku izabranom u Redmine profilu korisnika (Moj nalog → Jezik). Datoteke za 47 od 50 jezika Redmine-a 6 ispručuju se sa dodatnom komponentom, u faskikli `config/locales/`. Engleski je izvorni jezik, a ruski pottiče od samog autora; ostalih 45 su nacrti napravljeni uz pomoć modela veštačke inteligencije koje izvorni govorioci još nisu proverili, pa tu i tamo očekujte neuobičajenu formulaciju. Tekst koji nedostaje u datoteci prikazuje se na engleskom.
+Uređivač se prikazuje na jeziku izabranom u Redmine profilu korisnika (Moj nalog → Jezik). Datoteke za 47 od 50 jezika Redmine-a ispručuju se sa dodatnom komponentom, u faskikli `config/locales/`. Engleski je izvorni jezik, a ruski pottiče od samog autora; ostalih 45 su nacrti napravljeni uz pomoć modela veštačke inteligencije koje izvorni govorioci još nisu proverili, pa tu i tamo očekujte neuobičajenu formulaciju. Tekst koji nedostaje u datoteci prikazuje se na engleskom.
 
 Da biste ispravili prevod, izmenite njegove vrednosti u `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) i ponovo pokrenite Redmine. `bundle exec rake redmine_tiptap:locales` proverava datoteke. Dobrodošli su pull request-ovi sa ispravkama.
 

@@ -46,7 +46,7 @@
 
 Ky është një përpunues teksti për Redmine, i bazuar në TipTap https://github.com/ueberdosis/tiptap
 
-Versionet e mbështetura të Redmine-it: **6.\*** (zhvilluar dhe testuar në 6.1.4).
+Versionet e mbështetura të Redmine-it: **6.\*** dhe **7.\*** (testuar në 6.1.4, 6.1.5 dhe 7.0.2).
 
 Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
 
@@ -119,7 +119,7 @@ Hollësi: [highlight/README/sq.md](../highlight/README/sq.md).
 
 ## Gjuha e ndërfaqes
 
-Përpunuesi flet gjuhën e zgjedhur në profilin e përdoruesit në Redmine (Llogaria ime → Gjuhë). Me shtojcën vijnë kartela për 47 nga 50 gjuhët e Redmine 6, në `config/locales/`. Anglishtja është burimi dhe rusishtja është e vetë autorit; 45 të tjerat janë përkthime paraprake të bëra me ndihmën e një modeli të inteligjencës artificiale, që nuk janë rishikuar ende nga folës amtarë, ndaj prisni ndonjë frazë të çuditshme herë pas here. Një tekst që mungon në një kartelë shfaqet në anglisht.
+Përpunuesi flet gjuhën e zgjedhur në profilin e përdoruesit në Redmine (Llogaria ime → Gjuhë). Me shtojcën vijnë kartela për 47 nga 50 gjuhët e Redmine, në `config/locales/`. Anglishtja është burimi dhe rusishtja është e vetë autorit; 45 të tjerat janë përkthime paraprake të bëra me ndihmën e një modeli të inteligjencës artificiale, që nuk janë rishikuar ende nga folës amtarë, ndaj prisni ndonjë frazë të çuditshme herë pas here. Një tekst që mungon në një kartelë shfaqet në anglisht.
 
 Për të korrigjuar një përkthim, ndryshoni vlerat e tij në `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) dhe rinisni Redmine-in. `bundle exec rake redmine_tiptap:locales` i kontrollon kartelat. Mirëpriten pull request-e me korrigjime.
 

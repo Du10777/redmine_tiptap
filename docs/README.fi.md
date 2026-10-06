@@ -46,7 +46,7 @@
 
 Tämä on tekstieditori Redminelle, joka perustuu TipTapiin https://github.com/ueberdosis/tiptap
 
-Tuetut Redmine-versiot: **6.\*** (kehitetty ja testattu versiolla 6.1.4).
+Tuetut Redmine-versiot: **6.\*** ja **7.\*** (testattu versioilla 6.1.4, 6.1.5 ja 7.0.2).
 
 Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
 
@@ -119,7 +119,7 @@ Tiedot: [highlight/README/fi.md](../highlight/README/fi.md).
 
 ## Käyttöliittymän kieli
 
-Editori puhuu käyttäjän Redmine-profiilissa valittua kieltä (Oma tili → Kieli). 47 Redminen 6 50 kielestä tulee liitännäisen kanssa `config/locales/`-kansiossa. Englanti on lähde ja venäjä on kirjoittajan oma; loput 45 ovat luonnoksia, jotka on tehty tekoälymallin avulla ja joita äidinkieliset puhujat eivät ole vielä tarkastaneet, joten odota jotakin ihmeellistä sanaa täällä ja siellä. Tiedostosta puuttuva teksti näytetään englanniksi.
+Editori puhuu käyttäjän Redmine-profiilissa valittua kieltä (Oma tili → Kieli). 47 Redminen 50 kielestä tulee liitännäisen kanssa `config/locales/`-kansiossa. Englanti on lähde ja venäjä on kirjoittajan oma; loput 45 ovat luonnoksia, jotka on tehty tekoälymallin avulla ja joita äidinkieliset puhujat eivät ole vielä tarkastaneet, joten odota jotakin ihmeellistä sanaa täällä ja siellä. Tiedostosta puuttuva teksti näytetään englanniksi.
 
 Käännöksen korjaamiseksi muuta sen arvoja `config/locales/<code>.yml`-tiedostossa (`de`, `fr`, `pt-BR`, ...) ja käynnistä Redmine uudelleen. `bundle exec rake redmine_tiptap:locales` tarkistaa tiedostot. Pull-pyyntöjä korjauksilla otetaan vastaan.
 

@@ -46,7 +46,7 @@
 
 Bu, TipTap tabanlı Redmine için bir metin düzenleyicidir https://github.com/ueberdosis/tiptap
 
-Desteklenen Redmine sürümleri: **6.\*** (6.1.4 üzerinde geliştirilmiş ve test edilmiş).
+Desteklenen Redmine sürümleri: **6.\*** ve **7.\*** (6.1.4, 6.1.5 ve 7.0.2 üzerinde test edilmiştir).
 
 Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
 
@@ -119,7 +119,7 @@ Ayrıntılar: [highlight/README/tr.md](../highlight/README/tr.md).
 
 ## Arayüz dili
 
-Düzenleyici, kullanıcının Redmine profilinde seçilen dili konuşur (Hesabım → Dil). Redmine 6'nın 50 dilinden 47'si için dosyalar eklentiyle birlikte gelir, `config/locales/` klasöründe. İngilizce kaynak ve Rusça yazar kendi dilidir; diğer 45'i yapay zeka modeli tarafından hazırlanan taslaklar olup henüz yerli konuşmacılar tarafından gözden geçirilmemiştir, bu nedenle burada orada garip bir ifade bekleyin. Dosyada eksik olan metin İngilizce gösterilir.
+Düzenleyici, kullanıcının Redmine profilinde seçilen dili konuşur (Hesabım → Dil). Redmine'nin 50 dilinden 47'si için dosyalar eklentiyle birlikte gelir, `config/locales/` klasöründe. İngilizce kaynak ve Rusça yazar kendi dilidir; diğer 45'i yapay zeka modeli tarafından hazırlanan taslaklar olup henüz yerli konuşmacılar tarafından gözden geçirilmemiştir, bu nedenle burada orada garip bir ifade bekleyin. Dosyada eksik olan metin İngilizce gösterilir.
 
 Tercümeyi düzeltmek için `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) dosyasında değerlerini değiştirin ve Redmine'yi yeniden başlatın. `bundle exec rake redmine_tiptap:locales` dosyaları kontrol eder. Düzeltmelerle çekme istekleri hoş karşılanır.
 

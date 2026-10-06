@@ -46,7 +46,7 @@
 
 To je urejevalnik besedil za Redmine, ki temelji na TipTap https://github.com/ueberdosis/tiptap
 
-Podprte različice Redmineja: **6.\*** (razvito in testirano na 6.1.4).
+Podprte različice Redmineja: **6.\*** in **7.\*** (testirano na 6.1.4, 6.1.5 in 7.0.2).
 
 Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
 
@@ -119,7 +119,7 @@ Podrobnosti: [highlight/README/sl.md](../highlight/README/sl.md).
 
 ## Jezik vmesnika
 
-Urejevalnik govori jezik, izbran v profilu uporabnika Redmineja (Moj račun → Jezik). Plaginom je priloženo 47 od 50 jezikov Redmineja 6 v `config/locales/`. Angleščina je vir in ruščina je avtorjeva lastna; ostalih 45 so osnutki, narejeni s pomočjo modela umetne inteligence in jih naravni govorci še niso pregledali, zato pričakuj čudno frazo tukaj in tam. Besedilo, ki manjka v datoteki, je prikazano v angleščini.
+Urejevalnik govori jezik, izbran v profilu uporabnika Redmineja (Moj račun → Jezik). Plaginom je priloženo 47 od 50 jezikov Redmineja v `config/locales/`. Angleščina je vir in ruščina je avtorjeva lastna; ostalih 45 so osnutki, narejeni s pomočjo modela umetne inteligence in jih naravni govorci še niso pregledali, zato pričakuj čudno frazo tukaj in tam. Besedilo, ki manjka v datoteki, je prikazano v angleščini.
 
 Če želite popraviti prevod, spremenite njegove vrednosti v `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) in ponovno zaženete Redmine. `bundle exec rake redmine_tiptap:locales` preverja datoteke. Zahtevki za spremembe s popravkami so dobrodošli.
 

@@ -46,7 +46,7 @@
 
 Ez egy szövegszerkesztő a Redmine-hez, amely a TipTap alapján készült https://github.com/ueberdosis/tiptap
 
-Támogatott Redmine verziók: **6.\*** (fejlesztve és tesztelve a 6.1.4-en).
+Támogatott Redmine verziók: **6.\*** és **7.\*** (tesztelve a 6.1.4, 6.1.5 és 7.0.2 verziókon).
 
 Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
 
@@ -119,7 +119,7 @@ Részletek: [highlight/README/hu.md](../highlight/README/hu.md).
 
 ## Interfész nyelve
 
-A szerkesztő a felhasználó Redmine profiljában beállított nyelvén beszél (Fiókom adatai → Nyelv). A Redmine 6 50 nyelvéből 47 fájl van a bővítményben, a `config/locales/` mappában. Az angol a forrás, az orosz a szerző saját; a maradék 45 az AI-modellel készült vázlat, és még nincs áttekintve natív beszélőkkel, ezért várhatsz furcsa mondatokat. A fájlból hiányzó szöveg angol nyelven jelenik meg.
+A szerkesztő a felhasználó Redmine profiljában beállított nyelvén beszél (Fiókom adatai → Nyelv). A Redmine 50 nyelvéből 47 fájl van a bővítményben, a `config/locales/` mappában. Az angol a forrás, az orosz a szerző saját; a maradék 45 az AI-modellel készült vázlat, és még nincs áttekintve natív beszélőkkel, ezért várhatsz furcsa mondatokat. A fájlból hiányzó szöveg angol nyelven jelenik meg.
 
 A fordítás korrigálásához módosítsa az értékeket a `config/locales/<code>.yml` fájlban (`de`, `fr`, `pt-BR`, ...) és indítsa újra a Redmine-t. `bundle exec rake redmine_tiptap:locales` ellenőrzi a fájlokat. A javításokkal végzett pull requestek üdvözlendők.
 

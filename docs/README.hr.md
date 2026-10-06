@@ -46,7 +46,7 @@
 
 Ovo je tekstualni editor za Redmine, temeljen na TipTap https://github.com/ueberdosis/tiptap
 
-Podržane verzije Redminea: **6.\*** (razvijano i testirano na verziji 6.1.4).
+Podržane verzije Redminea: **6.\*** i **7.\*** (testirano na verzijama 6.1.4, 6.1.5 i 7.0.2).
 
 Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu točnu verziju u `package.json` i `package-lock.json` i moraju se uvijek ažurirati zajedno, na istu verziju.
 
@@ -119,7 +119,7 @@ Detalji: [highlight/README/hr.md](../highlight/README/hr.md).
 
 ## Jezik sučelja
 
-Editor govori jezikom odabranim u korisnički Redmine profilu (Moj profil → Primarni jezik). Datoteke za 47 od 50 jezika Redminea 6 dolaze sa dodatkom, u `config/locales/`. Engleski je izvor i Ruski je od autora; ostalih 45 su skice napravljene uz pomoć AI modela i još nisu verificirane od strane izvornih govornika, zato očekujte nečudnu frazu tu i tamo. Tekst koji nedostaje u datoteci prikazuje se na engleskom.
+Editor govori jezikom odabranim u korisnički Redmine profilu (Moj profil → Primarni jezik). Datoteke za 47 od 50 jezika Redminea dolaze sa dodatkom, u `config/locales/`. Engleski je izvor i Ruski je od autora; ostalih 45 su skice napravljene uz pomoć AI modela i još nisu verificirane od strane izvornih govornika, zato očekujte nečudnu frazu tu i tamo. Tekst koji nedostaje u datoteci prikazuje se na engleskom.
 
 Da ispravite prijevod, promijenite njegove vrijednosti u `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) i restartujte Redmine. `bundle exec rake redmine_tiptap:locales` provjerava datoteke. Pull zahtjevi sa ispravkama su dobrodošli.
 

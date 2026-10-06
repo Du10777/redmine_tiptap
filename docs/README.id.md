@@ -46,7 +46,7 @@
 
 Ini adalah editor teks untuk Redmine, berdasarkan TipTap https://github.com/ueberdosis/tiptap
 
-Versi Redmine yang didukung: **6.\*** (dikembangkan dan diuji di 6.1.4).
+Versi Redmine yang didukung: **6.\*** dan **7.\*** (diuji di 6.1.4, 6.1.5, dan 7.0.2).
 
 Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yang sama persis dalam `package.json` dan `package-lock.json` dan harus selalu ditingkatkan bersama, ke satu versi yang sama.
 
@@ -119,7 +119,7 @@ Detail: [highlight/README/id.md](../highlight/README/id.md).
 
 ## Bahasa antarmuka
 
-Editor berbicara dalam bahasa yang dipilih dalam profil Redmine pengguna (Akun saya → Bahasa). File untuk 47 dari 50 bahasa Redmine 6 disertakan dengan plugin, dalam `config/locales/`. Bahasa Inggris adalah sumber dan Rusia adalah milik penulis sendiri; 45 lainnya adalah draf yang dibuat dengan bantuan model AI dan belum ditinjau oleh penutur asli, jadi harapkan frasa yang aneh di sana-sini. Teks yang hilang dari file ditampilkan dalam Bahasa Inggris.
+Editor berbicara dalam bahasa yang dipilih dalam profil Redmine pengguna (Akun saya → Bahasa). File untuk 47 dari 50 bahasa Redmine disertakan dengan plugin, dalam `config/locales/`. Bahasa Inggris adalah sumber dan Rusia adalah milik penulis sendiri; 45 lainnya adalah draf yang dibuat dengan bantuan model AI dan belum ditinjau oleh penutur asli, jadi harapkan frasa yang aneh di sana-sini. Teks yang hilang dari file ditampilkan dalam Bahasa Inggris.
 
 Untuk mengoreksi terjemahan, ubah nilainya dalam `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) dan restart Redmine. `bundle exec rake redmine_tiptap:locales` memeriksa file. Pull request dengan koreksi disambut.
 

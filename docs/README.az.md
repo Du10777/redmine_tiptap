@@ -46,7 +46,7 @@
 
 Bu, Redmine üçün TipTap (https://github.com/ueberdosis/tiptap) əsasında hazırlanmış mətn redaktorudur.
 
-Dəstəklənən Redmine versiyaları: **6.\*** (6.1.4 versiyasında hazırlanıb və sınaqdan keçirilib).
+Dəstəklənən Redmine versiyaları: **6.\*** və **7.\*** (6.1.4, 6.1.5 və 7.0.2 versiyalarında sınaqdan keçirilib).
 
 Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
 
@@ -119,7 +119,7 @@ sh highlight/_compile.sh
 
 ## İnterfeys dili
 
-Redaktor istifadəçinin Redmine profilində seçilmiş dildə işləyir (Mənim hesabım → Dil). Redmine 6-nın 50 dilindən 47-nin faylları plaginlə birlikdə `config/locales/` qovluğunda gəlir. İngilis dili mənbədir, rus dili isə müəllifin öz dilidir; qalan 45 dil süni intellekt modelinin köməyi ilə hazırlanmış, hələ dil daşıyıcıları tərəfindən yoxlanılmamış qaralamalardır, ona görə yer-yer qəribə ifadələr ola bilər. Faylda olmayan mətn ingilis dilində göstərilir.
+Redaktor istifadəçinin Redmine profilində seçilmiş dildə işləyir (Mənim hesabım → Dil). Redmine-in 50 dilindən 47-nin faylları plaginlə birlikdə `config/locales/` qovluğunda gəlir. İngilis dili mənbədir, rus dili isə müəllifin öz dilidir; qalan 45 dil süni intellekt modelinin köməyi ilə hazırlanmış, hələ dil daşıyıcıları tərəfindən yoxlanılmamış qaralamalardır, ona görə yer-yer qəribə ifadələr ola bilər. Faylda olmayan mətn ingilis dilində göstərilir.
 
 Tərcüməni düzəltmək üçün `config/locales/<code>.yml` faylında (`de`, `fr`, `pt-BR`, ...) onun dəyərlərini dəyişin və Redmine-i yenidən işə salın. `bundle exec rake redmine_tiptap:locales` əmri faylları yoxlayır. Düzəlişləri olan pull request-lər məmnuniyyətlə qarşılanır.
 

@@ -46,7 +46,7 @@
 
 Tai tekstų redaktorius „Redmine", pagrįstas „TipTap" https://github.com/ueberdosis/tiptap
 
-Palaikomos „Redmine" versijos: **6.\*** (sukurta ir testuota naudojant 6.1.4).
+Palaikomos „Redmine" versijos: **6.\*** ir **7.\*** (testuota naudojant 6.1.4, 6.1.5 ir 7.0.2).
 
 Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
 
@@ -119,7 +119,7 @@ Išsamiau: [highlight/README/lt.md](../highlight/README/lt.md).
 
 ## Sąsajos kalba
 
-Redaktorius kalba vartotojo „Redmine" profilio pasirinkta kalba (Mano paskyra → Kalba). Failai 47 iš 50 „Redmine" 6 kalbų yra kartu su įskiepiu `config/locales/` aplanke. Anglų kalba yra šaltinis, o rusų kalba yra autoriaus pačios; kitos 45 yra juodraščiai, padaryti naudojant dirbtinio intelekto pagalbą ir dar nepatikrinti gimtakalbių, todėl tikėkitės keisto žodžio čia ir ten. Tekstas, trūkstamas iš failo, rodomas anglų kalba.
+Redaktorius kalba vartotojo „Redmine" profilio pasirinkta kalba (Mano paskyra → Kalba). Failai 47 iš 50 „Redmine" kalbų yra kartu su įskiepiu `config/locales/` aplanke. Anglų kalba yra šaltinis, o rusų kalba yra autoriaus pačios; kitos 45 yra juodraščiai, padaryti naudojant dirbtinio intelekto pagalbą ir dar nepatikrinti gimtakalbių, todėl tikėkitės keisto žodžio čia ir ten. Tekstas, trūkstamas iš failo, rodomas anglų kalba.
 
 Norint ištaisyti vertimą, pakeiskite jo reikšmes `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) ir paleiskite iš naujo „Redmine". `bundle exec rake redmine_tiptap:locales` patikrina failai. Traukiusios užklausos su pataisymais yra sveikingos.
 

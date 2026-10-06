@@ -46,7 +46,7 @@
 
 Šis ir Redmine teksta redaktors, kas balstīts uz TipTap https://github.com/ueberdosis/tiptap
 
-Atbalstītās Redmine versijas: **6.\*** (izstrādāts un testēts versijā 6.1.4).
+Atbalstītās Redmine versijas: **6.\*** un **7.\*** (testēts versijās 6.1.4, 6.1.5 un 7.0.2).
 
 Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
 
@@ -119,7 +119,7 @@ Sīkāk: [highlight/README/lv.md](../highlight/README/lv.md).
 
 ## Saskarnes valoda
 
-Redaktors tiek rādīts valodā, kas izvēlēta lietotāja Redmine profilā (Mans konts → Valoda). Kopā ar spraudni tiek piegādāti faili 47 no 50 Redmine 6 valodām mapē `config/locales/`. Angļu valoda ir avots, bet krievu valodas tulkojums ir paša autora; pārējie 45 ir melnraksti, kas izveidoti ar mākslīgā intelekta modeļa palīdzību un vēl nav pārbaudīti dzimtās valodas runātājiem, tāpēc vietumis var gadīties dīvaina frāze. Teksts, kura failā nav, tiek rādīts angliski.
+Redaktors tiek rādīts valodā, kas izvēlēta lietotāja Redmine profilā (Mans konts → Valoda). Kopā ar spraudni tiek piegādāti faili 47 no 50 Redmine valodām mapē `config/locales/`. Angļu valoda ir avots, bet krievu valodas tulkojums ir paša autora; pārējie 45 ir melnraksti, kas izveidoti ar mākslīgā intelekta modeļa palīdzību un vēl nav pārbaudīti dzimtās valodas runātājiem, tāpēc vietumis var gadīties dīvaina frāze. Teksts, kura failā nav, tiek rādīts angliski.
 
 Lai labotu tulkojumu, mainiet tā vērtības failā `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) un pārstartējiet Redmine. Failus pārbauda komanda `bundle exec rake redmine_tiptap:locales`. Laipni gaidīti labojumi pull request veidā.
 

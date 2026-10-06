@@ -36,7 +36,7 @@ When the plugin gets a new text, it is added to `en.yml` and `ru.yml`. Until a l
 
 ## Adding a language
 
-All languages of Redmine 6.1.4 have a file already, except the three written right to left (see [Right-to-left languages](#right-to-left-languages)). This section is for a language that a later Redmine brings, and for a fork that adds one of those three.
+All languages of Redmine 6 and 7 have a file already, except the three written right to left (see [Right-to-left languages](#right-to-left-languages)). This section is for a language that a later Redmine brings, and for a fork that adds one of those three.
 
 1. Find its code in the [list of Redmine languages](#languages-of-redmine) (only such codes work: a file for any other code would never be used).
 2. Copy `en.yml` to `<code>.yml`, for example `de.yml`.
@@ -75,7 +75,7 @@ All three are optional. Searching always works with the English words as well. `
 
 ## Languages of Redmine
 
-These are the languages of Redmine 6.1.4. The code is the name of the file in Redmine's own `config/locales`. "Draft" is explained above.
+These are the languages of Redmine 6.1.4 and 7.0.2 (the list is the same). The code is the name of the file in Redmine's own `config/locales`. "Draft" is explained above.
 
 | Code | Language | Translation |
 |---|---|---|

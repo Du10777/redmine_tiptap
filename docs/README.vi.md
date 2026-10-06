@@ -46,7 +46,7 @@
 
 Đây là trình soạn thảo văn bản cho Redmine, dựa trên TipTap https://github.com/ueberdosis/tiptap
 
-Các phiên bản Redmine được hỗ trợ: **6.\*** (phát triển và kiểm thử trên 6.1.4).
+Các phiên bản Redmine được hỗ trợ: **6.\*** và **7.\*** (đã kiểm thử trên 6.1.4, 6.1.5 và 7.0.2).
 
 Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
 
@@ -119,7 +119,7 @@ Chi tiết: [highlight/README/vi.md](../highlight/README/vi.md).
 
 ## Ngôn ngữ giao diện
 
-Trình soạn thảo nói theo ngôn ngữ được chọn trong hồ sơ Redmine của người dùng (Cá nhân → Ngôn ngữ). Các tệp cho 47 trong số 50 ngôn ngữ của Redmine 6 đi kèm với plugin, trong `config/locales/`. Tiếng Anh là nguồn và Tiếng Nga là của tác giả; 45 ngôn ngữ còn lại là bản nháp được tạo với sự trợ giúp của mô hình AI và chưa được xem xét bởi người bản xứ, vì vậy hãy mong đợi một cụm từ lạ ở đây. Văn bản bị thiếu từ tệp sẽ được hiển thị bằng Tiếng Anh.
+Trình soạn thảo nói theo ngôn ngữ được chọn trong hồ sơ Redmine của người dùng (Cá nhân → Ngôn ngữ). Các tệp cho 47 trong số 50 ngôn ngữ của Redmine đi kèm với plugin, trong `config/locales/`. Tiếng Anh là nguồn và Tiếng Nga là của tác giả; 45 ngôn ngữ còn lại là bản nháp được tạo với sự trợ giúp của mô hình AI và chưa được xem xét bởi người bản xứ, vì vậy hãy mong đợi một cụm từ lạ ở đây. Văn bản bị thiếu từ tệp sẽ được hiển thị bằng Tiếng Anh.
 
 Để sửa một bản dịch, hãy thay đổi các giá trị của nó trong `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) và khởi động lại Redmine. `bundle exec rake redmine_tiptap:locales` kiểm tra các tệp. Pull request có sửa chữa được hoan nghênh.
 

@@ -46,7 +46,7 @@
 
 Es un editor de text per a Redmine, basat en TipTap https://github.com/ueberdosis/tiptap
 
-Versions de Redmine compatibles: **6.\*** (desenvolupat i provat a la versió 6.1.4).
+Versions de Redmine compatibles: **6.\*** i **7.\*** (provat a les versions 6.1.4, 6.1.5 i 7.0.2).
 
 Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen a aquesta versió exacta a `package.json` i `package-lock.json` i sempre s'han d'actualitzar junts, a la mateixa versió.
 
@@ -119,7 +119,7 @@ Detalls: [highlight/README/ca.md](../highlight/README/ca.md).
 
 ## Idioma de la interfície
 
-L'editor parla l'idioma escollit al perfil de Redmine de l'usuari (El meu compte → Idioma). Els fitxers de 47 de les 50 llengues de Redmine 6 s'inclouen al complement, a `config/locales/`. L'anglès és la font i el rus és del mateix autor; els altres 45 són esborranys fets amb l'ajuda d'un model d'IA i encara no s'han revisat per parlants nadius, així que espereu alguna frase estranya aquí i allà. Un text que manqui d'un fitxer es mostra en anglès.
+L'editor parla l'idioma escollit al perfil de Redmine de l'usuari (El meu compte → Idioma). Els fitxers de 47 de les 50 llengues de Redmine s'inclouen al complement, a `config/locales/`. L'anglès és la font i el rus és del mateix autor; els altres 45 són esborranys fets amb l'ajuda d'un model d'IA i encara no s'han revisat per parlants nadius, així que espereu alguna frase estranya aquí i allà. Un text que manqui d'un fitxer es mostra en anglès.
 
 Per corregir una traducció, canvieu els seus valors a `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) i reinicieu Redmine. `bundle exec rake redmine_tiptap:locales` verifica els fitxers. Les sol·licituds de fusió amb correccions són benvingudes.
 
