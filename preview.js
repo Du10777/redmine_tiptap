@@ -34,7 +34,9 @@
     '<(?:ul|ol|table|thead|tbody|tfoot|tr|blockquote|div)\\b[^>]*>[ \\t]*\\r?\\n\\t+<'
   ].join('|'));
 
-  var SPECIAL_CONTAINER_RE = /<div\s+style\s*=\s*(["'])([\s\S]*?)\1\s*>((?:(?!<\/?div\b)[\s\S])*)<\/div>/gi;
+  // The style value is (?:(?!\1)[^<>])* , not a lazy [\s\S]*? : a lazy match backtracks across the whole
+  // document on many opening <div style=...> with no matching </div> (O(n^2)); barring < and > bounds it.
+  var SPECIAL_CONTAINER_RE = /<div\s+style\s*=\s*(["'])((?:(?!\1)[^<>])*)\1\s*>((?:(?!<\/?div\b)[\s\S])*)<\/div>/gi;
 
   function cssValue(value) {
     value = value.toLowerCase().replace(/\s*!important\s*$/, '').replace(/\s+/g, ' ').trim();
@@ -65,7 +67,7 @@
   }
 
   function convertSpecialContainers(html) {
-    if (!/<div\b/i.test(html)) return html;
+    if (!/<div\b/i.test(html) || !/<\/div/i.test(html)) return html;
     return html.replace(SPECIAL_CONTAINER_RE, function (whole, quote, style, inner) {
       // In Redmine the macros of the text are already taken out at this point ({{macro_1}}).
       if (/\{\{/.test(inner) || !specialContainerStyle(style)) return whole;
