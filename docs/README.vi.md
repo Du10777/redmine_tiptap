@@ -46,9 +46,9 @@
 
 Đây là trình soạn thảo văn bản cho Redmine, dựa trên TipTap https://github.com/ueberdosis/tiptap
 
-**[Dùng thử trình soạn thảo trực tuyến](https://du10777.github.io/redmine_tiptap/)**: trang demo chạy trình soạn thảo của plugin này ngay trong trình duyệt của bạn, trên một trang được làm giống biểu mẫu của Redmine. Hãy gõ và định dạng văn bản, dán một hình ảnh, mở thẻ "Xem trước" để xem văn bản sẽ trông thế nào sau khi lưu, đổi ngôn ngữ giao diện hoặc chọn một văn bản mẫu. Không cần cài đặt gì và không có gì được gửi đi đâu cả.
+**[Dùng thử trình soạn thảo trực tuyến](https://du10777.github.io/redmine_tiptap/?lang=vi)**: trang demo chạy trình soạn thảo của plugin này ngay trong trình duyệt của bạn, trên một trang được làm giống biểu mẫu của Redmine. Hãy gõ và định dạng văn bản, dán một hình ảnh, mở thẻ "Xem trước" để xem văn bản sẽ trông thế nào sau khi lưu, đổi ngôn ngữ giao diện hoặc chọn một văn bản mẫu. Không cần cài đặt gì và không có gì được gửi đi đâu cả.
 
-[![Trình soạn thảo trên trang demo](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Trình soạn thảo trên trang demo](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=vi)
 
 Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
 

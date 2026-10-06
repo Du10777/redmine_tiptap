@@ -46,9 +46,9 @@
 
 这是一个用于 Redmine 的文本编辑器，基于 TipTap https://github.com/ueberdosis/tiptap
 
-**[在线试用编辑器](https://du10777.github.io/redmine_tiptap/)**：演示页面直接在您的浏览器中运行本插件的编辑器，页面仿照 Redmine 的表单制作。您可以输入并设置文本格式、粘贴图片、打开“预览”选项卡查看文本保存后的样子、切换界面语言，或选择示例文本。无需安装任何东西，也不会发送任何数据。
+**[在线试用编辑器](https://du10777.github.io/redmine_tiptap/?lang=zh)**：演示页面直接在您的浏览器中运行本插件的编辑器，页面仿照 Redmine 的表单制作。您可以输入并设置文本格式、粘贴图片、打开“预览”选项卡查看文本保存后的样子、切换界面语言，或选择示例文本。无需安装任何东西，也不会发送任何数据。
 
-[![演示页面上的编辑器](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![演示页面上的编辑器](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=zh)
 
 编辑器引擎：**TipTap 3.31.4**。所有 `@tiptap/*` 包在 `package.json` 和 `package-lock.json` 中都固定为这一确切版本，并且必须始终一起升级，且升级到同一个版本。
 

@@ -46,9 +46,9 @@
 
 Dette er en teksteditor for Redmine, basert på TipTap https://github.com/ueberdosis/tiptap
 
-**[Prøv editoren på nett](https://du10777.github.io/redmine_tiptap/)**: demosiden kjører editoren i dette programtillegget rett i nettleseren din, på en side laget som et skjema i Redmine. Skriv og formater tekst, lim inn et bilde, åpne fanen «Forhåndsvis» for å se hvordan teksten vil se ut når den er lagret, bytt språk i grensesnittet eller velg en eksempeltekst. Ingenting å installere, og ingenting sendes noe sted.
+**[Prøv editoren på nett](https://du10777.github.io/redmine_tiptap/?lang=no)**: demosiden kjører editoren i dette programtillegget rett i nettleseren din, på en side laget som et skjema i Redmine. Skriv og formater tekst, lim inn et bilde, åpne fanen «Forhåndsvis» for å se hvordan teksten vil se ut når den er lagret, bytt språk i grensesnittet eller velg en eksempeltekst. Ingenting å installere, og ingenting sendes noe sted.
 
-[![Editoren på demosiden](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Editoren på demosiden](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=no)
 
 Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksakte versjonen i `package.json` og `package-lock.json` og må alltid oppgraderes sammen til samme versjon.
 

@@ -46,9 +46,9 @@
 
 Tämä on tekstieditori Redminelle, joka perustuu TipTapiin https://github.com/ueberdosis/tiptap
 
-**[Kokeile editoria verkossa](https://du10777.github.io/redmine_tiptap/)**: esittelysivulla tämän liitännäisen editori toimii suoraan selaimessasi, Redminen lomakkeen kaltaisella sivulla. Kirjoita ja muotoile tekstiä, liitä kuva, avaa välilehti ”Esikatselu” nähdäksesi, miltä teksti näyttää tallennettuna, vaihda käyttöliittymän kieli tai valitse esimerkkiteksti. Mitään ei tarvitse asentaa, eikä mitään lähetetä minnekään.
+**[Kokeile editoria verkossa](https://du10777.github.io/redmine_tiptap/?lang=fi)**: esittelysivulla tämän liitännäisen editori toimii suoraan selaimessasi, Redminen lomakkeen kaltaisella sivulla. Kirjoita ja muotoile tekstiä, liitä kuva, avaa välilehti ”Esikatselu” nähdäksesi, miltä teksti näyttää tallennettuna, vaihda käyttöliittymän kieli tai valitse esimerkkiteksti. Mitään ei tarvitse asentaa, eikä mitään lähetetä minnekään.
 
-[![Editori esittelysivulla](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Editori esittelysivulla](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=fi)
 
 Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
 

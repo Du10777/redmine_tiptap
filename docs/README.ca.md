@@ -46,9 +46,9 @@
 
 Es un editor de text per a Redmine, basat en TipTap https://github.com/ueberdosis/tiptap
 
-**[Proveu l'editor en línia](https://du10777.github.io/redmine_tiptap/)**: la pàgina de demostració fa funcionar l'editor d'aquest complement directament al vostre navegador, en una pàgina feta com un formulari de Redmine. Escriviu i doneu format al text, enganxeu una imatge, obriu la pestanya «Previsualitzar» per veure com es veurà el text un cop desat, canvieu l'idioma de la interfície o trieu un text d'exemple. No cal instal·lar res i no s'envia res enlloc.
+**[Proveu l'editor en línia](https://du10777.github.io/redmine_tiptap/?lang=ca)**: la pàgina de demostració fa funcionar l'editor d'aquest complement directament al vostre navegador, en una pàgina feta com un formulari de Redmine. Escriviu i doneu format al text, enganxeu una imatge, obriu la pestanya «Previsualitzar» per veure com es veurà el text un cop desat, canvieu l'idioma de la interfície o trieu un text d'exemple. No cal instal·lar res i no s'envia res enlloc.
 
-[![L'editor a la pàgina de demostració](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![L'editor a la pàgina de demostració](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=ca)
 
 Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen a aquesta versió exacta a `package.json` i `package-lock.json` i sempre s'han d'actualitzar junts, a la mateixa versió.
 

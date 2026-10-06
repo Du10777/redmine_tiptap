@@ -46,9 +46,9 @@
 
 Ez egy szövegszerkesztő a Redmine-hez, amely a TipTap alapján készült https://github.com/ueberdosis/tiptap
 
-**[Próbálja ki a szerkesztőt online](https://du10777.github.io/redmine_tiptap/)**: a bemutatóoldalon ennek a bővítménynek a szerkesztője közvetlenül a böngészőjében fut, egy Redmine-űrlapra hasonlító oldalon. Írjon és formázzon szöveget, illesszen be képet, nyissa meg az „Előnézet” lapot, hogy lássa, hogyan fog kinézni a szöveg mentés után, váltson a felület nyelvén, vagy válasszon egy példaszöveget. Semmit sem kell telepíteni, és semmi sem kerül elküldésre.
+**[Próbálja ki a szerkesztőt online](https://du10777.github.io/redmine_tiptap/?lang=hu)**: a bemutatóoldalon ennek a bővítménynek a szerkesztője közvetlenül a böngészőjében fut, egy Redmine-űrlapra hasonlító oldalon. Írjon és formázzon szöveget, illesszen be képet, nyissa meg az „Előnézet” lapot, hogy lássa, hogyan fog kinézni a szöveg mentés után, váltson a felület nyelvén, vagy válasszon egy példaszöveget. Semmit sem kell telepíteni, és semmi sem kerül elküldésre.
 
-[![A szerkesztő a bemutatóoldalon](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![A szerkesztő a bemutatóoldalon](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=hu)
 
 Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
 

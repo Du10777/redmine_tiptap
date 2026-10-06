@@ -46,9 +46,9 @@
 
 To je urejevalnik besedil za Redmine, ki temelji na TipTap https://github.com/ueberdosis/tiptap
 
-**[Preizkusite urejevalnik na spletu](https://du10777.github.io/redmine_tiptap/)**: na predstavitveni strani urejevalnik redmine_tiptap deluje kar v vašem brskalniku, na strani, narejeni kot obrazec Redmineja. Pišite in oblikujte besedilo, prilepite sliko, odprite zavihek »Predogled«, da vidite, kako bo besedilo videti po shranjevanju, zamenjajte jezik vmesnika ali izberite vzorčno besedilo. Ničesar ni treba namestiti in nič se nikamor ne pošilja.
+**[Preizkusite urejevalnik na spletu](https://du10777.github.io/redmine_tiptap/?lang=sl)**: na predstavitveni strani urejevalnik redmine_tiptap deluje kar v vašem brskalniku, na strani, narejeni kot obrazec Redmineja. Pišite in oblikujte besedilo, prilepite sliko, odprite zavihek »Predogled«, da vidite, kako bo besedilo videti po shranjevanju, zamenjajte jezik vmesnika ali izberite vzorčno besedilo. Ničesar ni treba namestiti in nič se nikamor ne pošilja.
 
-[![Urejevalnik na predstavitveni strani](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Urejevalnik na predstavitveni strani](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=sl)
 
 Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
 

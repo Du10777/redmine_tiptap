@@ -46,9 +46,9 @@
 
 Ovo je uređivač teksta za Redmine, zasnovan na TipTap-u https://github.com/ueberdosis/tiptap
 
-**[Isprobajte uređivač na mreži](https://du10777.github.io/redmine_tiptap/)**: na demo stranici uređivač ove dodatne komponente radi direktno u vašem pregledaču, na stranici napravljenoj kao obrazac Redmine-a. Kucajte i oblikujte tekst, nalepite sliku, otvorite karticu „Pregled” da vidite kako će tekst izgledati posle čuvanja, promenite jezik interfejsa ili izaberite primer teksta. Ništa ne treba instalirati i ništa se nikuda ne šalje.
+**[Isprobajte uređivač na mreži](https://du10777.github.io/redmine_tiptap/?lang=sr-YU)**: na demo stranici uređivač ove dodatne komponente radi direktno u vašem pregledaču, na stranici napravljenoj kao obrazac Redmine-a. Kucajte i oblikujte tekst, nalepite sliku, otvorite karticu „Pregled” da vidite kako će tekst izgledati posle čuvanja, promenite jezik interfejsa ili izaberite primer teksta. Ništa ne treba instalirati i ništa se nikuda ne šalje.
 
-[![Uređivač na demo stranici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Uređivač na demo stranici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=sr-YU)
 
 Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
 

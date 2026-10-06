@@ -46,9 +46,9 @@
 
 Redmine용 텍스트 에디터로, TipTap https://github.com/ueberdosis/tiptap 기반입니다.
 
-**[온라인으로 에디터 사용해 보기](https://du10777.github.io/redmine_tiptap/)**: 데모 페이지에서는 이 플러그인의 에디터가 Redmine 양식처럼 만든 페이지에서 브라우저로 바로 실행됩니다. 텍스트를 입력하고 서식을 지정하고, 그림을 붙여 넣고, "미리보기" 탭을 열어 저장된 뒤 텍스트가 어떻게 보이는지 확인하고, 인터페이스 언어를 바꾸거나 예제 텍스트를 고를 수 있습니다. 설치할 것도 없고 아무것도 전송되지 않습니다.
+**[온라인으로 에디터 사용해 보기](https://du10777.github.io/redmine_tiptap/?lang=ko)**: 데모 페이지에서는 이 플러그인의 에디터가 Redmine 양식처럼 만든 페이지에서 브라우저로 바로 실행됩니다. 텍스트를 입력하고 서식을 지정하고, 그림을 붙여 넣고, "미리보기" 탭을 열어 저장된 뒤 텍스트가 어떻게 보이는지 확인하고, 인터페이스 언어를 바꾸거나 예제 텍스트를 고를 수 있습니다. 설치할 것도 없고 아무것도 전송되지 않습니다.
 
-[![데모 페이지의 에디터](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![데모 페이지의 에디터](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=ko)
 
 에디터 엔진: **TipTap 3.31.4**. 모든 `@tiptap/*` 패키지는 `package.json`과 `package-lock.json`에서 이 정확한 버전으로 고정되어 있으며, 항상 함께 동일한 버전으로 업그레이드해야 합니다.
 

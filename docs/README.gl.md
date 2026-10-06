@@ -46,9 +46,9 @@
 
 Editor de texto para Redmine, baseado en TipTap https://github.com/ueberdosis/tiptap
 
-**[Proba o editor en liña](https://du10777.github.io/redmine_tiptap/)**: a páxina de demostración executa o editor deste complemento directamente no teu navegador, nunha páxina feita como un formulario de Redmine. Escribe e dálle formato ao texto, pega unha imaxe, abre a lapela «Vista previa» para ver como quedará o texto unha vez gardado, cambia o idioma da interface ou escolle un texto de exemplo. Non hai nada que instalar e non se envía nada a ningures.
+**[Proba o editor en liña](https://du10777.github.io/redmine_tiptap/?lang=gl)**: a páxina de demostración executa o editor deste complemento directamente no teu navegador, nunha páxina feita como un formulario de Redmine. Escribe e dálle formato ao texto, pega unha imaxe, abre a lapela «Vista previa» para ver como quedará o texto unha vez gardado, cambia o idioma da interface ou escolle un texto de exemplo. Non hai nada que instalar e non se envía nada a ningures.
 
-[![O editor na páxina de demostración](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![O editor na páxina de demostración](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=gl)
 
 Motor do editor: **TipTap 3.31.4**. Todos os paquetes `@tiptap/*` están fixados a esta versión exacta en `package.json` e `package-lock.json` e deben ser sempre actualizados xunto á mesma versión.
 

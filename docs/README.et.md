@@ -46,9 +46,9 @@
 
 See on tekstiredaktor Redmine'i jaoks, mis põhineb TipTapil https://github.com/ueberdosis/tiptap
 
-**[Proovige redaktorit veebis](https://du10777.github.io/redmine_tiptap/)**: demolehel töötab selle pistiku redaktor otse teie brauseris, Redmine'i vormi moodi tehtud lehel. Kirjutage ja vormindage teksti, kleepige pilt, avage vahekaart „Eelvaade“, et näha, milline tekst pärast salvestamist välja näeb, vahetage liidese keelt või valige näidistekst. Midagi ei pea paigaldama ja midagi ei saadeta kuhugi.
+**[Proovige redaktorit veebis](https://du10777.github.io/redmine_tiptap/?lang=et)**: demolehel töötab selle pistiku redaktor otse teie brauseris, Redmine'i vormi moodi tehtud lehel. Kirjutage ja vormindage teksti, kleepige pilt, avage vahekaart „Eelvaade“, et näha, milline tekst pärast salvestamist välja näeb, vahetage liidese keelt või valige näidistekst. Midagi ei pea paigaldama ja midagi ei saadeta kuhugi.
 
-[![Redaktor demolehel](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Redaktor demolehel](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=et)
 
 Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud selle täpsele versioonile `package.json` ja `package-lock.json` ning neid tuleb alati koos täiendada ühele ja samale versioonile.
 

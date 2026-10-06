@@ -46,9 +46,9 @@
 
 Tai tekstų redaktorius „Redmine", pagrįstas „TipTap" https://github.com/ueberdosis/tiptap
 
-**[Išbandykite redaktorių internete](https://du10777.github.io/redmine_tiptap/)**: demonstraciniame puslapyje šio įskiepio redaktorius veikia tiesiog jūsų naršyklėje, puslapyje, padarytame kaip „Redmine" forma. Rašykite ir formatuokite tekstą, įklijuokite paveikslėlį, atverkite skirtuką „Peržiūra“, kad pamatytumėte, kaip tekstas atrodys išsaugotas, perjunkite sąsajos kalbą arba pasirinkite pavyzdinį tekstą. Nieko nereikia diegti ir niekas niekur nesiunčiama.
+**[Išbandykite redaktorių internete](https://du10777.github.io/redmine_tiptap/?lang=lt)**: demonstraciniame puslapyje šio įskiepio redaktorius veikia tiesiog jūsų naršyklėje, puslapyje, padarytame kaip „Redmine" forma. Rašykite ir formatuokite tekstą, įklijuokite paveikslėlį, atverkite skirtuką „Peržiūra“, kad pamatytumėte, kaip tekstas atrodys išsaugotas, perjunkite sąsajos kalbą arba pasirinkite pavyzdinį tekstą. Nieko nereikia diegti ir niekas niekur nesiunčiama.
 
-[![Redaktorius demonstraciniame puslapyje](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Redaktorius demonstraciniame puslapyje](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=lt)
 
 Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
 

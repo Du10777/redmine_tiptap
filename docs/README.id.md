@@ -46,9 +46,9 @@
 
 Ini adalah editor teks untuk Redmine, berdasarkan TipTap https://github.com/ueberdosis/tiptap
 
-**[Coba editor secara daring](https://du10777.github.io/redmine_tiptap/)**: halaman demo menjalankan editor plugin ini langsung di peramban Anda, pada halaman yang dibuat seperti formulir Redmine. Ketik dan format teks, tempel gambar, buka tab "Tinjauan" untuk melihat tampilan teks setelah disimpan, ganti bahasa antarmuka, atau pilih contoh teks. Tidak perlu memasang apa pun, dan tidak ada yang dikirim ke mana pun.
+**[Coba editor secara daring](https://du10777.github.io/redmine_tiptap/?lang=id)**: halaman demo menjalankan editor plugin ini langsung di peramban Anda, pada halaman yang dibuat seperti formulir Redmine. Ketik dan format teks, tempel gambar, buka tab "Tinjauan" untuk melihat tampilan teks setelah disimpan, ganti bahasa antarmuka, atau pilih contoh teks. Tidak perlu memasang apa pun, dan tidak ada yang dikirim ke mana pun.
 
-[![Editor di halaman demo](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Editor di halaman demo](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=id)
 
 Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yang sama persis dalam `package.json` dan `package-lock.json` dan harus selalu ditingkatkan bersama, ke satu versi yang sama.
 

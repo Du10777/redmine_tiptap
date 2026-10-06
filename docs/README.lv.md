@@ -46,9 +46,9 @@
 
 Šis ir Redmine teksta redaktors, kas balstīts uz TipTap https://github.com/ueberdosis/tiptap
 
-**[Izmēģiniet redaktoru tiešsaistē](https://du10777.github.io/redmine_tiptap/)**: demonstrācijas lapā šī spraudņa redaktors darbojas tieši jūsu pārlūkā, lapā, kas veidota kā Redmine veidlapa. Rakstiet un formatējiet tekstu, ielīmējiet attēlu, atveriet cilni “Priekšskatījums”, lai redzētu, kā teksts izskatīsies pēc saglabāšanas, pārslēdziet saskarnes valodu vai izvēlieties parauga tekstu. Nekas nav jāinstalē, un nekas netiek nekur sūtīts.
+**[Izmēģiniet redaktoru tiešsaistē](https://du10777.github.io/redmine_tiptap/?lang=lv)**: demonstrācijas lapā šī spraudņa redaktors darbojas tieši jūsu pārlūkā, lapā, kas veidota kā Redmine veidlapa. Rakstiet un formatējiet tekstu, ielīmējiet attēlu, atveriet cilni “Priekšskatījums”, lai redzētu, kā teksts izskatīsies pēc saglabāšanas, pārslēdziet saskarnes valodu vai izvēlieties parauga tekstu. Nekas nav jāinstalē, un nekas netiek nekur sūtīts.
 
-[![Redaktors demonstrācijas lapā](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+[![Redaktors demonstrācijas lapā](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=lv)
 
 Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
 
