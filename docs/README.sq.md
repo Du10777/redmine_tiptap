@@ -46,7 +46,15 @@
 
 Ky është një përpunues teksti për Redmine, i bazuar në TipTap https://github.com/ueberdosis/tiptap
 
-Versionet e mbështetura të Redmine-it: **6.\*** dhe **7.\*** (testuar në 6.1.4, 6.1.5 dhe 7.0.2).
+Versionet e mbështetura të Redmine-it:
+
+| Redmine | Mbështetet | Testuar në |
+|---|---|---|
+| 7.x | po | 7.0.2 |
+| 6.x | po | 6.1.4, 6.1.5 |
+| 5.x dhe më të vjetra | jo | — |
+
+Një version i ri kryesor (8.x e më pas) mbështetet vetëm pasi shtojca të jetë testuar në të. Deri atëherë, Redmine i atij versioni nuk niset me shtojcën të instaluar: ndalet me një gabim që përmend versionet e mbështetura.
 
 Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
 

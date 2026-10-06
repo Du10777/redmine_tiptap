@@ -46,7 +46,15 @@
 
 Il s’agit d’un éditeur de texte pour Redmine, basé sur TipTap https://github.com/ueberdosis/tiptap
 
-Versions de Redmine prises en charge : **6.\*** et **7.\*** (testé sur les versions 6.1.4, 6.1.5 et 7.0.2).
+Versions de Redmine prises en charge :
+
+| Redmine | Prise en charge | Testé sur |
+|---|---|---|
+| 7.x | oui | 7.0.2 |
+| 6.x | oui | 6.1.4, 6.1.5 |
+| 5.x et antérieures | non | — |
+
+Une nouvelle version majeure (8.x et suivantes) n'est prise en charge qu'après que le plugin y a été testé. D'ici là, Redmine dans cette version ne démarre pas avec le plugin installé : il s'arrête sur une erreur qui indique les versions prises en charge.
 
 Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont épinglés à cette version exacte dans `package.json` et `package-lock.json` et doivent toujours être mis à jour ensemble, vers une seule et même version.
 

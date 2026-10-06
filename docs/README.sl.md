@@ -46,7 +46,15 @@
 
 To je urejevalnik besedil za Redmine, ki temelji na TipTap https://github.com/ueberdosis/tiptap
 
-Podprte različice Redmineja: **6.\*** in **7.\*** (testirano na 6.1.4, 6.1.5 in 7.0.2).
+Podprte različice Redmineja:
+
+| Redmine | Podpora | Testirano na |
+|---|---|---|
+| 7.x | da | 7.0.2 |
+| 6.x | da | 6.1.4, 6.1.5 |
+| 5.x in starejše | ne | — |
+
+Nova glavna različica (8.x in novejše) postane podprta šele, ko je redmine_tiptap na njej preizkušen. Do takrat se Redmine te različice z nameščenim redmine_tiptap ne zažene: ustavi se z napako, ki navede podprte različice.
 
 Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
 

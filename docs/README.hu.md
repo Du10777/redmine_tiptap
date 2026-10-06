@@ -46,7 +46,15 @@
 
 Ez egy szövegszerkesztő a Redmine-hez, amely a TipTap alapján készült https://github.com/ueberdosis/tiptap
 
-Támogatott Redmine verziók: **6.\*** és **7.\*** (tesztelve a 6.1.4, 6.1.5 és 7.0.2 verziókon).
+Támogatott Redmine verziók:
+
+| Redmine | Támogatott | Tesztelt verziók |
+|---|---|---|
+| 7.x | igen | 7.0.2 |
+| 6.x | igen | 6.1.4, 6.1.5 |
+| 5.x és régebbi | nem | — |
+
+Egy új főverzió (8.x és újabb) csak azután lesz támogatott, hogy a bővítményt tesztelték rajta. Addig az ilyen verziójú Redmine nem indul el telepített bővítménnyel: hibával leáll, amely megnevezi a támogatott verziókat.
 
 Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
 

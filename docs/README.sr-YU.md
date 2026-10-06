@@ -46,7 +46,15 @@
 
 Ovo je uređivač teksta za Redmine, zasnovan na TipTap-u https://github.com/ueberdosis/tiptap
 
-Podržane verzije Redmine-a: **6.\*** i **7.\*** (testirano na 6.1.4, 6.1.5 i 7.0.2).
+Podržane verzije Redmine-a:
+
+| Redmine | Podrška | Testirano na |
+|---|---|---|
+| 7.x | da | 7.0.2 |
+| 6.x | da | 6.1.4, 6.1.5 |
+| 5.x i starije | ne | — |
+
+Nova glavna verzija (8.x i novije) postaje podržana tek kada se dodatna komponenta testira na njoj. Do tada se Redmine te verzije ne pokreće sa instaliranom dodatnom komponentom: zaustavlja se sa greškom u kojoj su navedene podržane verzije.
 
 Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
 
@@ -108,7 +116,7 @@ Sintaksa u blokovima koda istakuje se podjednako i u uređivaču i na sačuvanim
 
 Sa dodatnom komponentom dolazi 52 jezika, među kojima su HTML, 1C, Cisco IOS, MikroTik RouterOS, Windows cmd, docker compose, dnevnici Linux servisa i izlaz komande journalctl.
 
-Možete dodati sopstvene jezike. Svaki jezik je jedna datoteka u faskikli `highlight/`. Bilo koja od 190+ gramatika highlight.js, ili gramatika treće strane, konvertuje se u takvu datoteku jednom komandom:
+Možete dodati sopstvene jezike. Svaki jezik je jedna datoteka u fascikli `highlight/`. Bilo koja od 190+ gramatika highlight.js, ili gramatika treće strane, konvertuje se u takvu datoteku jednom komandom:
 
 ```sh
 python3 highlight/_convert_grammar.py erlang
@@ -119,7 +127,7 @@ Detalji: [highlight/README/sr-YU.md](../highlight/README/sr-YU.md).
 
 ## Jezik interfejsa
 
-Uređivač se prikazuje na jeziku izabranom u Redmine profilu korisnika (Moj nalog → Jezik). Datoteke za 47 od 50 jezika Redmine-a ispručuju se sa dodatnom komponentom, u faskikli `config/locales/`. Engleski je izvorni jezik, a ruski pottiče od samog autora; ostalih 45 su nacrti napravljeni uz pomoć modela veštačke inteligencije koje izvorni govorioci još nisu proverili, pa tu i tamo očekujte neuobičajenu formulaciju. Tekst koji nedostaje u datoteci prikazuje se na engleskom.
+Uređivač se prikazuje na jeziku izabranom u Redmine profilu korisnika (Moj nalog → Jezik). Datoteke za 47 od 50 jezika Redmine-a isporučuju se sa dodatnom komponentom, u fascikli `config/locales/`. Engleski je izvorni jezik, a ruski pottiče od samog autora; ostalih 45 su nacrti napravljeni uz pomoć modela veštačke inteligencije koje izvorni govorioci još nisu proverili, pa tu i tamo očekujte neuobičajenu formulaciju. Tekst koji nedostaje u datoteci prikazuje se na engleskom.
 
 Da biste ispravili prevod, izmenite njegove vrednosti u `config/locales/<code>.yml` (`de`, `fr`, `pt-BR`, ...) i ponovo pokrenite Redmine. `bundle exec rake redmine_tiptap:locales` proverava datoteke. Dobrodošli su pull request-ovi sa ispravkama.
 
@@ -163,7 +171,7 @@ Da biste ostali na određenoj verziji umesto na najnovijem komitu: `git fetch &&
 ### Inštalirano iz arhive
 
 1. Izbrišite staru fasciklu `plugins/redmine_tiptap` i na njeno mjesto raspakujte novu verziju. Prethodno brisanje obezbeđuje da datoteke uklonjene u novoj verziji ne zaostanu.
-2. Izbrišite `public/assets/.manifest.json` u faskikli Redmine-a.
+2. Izbrišite `public/assets/.manifest.json` u fascikli Redmine-a.
 3. Ponovo pokrenite Redmine.
 
 Korak 2 je važan. Pri pokretanju Redmine ponovo objavljuje resurse dodatnih komponenti samo ako su njihove datoteke novije od ovog manifesta. Datoteke raspakovane iz arhive zadržavaju svoje prvobitne vremenske oznake, pa bez koraka 2 Redmine može i dalje da isporučuje stari uređivač. Manifest se automatski ponovo pravi pri pokretanju. Sa `git pull` ovaj korak nije potreban: git izmenjenim datotekama postavlja trenutno vreme.
@@ -171,7 +179,7 @@ Korak 2 je važan. Pri pokretanju Redmine ponovo objavljuje resurse dodatnih kom
 ### Posle ažuriranja
 
 - Skripta i stilski list uređivača isporučuju se sa otiskom sadržaja u svojim URL adresama, pa pregledači učitavaju novu verziju odmah nakon ponovnog pokretanja. Korisnici ne moraju da brišu keš svog pregledača.
-- Ako je u podešavanjima Redmine-a uključeno *Keširanje obrađenog teksta* (Administracija → Podešavanja → Opšti), jednom očistite Redmine-ov keš nakon ažuriranja na verziju koja menja kako se tekstovi prikazuju (čišćenje HTML-a, podrška za tekstove iz CKEditor-a): `bundle exec rake tmp:cache:clear RAILS_ENV=production` u faskikli Redmine-a. U suprotnom se stranice obrađene pre ažuriranja mogu prikazivati iz keša, nečišćene, sve dok se njihov tekst ne izmeni.
+- Ako je u podešavanjima Redmine-a uključeno *Keširanje obrađenog teksta* (Administracija → Podešavanja → Opšti), jednom očistite Redmine-ov keš nakon ažuriranja na verziju koja menja kako se tekstovi prikazuju (čišćenje HTML-a, podrška za tekstove iz CKEditor-a): `bundle exec rake tmp:cache:clear RAILS_ENV=production` u fascikli Redmine-a. U suprotnom se stranice obrađene pre ažuriranja mogu prikazivati iz keša, nečišćene, sve dok se njihov tekst ne izmeni.
 - Ranije verzije dodatne komponente kopirali su skriptu u `public/tiptap_bundle.js`. Ove datoteke se više ne koriste i mogu se izbrisati:
   ```sh
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map

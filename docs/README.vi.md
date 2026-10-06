@@ -46,7 +46,15 @@
 
 Đây là trình soạn thảo văn bản cho Redmine, dựa trên TipTap https://github.com/ueberdosis/tiptap
 
-Các phiên bản Redmine được hỗ trợ: **6.\*** và **7.\*** (đã kiểm thử trên 6.1.4, 6.1.5 và 7.0.2).
+Các phiên bản Redmine được hỗ trợ:
+
+| Redmine | Hỗ trợ | Đã kiểm thử trên |
+|---|---|---|
+| 7.x | có | 7.0.2 |
+| 6.x | có | 6.1.4, 6.1.5 |
+| 5.x trở về trước | không | — |
+
+Phiên bản chính mới (8.x trở đi) chỉ được hỗ trợ sau khi plugin đã được kiểm thử trên phiên bản đó. Trước đó, Redmine phiên bản này sẽ không khởi động khi đã cài plugin: nó dừng lại với lỗi nêu rõ các phiên bản được hỗ trợ.
 
 Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
 

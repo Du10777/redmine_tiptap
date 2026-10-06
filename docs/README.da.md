@@ -46,7 +46,15 @@
 
 Dette er en teksteditor til Redmine, baseret på TipTap https://github.com/ueberdosis/tiptap
 
-Understøttede Redmine-versioner: **6.\*** og **7.\*** (testet på 6.1.4, 6.1.5 og 7.0.2).
+Understøttede Redmine-versioner:
+
+| Redmine | Understøttet | Testet på |
+|---|---|---|
+| 7.x | ja | 7.0.2 |
+| 6.x | ja | 6.1.4, 6.1.5 |
+| 5.x og ældre | nej | — |
+
+En ny hovedversion (8.x og senere) understøttes først, når plugin'et er testet på den. Indtil da starter Redmine i den version ikke med plugin'et installeret: den stopper med en fejl, der angiver de understøttede versioner.
 
 Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er fastsat til denne præcise version i `package.json` og `package-lock.json` og skal altid opgraderes sammen til samme version.
 

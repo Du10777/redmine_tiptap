@@ -46,7 +46,15 @@
 
 See on tekstiredaktor Redmine'i jaoks, mis põhineb TipTapil https://github.com/ueberdosis/tiptap
 
-Toetatud Redmine'i versioonid: **6.\*** ja **7.\*** (testitud versioonidel 6.1.4, 6.1.5 ja 7.0.2).
+Toetatud Redmine'i versioonid:
+
+| Redmine | Toetatud | Testitud versioonidel |
+|---|---|---|
+| 7.x | jah | 7.0.2 |
+| 6.x | jah | 6.1.4, 6.1.5 |
+| 5.x ja vanemad | ei | — |
+
+Uus põhiversioon (8.x ja hilisemad) saab toetatuks alles pärast seda, kui pistikut on sellel testitud. Seni ei käivitu selle versiooni Redmine paigaldatud pistikuga: see peatub veaga, mis nimetab toetatud versioonid.
 
 Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud selle täpsele versioonile `package.json` ja `package-lock.json` ning neid tuleb alati koos täiendada ühele ja samale versioonile.
 

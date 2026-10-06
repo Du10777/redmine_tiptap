@@ -46,7 +46,15 @@
 
 Bu, Redmine üçün TipTap (https://github.com/ueberdosis/tiptap) əsasında hazırlanmış mətn redaktorudur.
 
-Dəstəklənən Redmine versiyaları: **6.\*** və **7.\*** (6.1.4, 6.1.5 və 7.0.2 versiyalarında sınaqdan keçirilib).
+Dəstəklənən Redmine versiyaları:
+
+| Redmine | Dəstəklənir | Sınaqdan keçirilib |
+|---|---|---|
+| 7.x | bəli | 7.0.2 |
+| 6.x | bəli | 6.1.4, 6.1.5 |
+| 5.x və daha köhnə | xeyr | — |
+
+Yeni əsas versiya (8.x və sonrakılar) yalnız plagin onun üzərində sınaqdan keçirildikdən sonra dəstəklənir. O vaxta qədər həmin versiyalı Redmine plagin quraşdırılmış halda işə düşmür: dəstəklənən versiyaları göstərən xəta ilə dayanır.
 
 Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
 

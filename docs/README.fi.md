@@ -46,7 +46,15 @@
 
 Tämä on tekstieditori Redminelle, joka perustuu TipTapiin https://github.com/ueberdosis/tiptap
 
-Tuetut Redmine-versiot: **6.\*** ja **7.\*** (testattu versioilla 6.1.4, 6.1.5 ja 7.0.2).
+Tuetut Redmine-versiot:
+
+| Redmine | Tuettu | Testattu versioilla |
+|---|---|---|
+| 7.x | kyllä | 7.0.2 |
+| 6.x | kyllä | 6.1.4, 6.1.5 |
+| 5.x ja vanhemmat | ei | — |
+
+Uusi pääversio (8.x ja myöhemmät) tulee tuetuksi vasta, kun liitännäinen on testattu sillä. Siihen asti tämän version Redmine ei käynnisty, kun liitännäinen on asennettu: se pysähtyy virheeseen, jossa mainitaan tuetut versiot.
 
 Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
 

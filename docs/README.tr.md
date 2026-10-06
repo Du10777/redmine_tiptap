@@ -46,7 +46,15 @@
 
 Bu, TipTap tabanlı Redmine için bir metin düzenleyicidir https://github.com/ueberdosis/tiptap
 
-Desteklenen Redmine sürümleri: **6.\*** ve **7.\*** (6.1.4, 6.1.5 ve 7.0.2 üzerinde test edilmiştir).
+Desteklenen Redmine sürümleri:
+
+| Redmine | Destek | Test edilen sürümler |
+|---|---|---|
+| 7.x | evet | 7.0.2 |
+| 6.x | evet | 6.1.4, 6.1.5 |
+| 5.x ve öncesi | hayır | — |
+
+Yeni bir ana sürüm (8.x ve sonrası), ancak eklenti o sürümde test edildikten sonra desteklenir. O zamana kadar o sürümdeki Redmine, eklenti kuruluyken başlamaz: desteklenen sürümleri belirten bir hatayla durur.
 
 Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
 

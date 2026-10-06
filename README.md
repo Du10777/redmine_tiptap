@@ -43,7 +43,15 @@
 
 This is text editor for Redmine, based on TipTap https://github.com/ueberdosis/tiptap
 
-Supported Redmine versions: **6.\*** and **7.\*** (tested on 6.1.4, 6.1.5 and 7.0.2).
+Supported Redmine versions:
+
+| Redmine | Supported | Tested on |
+|---|---|---|
+| 7.x | yes | 7.0.2 |
+| 6.x | yes | 6.1.4, 6.1.5 |
+| 5.x and older | no | — |
+
+A newer major version (8.x and later) becomes supported only after the plugin has been tested on it. Until then, Redmine of that version does not start with the plugin installed: it stops with an error that names the supported versions.
 
 Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this exact version in `package.json` and `package-lock.json` and must always be upgraded together, to one and the same version.
 

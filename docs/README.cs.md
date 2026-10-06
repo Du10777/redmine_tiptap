@@ -46,7 +46,15 @@
 
 Toto je textový editor pro Redmine založený na TipTap https://github.com/ueberdosis/tiptap
 
-Podporované verze Redmine: **6.\*** a **7.\*** (testováno na 6.1.4, 6.1.5 a 7.0.2).
+Podporované verze Redmine:
+
+| Redmine | Podpora | Testováno na |
+|---|---|---|
+| 7.x | ano | 7.0.2 |
+| 6.x | ano | 6.1.4, 6.1.5 |
+| 5.x a starší | ne | — |
+
+Nová hlavní verze (8.x a novější) je podporována až poté, co je na ní plugin otestován. Do té doby se Redmine této verze s nainstalovaným pluginem nespustí: zastaví se s chybou, která uvádí podporované verze.
 
 Editor: **TipTap 3.31.4**. Všechny balíčky `@tiptap/*` jsou v `package.json` a `package-lock.json` připnuty na tuto přesnou verzi a musí být vždy aktualizovány společně na stejnou verzi.
 

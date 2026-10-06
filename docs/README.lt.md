@@ -46,7 +46,15 @@
 
 Tai tekstų redaktorius „Redmine", pagrįstas „TipTap" https://github.com/ueberdosis/tiptap
 
-Palaikomos „Redmine" versijos: **6.\*** ir **7.\*** (testuota naudojant 6.1.4, 6.1.5 ir 7.0.2).
+Palaikomos „Redmine" versijos:
+
+| Redmine | Palaikoma | Testuota su |
+|---|---|---|
+| 7.x | taip | 7.0.2 |
+| 6.x | taip | 6.1.4, 6.1.5 |
+| 5.x ir senesnės | ne | — |
+
+Nauja pagrindinė versija (8.x ir vėlesnės) palaikoma tik tada, kai įskiepis joje išbandomas. Iki tol tos versijos „Redmine" su įdiegtu įskiepiu nepasileidžia: sustoja su klaida, kurioje nurodytos palaikomos versijos.
 
 Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
 

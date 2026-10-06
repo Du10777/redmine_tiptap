@@ -46,7 +46,15 @@
 
 Šis ir Redmine teksta redaktors, kas balstīts uz TipTap https://github.com/ueberdosis/tiptap
 
-Atbalstītās Redmine versijas: **6.\*** un **7.\*** (testēts versijās 6.1.4, 6.1.5 un 7.0.2).
+Atbalstītās Redmine versijas:
+
+| Redmine | Atbalstīta | Testēts versijās |
+|---|---|---|
+| 7.x | jā | 7.0.2 |
+| 6.x | jā | 6.1.4, 6.1.5 |
+| 5.x un vecākas | nē | — |
+
+Jauna galvenā versija (8.x un jaunākas) tiek atbalstīta tikai pēc tam, kad spraudnis tajā ir pārbaudīts. Līdz tam šīs versijas Redmine ar instalētu spraudni nestartē: tas apstājas ar kļūdu, kurā nosauktas atbalstītās versijas.
 
 Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
 
