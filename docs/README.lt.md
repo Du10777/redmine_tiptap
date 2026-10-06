@@ -161,8 +161,9 @@ Išsamiau ir „Redmine" kalbų sąrašas: [config/locales/README.md](../config/
 1. Sudėkite įskiepį į „Redmine" `plugins` aplanką. Aplanko pavadinimas turi būti `redmine_tiptap`. Lengviausia yra naudoti git, kas taip pat leidžia atnaujinti viena komanda:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Šakoje `release` yra tik tie failai, kurių reikia įskiepio veikimui, be šios dokumentacijos, o `--depth 1` neatsisiunčia saugyklos istorijos.
 2. Paleiskite „Redmine" iš naujo.
 3. „Redmine" nustatymuose (redmine.selfhosted/_settings_) pasirinkite Teksto formatavimas: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Norint likti konkrečioje versijoje vietoj naujausio įsipareigojimo: `git fetch && git checkout <tag-or-commit>`.
+Jei norite likti konkrečioje versijoje, o ne naujausioje, atsisiųskite šakos `release` commit ir persijunkite į jį: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Jei įskiepis buvo įdiegtas paprastu `git clone` (šaka `main`, su dokumentacija ir visa istorija), vieną kartą pereikite į šaką `release`: ištrinkite aplanką `plugins/redmine_tiptap` ir įdiekite įskiepį iš naujo, kaip aprašyta skyriuje [Diegimas](#diegimas). Įskiepis savo aplanke nesaugo nieko savo, todėl niekas neprarandama; tik pačių pridėtas kodo paryškinimo kalbas pirmiau nukopijuokite iš `highlight/`.
 
 ### Diegta iš archyvo
 
-1. Panaikinkite seną `plugins/redmine_tiptap` aplanką ir iš naujo iškompakuokite naują versiją. Pirmiausia panaikinimas užtikrina, kad failai, pašalinti naujoje versijoje, negrąžinami.
+1. Atsisiųskite šakos `release` archyvą: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Ištrinkite seną aplanką `plugins/redmine_tiptap` ir išskleiskite archyvą jo vietoje; archyve esantis aplankas vadinasi `redmine_tiptap-release`, pervadinkite jį į `redmine_tiptap`. Ištrynus iš anksto, neliks failų, kurių naujoje versijoje nebėra.
 2. Panaikinkite `public/assets/.manifest.json` „Redmine" aplanke.
 3. Paleiskite „Redmine" iš naujo.
 

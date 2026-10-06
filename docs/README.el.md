@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. Τοποθετήστε το πλαίσιο στο φάκελο `plugins` του Redmine. Ο φάκελος πρέπει να ονομάζεται `redmine_tiptap`. Ο ευκολότερος τρόπος είναι το git, το οποίο καθιστά τις ενημερώσεις μια μόνη εντολή:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Ο κλάδος `release` περιέχει μόνο τα αρχεία που χρειάζεται το redmine_tiptap για να λειτουργήσει, χωρίς αυτή την τεκμηρίωση, και το `--depth 1` δεν κατεβάζει το ιστορικό του αποθετηρίου.
 2. Επανεκκινήστε το Redmine.
 3. Στις ρυθμίσεις του Redmine (redmine.selfhosted/_settings_) επιλέξτε Μορφοποίηση κειμένου: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Για να παραμείνετε σε μια συγκεκριμένη έκδοση αντί του τελευταίου commit: `git fetch && git checkout <tag-or-commit>`.
+Για να παραμείνετε σε μια συγκεκριμένη έκδοση αντί για την πιο πρόσφατη, κατεβάστε ένα commit του κλάδου `release` και μεταβείτε σε αυτό: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Αν το redmine_tiptap εγκαταστάθηκε με απλό `git clone` (ο κλάδος `main`, με την τεκμηρίωση και όλο το ιστορικό), μεταβείτε στον κλάδο `release` μία φορά: διαγράψτε τον φάκελο `plugins/redmine_tiptap` και εγκαταστήστε το ξανά όπως περιγράφεται στην ενότητα [Εγκατάσταση](#εγκατάσταση). Το redmine_tiptap δεν κρατά τίποτα δικό του στον φάκελό του, οπότε δεν χάνεται τίποτα· μόνο τις γλώσσες επισήμανσης κώδικα που προσθέσατε εσείς αντιγράψτε πρώτα έξω από το `highlight/`.
 
 ### Εγκατεστημένο από ένα αρχείο
 
-1. Διαγράψτε το παλιό φάκελο `plugins/redmine_tiptap` και ξεπακετάρετε την νέα έκδοση στη θέση του. Η διαγραφή πρώτα διασφαλίζει ότι τα αρχεία που αφαιρέθηκαν στη νέα έκδοση δεν παραμένουν.
+1. Κατεβάστε το αρχείο του κλάδου `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Διαγράψτε τον παλιό φάκελο `plugins/redmine_tiptap` και αποσυμπιέστε το αρχείο στη θέση του· ο φάκελος μέσα στο αρχείο λέγεται `redmine_tiptap-release`, μετονομάστε τον σε `redmine_tiptap`. Η διαγραφή πρώτα εξασφαλίζει ότι δεν μένουν αρχεία που αφαιρέθηκαν στη νέα έκδοση.
 2. Διαγράψτε `public/assets/.manifest.json` στο φάκελο Redmine.
 3. Επανεκκινήστε το Redmine.
 

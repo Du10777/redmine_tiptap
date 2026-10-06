@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. 將外掛程式放入 Redmine 的 `plugins` 資料夾中，資料夾必須命名為 `redmine_tiptap`。最簡單的方式是使用 git，這樣更新也只需一個指令：
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` 分支只包含外掛程式執行所需的檔案，不含這份文件，而 `--depth 1` 不會下載儲存庫的歷史記錄。
 2. 重新啟動 Redmine。
 3. 在 Redmine 設定（redmine.selfhosted/_settings_）中，將文字格式選擇為 *TipTap HTML*。
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-若要停留在某個特定版本，而不是最新的提交，請執行 `git fetch && git checkout <tag-or-commit>`。
+若要停留在某個特定版本而不是最新版本，請取得 `release` 分支的某個提交並切換過去：`git fetch --depth 1 origin <commit> && git checkout <commit>`。
+
+如果外掛程式是以一般的 `git clone` 安裝的（`main` 分支，包含文件與完整歷史記錄），請一次性改用 `release` 分支：刪除 `plugins/redmine_tiptap` 資料夾，並依照[安裝](#安裝)一節重新安裝外掛程式。外掛程式不會在自己的資料夾中保存任何自己的資料，所以不會遺失任何東西；只有您自行新增的程式碼醒目提示語言，需要先從 `highlight/` 複製出來。
 
 ### 透過壓縮檔案安裝
 
-1. 刪除舊的 `plugins/redmine_tiptap` 資料夾，並在原位置解壓新版本。先刪除可以確保新版本中已移除的檔案不會殘留。
+1. 下載 `release` 分支的壓縮檔：https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip 。刪除舊的 `plugins/redmine_tiptap` 資料夾，並在原位置解壓縮；壓縮檔中的資料夾名為 `redmine_tiptap-release`，請將其重新命名為 `redmine_tiptap`。先刪除可以確保新版本中已移除的檔案不會殘留。
 2. 刪除 Redmine 資料夾中的 `public/assets/.manifest.json`。
 3. 重新啟動 Redmine。
 

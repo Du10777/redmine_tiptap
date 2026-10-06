@@ -161,8 +161,9 @@ Tiedot ja Redminen kielten luettelo: [config/locales/README.md](../config/locale
 1. Laita liitännäinen Redminen `plugins`-kansioon. Kansion on oltava nimeltään `redmine_tiptap`. Helpoin tapa on git, joka tekee päivityksistä myös yhden komennon:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Haarassa `release` on vain tiedostot, joita liitännäinen tarvitsee toimiakseen, ilman tätä dokumentaatiota, ja `--depth 1` jättää tietovaraston historian lataamatta.
 2. Käynnistä Redmine uudelleen.
 3. Valitse Redminen asetuksissa (redmine.selfhosted/_settings_) Tekstin muotoilu: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Pysyäkseen tietyssä versiossa viimeisen commit-osoitteen sijasta: `git fetch && git checkout <tag-or-commit>`.
+Jos haluat pysyä tietyssä versiossa uusimman sijaan, hae haaran `release` commit ja vaihda siihen: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Jos liitännäinen asennettiin tavallisella `git clone` -komennolla (haara `main`, dokumentaation ja koko historian kanssa), siirry kerran haaraan `release`: poista kansio `plugins/redmine_tiptap` ja asenna liitännäinen uudelleen kohdan [Asennus](#asennus) mukaan. Liitännäinen ei säilytä kansiossaan mitään omaa, joten mitään ei katoa; vain itse lisäämäsi koodin korostuksen kielet on ensin kopioitava pois kansiosta `highlight/`.
 
 ### Asennettu arkistosta
 
-1. Poista vanha `plugins/redmine_tiptap`-kansio ja pura uusi versio sen tilalle. Poistaminen ensin varmistaa, että uuden version poistetut tiedostot eivät jää.
+1. Lataa haaran `release` arkisto: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Poista vanha kansio `plugins/redmine_tiptap` ja pura arkisto sen tilalle; arkistossa olevan kansion nimi on `redmine_tiptap-release`, nimeä se uudelleen nimelle `redmine_tiptap`. Kun kansio poistetaan ensin, uudesta versiosta poistetut tiedostot eivät jää jäljelle.
 2. Poista `public/assets/.manifest.json` Redmine-kansiosta.
 3. Käynnistä Redmine uudelleen.
 

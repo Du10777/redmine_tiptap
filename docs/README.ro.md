@@ -161,8 +161,9 @@ Detalii și lista limbilor Redmine: [config/locales/README.md](../config/locales
 1. Plasați plugin-ul în dosarul `plugins` al Redmine. Dosarul trebuie numit `redmine_tiptap`. Cel mai ușor mod este git, care face și actualizările o singură comandă:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Ramura `release` conține doar fișierele de care pluginul are nevoie pentru a funcționa, fără această documentație, iar `--depth 1` nu descarcă istoricul depozitului.
 2. Reporniți Redmine.
 3. În setările Redmine (redmine.selfhosted/_settings_) alegeți Formatare text: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Pentru a rămâne la o anumită versiune în loc de cea mai recentă commit: `git fetch && git checkout <tag-or-commit>`.
+Pentru a rămâne la o anumită versiune în loc de cea mai recentă, descărcați un commit al ramurii `release` și comutați pe el: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Dacă pluginul a fost instalat cu un `git clone` obișnuit (ramura `main`, cu documentația și tot istoricul), treceți o singură dată la ramura `release`: ștergeți dosarul `plugins/redmine_tiptap` și instalați pluginul din nou, așa cum este descris în [Instalare](#instalare). Pluginul nu păstrează nimic propriu în dosarul său, așa că nu se pierde nimic; doar limbajele de evidențiere a codului adăugate de dumneavoastră trebuie copiate mai întâi din `highlight/`.
 
 ### Instalat dintr-o arhivă
 
-1. Ștergeți dosarul vechi `plugins/redmine_tiptap` și despachetați versiunea nouă în locul acestuia. Ștergerea mai întâi se asigură că fișierele eliminate în versiunea nouă nu rămân.
+1. Descărcați arhiva ramurii `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Ștergeți dosarul vechi `plugins/redmine_tiptap` și dezarhivați arhiva în locul lui; dosarul din arhivă se numește `redmine_tiptap-release`, redenumiți-l în `redmine_tiptap`. Ștergerea în prealabil asigură că nu rămân fișiere pe care versiunea nouă nu le mai are.
 2. Ștergeți `public/assets/.manifest.json` în dosarul Redmine.
 3. Reporniți Redmine.
 

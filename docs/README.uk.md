@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. Поставте плагін в папку `plugins` Redmine. Папка повинна мати назву `redmine_tiptap`. Найпростіший спосіб - це git, який також дозволяє оновлювати однією командою:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Гілка `release` містить лише файли, потрібні плагіну для роботи, без цієї документації, а `--depth 1` не завантажує історію репозиторію.
 2. Перезапустіть Redmine.
 3. У налаштуваннях Redmine (redmine.selfhosted/_settings_) виберіть Форматування тексту: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Щоб залишитися на певній версії замість останнього комітру: `git fetch && git checkout <tag-or-commit>`.
+Щоб залишитися на певній версії замість найновішої, завантажте коміт гілки `release` і перемкніться на нього: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Якщо плагін було встановлено звичайним `git clone` (гілка `main`, з документацією та всією історією), один раз перейдіть на гілку `release`: видаліть папку `plugins/redmine_tiptap` і встановіть плагін заново, як описано в розділі [Установка](#установка). Плагін не зберігає у своїй папці нічого свого, тож нічого не загубиться; лише мови підсвічування коду, які ви додали самі, спершу скопіюйте з `highlight/`.
 
 ### Встановлено з архіву
 
-1. Видаліть стару папку `plugins/redmine_tiptap` і розпакуйте нову версію на її місце. Видалення спочатку гарантує, що файли, видалені в новій версії, не залишатимуться.
+1. Завантажте архів гілки `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Видаліть стару папку `plugins/redmine_tiptap` і розпакуйте архів на її місце; папка в архіві називається `redmine_tiptap-release`, перейменуйте її на `redmine_tiptap`. Видалення спочатку гарантує, що файли, видалені в новій версії, не залишатимуться.
 2. Видаліть `public/assets/.manifest.json` у папці Redmine.
 3. Перезапустіть Redmine.
 

@@ -161,8 +161,9 @@ Szczegóły i lista języków Redmine: [config/locales/README.md](../config/loca
 1. Umieść wtyczkę w folderze `plugins` Redmine. Folder musi być nazwany `redmine_tiptap`. Najprościej jest użyć git, co również ułatwia aktualizacje jedną komendą:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Gałąź `release` zawiera tylko pliki potrzebne wtyczce do działania, bez tej dokumentacji, a `--depth 1` nie pobiera historii repozytorium.
 2. Uruchom ponownie Redmine.
 3. W ustawieniach Redmine (redmine.selfhosted/_settings_) wybierz Formatowanie tekstu: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Aby pozostać na określonej wersji zamiast najnowszego commitu: `git fetch && git checkout <tag-or-commit>`.
+Aby pozostać przy określonej wersji zamiast najnowszej, pobierz commit z gałęzi `release` i przełącz się na niego: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Jeśli wtyczka została zainstalowana zwykłym `git clone` (gałąź `main`, z dokumentacją i całą historią), przejdź jednorazowo na gałąź `release`: usuń folder `plugins/redmine_tiptap` i zainstaluj wtyczkę ponownie, jak opisano w sekcji [Instalacja](#instalacja). Wtyczka nie przechowuje w swoim folderze niczego własnego, więc nic nie przepadnie; jedynie języki wyróżniania składni dodane samodzielnie trzeba najpierw skopiować z `highlight/`.
 
 ### Zainstalowana z archiwum
 
-1. Usuń stary folder `plugins/redmine_tiptap` i rozpakuj nową wersję w jego miejscu. Usunięcie najpierw upewnia się, że pliki usunięte w nowej wersji nie pozostają.
+1. Pobierz archiwum gałęzi `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Usuń stary folder `plugins/redmine_tiptap` i rozpakuj archiwum w jego miejscu; folder w archiwum nazywa się `redmine_tiptap-release`, zmień jego nazwę na `redmine_tiptap`. Wcześniejsze usunięcie gwarantuje, że nie zostaną pliki, których nowa wersja już nie ma.
 2. Usuń `public/assets/.manifest.json` w folderze Redmine.
 3. Uruchom ponownie Redmine.
 

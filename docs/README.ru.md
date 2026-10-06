@@ -159,8 +159,9 @@ sh highlight/_compile.sh
 1. Положите плагин в папку `plugins` Redmine. Папка должна называться `redmine_tiptap`. Проще всего через git — тогда и обновление делается одной командой:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   В ветке `release` только те файлы, которые нужны плагину для работы, без этой документации, а `--depth 1` не скачивает историю репозитория.
 2. Перезапустите Redmine.
 3. В настройках Redmine (redmine.selfhosted/_settings_) выберите форматирование текста: *TipTap HTML*.
 
@@ -185,11 +186,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Чтобы остаться на определённой версии, а не на последнем коммите: `git fetch && git checkout <тег-или-коммит>`.
+Чтобы остаться на определённой версии, а не на последней, скачайте коммит ветки `release` и переключитесь на него: `git fetch --depth 1 origin <коммит> && git checkout <коммит>`.
+
+Если плагин был установлен обычным `git clone` (ветка `main`, с документацией и всей историей), перейдите на ветку `release` один раз: удалите папку `plugins/redmine_tiptap` и установите плагин заново, как описано в разделе [Установка](#установка). Своих данных в своей папке плагин не хранит, так что ничего не потеряется; только языки подсветки кода, которые вы добавили сами, сначала скопируйте из `highlight/`.
 
 ### Если плагин установлен из архива
 
-1. Удалите старую папку `plugins/redmine_tiptap` и распакуйте новую версию на её место. Удалять сначала нужно, чтобы не остались файлы, которых в новой версии уже нет.
+1. Скачайте архив ветки `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Удалите старую папку `plugins/redmine_tiptap` и распакуйте архив на её место; папка в архиве называется `redmine_tiptap-release`, переименуйте её в `redmine_tiptap`. Удалять сначала нужно, чтобы не остались файлы, которых в новой версии уже нет.
 2. Удалите `public/assets/.manifest.json` в папке Redmine.
 3. Перезапустите Redmine.
 

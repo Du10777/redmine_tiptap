@@ -161,8 +161,9 @@ Detaljer og listen over Redmine-sprog: [config/locales/README.md](../config/loca
 1. Sæt plugin'et ind i Redmines mappe `plugins`. Mappen skal være navngivet `redmine_tiptap`. Den nemmeste måde er git, som også gør opdateringer til en kommando:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Grenen `release` har kun de filer, plugin'et skal bruge for at køre, uden denne dokumentation, og `--depth 1` udelader repositoriets historik.
 2. Genstart Redmine.
 3. I Redmines indstillinger (redmine.selfhosted/_settings_) vælg Tekstformatering: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-For at blive på en bestemt version i stedet for den seneste commit: `git fetch && git checkout <tag-or-commit>`.
+For at blive på en bestemt version i stedet for den nyeste skal du hente en commit fra grenen `release` og skifte til den: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Hvis plugin'et blev installeret med en almindelig `git clone` (grenen `main`, med dokumentationen og hele historikken), så skift til grenen `release` én gang: slet mappen `plugins/redmine_tiptap` og installer plugin'et igen som beskrevet i [Installation](#installation). Plugin'et gemmer intet af sit eget i sin mappe, så intet går tabt; kun sprog til syntaksmarkering, som du selv har tilføjet, skal først kopieres ud af `highlight/`.
 
 ### Installeret fra et arkiv
 
-1. Slet den gamle mappe `plugins/redmine_tiptap` og pak den nye version ud på sin plads. Sletning først sikrer, at filer fjernet i den nye version ikke bliver tilbage.
+1. Hent arkivet for grenen `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Slet den gamle mappe `plugins/redmine_tiptap` og pak arkivet ud på dens plads; mappen i arkivet hedder `redmine_tiptap-release`, omdøb den til `redmine_tiptap`. Når den slettes først, bliver filer, der er fjernet i den nye version, ikke liggende.
 2. Slet `public/assets/.manifest.json` i Redmine-mappen.
 3. Genstart Redmine.
 

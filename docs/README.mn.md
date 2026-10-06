@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. Плагиныг Redmine-ийн `plugins` хавтсанд хийнэ. Хавтасны нэр `redmine_tiptap` байх ёстой. Хамгийн хялбар арга нь git бөгөөд шинэчлэлтийг ч нэг командаар хийх боломжийг олгоно:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` салбарт плагин ажиллахад хэрэгтэй файлууд л байгаа бөгөөд энэ баримт бичиг ороогүй, харин `--depth 1` нь репозиторын түүхийг татахгүй.
 2. Redmine-ийг дахин эхлүүлнэ.
 3. Redmine-ийн тохиргоонд (redmine.selfhosted/_settings_) Текст хэлбэржүүлэлт хэсэгт *TipTap HTML*-ийг сонгоно.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Сүүлийн коммитын оронд тодорхой хувилбар дээр үлдэхийн тулд: `git fetch && git checkout <tag-or-commit>`.
+Хамгийн сүүлийнх биш, тодорхой хувилбар дээр үлдэхийн тулд `release` салбарын коммитыг татаж, түүн рүү шилжинэ: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Хэрэв плагиныг энгийн `git clone` (баримт бичиг болон бүх түүхтэй `main` салбар)-оор суулгасан бол нэг удаа `release` салбар руу шилжинэ үү: `plugins/redmine_tiptap` хавтсыг устгаад, плагиныг [Суулгалт](#суулгалт) хэсэгт тайлбарласны дагуу дахин суулгана. Плагин өөрийн хавтсанд өөрийн гэсэн юу ч хадгалдаггүй тул юу ч алга болохгүй; зөвхөн өөрөө нэмсэн кодын тодруулгын хэлнүүдийг эхлээд `highlight/`-аас хуулж авна уу.
 
 ### Архиваас суулгасан бол
 
-1. Хуучин `plugins/redmine_tiptap` хавтсыг устгаад, түүний оронд шинэ хувилбарыг задлана. Эхлээд устгаснаар шинэ хувилбарт хасагдсан файлууд үлдэхгүй байх нь баталгаатай болно.
+1. `release` салбарын архивыг татна: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Хуучин `plugins/redmine_tiptap` хавтсыг устгаад, түүний оронд архивыг задлана; архив доторх хавтасны нэр `redmine_tiptap-release` тул нэрийг нь `redmine_tiptap` болгож өөрчилнө. Эхлээд устгаснаар шинэ хувилбарт хасагдсан файлууд үлдэхгүй.
 2. Redmine-ийн хавтас дахь `public/assets/.manifest.json` файлыг устгана.
 3. Redmine-ийг дахин эхлүүлнэ.
 

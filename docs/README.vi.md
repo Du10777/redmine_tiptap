@@ -161,8 +161,9 @@ Chi tiết và danh sách các ngôn ngữ Redmine: [config/locales/README.md](.
 1. Đặt plugin vào thư mục `plugins` của Redmine. Thư mục phải được đặt tên `redmine_tiptap`. Cách dễ nhất là sử dụng git, điều này cũng làm cho việc cập nhật chỉ còn một lệnh:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Nhánh `release` chỉ có những tệp mà plugin cần để chạy, không có tài liệu này, còn `--depth 1` không tải lịch sử của kho mã.
 2. Khởi động lại Redmine.
 3. Trong phần thiết lập Redmine (redmine.selfhosted/_settings_) chọn Định dạng bài viết: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Để ở lại phiên bản cụ thể thay vì commit mới nhất: `git fetch && git checkout <tag-or-commit>`.
+Để ở lại một phiên bản cụ thể thay vì phiên bản mới nhất, hãy tải một commit của nhánh `release` và chuyển sang nó: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Nếu plugin đã được cài bằng `git clone` thông thường (nhánh `main`, có tài liệu và toàn bộ lịch sử), hãy chuyển sang nhánh `release` một lần: xóa thư mục `plugins/redmine_tiptap` rồi cài lại plugin như mô tả trong [Cài đặt](#cài-đặt). Plugin không lưu gì của riêng nó trong thư mục của mình, nên không mất gì cả; chỉ các ngôn ngữ tô sáng mã do bạn tự thêm thì cần sao chép ra khỏi `highlight/` trước.
 
 ### Được cài đặt từ một kho lưu trữ
 
-1. Xóa thư mục `plugins/redmine_tiptap` cũ và giải nén phiên bản mới vào vị trí tương tự. Xóa trước đảm bảo rằng các tệp bị xóa trong phiên bản mới sẽ không còn tồn tại.
+1. Tải tệp nén của nhánh `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Xóa thư mục `plugins/redmine_tiptap` cũ và giải nén tệp vào đúng vị trí đó; thư mục trong tệp nén có tên `redmine_tiptap-release`, hãy đổi tên nó thành `redmine_tiptap`. Xóa trước đảm bảo rằng các tệp đã bị loại bỏ trong phiên bản mới sẽ không còn sót lại.
 2. Xóa `public/assets/.manifest.json` trong thư mục Redmine.
 3. Khởi động lại Redmine.
 

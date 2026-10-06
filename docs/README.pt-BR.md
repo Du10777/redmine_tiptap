@@ -161,8 +161,9 @@ Detalhes e lista dos idiomas Redmine: [config/locales/README.md](../config/local
 1. Coloque o plugin na pasta `plugins` do Redmine. A pasta deve ser nomeada `redmine_tiptap`. A forma mais fácil é usar git, que também torna as atualizações um comando único:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   O branch `release` tem apenas os arquivos de que o plugin precisa para funcionar, sem esta documentação, e `--depth 1` não baixa o histórico do repositório.
 2. Reinicie o Redmine.
 3. Nas configurações do Redmine (redmine.selfhosted/_settings_) escolha Formatação do texto: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Para ficar em uma versão específica em vez do commit mais recente: `git fetch && git checkout <tag-or-commit>`.
+Para ficar em uma versão específica em vez da mais recente, baixe um commit do branch `release` e mude para ele: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Se o plugin foi instalado com um `git clone` comum (o branch `main`, com a documentação e todo o histórico), mude para o branch `release` uma única vez: exclua a pasta `plugins/redmine_tiptap` e instale o plugin de novo como descrito em [Instalação](#instalação). O plugin não guarda nada próprio na sua pasta, então nada se perde; apenas as linguagens de destaque de código que você mesmo adicionou precisam ser copiadas antes para fora de `highlight/`.
 
 ### Instalado a partir de um arquivo
 
-1. Exclua a pasta antiga `plugins/redmine_tiptap` e descompacte a nova versão no seu lugar. Excluir primeiro garante que os arquivos removidos na nova versão não fiquem retidos.
+1. Baixe o arquivo compactado do branch `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Exclua a pasta antiga `plugins/redmine_tiptap` e descompacte o arquivo no lugar dela; a pasta dentro do arquivo se chama `redmine_tiptap-release`, renomeie-a para `redmine_tiptap`. Excluir primeiro garante que os arquivos removidos na nova versão não fiquem para trás.
 2. Exclua `public/assets/.manifest.json` na pasta do Redmine.
 3. Reinicie o Redmine.
 

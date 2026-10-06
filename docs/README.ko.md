@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. 플러그인을 Redmine의 `plugins` 폴더에 넣으세요. 폴더는 `redmine_tiptap`이어야 합니다. 가장 쉬운 방법은 git을 사용하는 것인데, 업데이트도 한 명령으로 됩니다.
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` 브랜치에는 플러그인 실행에 필요한 파일만 있고 이 문서는 없으며, `--depth 1`은 저장소의 이력을 받지 않습니다.
 2. Redmine을 다시 시작하세요.
 3. Redmine 설정(redmine.selfhosted/_settings_)에서 본문 형식으로 *TipTap HTML*을 선택하세요.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-최신 커밋이 아닌 특정 버전으로 유지하려면: `git fetch && git checkout <tag-or-commit>`.
+최신 버전이 아닌 특정 버전으로 유지하려면 `release` 브랜치의 커밋을 가져와 전환합니다: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+플러그인을 일반 `git clone`(`main` 브랜치, 문서와 전체 이력 포함)으로 설치했다면 한 번만 `release` 브랜치로 옮기세요. `plugins/redmine_tiptap` 폴더를 삭제하고 [설치](#설치)에 설명된 대로 플러그인을 다시 설치합니다. 플러그인은 자기 폴더에 자체 데이터를 저장하지 않으므로 잃는 것은 없습니다. 다만 직접 추가한 코드 강조 언어는 먼저 `highlight/`에서 복사해 두어야 합니다.
 
 ### 아카이브에서 설치함
 
-1. 오래된 `plugins/redmine_tiptap` 폴더를 삭제하고 그 자리에 새 버전을 압축 해제합니다. 먼저 삭제하면 새 버전에서 제거된 파일이 남지 않습니다.
+1. `release` 브랜치의 아카이브를 내려받습니다: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. 기존 `plugins/redmine_tiptap` 폴더를 삭제하고 그 자리에 아카이브를 압축 해제합니다. 아카이브 안의 폴더 이름은 `redmine_tiptap-release`이므로 `redmine_tiptap`으로 이름을 바꿉니다. 먼저 삭제하면 새 버전에서 제거된 파일이 남지 않습니다.
 2. Redmine 폴더의 `public/assets/.manifest.json`을 삭제하세요.
 3. Redmine을 다시 시작하세요.
 

@@ -161,8 +161,9 @@ Detail dan daftar bahasa Redmine: [config/locales/README.md](../config/locales/R
 1. Letakkan plugin ke dalam folder `plugins` Redmine. Folder harus diberi nama `redmine_tiptap`. Cara paling mudah adalah git, yang juga membuat pembaruan menjadi satu perintah:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Cabang `release` hanya berisi file yang dibutuhkan plugin untuk berjalan, tanpa dokumentasi ini, dan `--depth 1` tidak mengunduh riwayat repositori.
 2. Restart Redmine.
 3. Dalam pengaturan Redmine (redmine.selfhosted/_settings_) pilih Format teks: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Untuk tetap di versi tertentu alih-alih komit terbaru: `git fetch && git checkout <tag-or-commit>`.
+Untuk tetap di versi tertentu alih-alih yang terbaru, ambil sebuah commit dari cabang `release` lalu beralih ke sana: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Jika plugin dipasang dengan `git clone` biasa (cabang `main`, dengan dokumentasi dan seluruh riwayat), pindahlah ke cabang `release` sekali saja: hapus folder `plugins/redmine_tiptap` lalu pasang ulang plugin seperti dijelaskan di [Instalasi](#instalasi). Plugin tidak menyimpan apa pun miliknya sendiri di foldernya, jadi tidak ada yang hilang; hanya bahasa penyorotan kode yang Anda tambahkan sendiri yang perlu disalin keluar dari `highlight/` terlebih dahulu.
 
 ### Dipasang dari arsip
 
-1. Hapus folder lama `plugins/redmine_tiptap` dan unpack versi baru di tempatnya. Menghapus lebih dulu memastikan bahwa file yang dihapus di versi baru tidak tertinggal.
+1. Unduh arsip cabang `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Hapus folder lama `plugins/redmine_tiptap` dan ekstrak arsip di tempatnya; folder di dalam arsip bernama `redmine_tiptap-release`, ganti namanya menjadi `redmine_tiptap`. Menghapus lebih dulu memastikan bahwa file yang sudah tidak ada di versi baru tidak tertinggal.
 2. Hapus `public/assets/.manifest.json` di folder Redmine.
 3. Restart Redmine.
 

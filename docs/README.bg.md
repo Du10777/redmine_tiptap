@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. Поставете плъгина в папката `plugins` на Redmine. Папката трябва да се казва `redmine_tiptap`. Най-лесният начин е git, което също прави актуализирането една команда:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Клонът `release` съдържа само файловете, нужни за работата на плъгина, без тази документация, а `--depth 1` не изтегля историята на хранилището.
 2. Рестартирайте Redmine.
 3. В настройките на Redmine (redmine.selfhosted/_settings_) изберете Форматиране на текста: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-За оставане на конкретна версия вместо последния commit: `git fetch && git checkout <tag-or-commit>`.
+За да останете на конкретна версия вместо на последната, изтеглете commit от клона `release` и превключете на него: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Ако плъгинът е инсталиран с обикновен `git clone` (клонът `main`, с документацията и цялата история), преминете към клона `release` веднъж: изтрийте папката `plugins/redmine_tiptap` и инсталирайте плъгина отново, както е описано в [Инсталация](#инсталация). Плъгинът не пази нищо свое в папката си, така че нищо не се губи; само езиците за оцветяване на код, които сте добавили сами, трябва първо да копирате от `highlight/`.
 
 ### Инсталиран от архив
 
-1. Изтрийте старата папка `plugins/redmine_tiptap` и разпакувайте новата версия в нейното място. Изтриването първо гарантира, че файлове премахнати в новата версия не остават.
+1. Изтеглете архива на клона `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Изтрийте старата папка `plugins/redmine_tiptap` и разпакувайте архива на нейно място; папката в архива се казва `redmine_tiptap-release`, преименувайте я на `redmine_tiptap`. Изтриването първо гарантира, че файловете, премахнати в новата версия, няма да останат.
 2. Изтрийте `public/assets/.manifest.json` в папката на Redmine.
 3. Рестартирайте Redmine.
 

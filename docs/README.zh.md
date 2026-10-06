@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. 将插件放入 Redmine 的 `plugins` 文件夹中，文件夹必须命名为 `redmine_tiptap`。最简单的方式是使用 git，这样更新也只需一条命令：
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` 分支只包含插件运行所需的文件，不含这份文档，而 `--depth 1` 不会下载仓库的历史记录。
 2. 重启 Redmine。
 3. 在 Redmine 配置（redmine.selfhosted/_settings_）中，将文本格式选择为 *TipTap HTML*。
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-若要停留在某个特定版本，而不是最新的提交，请执行 `git fetch && git checkout <tag-or-commit>`。
+若要停留在某个特定版本而不是最新版本，请获取 `release` 分支的某个提交并切换过去：`git fetch --depth 1 origin <commit> && git checkout <commit>`。
+
+如果插件是用普通的 `git clone` 安装的（`main` 分支，包含文档和完整历史），请一次性改用 `release` 分支：删除 `plugins/redmine_tiptap` 文件夹，并按照[安装](#安装)一节重新安装插件。插件不会在自己的文件夹中保存任何自己的数据，所以不会丢失任何东西；只有您自己添加的代码高亮语言需要先从 `highlight/` 复制出来。
 
 ### 通过压缩包安装
 
-1. 删除旧的 `plugins/redmine_tiptap` 文件夹，并在原位置解压新版本。先删除可以确保新版本中已移除的文件不会残留。
+1. 下载 `release` 分支的压缩包：https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip 。删除旧的 `plugins/redmine_tiptap` 文件夹，并在原位置解压；压缩包中的文件夹名为 `redmine_tiptap-release`，请将其重命名为 `redmine_tiptap`。先删除可以确保新版本中已移除的文件不会残留。
 2. 删除 Redmine 文件夹中的 `public/assets/.manifest.json`。
 3. 重启 Redmine。
 

@@ -161,8 +161,9 @@ Részletek és a Redmine nyelvek listája: [config/locales/README.md](../config/
 1. Helyezze a bővítményt a Redmine `plugins` mappájába. A mappa neve `redmine_tiptap` kell hogy legyen. A legegyszerűbb módja a git, amely az frissítéseket egyetlen paranccsal végzi:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   A `release` ágban csak azok a fájlok vannak, amelyekre a bővítménynek a működéshez szüksége van, ez a dokumentáció nélkül, a `--depth 1` pedig nem tölti le a tároló előzményeit.
 2. Indítsa újra a Redmine-t.
 3. A Redmine beállításaiban (redmine.selfhosted/_settings_) válassza a Szöveg formázás: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Ahhoz, hogy az utolsó commit helyett egy adott verziót tartson meg: `git fetch && git checkout <tag-or-commit>`.
+Ha a legújabb helyett egy adott verziónál szeretne maradni, töltse le a `release` ág egy commitját, és váltson rá: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Ha a bővítményt egyszerű `git clone` paranccsal telepítette (a `main` ág, a dokumentációval és a teljes előzménnyel), egyszer váltson át a `release` ágra: törölje a `plugins/redmine_tiptap` mappát, és telepítse újra a bővítményt a [Telepítés](#telepítés) részben leírtak szerint. A bővítmény semmi sajátot nem tárol a mappájában, így semmi sem vész el; csak a saját maga által hozzáadott kódkiemelési nyelveket kell előbb kimásolnia a `highlight/` mappából.
 
 ### Archívumból telepítve
 
-1. Törölje az összeomló `plugins/redmine_tiptap` mappát, és csomagolja ki az új verziót a helyére. Az előzetes törlés biztosítja, hogy az új verzióban eltávolított fájlok nem maradnak vissza.
+1. Töltse le a `release` ág archívumát: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Törölje a régi `plugins/redmine_tiptap` mappát, és csomagolja ki a helyére az archívumot; az archívumban lévő mappa neve `redmine_tiptap-release`, nevezze át `redmine_tiptap` névre. Az előzetes törlés biztosítja, hogy ne maradjanak meg olyan fájlok, amelyek az új verzióban már nincsenek.
 2. Töröljék a `public/assets/.manifest.json` fájlt a Redmine mappában.
 3. Indítsa újra a Redmine-t.
 

@@ -161,8 +161,9 @@ Details en de lijst met Redmine-talen: [config/locales/README.md](../config/loca
 1. Plaats de plugin in de map `plugins` van Redmine. De map moet `redmine_tiptap` heten. Het gemakkelijkste is git, waardoor updates ook een enkel commando zijn:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   De branch `release` bevat alleen de bestanden die de plugin nodig heeft om te werken, zonder deze documentatie, en `--depth 1` laat de geschiedenis van de repository weg.
 2. Start Redmine opnieuw op.
 3. Kies in de Redmine-instellingen (redmine.selfhosted/_settings_) voor Tekstformaat: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Gebruik dit om op een bepaalde versie te blijven in plaats van op de nieuwste commit: `git fetch && git checkout <tag-or-commit>`.
+Om op een bepaalde versie te blijven in plaats van de nieuwste, haalt u een commit van de branch `release` op en schakelt u daarnaar over: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Is de plugin geïnstalleerd met een gewone `git clone` (de branch `main`, met de documentatie en de hele geschiedenis), stap dan één keer over op de branch `release`: verwijder de map `plugins/redmine_tiptap` en installeer de plugin opnieuw zoals beschreven onder [Installatie](#installatie). De plugin bewaart niets van zichzelf in zijn map, dus er gaat niets verloren; alleen talen voor syntaxmarkering die u zelf hebt toegevoegd, moet u eerst uit `highlight/` kopiëren.
 
 ### Geïnstalleerd vanuit een archief
 
-1. Verwijder de oude map `plugins/redmine_tiptap` en pak de nieuwe versie op dezelfde plek uit. Door eerst te verwijderen, zorgt u ervoor dat bestanden die in de nieuwe versie zijn verwijderd, niet achterblijven.
+1. Download het archief van de branch `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Verwijder de oude map `plugins/redmine_tiptap` en pak het archief op dezelfde plek uit; de map in het archief heet `redmine_tiptap-release`, hernoem die naar `redmine_tiptap`. Door eerst te verwijderen, zorgt u ervoor dat bestanden die in de nieuwe versie zijn verwijderd, niet achterblijven.
 2. Verwijder `public/assets/.manifest.json` in de Redmine-map.
 3. Start Redmine opnieuw op.
 

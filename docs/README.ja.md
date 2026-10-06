@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. プラグインを Redmine の `plugins` フォルダーに配置します。フォルダー名は `redmine_tiptap` にする必要があります。最も簡単な方法は git を使うことで、アップデートもコマンド 1 つで済みます。
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` ブランチには、プラグインの動作に必要なファイルだけが入っており、このドキュメントは含まれません。また、`--depth 1` を付けるとリポジトリの履歴はダウンロードされません。
 2. Redmine を再起動します。
 3. Redmine の設定（redmine.selfhosted/_settings_）の「テキスト書式」で *TipTap HTML* を選択します。
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-最新のコミットではなく特定のバージョンにとどまるには、`git fetch && git checkout <tag-or-commit>` を実行します。
+最新ではなく特定のバージョンにとどめるには、`release` ブランチのコミットを取得して切り替えます（`git fetch --depth 1 origin <commit> && git checkout <commit>`）。
+
+以前に通常の `git clone`（`main` ブランチ。ドキュメントと全履歴を含む）でインストールした場合は、一度だけ `release` ブランチに移行してください。`plugins/redmine_tiptap` フォルダーを削除し、[インストール](#インストール) の手順でプラグインを再インストールします。プラグインは自身のフォルダーに独自のデータを保存しないため、何も失われません。ただし、自分で追加したコードハイライトの言語は、先に `highlight/` からコピーしておいてください。
 
 ### アーカイブからインストールした場合
 
-1. 古い `plugins/redmine_tiptap` フォルダーを削除し、その場所に新しいバージョンを展開します。先に削除しておくことで、新しいバージョンで削除されたファイルが残らないようにします。
+1. `release` ブランチのアーカイブをダウンロードします: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip 。古い `plugins/redmine_tiptap` フォルダーを削除し、その場所にアーカイブを展開します。アーカイブ内のフォルダー名は `redmine_tiptap-release` なので、`redmine_tiptap` に名前を変更してください。先に削除しておくことで、新しいバージョンで削除されたファイルが残らないようにします。
 2. Redmine のフォルダー内の `public/assets/.manifest.json` を削除します。
 3. Redmine を再起動します。
 

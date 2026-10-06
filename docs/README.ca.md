@@ -161,8 +161,9 @@ Detalls i llista de llengues de Redmine: [config/locales/README.md](../config/lo
 1. Poseu el complement a la carpeta `plugins` de Redmine. La carpeta s'ha de dir `redmine_tiptap`. El més fàcil és usar git, que també fa les actualitzacions d'una sola comanda:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   La branca `release` només té els fitxers que el complement necessita per funcionar, sense aquesta documentació, i `--depth 1` no baixa l'historial del repositori.
 2. Reinicieu Redmine.
 3. A la configuració de Redmine (redmine.selfhosted/_settings_), trieu Format del text: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Per mantenir-vos en una versió particular en lloc de l'últim commit: `git fetch && git checkout <tag-or-commit>`.
+Per quedar-vos en una versió concreta en lloc de la més recent, baixeu un commit de la branca `release` i canvieu-hi: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Si el complement es va instal·lar amb un `git clone` normal (la branca `main`, amb la documentació i tot l'historial), passeu a la branca `release` una vegada: suprimiu la carpeta `plugins/redmine_tiptap` i torneu a instal·lar el complement tal com es descriu a [Instal·lació](#installació). El complement no desa res de propi a la seva carpeta, així que no es perd res; només cal copiar abans fora de `highlight/` els llenguatges de ressaltat de codi que hàgiu afegit vosaltres.
 
 ### Instal·lat des d'un arxiu
 
-1. Supprimiu l'antiga carpeta `plugins/redmine_tiptap` i descomprimiu la nova versió al seu lloc. Suprimir primer s'assegura que els fitxers eliminats en la nova versió no romanen.
+1. Baixeu l'arxiu de la branca `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Suprimiu l'antiga carpeta `plugins/redmine_tiptap` i descomprimiu l'arxiu al seu lloc; la carpeta de l'arxiu es diu `redmine_tiptap-release`, canvieu-li el nom a `redmine_tiptap`. Suprimir-la primer garanteix que no quedin fitxers que la nova versió ja no té.
 2. Supprimiu `public/assets/.manifest.json` a la carpeta de Redmine.
 3. Reinicieu Redmine.
 

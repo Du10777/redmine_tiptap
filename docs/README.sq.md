@@ -161,8 +161,9 @@ Hollësi dhe lista e gjuhëve të Redmine-it: [config/locales/README.md](../conf
 1. Vendoseni shtojcën në dosjen `plugins` të Redmine-it. Dosja duhet të quhet `redmine_tiptap`. Mënyra më e lehtë është git, i cili i bën edhe përditësimet një komandë të vetme:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Dega `release` ka vetëm kartelat që i duhen shtojcës për të punuar, pa këtë dokumentim, dhe `--depth 1` nuk shkarkon historikun e depos.
 2. Rinisni Redmine-in.
 3. Te rregullimet e Redmine-it (redmine.selfhosted/_settings_) zgjidhni Formatim tekstesh: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Për të qëndruar në një version të caktuar në vend të commit-it të fundit: `git fetch && git checkout <tag-or-commit>`.
+Për të qëndruar në një version të caktuar në vend të më të riut, shkarkoni një commit të degës `release` dhe kaloni në të: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Nëse shtojca është instaluar me një `git clone` të zakonshëm (dega `main`, me dokumentimin dhe gjithë historikun), kaloni një herë në degën `release`: fshini dosjen `plugins/redmine_tiptap` dhe instalojeni shtojcën përsëri siç përshkruhet te [Instalimi](#instalimi). Shtojca nuk mban asgjë të vetën në dosjen e saj, ndaj nuk humbet asgjë; vetëm gjuhët e theksimit të kodit që i keni shtuar vetë duhet t’i kopjoni më parë jashtë `highlight/`.
 
 ### Instaluar nga një arkiv
 
-1. Fshini dosjen e vjetër `plugins/redmine_tiptap` dhe ekstraktoni versionin e ri në vend të saj. Fshirja paraprake siguron që kartelat e hequra në versionin e ri të mos mbeten aty.
+1. Shkarkoni arkivin e degës `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Fshini dosjen e vjetër `plugins/redmine_tiptap` dhe çpaketoni arkivin në vend të saj; dosja në arkiv quhet `redmine_tiptap-release`, riemërtojeni në `redmine_tiptap`. Fshirja paraprake siguron që kartelat e hequra në versionin e ri të mos mbeten aty.
 2. Fshini `public/assets/.manifest.json` në dosjen e Redmine-it.
 3. Rinisni Redmine-in.
 

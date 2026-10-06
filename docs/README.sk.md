@@ -161,8 +161,9 @@ Podrobnosti a zoznam jazykov Redmine: [config/locales/README.md](../config/local
 1. Umiestnite plugin do zložky `plugins` Redmine. Zložka musí byť pomenovaná `redmine_tiptap`. Najjednoduchší je git, ktorý tiež umožňuje aktualizácie jedným príkazom:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Vetva `release` obsahuje len súbory, ktoré plugin potrebuje na svoj chod, bez tejto dokumentácie, a `--depth 1` nesťahuje históriu repozitára.
 2. Restartujte Redmine.
 3. V nastavení Redmine (redmine.selfhosted/_settings_) vyberte Formátovanie textu: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Ak chcete zostať na konkrétnej verzii namiesto najnovšieho commitu: `git fetch && git checkout <tag-or-commit>`.
+Ak chcete zostať na konkrétnej verzii namiesto najnovšej, stiahnite commit vetvy `release` a prepnite sa naň: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Ak bol plugin nainštalovaný obyčajným `git clone` (vetva `main`, s dokumentáciou a celou históriou), prejdite raz na vetvu `release`: odstráňte priečinok `plugins/redmine_tiptap` a nainštalujte plugin znova podľa časti [Inštalácia](#inštalácia). Plugin vo svojom priečinku neuchováva nič vlastné, takže sa nič nestratí; len jazyky zvýrazňovania kódu, ktoré ste pridali sami, najprv skopírujte z `highlight/`.
 
 ### Nainštalované z archívu
 
-1. Odstráňte starou zložku `plugins/redmine_tiptap` a rozbalte novú verziu na jej miesto. Odstránenie najskôr zaistí, že súbory odstránené v novej verzii nebudú pretrvávať.
+1. Stiahnite archív vetvy `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Odstráňte starý priečinok `plugins/redmine_tiptap` a rozbaľte archív na jeho miesto; priečinok v archíve sa volá `redmine_tiptap-release`, premenujte ho na `redmine_tiptap`. Predchádzajúce odstránenie zaistí, že nezostanú súbory, ktoré už nová verzia nemá.
 2. Odstráňte `public/assets/.manifest.json` v zložke Redmine.
 3. Restartujte Redmine.
 

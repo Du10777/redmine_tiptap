@@ -161,8 +161,9 @@ Details und die Liste der Redmine-Sprachen: [config/locales/README.md](../config
 1. Legen Sie das Plugin in den Ordner `plugins` von Redmine. Der Ordner muss `redmine_tiptap` heißen. Am einfachsten geht das mit git; damit wird auch jede Aktualisierung zu einem einzigen Befehl:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Der Branch `release` enthält nur die Dateien, die das Plugin zum Laufen braucht, ohne diese Dokumentation, und `--depth 1` lädt die Historie des Repositorys nicht mit.
 2. Starten Sie Redmine neu.
 3. Wählen Sie in der Redmine-Konfiguration (redmine.selfhosted/_settings_) bei Textformatierung die Option *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Um bei einer bestimmten Version zu bleiben und nicht auf den neuesten Commit zu wechseln: `git fetch && git checkout <tag-or-commit>`.
+Um bei einer bestimmten Version statt der neuesten zu bleiben, holen Sie einen Commit des Branches `release` und wechseln zu ihm: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Wurde das Plugin mit einem einfachen `git clone` installiert (der Branch `main`, mit der Dokumentation und der ganzen Historie), wechseln Sie einmalig zum Branch `release`: Löschen Sie den Ordner `plugins/redmine_tiptap` und installieren Sie das Plugin neu, wie unter [Installation](#installation) beschrieben. Das Plugin speichert in seinem Ordner nichts Eigenes, es geht also nichts verloren; nur selbst hinzugefügte Sprachen der Syntaxhervorhebung müssen Sie vorher aus `highlight/` herauskopieren.
 
 ### Aus einem Archiv installiert
 
-1. Löschen Sie den alten Ordner `plugins/redmine_tiptap` und entpacken Sie die neue Version an seiner Stelle. Durch das vorherige Löschen ist sichergestellt, dass in der neuen Version entfernte Dateien nicht zurückbleiben.
+1. Laden Sie das Archiv des Branches `release` herunter: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Löschen Sie den alten Ordner `plugins/redmine_tiptap` und entpacken Sie das Archiv an seiner Stelle; der Ordner im Archiv heißt `redmine_tiptap-release`, benennen Sie ihn in `redmine_tiptap` um. Durch das vorherige Löschen ist sichergestellt, dass in der neuen Version entfernte Dateien nicht zurückbleiben.
 2. Löschen Sie `public/assets/.manifest.json` im Redmine-Ordner.
 3. Starten Sie Redmine neu.
 

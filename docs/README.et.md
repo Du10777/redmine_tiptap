@@ -161,8 +161,9 @@ Tõlke parandamiseks muutke selle väärtused `config/locales/<code>.yml` (`de`,
 1. Pange pistik Redmine'i `plugins` kausta. Kaust tuleb nimetada `redmine_tiptap`. Lihtsaim viis on git, mis teeb värskendused ühe käsuga:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Harus `release` on ainult failid, mida pistik tööks vajab, ilma selle dokumentatsioonita, ja `--depth 1` jätab hoidla ajaloo alla laadimata.
 2. Taaskäivitage Redmine.
 3. Redmine seadetes (redmine.selfhosted/_settings_) valige Teksti vormindamine: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Reisija
 docker compose restart redmine          # Docker
 ```
 
-Konkreetsele versioonile jäämiseks viimase asemel: `git fetch && git checkout <tag-or-commit>`.
+Kui soovite jääda kindla versiooni juurde, mitte uusima, laadige alla haru `release` commit ja lülituge sellele: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Kui pistik paigaldati tavalise `git clone` käsuga (haru `main` koos dokumentatsiooni ja kogu ajalooga), minge ühe korra üle harule `release`: kustutage kaust `plugins/redmine_tiptap` ja paigaldage pistik uuesti, nagu on kirjeldatud jaotises [Paigaldus](#paigaldus). Pistik ei hoia oma kaustas midagi omaenda, nii et midagi ei lähe kaduma; ainult ise lisatud süntaksvärvituse keeled tuleb enne kaustast `highlight/` välja kopeerida.
 
 ### Paigaldatud arhiivist
 
-1. Kustutage vana `plugins/redmine_tiptap` kaust ja pakkige uus versioon selle asemele. Kustutamine esimesena taastab, et uues versioonis eemaldatud failid ei säili.
+1. Laadige alla haru `release` arhiiv: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Kustutage vana kaust `plugins/redmine_tiptap` ja pakkige arhiiv selle asemele lahti; arhiivis oleva kausta nimi on `redmine_tiptap-release`, nimetage see ümber: `redmine_tiptap`. Kui kaust enne kustutada, ei jää alles faile, mis uuest versioonist on eemaldatud.
 2. Kustutage `public/assets/.manifest.json` Redmine'i kaustas.
 3. Taaskäivitage Redmine.
 

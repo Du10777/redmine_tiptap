@@ -161,8 +161,9 @@ Ayrıntılar ve Redmine dillerinin listesi: [config/locales/README.md](../config
 1. Eklentiyi Redmine'nin `plugins` klasörüne yerleştirin. Klasör `redmine_tiptap` adlandırılmalıdır. En kolay yol git'tir, bu da güncellemeleri tek bir komut yapar:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` dalında yalnızca eklentinin çalışması için gereken dosyalar vardır, bu belgeler yoktur; `--depth 1` ise deponun geçmişini indirmez.
 2. Redmine'yi yeniden başlatın.
 3. Redmine ayarlarında (redmine.selfhosted/_settings_) metin biçimini seçin: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-En son sürümde kalmak yerine belirli bir sürümde kalmak için: `git fetch && git checkout <tag-or-commit>`.
+En yenisi yerine belirli bir sürümde kalmak için `release` dalından bir commit indirin ve ona geçin: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Eklenti sıradan bir `git clone` ile kurulduysa (`main` dalı, belgeler ve tüm geçmişle birlikte), bir kez `release` dalına geçin: `plugins/redmine_tiptap` klasörünü silin ve eklentiyi [Kurulum](#kurulum) bölümünde anlatıldığı gibi yeniden kurun. Eklenti kendi klasöründe kendine ait hiçbir şey saklamaz, bu yüzden hiçbir şey kaybolmaz; yalnızca kendi eklediğiniz kod vurgulama dillerini önce `highlight/` klasöründen dışarı kopyalayın.
 
 ### Arşivden kurulu
 
-1. Eski `plugins/redmine_tiptap` klasörünü silin ve yeni sürümü onun yerine çıkarın. Silme, yeni sürümde kaldırılan dosyaların kalmamasını sağlar.
+1. `release` dalının arşivini indirin: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Eski `plugins/redmine_tiptap` klasörünü silin ve arşivi onun yerine çıkarın; arşivdeki klasörün adı `redmine_tiptap-release`'dir, adını `redmine_tiptap` olarak değiştirin. Önce silmek, yeni sürümde kaldırılan dosyaların geride kalmamasını sağlar.
 2. Redmine klasöründe `public/assets/.manifest.json` dosyasını silin.
 3. Redmine'yi yenidenibaşlatın.
 

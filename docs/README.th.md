@@ -161,8 +161,9 @@ sh highlight/_compile.sh
 1. วางส่วนเสริมไว้ในโฟลเดอร์ `plugins` ของ Redmine โดยโฟลเดอร์ต้องมีชื่อว่า `redmine_tiptap` วิธีที่ง่ายที่สุดคือใช้ git ซึ่งทำให้การอัปเดตเหลือเพียงคำสั่งเดียวด้วย:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   สาขา `release` มีเฉพาะไฟล์ที่ปลั๊กอินต้องใช้ในการทำงาน ไม่มีเอกสารนี้ และ `--depth 1` จะไม่ดาวน์โหลดประวัติของที่เก็บ
 2. รีสตาร์ต Redmine
 3. ในหน้าปรับแต่งของ Redmine (redmine.selfhosted/_settings_) ให้เลือกการจัดรูปแบบข้อความเป็น *TipTap HTML*
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-หากต้องการอยู่ที่เวอร์ชันใดเวอร์ชันหนึ่งโดยไม่ใช้คอมมิตล่าสุด: `git fetch && git checkout <tag-or-commit>`
+หากต้องการอยู่ที่เวอร์ชันใดเวอร์ชันหนึ่งแทนเวอร์ชันล่าสุด ให้ดึงคอมมิตของสาขา `release` แล้วสลับไปที่คอมมิตนั้น: `git fetch --depth 1 origin <commit> && git checkout <commit>`
+
+หากติดตั้งปลั๊กอินด้วย `git clone` แบบธรรมดา (สาขา `main` ที่มีเอกสารและประวัติทั้งหมด) ให้ย้ายไปใช้สาขา `release` เพียงครั้งเดียว: ลบโฟลเดอร์ `plugins/redmine_tiptap` แล้วติดตั้งปลั๊กอินใหม่ตามที่อธิบายไว้ใน [การติดตั้ง](#การติดตั้ง) ปลั๊กอินไม่ได้เก็บข้อมูลของตนเองไว้ในโฟลเดอร์ จึงไม่มีอะไรสูญหาย ยกเว้นภาษาสำหรับการเน้นสีโค้ดที่คุณเพิ่มเอง ซึ่งต้องคัดลอกออกจาก `highlight/` ก่อน
 
 ### ติดตั้งจากไฟล์เก็บถาวร
 
-1. ลบโฟลเดอร์ `plugins/redmine_tiptap` เดิม แล้วแตกไฟล์เวอร์ชันใหม่ลงในตำแหน่งเดียวกัน การลบก่อนช่วยให้แน่ใจว่าไฟล์ที่ถูกนำออกไปในเวอร์ชันใหม่จะไม่ตกค้างอยู่
+1. ดาวน์โหลดไฟล์เก็บถาวรของสาขา `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip ลบโฟลเดอร์ `plugins/redmine_tiptap` เดิม แล้วแตกไฟล์เก็บถาวรลงในตำแหน่งเดียวกัน โฟลเดอร์ในไฟล์เก็บถาวรชื่อ `redmine_tiptap-release` ให้เปลี่ยนชื่อเป็น `redmine_tiptap` การลบก่อนช่วยให้แน่ใจว่าไฟล์ที่ถูกนำออกไปในเวอร์ชันใหม่จะไม่ตกค้างอยู่
 2. ลบ `public/assets/.manifest.json` ในโฟลเดอร์ Redmine
 3. รีสตาร์ต Redmine
 

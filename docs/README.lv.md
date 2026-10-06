@@ -161,8 +161,9 @@ Sīkāka informācija un Redmine valodu saraksts: [config/locales/README.md](../
 1. Ievietojiet spraudni Redmine mapē `plugins`. Mapei jābūt nosauktai `redmine_tiptap`. Vienkāršākais veids ir git, ar kuru arī atjaunināšana ir tikai viena komanda:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Zarā `release` ir tikai tie faili, kas spraudnim vajadzīgi darbam, bez šīs dokumentācijas, un `--depth 1` nelejupielādē repozitorija vēsturi.
 2. Pārstartējiet Redmine.
 3. Redmine iestatījumos (redmine.selfhosted/_settings_) kā Teksta formatēšanu izvēlieties *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Lai paliktu pie noteiktas versijas, nevis jaunākā commit: `git fetch && git checkout <tag-or-commit>`.
+Lai paliktu pie noteiktas versijas, nevis jaunākās, lejupielādējiet zara `release` commit un pārslēdzieties uz to: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Ja spraudnis tika instalēts ar parastu `git clone` (zars `main`, ar dokumentāciju un visu vēsturi), vienreiz pārejiet uz zaru `release`: izdzēsiet mapi `plugins/redmine_tiptap` un instalējiet spraudni no jauna, kā aprakstīts sadaļā [Instalēšana](#instalēšana). Spraudnis savā mapē neglabā neko savu, tāpēc nekas nezūd; tikai pašu pievienotās koda izcelšanas valodas vispirms nokopējiet ārpus `highlight/`.
 
 ### Instalēts no arhīva
 
-1. Izdzēsiet veco mapi `plugins/redmine_tiptap` un tās vietā izpakojiet jauno versiju. Vispirms izdzēšot, tiek nodrošināts, ka faili, kas jaunajā versijā ir noņemti, nepaliek.
+1. Lejupielādējiet zara `release` arhīvu: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Izdzēsiet veco mapi `plugins/redmine_tiptap` un tās vietā izpakojiet arhīvu; mape arhīvā saucas `redmine_tiptap-release`, pārdēvējiet to par `redmine_tiptap`. Vispirms izdzēšot, tiek nodrošināts, ka faili, kas jaunajā versijā ir noņemti, nepaliek.
 2. Izdzēsiet `public/assets/.manifest.json` Redmine mapē.
 3. Pārstartējiet Redmine.
 

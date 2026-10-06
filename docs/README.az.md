@@ -161,8 +161,9 @@ Tərcüməni düzəltmək üçün `config/locales/<code>.yml` faylında (`de`, `
 1. Plagini Redmine-in `plugins` qovluğuna yerləşdirin. Qovluğun adı `redmine_tiptap` olmalıdır. Ən asan yol git-dən istifadədir, bu, yeniləməni də tək bir əmrə çevirir:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   `release` budağında yalnız plaginin işləməsi üçün lazım olan fayllar var, bu sənədlər olmadan, `--depth 1` isə repozitoriyanın tarixçəsini yükləmir.
 2. Redmine-i yenidən işə salın.
 3. Redmine sazlamalarında (redmine.selfhosted/_settings_) Mətnin formatlaşdırılması üçün *TipTap HTML* seçin.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Son commit əvəzinə müəyyən bir versiyada qalmaq üçün: `git fetch && git checkout <tag-or-commit>`.
+Ən son versiya əvəzinə müəyyən bir versiyada qalmaq üçün `release` budağının bir commit-ini yükləyin və ona keçin: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Plagin adi `git clone` ilə quraşdırılıbsa (`main` budağı, sənədlər və bütün tarixçə ilə), bir dəfə `release` budağına keçin: `plugins/redmine_tiptap` qovluğunu silin və plagini [Quraşdırma](#quraşdırma) bölməsində təsvir olunduğu kimi yenidən quraşdırın. Plagin öz qovluğunda özünə aid heç nə saxlamır, ona görə də heç nə itmir; yalnız özünüz əlavə etdiyiniz kod vurğulama dillərini əvvəlcə `highlight/` qovluğundan kənara köçürün.
 
 ### Arxivdən quraşdırıldıqda
 
-1. Köhnə `plugins/redmine_tiptap` qovluğunu silin və yeni versiyanı onun yerinə açın. Əvvəlcə silmək yeni versiyada ləğv edilmiş faylların yerində qalmamasını təmin edir.
+1. `release` budağının arxivini yükləyin: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Köhnə `plugins/redmine_tiptap` qovluğunu silin və arxivi onun yerinə açın; arxivdəki qovluğun adı `redmine_tiptap-release`-dir, onun adını `redmine_tiptap` olaraq dəyişin. Əvvəlcə silmək yeni versiyada çıxarılmış faylların qalmamasını təmin edir.
 2. Redmine qovluğundakı `public/assets/.manifest.json` faylını silin.
 3. Redmine-i yenidən işə salın.
 

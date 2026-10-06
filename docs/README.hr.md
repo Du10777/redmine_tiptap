@@ -161,8 +161,9 @@ Detalji i popis jezika Redminea: [config/locales/README.md](../config/locales/RE
 1. Stavite dodatak u `plugins` mapu Redminea. Mapa mora biti nazvana `redmine_tiptap`. Najjednostavniji način je git, koji također čini ažuriranje jednom naredbom:
    ```sh
    cd /path/to/redmine
-   git clone https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
+   git clone --branch release --single-branch --depth 1 https://github.com/Du10777/redmine_tiptap.git plugins/redmine_tiptap
    ```
+   Grana `release` sadrži samo datoteke koje dodatak treba za rad, bez ove dokumentacije, a `--depth 1` ne preuzima povijest repozitorija.
 2. Restartujte Redmine.
 3. U Redmine postavkama (redmine.selfhosted/_settings_) odaberite Oblikovanje teksta: *TipTap HTML*.
 
@@ -187,11 +188,13 @@ touch /path/to/redmine/tmp/restart.txt  # Passenger
 docker compose restart redmine          # Docker
 ```
 
-Da ostanete na određenoj verziji umjesto najnovijeg commita: `git fetch && git checkout <tag-or-commit>`.
+Da biste ostali na određenoj verziji umjesto najnovije, preuzmite commit grane `release` i prebacite se na njega: `git fetch --depth 1 origin <commit> && git checkout <commit>`.
+
+Ako je dodatak instaliran običnim `git clone` (grana `main`, s dokumentacijom i cijelom poviješću), jednom prijeđite na granu `release`: izbrišite mapu `plugins/redmine_tiptap` i ponovno instalirajte dodatak kako je opisano u odjeljku [Instalacija](#instalacija). Dodatak u svojoj mapi ne čuva ništa svoje, pa se ništa ne gubi; samo jezike isticanja koda koje ste sami dodali najprije kopirajte iz `highlight/`.
 
 ### Instaliran iz arhive
 
-1. Izbrišite stari `plugins/redmine_tiptap` mapu i raspakujte novu verziju na njezino mjesto. Brisanje prvo osigurava da datoteke uklonjene u novoj verziji ne ostanu.
+1. Preuzmite arhivu grane `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Izbrišite staru mapu `plugins/redmine_tiptap` i raspakirajte arhivu na njezino mjesto; mapa u arhivi zove se `redmine_tiptap-release`, preimenujte je u `redmine_tiptap`. Brisanje unaprijed osigurava da ne ostanu datoteke koje nova verzija više nema.
 2. Izbrišite `public/assets/.manifest.json` u Redmine mapi.
 3. Restartujte Redmine.
 
