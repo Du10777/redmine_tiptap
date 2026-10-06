@@ -1,3 +1,5 @@
+// Small helpers for handling HTML off the visible page.
+
 // A document without a window, for HTML that is only taken apart and put together
 // again (the text being saved, the text being loaded into the editor, the source
 // mode). What is put into its elements is parsed, but nothing is loaded. An element
@@ -10,4 +12,10 @@ var inert = null;
 export function inertElement(tag) {
   if (!inert) inert = document.implementation.createHTMLDocument('');
   return inert.createElement(tag || 'div');
+}
+
+// The three characters that start markup, as entities, so a piece of text can go into
+// an HTML string without being read as tags. For text content, not attribute values.
+export function escapeHtml(text) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

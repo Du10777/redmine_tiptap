@@ -90,7 +90,6 @@ export const Image = BaseImage.extend({
       var img = document.createElement('img');
       img.src = node.attrs.src;
       img.alt = node.attrs.alt || '';
-      if (node.attrs['data-filename']) img.setAttribute('data-filename', node.attrs['data-filename']);
       setSize(img, node.attrs);
       dom.appendChild(img);
 

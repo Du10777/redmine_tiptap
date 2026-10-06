@@ -1,7 +1,7 @@
 import { Extension, Node, Mark, mergeAttributes } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { indentOf } from './tiptap_indent.js';
-import { inertElement } from './tiptap_inert.js';
+import { inertElement, escapeHtml } from './tiptap_inert.js';
 
 // Texts written in CKEditor (the redmine_ckeditor plugin) hold HTML that this
 // editor's schema does not know. ProseMirror drops whatever its schema lacks, so
@@ -31,10 +31,6 @@ var PROTECT_RE = new RegExp(
   'gi'
 );
 
-function escapeText(text) {
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 // What the atom shows: the first line of the macro; a macro with a body ends
 // with an ellipsis.
 function macroLabel(source) {
@@ -54,7 +50,7 @@ export function protectMacros(html) {
   return html.replace(PROTECT_RE, function(whole, code, escaped, macro) {
     if (code || escaped) return whole;
     return '<span data-redmine-macro="' + encodeURIComponent(macro) + '" class="tiptap-macro">'
-      + escapeText(macroLabel(macro)) + '</span>';
+      + escapeHtml(macroLabel(macro)) + '</span>';
   });
 }
 
