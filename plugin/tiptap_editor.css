@@ -1,0 +1,1311 @@
+/* This file is assembled by ./src/_build.sh - do not edit it by hand */
+
+.tiptap-wrapper {
+  margin-bottom: 8px;
+}
+
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  margin-bottom: 4px;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.tiptap-toolbar-zone {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.tiptap-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.tiptap-style-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-style-btn {
+  gap: 3px;
+  width: 31px;
+  justify-content: space-between;
+}
+
+.tiptap-style-arrow {
+  font-size: 10px;
+  color: #666;
+  pointer-events: none;
+}
+
+.tiptap-style-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 150px;
+}
+
+.tiptap-style-option {
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tiptap-style-option:hover {
+  background: #d0e4ff;
+}
+
+.tiptap-align-wrapper,
+.tiptap-list-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-align-btn,
+.tiptap-list-btn {
+  gap: 2px;
+}
+
+.tiptap-align-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-align-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tiptap-align-option {
+  min-width: 28px;
+}
+
+.tiptap-list-dropdown {
+  top: 28px;
+  min-width: 190px;
+}
+
+.tiptap-font-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-font-btn {
+  gap: 2px;
+}
+
+.tiptap-font-icon {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 15px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tiptap-font-dropdown {
+  top: 28px;
+  min-width: 170px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.tiptap-style-option.active {
+  background: #eaf3ff;
+  font-weight: 600;
+}
+
+.tiptap-btn {
+  height: 26px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: monospace;
+  min-width: 28px;
+}
+
+.tiptap-btn:hover { background: #e8e8e8; }
+
+.tiptap-btn.active {
+  background: #d0e4ff;
+  border-color: #5b9bd5;
+  font-weight: bold;
+}
+
+.tiptap-sep {
+  width: 1px;
+  height: 20px;
+  background: #ccc;
+  margin: 0 4px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.tiptap-select {
+  height: 26px;
+  padding: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.tiptap-select:hover { background: #e8e8e8; }
+
+.tiptap-size-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-size-input {
+  height: 26px;
+  width: 52px;
+  padding: 0 16px 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.tiptap-size-arrow {
+  position: absolute;
+  right: 4px;
+  font-size: 10px;
+  color: #666;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tiptap-size-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-height: 240px;
+  overflow-y: auto;
+  min-width: 52px;
+}
+
+.tiptap-size-option {
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tiptap-size-option:hover {
+  background: #d0e4ff;
+}
+
+.tiptap-color-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 2px 5px;
+}
+
+.tiptap-color-label {
+  position: relative;
+  font-size: 15px;
+  font-weight: bold;
+  pointer-events: none;
+  display: inline-block;
+  line-height: 1;
+}
+
+.tiptap-color-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: transparent;
+  border-radius: 1px;
+}
+
+.tiptap-bg-label {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0 3px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.tiptap-link-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.tiptap-content {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  /* Do not let the editor grow with the amount of text: it never gets taller than
+     the screen, past that it scrolls inside. JS sets the exact value on .tiptap-wrapper;
+     the value in var() is a fallback in case JS has not run yet. */
+  /* --tiptap-height is set only after the user has dragged the resize handle;
+     normally the height follows the content and is capped by max-height. */
+  height: var(--tiptap-height, auto);
+  max-height: var(--tiptap-max-height, calc(100vh - 260px));
+  overflow-y: auto;
+}
+
+.tiptap-content p {
+  padding-left: 0 !important;
+}
+
+.ProseMirror {
+  padding: 8px;
+  min-height: 150px;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.ProseMirror p { margin-top: 0 !important; margin-bottom: 2px !important; min-height: 0 !important; }
+.ProseMirror h1 { font-size: 1.6em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h2 { font-size: 1.3em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h3 { font-size: 1.1em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h4 { font-size: 1em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h5 { font-size: 0.9em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h6 { font-size: 0.85em; font-weight: bold; margin: 8px 0 4px; color: #555; }
+/* Code styling in the editor. The same look is forced on view mode as well -
+   see the "Code in view mode" block below, which also explains why. */
+.ProseMirror code {
+  background: #f0f0f0;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+  /* same as Redmine in view mode: spaces inside inline code are not collapsed */
+  white-space: pre-wrap;
+}
+.ProseMirror pre {
+  background: #f0f0f0;
+  padding: 8px;
+  border-radius: 3px;
+  overflow-x: auto;
+}
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  white-space: pre;
+}
+
+/* --- Code in view mode -----------------------------------------------------
+   Redmine renders saved code with its own rules div.wiki pre and
+   div.wiki *:not(pre)>code: a light background, a border and a 1.6em left
+   margin. The editor looks different, and the same block looked different
+   before and after saving. Here view mode is made to look like the editor.
+   The scope is narrowed by body[data-text-formatting]: if the text formatting
+   is switched to textile or markdown, Redmine keeps its native styling.
+   The selector is also more specific than the original one, so it does not
+   depend on the order in which the stylesheets are loaded. */
+body[data-text-formatting="tiptap"] div.wiki pre {
+  margin: 1em 0;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 3px;
+  line-height: 1.25;
+}
+
+body[data-text-formatting="tiptap"] div.wiki *:not(pre) > code,
+body[data-text-formatting="tiptap"] div.wiki > code {
+  background: #f0f0f0;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* The right offset of the copy button was calculated for margin: 1em on pre,
+   and we removed the right margin - otherwise the button drifts into the block. */
+body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
+  inset-inline-end: 3px;
+}
+.ProseMirror ul { padding-left: 20px; list-style: disc; }
+.ProseMirror ol { padding-left: 20px; list-style: decimal; }
+.ProseMirror li { margin: 0 !important; }
+.ProseMirror li > p { margin: 0 !important; }
+
+/* Line spacing in the saved view. Only the vertical margins are set: a paragraph may
+   have a margin on the left (the indent) that must stay. */
+div.wiki p,
+div.wiki-page p {
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
+  line-height: 1.25 !important;
+}
+
+div.wiki li,
+div.wiki-page li {
+  margin: 0 !important;
+}
+
+div.wiki li > p,
+div.wiki-page li > p {
+  margin: 0 !important;
+}
+
+/* A text written in CKEditor (the formatter wraps it in div.tiptap-legacy) keeps the
+   spacing it had there, the default of Redmine: more room between paragraphs and list
+   items than the editor of this plugin leaves. */
+div.wiki .tiptap-legacy p,
+div.wiki-page .tiptap-legacy p {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li,
+div.wiki-page .tiptap-legacy li {
+  margin-bottom: 0.125rem !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li > p,
+div.wiki-page .tiptap-legacy li > p {
+  margin: 0 !important;
+}
+
+/* Source mode (tiptap_source.js): the textarea with the HTML lies over a copy of its
+   text that is colored; the textarea's own text is transparent. The two must lay
+   the text out exactly alike - the least difference here moves the colors off the
+   letters. */
+.tiptap-source-box {
+  position: relative;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tiptap-source,
+.tiptap-source-mirror {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 19px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-indent: 0;
+  text-transform: none;
+  tab-size: 4;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.tiptap-source {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 150px;
+  height: var(--tiptap-height, auto);
+  max-height: var(--tiptap-max-height, calc(100vh - 260px));
+  overflow: auto;
+  border: 1px solid #ccc !important;
+  border-radius: 3px;
+  outline: none;
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #333;
+  /* the size is changed by the shared .tiptap-resizer handle; the native textarea
+     corner is removed, otherwise one field ends up with two different resizers */
+  resize: none;
+}
+
+/* The selection must not hide the colored letters under it. */
+.tiptap-source::selection {
+  background: rgba(98, 141, 182, 0.35);
+  color: transparent;
+}
+
+.tiptap-source-mirror {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  color: #333;
+  pointer-events: none;
+}
+
+.tiptap-source-mirror code {
+  all: unset;
+}
+
+/* Bold and italic letters are not always as wide as the usual ones: they would
+   push the rest of the line off the textarea's text. The colors say enough. */
+.tiptap-source-mirror * {
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+/* No colors (a huge text, or no highlight languages): the textarea shows its text. */
+.tiptap-source-plain .tiptap-source-mirror {
+  display: none;
+}
+
+.tiptap-source-plain .tiptap-source {
+  color: inherit !important;
+}
+
+.tiptap-source-plain .tiptap-source::selection {
+  background: Highlight;
+  color: HighlightText;
+}
+
+/* Task list (checkboxes): editor and view mode */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 4px;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+ul[data-type="taskList"] li > label {
+  user-select: none;
+}
+
+ul[data-type="taskList"] li > label input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* in the editor, shift the checkboxes inside the area */
+.ProseMirror ul[data-type="taskList"] {
+  padding-left: 24px;
+}
+
+/* outside the editor the checkbox is unclickable and dimmed right away (before JS runs) */
+ul[data-type="taskList"] li > label input {
+  pointer-events: none;
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.ProseMirror ul[data-type="taskList"] li > label input {
+  pointer-events: auto;
+  filter: none;
+  opacity: 1;
+}
+
+ul[data-type="taskList"] li > div {
+  flex: 1;
+}
+
+ul[data-type="taskList"] li > div > p {
+  margin: 0;
+}
+
+ul[data-type="taskList"] li[data-checked="true"] > div {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.ProseMirror a,
+.wiki .tiptap a { color: #169; text-decoration: underline; }
+.ProseMirror u { text-decoration: underline; }
+
+.ProseMirror hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 8px 0;
+}
+
+/* Collapsible blocks: saved view */
+.wiki details,
+.wiki-page details {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  clear: both;
+}
+
+.wiki summary {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.wiki details[open] summary {
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px 3px 0 0;
+}
+
+.wiki details > div[data-type="collapsible-content"] {
+  padding: 8px 10px;
+}
+
+/* Collapsible blocks: editor */
+.ProseMirror details {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.ProseMirror summary {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: default;
+}
+
+.ProseMirror div[data-type="collapsible-content"] {
+  padding: 8px 10px;
+}
+
+/* Quote: in the editor and in the saved view */
+.tiptap-quote,
+.wiki .tiptap-quote,
+.wiki-page .tiptap-quote {
+  border: 1px solid #ccc;
+  border-left: 4px solid #999;
+  border-radius: 3px;
+  margin: 8px 0;
+  padding: 0;
+  background: #fafafa;
+}
+
+.tiptap-quote-header {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+  color: #555;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+
+.tiptap-quote-body {
+  padding: 8px 10px;
+}
+
+.tiptap-quote-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Image resizing */
+.tiptap-image-wrapper {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+}
+
+.tiptap-image-selected {
+  outline: 2px solid #000;
+}
+
+.tiptap-image-selected img {
+  display: block;
+}
+
+.tiptap-resize-handle {
+  position: absolute;
+  width:  5px;
+  height: 5px;
+  background: #000;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  z-index: 10;
+}
+
+.tiptap-resize-nw { top:    -4.5px; left:  -4.5px; cursor: nw-resize; }
+.tiptap-resize-ne { top:    -4.5px; right: -4.5px; cursor: ne-resize; }
+.tiptap-resize-sw { bottom: -4.5px; left:  -4.5px; cursor: sw-resize; }
+.tiptap-resize-se { bottom: -4.5px; right: -4.5px; cursor: se-resize; }
+
+/* Resize handle of the editing area: the bottom right corner.
+   margin-left:auto pushes it to the right while it stays in the flow below the input. */
+.tiptap-resizer {
+  display: block;
+  margin-left: auto;
+  width: 18px;
+  height: 13px;
+  cursor: ns-resize;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  background-color: #f5f5f5;
+  background-image: repeating-linear-gradient(315deg, #aaa 0 1px, transparent 1px 4px);
+  background-position: center;
+  background-size: 11px 8px;
+  background-repeat: no-repeat;
+  touch-action: none;
+}
+
+.tiptap-resizer:hover {
+  background-color: #e8e8e8;
+}
+
+/* Modal (shared) */
+.tiptap-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.tiptap-modal {
+  background: #fff;
+  border-radius: 6px;
+  width: 360px;
+  max-width: 90vw;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tiptap-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
+
+.tiptap-modal-close {
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+  border: none;
+  background: none;
+  line-height: 1;
+}
+
+.tiptap-modal-close:hover { color: #333; }
+
+.tiptap-modal-list {
+  padding: 8px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.tiptap-modal-empty {
+  padding: 16px;
+  text-align: center;
+  color: #888;
+  font-size: 13px;
+}
+
+.tiptap-modal-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.tiptap-modal-item:hover { background: #f0f0f0; }
+
+.tiptap-modal-item.selected { background: #d0e4ff; }
+
+.tiptap-modal-item-icon {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  font-family: monospace;
+  color: #888;
+}
+
+.tiptap-modal-item-name {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tiptap-modal-footer {
+  border-top: 1px solid #ccc;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tiptap-modal-footer label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.tiptap-modal-insert-btn {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tiptap-modal-insert-btn:hover { background: #e8e8e8; }
+
+.tiptap-modal-insert-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tiptap-modal-wide {
+  width: 750px;
+  max-width: 90vw;
+}
+
+/* Image tiles */
+.tiptap-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.tiptap-image-tile {
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.tiptap-image-tile:hover { background: #f0f0f0; }
+
+.tiptap-image-tile.selected {
+  border-color: #3d8ef8;
+  background: #d0e4ff;
+}
+
+.tiptap-image-tile img {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.tiptap-image-tile-name {
+  font-size: 11px;
+  color: #555;
+  text-align: center;
+  word-break: break-all;
+  max-width: 100px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Color palette */
+.tiptap-palette {
+  position: absolute;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 176px;
+}
+
+.tiptap-palette-hex-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.tiptap-palette-hex {
+  flex: 1;
+  height: 24px;
+  padding: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.tiptap-palette-hex-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+
+.tiptap-palette-hex-btn:hover { background: #e8e8e8; }
+
+.tiptap-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 18px);
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.tiptap-palette-cell {
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.tiptap-palette-cell:hover {
+  transform: scale(1.2);
+  border-color: #333;
+}
+
+.tiptap-palette-reset {
+  width: 100%;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.tiptap-palette-reset:hover { background: #e8e8e8; }
+
+/* Tables: editor */
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  min-width: 40px;
+}
+
+.ProseMirror table th {
+  background: #f0f0f0;
+  font-weight: bold;
+  text-align: left;
+}
+
+.ProseMirror table p { margin: 0 !important; min-height: 0 !important; line-height: 1.2 !important; }
+
+/* Column resize handle */
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #3d8ef8;
+  cursor: col-resize;
+  z-index: 20;
+}
+
+.ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+/* Selected cells */
+.ProseMirror table .selectedCell {
+  background: #d0e4ff;
+}
+
+/* Tables: saved view */
+.wiki table.tiptap-table,
+.wiki-page table.tiptap-table,
+.wiki table,
+.wiki-page table {
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+
+/* A table with the align attribute (CKEditor writes it) stays in the middle or at the right. */
+.wiki table[align="center"],
+.wiki-page table[align="center"] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wiki table[align="right"],
+.wiki-page table[align="right"] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.wiki table td,
+.wiki table th,
+.wiki-page table td,
+.wiki-page table th {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.wiki table p,
+.wiki-page table p {
+  margin: 0 !important;
+  min-height: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.wiki table th,
+.wiki-page table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Table context menu */
+.tiptap-table-menu {
+  position: absolute;
+  z-index: 10001;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 4px 0;
+  min-width: 180px;
+}
+
+.tiptap-table-menu-item {
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tiptap-table-menu-item:hover { background: #d0e4ff; }
+
+.tiptap-table-menu-item.danger { color: #c00; }
+.tiptap-table-menu-item.danger:hover { background: #fdd; }
+
+.tiptap-table-menu-sep {
+  height: 1px;
+  background: #eee;
+  margin: 4px 0;
+}
+
+/* --- Language badge in the corner of a code block ------------------------ */
+/* In the editor the wrapper with position: relative is created by the node view.
+   In view mode div.pre-wrapper, added by Redmine itself, serves as the wrapper. */
+
+.tiptap-code-wrapper {
+  position: relative;
+}
+
+.tiptap-code-lang {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 2;
+  padding: 0 5px;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  background: #fff;
+  color: #666;
+  font-family: Consolas, Menlo, "Liberation Mono", Courier, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.tiptap-code-lang:hover {
+  border-color: #aaa;
+  color: #333;
+}
+
+/* In view mode the badge only labels the block, there is nothing to pick there. */
+.tiptap-code-lang-static {
+  cursor: default;
+}
+
+.tiptap-code-lang-static:hover {
+  border-color: #d5d5d5;
+  color: #666;
+}
+
+/* Without a language the badge in the editor does not label the block: it is
+   hidden and shows up only on hover, so that a language can still be picked. */
+.tiptap-code-lang-empty {
+  visibility: hidden;
+  font-style: italic;
+}
+
+.tiptap-code-wrapper:hover .tiptap-code-lang-empty {
+  visibility: visible;
+}
+
+/* In view mode the badge and the Redmine "Copy" button share one corner: both
+   are put into a flex container, and the button lines up to the left of the
+   badge by itself, however long the language name is. */
+.tiptap-code-corner {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tiptap-code-corner .tiptap-code-lang {
+  position: static;
+}
+
+/* Higher specificity than the native div.pre-wrapper a.copy-pre-content-link,
+   otherwise the button would stay absolutely positioned on top of the badge. */
+div.pre-wrapper .tiptap-code-corner a.copy-pre-content-link {
+  position: static;
+}
+
+/* In the editor the code block is rendered by the node view, so the outer margins
+   of the wrapper must repeat the margins of the pre itself, otherwise the block shifts. */
+.ProseMirror .tiptap-code-wrapper > pre {
+  margin: 0;
+}
+
+.ProseMirror .tiptap-code-wrapper {
+  margin: 1em 0;
+}
+
+/* --- Language picker panel ------------------------------------------------ */
+/* Lives in body: the input area scrolls and would clip the dropdown. */
+
+.tiptap-lang-panel {
+  position: fixed;
+  z-index: 10000;
+  width: 220px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.tiptap-lang-search {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 3px 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  outline: none;
+}
+
+.tiptap-lang-search:focus {
+  border-color: #628db6;
+}
+
+.tiptap-lang-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.tiptap-lang-group {
+  padding: 4px 6px 2px;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.tiptap-lang-option {
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-family: Consolas, Menlo, "Liberation Mono", Courier, monospace;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tiptap-lang-option:hover {
+  background: #eef3f8;
+}
+
+.tiptap-lang-option.active {
+  background: #628db6;
+  color: #fff;
+}
+
+/* Note after the name: "1C:Enterprise", "MikroTik", "nginx, apache". */
+.tiptap-lang-hint {
+  margin-left: 6px;
+  color: #999;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+.tiptap-lang-option.active .tiptap-lang-hint {
+  color: #dbe6f1;
+}
+
+.tiptap-lang-empty {
+  padding: 6px;
+  color: #999;
+  font-size: 12px;
+}
+
+/* --- Highlighting palette ------------------------------------------------- */
+/* The colors are taken from the native Redmine scheme (.syntaxhl, pygments colorful),
+   so that highlighted code does not stand out from the rest of the interface. The
+   classes come from highlight.js, the same set in the editor and in view mode. */
+
+.hljs-comment,
+.hljs-quote { color: #888888; }
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-name { color: #008800; font-weight: bold; }
+
+.hljs-type,
+.hljs-class.hljs-title { color: #333399; font-weight: bold; }
+
+.hljs-string,
+.hljs-regexp,
+.hljs-template-variable,
+.hljs-subst { background-color: #fff0f0; }
+
+.hljs-number { color: #0000DD; font-weight: bold; }
+
+.hljs-title,
+.hljs-title.function_ { color: #0066BB; font-weight: bold; }
+
+.hljs-title.class_,
+.hljs-selector-class { color: #BB0066; font-weight: bold; }
+
+.hljs-built_in,
+.hljs-symbol { color: #007020; }
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-selector-attr { color: #0000CC; }
+
+.hljs-variable,
+.hljs-params,
+.hljs-template-tag { color: #996633; }
+
+.hljs-tag { color: #007700; }
+
+.hljs-meta { color: #557799; }
+
+.hljs-deletion { color: #A00000; }
+.hljs-addition { color: #00A000; }
+
+/* Logs (the plugin's own log and journalctl grammars): message levels in their own
+   colors, so that errors and warnings are visible without reading closely. */
+.hljs-log-error { color: #C00000; font-weight: bold; }
+.hljs-log-warn { color: #B35C00; font-weight: bold; }
+.hljs-log-ok { color: #118811; font-weight: bold; }
+.hljs-log-info { color: #0057AE; }
+.hljs-link { color: #3E5B76; text-decoration: underline; }
+
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
+
+/* Parts of a text written in CKEditor that the editor shows as one indivisible
+   element: a Redmine macro and an <iframe> (see tiptap_legacy.js). */
+.ProseMirror .tiptap-macro,
+.ProseMirror .tiptap-iframe {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0 6px;
+  border: 1px solid #c8d4e3;
+  border-radius: 3px;
+  background: #eef3f9;
+  color: #3b4a5c;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  vertical-align: baseline;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.ProseMirror .tiptap-iframe {
+  border-style: dashed;
+}
+
+.ProseMirror .ProseMirror-selectednode.tiptap-macro,
+.ProseMirror .ProseMirror-selectednode.tiptap-iframe {
+  outline: 2px solid #3d8ef8;
+}

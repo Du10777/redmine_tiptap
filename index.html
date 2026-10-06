@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>redmine_tiptap: try the editor</title>
+<meta name="description" content="A demo of redmine_tiptap, a WYSIWYG editor for Redmine based on TipTap: try it right in the browser.">
+<link rel="icon" href="redmine/images/favicon.ico">
+<link rel="stylesheet" href="redmine/application.css">
+<link rel="stylesheet" href="plugin/tiptap_editor.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body class="controller-issues action-new" data-text-formatting="tiptap">
+<div id="wrapper">
+  <div id="top-menu">
+    <div id="account">
+      <ul>
+        <li><label id="demo-language-label" for="demo-language">Language</label> <select id="demo-language"></select></li>
+      </ul>
+    </div>
+    <ul>
+      <li><a href="https://github.com/Du10777/redmine_tiptap">redmine_tiptap on GitHub</a></li>
+    </ul>
+  </div>
+  <div id="header">
+    <h1>redmine_tiptap</h1>
+    <div id="main-menu" class="tabs">
+      <ul><li><a class="issues selected" href="./">Demo</a></li></ul>
+    </div>
+  </div>
+  <div id="main" class="nosidebar">
+    <div id="sidebar"></div>
+    <div id="content">
+      <h2 id="demo-title">New issue</h2>
+      <div class="flash notice demo-about">
+        A demo of <a href="https://github.com/Du10777/redmine_tiptap">redmine_tiptap</a>, a WYSIWYG editor for Redmine:
+        the editor of the plugin works right here, in your browser. Nothing is sent anywhere, and your text stays in
+        this browser. There is no Redmine behind this page, so pictures you paste, drop or choose are kept only until
+        the page is reloaded, and Redmine links and macros stay plain text in the preview.
+      </div>
+      <p id="demo-error" class="conflict" style="display: none;"></p>
+      <form id="issue-form" class="new_issue" action="#" method="post">
+        <div class="box tabular filedroplistner">
+          <div id="all_attributes">
+            <p><label for="issue_subject" id="demo-subject-label">Subject</label><input size="80" maxlength="255" type="text" id="issue_subject" value="Trying the editor of redmine_tiptap"></p>
+            <p>
+              <label for="issue_description" id="demo-description-label">Description</label>
+              <span id="issue_description_and_toolbar"><textarea cols="60" rows="10" class="wiki-edit" name="issue[description]" id="issue_description"></textarea></span>
+            </p>
+          </div>
+          <p id="attachments_form"><label id="demo-files-label" for="demo-files">Files</label><span class="add_attachment"><input type="file" id="demo-files" class="filedrop" multiple accept="image/*"></span></p>
+        </div>
+        <input type="submit" id="demo-create" value="Create" disabled>
+      </form>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="bgl"><div class="bgr">
+      Editor: redmine_tiptap main@502adb4 (TipTap 3.31.4) &middot;
+      the look: styles, icons and fonts of Redmine 6.1.5 (GNU GPL v2, &copy; Jean-Philippe Lang), Noto Sans (SIL Open Font License)
+    </div></div>
+  </div>
+</div>
+<script src="languages.js"></script>
+<script src="samples.js"></script>
+<script src="sanitizer-config.js"></script>
+<script src="preview.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>
