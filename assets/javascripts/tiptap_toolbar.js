@@ -45,6 +45,14 @@ function positionDropdown(dropdown, anchor) {
   dropdown.style.left = r.left + 'px';
 }
 
+// Closes a dropdown when the next mousedown lands outside its wrapper. The listener
+// stays on the document for the life of the page, as it did when written inline.
+function hideOnOutsideMousedown(wrapper, dropdown) {
+  document.addEventListener('mousedown', function(e) {
+    if (!wrapper.contains(e.target)) dropdown.style.display = 'none';
+  });
+}
+
 var COLOR_PALETTE = [
   '#000000', '#434343', '#666666', '#999999', '#b7b7b7', '#cccccc', '#d9d9d9', '#ffffff',
   '#ff0000', '#ff9900', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#9900ff', '#ff00ff',
@@ -146,6 +154,8 @@ var STYLE_ITEMS = [
   { value: 'codeBlock', labelKey: 'paragraph_styles.monospace',   short: 'M'  },
 ];
 
+var ALIGNMENTS = ['left', 'center', 'right', 'justify'];
+
 var ALIGN_SVG = {
   left:    '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="currentColor"><rect x="1" y="2" width="14" height="1.5"/><rect x="1" y="6" width="9" height="1.5"/><rect x="1" y="10" width="14" height="1.5"/><rect x="1" y="14" width="9" height="1.5"/></g></svg>',
   center:  '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="currentColor"><rect x="1" y="2" width="14" height="1.5"/><rect x="3.5" y="6" width="9" height="1.5"/><rect x="1" y="10" width="14" height="1.5"/><rect x="3.5" y="14" width="9" height="1.5"/></g></svg>',
@@ -208,9 +218,7 @@ function makeRow1(editor) {
     if (show) positionDropdown(styleDropdown, styleBtn);
   });
 
-  document.addEventListener('mousedown', function(e) {
-    if (!styleWrapper.contains(e.target)) styleDropdown.style.display = 'none';
-  });
+  hideOnOutsideMousedown(styleWrapper, styleDropdown);
 
   styleWrapper.appendChild(styleBtn);
   styleWrapper.appendChild(styleDropdown);
@@ -245,7 +253,7 @@ function makeRow1(editor) {
     right: t('align_options.right'), justify: t('align_options.justify'),
   };
   var alignOptionBtns = {};
-  ['left', 'center', 'right', 'justify'].forEach(function(al) {
+  ALIGNMENTS.forEach(function(al) {
     var o = document.createElement('button');
     o.type = 'button';
     o.className = 'tiptap-btn tiptap-align-option';
@@ -266,9 +274,7 @@ function makeRow1(editor) {
     alignDropdown.style.display = show ? 'flex' : 'none';
     if (show) positionDropdown(alignDropdown, alignBtn);
   });
-  document.addEventListener('mousedown', function(e) {
-    if (!alignWrapper.contains(e.target)) alignDropdown.style.display = 'none';
-  });
+  hideOnOutsideMousedown(alignWrapper, alignDropdown);
 
   alignWrapper.appendChild(alignBtn);
   alignWrapper.appendChild(alignDropdown);
@@ -346,9 +352,7 @@ function makeRow1(editor) {
     fontDropdown.style.display = show ? 'block' : 'none';
     if (show) positionDropdown(fontDropdown, fontBtn);
   });
-  document.addEventListener('mousedown', function(e) {
-    if (!fontWrapper.contains(e.target)) fontDropdown.style.display = 'none';
-  });
+  hideOnOutsideMousedown(fontWrapper, fontDropdown);
 
   fontWrapper.appendChild(fontBtn);
   fontWrapper.appendChild(fontDropdown);
@@ -412,9 +416,7 @@ function makeRow1(editor) {
       sizeDropdown.style.display = 'none';
     }
   });
-  document.addEventListener('mousedown', function(e) {
-    if (!sizeWrapper.contains(e.target)) sizeDropdown.style.display = 'none';
-  });
+  hideOnOutsideMousedown(sizeWrapper, sizeDropdown);
 
   sizeWrapper.appendChild(sizeInput);
   sizeWrapper.appendChild(sizeArrow);
@@ -462,11 +464,11 @@ function makeRow1(editor) {
 
     // alignment: icon on the button + active in the menu
     var curAlign = 'left';
-    ['center', 'right', 'justify'].forEach(function(al) {
+    ALIGNMENTS.slice(1).forEach(function(al) {
       if (editor.isActive({ textAlign: al })) curAlign = al;
     });
     alignIcon.innerHTML = ALIGN_SVG[curAlign];
-    ['left', 'center', 'right', 'justify'].forEach(function(al) {
+    ALIGNMENTS.forEach(function(al) {
       if (al === curAlign) alignOptionBtns[al].classList.add('active');
       else alignOptionBtns[al].classList.remove('active');
     });
@@ -492,7 +494,7 @@ function makeRow1(editor) {
     sizeInput.value = attrs.fontSize ? (parseInt(attrs.fontSize) || 14) : 14;
   }
 
-  return { row1El: row, updateState: updateState, styleBtn: styleBtn };
+  return { row1El: row, updateState: updateState };
 }
 
 
