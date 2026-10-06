@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Basque (Euskara).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+eu:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Iturburu-kodea (HTML)"
+      paragraph_style: "Paragrafo-estiloa"
+      align: "Lerrokatzea"
+      outdent: "Txikitu koska"
+      indent: "Handitu koska"
+      subscript: "Azpiindizea"
+      superscript: "Goi-indizea"
+      bold: "Lodia"
+      italic: "Etzana"
+      underline: "Azpimarratua"
+      strike: "Marratua"
+      font: "Letra-tipoa"
+      font_size: "Letra-tamaina"
+      text_color: "Testuaren kolorea"
+      background_color: "Testuaren atzeko planoaren kolorea"
+      undo: "Desegin"
+      redo: "Berregin"
+      collapsible: "Bloke tolesgarria"
+      code: "Kodea"
+      code_block: "Kode-blokea"
+      horizontal_rule: "Marra horizontala"
+      quote: "Aipua"
+      link: "Esteka"
+      unlink: "Kendu esteka"
+      list: "Zerrenda"
+      insert_table: "Txertatu taula"
+      insert_attachment: "Txertatu eranskina"
+      insert_image: "Txertatu irudia eranskinetatik"
+
+    paragraph_styles:
+      heading1: "1. izenburua"
+      heading2: "2. izenburua"
+      heading3: "3. izenburua"
+      normal: "Testu normala"
+      subheading4: "4. azpiizenburua"
+      subheading5: "5. azpiizenburua"
+      subheading6: "6. azpiizenburua"
+      monospace: "Zabalera finkoa"
+
+    align_options:
+      left: "Lerrokatu ezkerrean"
+      center: "Zentratu"
+      right: "Lerrokatu eskuinean"
+      justify: "Justifikatu"
+
+    font_options:
+      default: "Lehenetsia"
+      size_placeholder: "Tam."
+
+    color_picker:
+      reset: "Berrezarri"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Zereginen zerrenda"
+      bullet_disc: "• Buletak (biribil beteak)"
+      bullet_circle: "◦ Buletak (biribil hutsak)"
+      bullet_square: "▪ Buletak (karratuak)"
+      decimal: "1. Zenbakitzea (1, 2, 3)"
+      decimal_zero: "01. Zenbakitzea (01, 02)"
+      lower_alpha: "a. Zenbakitzea (a, b, c)"
+      upper_alpha: "A. Zenbakitzea (A, B, C)"
+      lower_roman: "i. Zenbakitzea (i, ii, iii)"
+      upper_roman: "I. Zenbakitzea (I, II, III)"
+      lower_greek: "α. Zenbakitzea (α, β, γ)"
+
+    dialog:
+      insert: "Txertatu"
+
+    link_dialog:
+      title: "Txertatu esteka"
+      text: "Testua"
+      text_placeholder: "Estekaren testua"
+      url: "URLa"
+
+    table_dialog:
+      title: "Txertatu taula"
+      rows: "Errenkadak"
+      columns: "Zutabeak"
+      header_row: "Lehen errenkada goiburua da"
+
+    attachment_dialog:
+      title: "Txertatu eranskina"
+      empty: "Ez dago igotako eranskinik"
+
+    image_dialog:
+      title: "Txertatu irudia"
+      empty: "Ez dago igotako irudirik"
+
+    table_menu:
+      add_column_left: "Gehitu zutabe bat ezkerrean"
+      add_column_right: "Gehitu zutabe bat eskuinean"
+      delete_column: "Ezabatu zutabea"
+      add_row_above: "Gehitu errenkada bat goian"
+      add_row_below: "Gehitu errenkada bat behean"
+      delete_row: "Ezabatu errenkada"
+      merge_cells: "Batu gelaxkak"
+      split_cell: "Zatitu gelaxka"
+      header_row: "Lehen errenkada goiburua da"
+      header_column: "Lehen zutabea goiburua da"
+      delete_table: "Ezabatu taula"
+
+    quote:
+      default_header: "Egilea, data"
+      default_text: "Aipuaren testua"
+
+    collapsible:
+      default_title: "Izenburua"
+      default_content: "Edukia"
+
+    code_block:
+      badge_title: "Kode-blokearen lengoaia: egin klik hautatzeko"
+      badge_empty: "lengoaia"
+      search_language: "Bilatu lengoaia"
+      nothing_found: "Ez da ezer aurkitu"
+      no_highlighting: "Nabarmentzerik gabe (plaintext)"
+      recent: "Berriki erabiliak"
+      frequent: "Maiz erabiliak"
+      all_languages: "Lengoaia guztiak"
+
+    resizer:
+      title: "Arrastatu editorearen altuera aldatzeko, egin klik bikoitza altuera automatikoa leheneratzeko"

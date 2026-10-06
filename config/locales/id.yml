@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Indonesian (Bahasa Indonesia).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+id:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Kode sumber (HTML)"
+      paragraph_style: "Gaya paragraf"
+      align: "Perataan"
+      outdent: "Kurangi indentasi"
+      indent: "Tambah indentasi"
+      subscript: "Subskrip"
+      superscript: "Superskrip"
+      bold: "Tebal"
+      italic: "Miring"
+      underline: "Garis bawah"
+      strike: "Coret"
+      font: "Font"
+      font_size: "Ukuran font"
+      text_color: "Warna teks"
+      background_color: "Warna latar belakang teks"
+      undo: "Urungkan"
+      redo: "Ulangi"
+      collapsible: "Blok yang dapat diciutkan"
+      code: "Kode"
+      code_block: "Blok kode"
+      horizontal_rule: "Garis horizontal"
+      quote: "Kutipan"
+      link: "Tautan"
+      unlink: "Hapus tautan"
+      list: "Daftar"
+      insert_table: "Sisipkan tabel"
+      insert_attachment: "Sisipkan lampiran"
+      insert_image: "Sisipkan gambar dari lampiran"
+
+    paragraph_styles:
+      heading1: "Judul 1"
+      heading2: "Judul 2"
+      heading3: "Judul 3"
+      normal: "Teks normal"
+      subheading4: "Subjudul 4"
+      subheading5: "Subjudul 5"
+      subheading6: "Subjudul 6"
+      monospace: "Teks lebar tetap"
+
+    align_options:
+      left: "Rata kiri"
+      center: "Rata tengah"
+      right: "Rata kanan"
+      justify: "Rata kiri kanan"
+
+    font_options:
+      default: "Bawaan"
+      size_placeholder: "Uk."
+
+    color_picker:
+      reset: "Atur ulang"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Daftar tugas"
+      bullet_disc: "• Poin (bulatan)"
+      bullet_circle: "◦ Poin (lingkaran)"
+      bullet_square: "▪ Poin (persegi)"
+      decimal: "1. Penomoran (1, 2, 3)"
+      decimal_zero: "01. Penomoran (01, 02)"
+      lower_alpha: "a. Penomoran (a, b, c)"
+      upper_alpha: "A. Penomoran (A, B, C)"
+      lower_roman: "i. Penomoran (i, ii, iii)"
+      upper_roman: "I. Penomoran (I, II, III)"
+      lower_greek: "α. Penomoran (α, β, γ)"
+
+    dialog:
+      insert: "Sisipkan"
+
+    link_dialog:
+      title: "Sisipkan tautan"
+      text: "Teks"
+      text_placeholder: "Teks tautan"
+      url: "URL"
+
+    table_dialog:
+      title: "Sisipkan tabel"
+      rows: "Baris"
+      columns: "Kolom"
+      header_row: "Baris pertama sebagai header"
+
+    attachment_dialog:
+      title: "Sisipkan lampiran"
+      empty: "Belum ada lampiran yang diunggah"
+
+    image_dialog:
+      title: "Sisipkan gambar"
+      empty: "Belum ada gambar yang diunggah"
+
+    table_menu:
+      add_column_left: "Tambahkan kolom di sebelah kiri"
+      add_column_right: "Tambahkan kolom di sebelah kanan"
+      delete_column: "Hapus kolom"
+      add_row_above: "Tambahkan baris di atas"
+      add_row_below: "Tambahkan baris di bawah"
+      delete_row: "Hapus baris"
+      merge_cells: "Gabungkan sel"
+      split_cell: "Pisahkan sel"
+      header_row: "Baris pertama sebagai header"
+      header_column: "Kolom pertama sebagai header"
+      delete_table: "Hapus tabel"
+
+    quote:
+      default_header: "Penulis, tanggal"
+      default_text: "Teks kutipan"
+
+    collapsible:
+      default_title: "Judul"
+      default_content: "Isi"
+
+    code_block:
+      badge_title: "Bahasa blok kode – klik untuk memilih"
+      badge_empty: "bahasa"
+      search_language: "Cari bahasa"
+      nothing_found: "Tidak ada hasil"
+      no_highlighting: "Tanpa penyorotan (plaintext)"
+      recent: "Terakhir digunakan"
+      frequent: "Sering digunakan"
+      all_languages: "Semua bahasa"
+
+    resizer:
+      title: "Seret untuk mengubah tinggi editor, klik dua kali untuk mengembalikan tinggi otomatis"

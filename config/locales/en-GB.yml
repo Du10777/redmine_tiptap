@@ -1,0 +1,13 @@
+# Interface strings of the TipTap editor: English (British).
+# Only the texts that differ from en.yml are here; every other text comes from en.yml.
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+en-GB:
+  redmine_tiptap:
+
+    toolbar:
+      text_color: "Text colour"
+      background_color: "Text background colour"
+
+    align_options:
+      center: "Centre"

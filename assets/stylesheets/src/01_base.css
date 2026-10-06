@@ -1,0 +1,284 @@
+.tiptap-wrapper {
+  margin-bottom: 8px;
+}
+
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  margin-bottom: 4px;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.tiptap-toolbar-zone {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.tiptap-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.tiptap-style-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-style-btn {
+  gap: 3px;
+  width: 31px;
+  justify-content: space-between;
+}
+
+.tiptap-style-arrow {
+  font-size: 10px;
+  color: #666;
+  pointer-events: none;
+}
+
+.tiptap-style-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 150px;
+}
+
+.tiptap-style-option {
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tiptap-style-option:hover {
+  background: #d0e4ff;
+}
+
+.tiptap-align-wrapper,
+.tiptap-list-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-align-btn,
+.tiptap-list-btn {
+  gap: 2px;
+}
+
+.tiptap-align-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-align-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tiptap-align-option {
+  min-width: 28px;
+}
+
+.tiptap-list-dropdown {
+  top: 28px;
+  min-width: 190px;
+}
+
+.tiptap-font-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-font-btn {
+  gap: 2px;
+}
+
+.tiptap-font-icon {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 15px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tiptap-font-dropdown {
+  top: 28px;
+  min-width: 170px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.tiptap-style-option.active {
+  background: #eaf3ff;
+  font-weight: 600;
+}
+
+.tiptap-btn {
+  height: 26px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 7px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: monospace;
+  min-width: 28px;
+}
+
+.tiptap-btn:hover { background: #e8e8e8; }
+
+.tiptap-btn.active {
+  background: #d0e4ff;
+  border-color: #5b9bd5;
+  font-weight: bold;
+}
+
+.tiptap-sep {
+  width: 1px;
+  height: 20px;
+  background: #ccc;
+  margin: 0 4px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.tiptap-select {
+  height: 26px;
+  padding: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.tiptap-select:hover { background: #e8e8e8; }
+
+.tiptap-size-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tiptap-size-input {
+  height: 26px;
+  width: 52px;
+  padding: 0 16px 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.tiptap-size-arrow {
+  position: absolute;
+  right: 4px;
+  font-size: 10px;
+  color: #666;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tiptap-size-dropdown {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 10000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-height: 240px;
+  overflow-y: auto;
+  min-width: 52px;
+}
+
+.tiptap-size-option {
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tiptap-size-option:hover {
+  background: #d0e4ff;
+}
+
+.tiptap-color-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 2px 5px;
+}
+
+.tiptap-color-label {
+  position: relative;
+  font-size: 15px;
+  font-weight: bold;
+  pointer-events: none;
+  display: inline-block;
+  line-height: 1;
+}
+
+.tiptap-color-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: transparent;
+  border-radius: 1px;
+}
+
+.tiptap-bg-label {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0 3px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.tiptap-link-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  box-sizing: border-box;
+}

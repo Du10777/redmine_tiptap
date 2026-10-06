@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Vietnamese (Tiếng Việt).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+vi:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Mã nguồn (HTML)"
+      paragraph_style: "Kiểu đoạn văn"
+      align: "Căn chỉnh"
+      outdent: "Giảm thụt lề"
+      indent: "Tăng thụt lề"
+      subscript: "Chỉ số dưới"
+      superscript: "Chỉ số trên"
+      bold: "In đậm"
+      italic: "In nghiêng"
+      underline: "Gạch chân"
+      strike: "Gạch ngang"
+      font: "Phông chữ"
+      font_size: "Cỡ chữ"
+      text_color: "Màu chữ"
+      background_color: "Màu nền chữ"
+      undo: "Hoàn tác"
+      redo: "Làm lại"
+      collapsible: "Khối có thể thu gọn"
+      code: "Mã trong dòng"
+      code_block: "Khối mã"
+      horizontal_rule: "Đường kẻ ngang"
+      quote: "Trích dẫn"
+      link: "Liên kết"
+      unlink: "Xóa liên kết"
+      list: "Danh sách"
+      insert_table: "Chèn bảng"
+      insert_attachment: "Chèn tệp đính kèm"
+      insert_image: "Chèn ảnh từ tệp đính kèm"
+
+    paragraph_styles:
+      heading1: "Tiêu đề 1"
+      heading2: "Tiêu đề 2"
+      heading3: "Tiêu đề 3"
+      normal: "Văn bản thường"
+      subheading4: "Tiêu đề phụ 4"
+      subheading5: "Tiêu đề phụ 5"
+      subheading6: "Tiêu đề phụ 6"
+      monospace: "Văn bản đơn cách"
+
+    align_options:
+      left: "Căn trái"
+      center: "Căn giữa"
+      right: "Căn phải"
+      justify: "Căn đều hai bên"
+
+    font_options:
+      default: "Mặc định"
+      size_placeholder: "Cỡ"
+
+    color_picker:
+      reset: "Đặt lại"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Danh sách công việc"
+      bullet_disc: "• Dấu đầu dòng (chấm tròn)"
+      bullet_circle: "◦ Dấu đầu dòng (vòng tròn)"
+      bullet_square: "▪ Dấu đầu dòng (hình vuông)"
+      decimal: "1. Đánh số (1, 2, 3)"
+      decimal_zero: "01. Đánh số (01, 02)"
+      lower_alpha: "a. Đánh số (a, b, c)"
+      upper_alpha: "A. Đánh số (A, B, C)"
+      lower_roman: "i. Đánh số (i, ii, iii)"
+      upper_roman: "I. Đánh số (I, II, III)"
+      lower_greek: "α. Đánh số (α, β, γ)"
+
+    dialog:
+      insert: "Chèn"
+
+    link_dialog:
+      title: "Chèn liên kết"
+      text: "Văn bản"
+      text_placeholder: "Văn bản liên kết"
+      url: "URL"
+
+    table_dialog:
+      title: "Chèn bảng"
+      rows: "Số hàng"
+      columns: "Số cột"
+      header_row: "Hàng đầu tiên là tiêu đề"
+
+    attachment_dialog:
+      title: "Chèn tệp đính kèm"
+      empty: "Chưa có tệp đính kèm nào được tải lên"
+
+    image_dialog:
+      title: "Chèn ảnh"
+      empty: "Chưa có ảnh nào được tải lên"
+
+    table_menu:
+      add_column_left: "Chèn cột bên trái"
+      add_column_right: "Chèn cột bên phải"
+      delete_column: "Xóa cột"
+      add_row_above: "Chèn hàng phía trên"
+      add_row_below: "Chèn hàng phía dưới"
+      delete_row: "Xóa hàng"
+      merge_cells: "Gộp ô"
+      split_cell: "Tách ô"
+      header_row: "Hàng đầu tiên là tiêu đề"
+      header_column: "Cột đầu tiên là tiêu đề"
+      delete_table: "Xóa bảng"
+
+    quote:
+      default_header: "Tác giả, ngày"
+      default_text: "Nội dung trích dẫn"
+
+    collapsible:
+      default_title: "Tiêu đề"
+      default_content: "Nội dung"
+
+    code_block:
+      badge_title: "Ngôn ngữ của khối mã - nhấp để chọn"
+      badge_empty: "ngôn ngữ"
+      search_language: "Tìm ngôn ngữ"
+      nothing_found: "Không tìm thấy kết quả"
+      no_highlighting: "Không tô sáng cú pháp (plaintext)"
+      recent: "Gần đây"
+      frequent: "Thường dùng"
+      all_languages: "Tất cả ngôn ngữ"
+
+    resizer:
+      title: "Kéo để thay đổi chiều cao trình soạn thảo, nhấp đúp để khôi phục chiều cao tự động"

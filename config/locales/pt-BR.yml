@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Portuguese/Brazil (Português/Brasil).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+pt-BR:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Código-fonte (HTML)"
+      paragraph_style: "Estilo de parágrafo"
+      align: "Alinhamento"
+      outdent: "Diminuir recuo"
+      indent: "Aumentar recuo"
+      subscript: "Subscrito"
+      superscript: "Sobrescrito"
+      bold: "Negrito"
+      italic: "Itálico"
+      underline: "Sublinhado"
+      strike: "Tachado"
+      font: "Fonte"
+      font_size: "Tamanho da fonte"
+      text_color: "Cor do texto"
+      background_color: "Cor de fundo do texto"
+      undo: "Desfazer"
+      redo: "Refazer"
+      collapsible: "Bloco recolhível"
+      code: "Código"
+      code_block: "Bloco de código"
+      horizontal_rule: "Linha horizontal"
+      quote: "Citação"
+      link: "Link"
+      unlink: "Remover link"
+      list: "Lista"
+      insert_table: "Inserir tabela"
+      insert_attachment: "Inserir anexo"
+      insert_image: "Inserir imagem dos anexos"
+
+    paragraph_styles:
+      heading1: "Título 1"
+      heading2: "Título 2"
+      heading3: "Título 3"
+      normal: "Texto normal"
+      subheading4: "Subtítulo 4"
+      subheading5: "Subtítulo 5"
+      subheading6: "Subtítulo 6"
+      monospace: "Monoespaçado"
+
+    align_options:
+      left: "Alinhar à esquerda"
+      center: "Centralizar"
+      right: "Alinhar à direita"
+      justify: "Justificar"
+
+    font_options:
+      default: "Padrão"
+      size_placeholder: "Tam."
+
+    color_picker:
+      reset: "Redefinir"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Lista de tarefas"
+      bullet_disc: "• Marcadores (círculos cheios)"
+      bullet_circle: "◦ Marcadores (círculos)"
+      bullet_square: "▪ Marcadores (quadrados)"
+      decimal: "1. Numeração (1, 2, 3)"
+      decimal_zero: "01. Numeração (01, 02)"
+      lower_alpha: "a. Numeração (a, b, c)"
+      upper_alpha: "A. Numeração (A, B, C)"
+      lower_roman: "i. Numeração (i, ii, iii)"
+      upper_roman: "I. Numeração (I, II, III)"
+      lower_greek: "α. Numeração (α, β, γ)"
+
+    dialog:
+      insert: "Inserir"
+
+    link_dialog:
+      title: "Inserir link"
+      text: "Texto"
+      text_placeholder: "Texto do link"
+      url: "URL"
+
+    table_dialog:
+      title: "Inserir tabela"
+      rows: "Linhas"
+      columns: "Colunas"
+      header_row: "A primeira linha é um cabeçalho"
+
+    attachment_dialog:
+      title: "Inserir anexo"
+      empty: "Nenhum anexo enviado"
+
+    image_dialog:
+      title: "Inserir imagem"
+      empty: "Nenhuma imagem enviada"
+
+    table_menu:
+      add_column_left: "Adicionar coluna à esquerda"
+      add_column_right: "Adicionar coluna à direita"
+      delete_column: "Excluir coluna"
+      add_row_above: "Adicionar linha acima"
+      add_row_below: "Adicionar linha abaixo"
+      delete_row: "Excluir linha"
+      merge_cells: "Mesclar células"
+      split_cell: "Dividir célula"
+      header_row: "A primeira linha é um cabeçalho"
+      header_column: "A primeira coluna é um cabeçalho"
+      delete_table: "Excluir tabela"
+
+    quote:
+      default_header: "Autor, data"
+      default_text: "Texto da citação"
+
+    collapsible:
+      default_title: "Título"
+      default_content: "Conteúdo"
+
+    code_block:
+      badge_title: "Linguagem do bloco de código: clique para escolher"
+      badge_empty: "linguagem"
+      search_language: "Buscar linguagem"
+      nothing_found: "Nada encontrado"
+      no_highlighting: "Sem destaque (plaintext)"
+      recent: "Recentes"
+      frequent: "Frequentes"
+      all_languages: "Todas as linguagens"
+
+    resizer:
+      title: "Arraste para alterar a altura do editor, clique duas vezes para restaurar a altura automática"

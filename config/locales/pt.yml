@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Portuguese (Português).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+pt:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Código-fonte (HTML)"
+      paragraph_style: "Estilo de parágrafo"
+      align: "Alinhamento"
+      outdent: "Diminuir avanço"
+      indent: "Aumentar avanço"
+      subscript: "Inferior à linha"
+      superscript: "Superior à linha"
+      bold: "Negrito"
+      italic: "Itálico"
+      underline: "Sublinhado"
+      strike: "Rasurado"
+      font: "Tipo de letra"
+      font_size: "Tamanho do tipo de letra"
+      text_color: "Cor do texto"
+      background_color: "Cor de fundo do texto"
+      undo: "Anular"
+      redo: "Refazer"
+      collapsible: "Bloco expansível"
+      code: "Código"
+      code_block: "Bloco de código"
+      horizontal_rule: "Linha horizontal"
+      quote: "Citação"
+      link: "Hiperligação"
+      unlink: "Remover hiperligação"
+      list: "Lista"
+      insert_table: "Inserir tabela"
+      insert_attachment: "Inserir anexo"
+      insert_image: "Inserir imagem dos anexos"
+
+    paragraph_styles:
+      heading1: "Título 1"
+      heading2: "Título 2"
+      heading3: "Título 3"
+      normal: "Texto normal"
+      subheading4: "Subtítulo 4"
+      subheading5: "Subtítulo 5"
+      subheading6: "Subtítulo 6"
+      monospace: "Monoespaçado"
+
+    align_options:
+      left: "Alinhar à esquerda"
+      center: "Centrar"
+      right: "Alinhar à direita"
+      justify: "Justificar"
+
+    font_options:
+      default: "Predefinido"
+      size_placeholder: "Tam."
+
+    color_picker:
+      reset: "Repor"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Lista de tarefas"
+      bullet_disc: "• Marcadores (círculos cheios)"
+      bullet_circle: "◦ Marcadores (círculos)"
+      bullet_square: "▪ Marcadores (quadrados)"
+      decimal: "1. Numeração (1, 2, 3)"
+      decimal_zero: "01. Numeração (01, 02)"
+      lower_alpha: "a. Numeração (a, b, c)"
+      upper_alpha: "A. Numeração (A, B, C)"
+      lower_roman: "i. Numeração (i, ii, iii)"
+      upper_roman: "I. Numeração (I, II, III)"
+      lower_greek: "α. Numeração (α, β, γ)"
+
+    dialog:
+      insert: "Inserir"
+
+    link_dialog:
+      title: "Inserir hiperligação"
+      text: "Texto"
+      text_placeholder: "Texto da hiperligação"
+      url: "URL"
+
+    table_dialog:
+      title: "Inserir tabela"
+      rows: "Linhas"
+      columns: "Colunas"
+      header_row: "A primeira linha é um cabeçalho"
+
+    attachment_dialog:
+      title: "Inserir anexo"
+      empty: "Não existem anexos carregados"
+
+    image_dialog:
+      title: "Inserir imagem"
+      empty: "Não existem imagens carregadas"
+
+    table_menu:
+      add_column_left: "Adicionar coluna à esquerda"
+      add_column_right: "Adicionar coluna à direita"
+      delete_column: "Eliminar coluna"
+      add_row_above: "Adicionar linha acima"
+      add_row_below: "Adicionar linha abaixo"
+      delete_row: "Eliminar linha"
+      merge_cells: "Unir células"
+      split_cell: "Dividir célula"
+      header_row: "A primeira linha é um cabeçalho"
+      header_column: "A primeira coluna é um cabeçalho"
+      delete_table: "Eliminar tabela"
+
+    quote:
+      default_header: "Autor, data"
+      default_text: "Texto da citação"
+
+    collapsible:
+      default_title: "Título"
+      default_content: "Conteúdo"
+
+    code_block:
+      badge_title: "Linguagem do bloco de código: clique para escolher"
+      badge_empty: "linguagem"
+      search_language: "Procurar linguagem"
+      nothing_found: "Nada encontrado"
+      no_highlighting: "Sem realce (plaintext)"
+      recent: "Recentes"
+      frequent: "Frequentes"
+      all_languages: "Todas as linguagens"
+
+    resizer:
+      title: "Arraste para alterar a altura do editor, faça duplo clique para repor a altura automática"

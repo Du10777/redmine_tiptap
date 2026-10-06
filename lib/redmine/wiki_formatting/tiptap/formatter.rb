@@ -1,0 +1,251 @@
+require_relative 'sanitizer'
+
+module Redmine
+  module WikiFormatting
+    module Tiptap
+      class Formatter
+        # Redmine's own helper that makes links of plain addresses (auto_link!).
+        include Redmine::WikiFormatting::LinksHelper
+
+        # How a text of CKEditor can be told from a text of this editor: CKEditor
+        # writes void tags in the XHTML way (<br />, <hr />, <img ... />), separates
+        # all blocks, paragraphs too, with a blank line and indents what is inside a
+        # list, a table, a quote with a tab; the editor of this plugin writes <br>,
+        # <hr>, <img ...> and no space between blocks. The source mode of the editor
+        # (the one thing of this plugin that formats the HTML, see tiptap_source.js)
+        # indents with spaces and puts a blank line only around a block of several
+        # lines, never between two paragraphs, so what it writes is not taken for a
+        # text of CKEditor.
+        CKEDITOR_SIGNS = Regexp.union(
+          %r{<br />}, %r{<hr />}, %r{<img\b[^>]*/>},
+          %r{</(?:p|h[1-6])>[ \t]*\r?\n[ \t]*\r?\n[ \t]*<(?:p|h[1-6])\b},
+          %r{<(?:ul|ol|table|thead|tbody|tfoot|tr|blockquote|div)\b[^>]*>[ \t]*\r?\n\t+<}
+        ).freeze
+
+        # The language names that CodeRay (Redmine's own highlighter, which
+        # CKEditor's formatter used) has and that are called differently here.
+        CODE_LANGUAGE_ALIASES = {
+          'java_script' => 'javascript', 'html' => 'xml', 'sass' => 'scss',
+          'text' => 'plaintext', 'debug' => 'plaintext', 'raydebug' => 'plaintext', 'scanner' => 'plaintext'
+        }.freeze
+
+        # CKEditor's "Special Container" (its Styles list): a <div> with a gray frame.
+        # It is shown as a code block without highlighting, see convert_special_containers.
+        # Only a <div> whose style is exactly these declarations counts; the same rule
+        # is in tiptap_legacy.js (convertSpecialContainers), keep both alike.
+        SPECIAL_CONTAINER_STYLE = [
+          'background:#eeeeee', 'border:1px solid #cccccc', 'padding:5px 10px'
+        ].freeze
+
+        # <div style="..."> with no other <div> inside (an innermost one).
+        SPECIAL_CONTAINER_RE = %r{<div\s+style\s*=\s*(["'])(.*?)\1\s*>((?:(?!</?div\b).)*)</div>}mi
+
+        # Redmine 7 calls the formatter as new(text, options),
+        # Redmine 6 as new(text). The second argument is optional.
+        def initialize(text, options = {})
+          @text = text
+          @options = options
+        end
+
+        # The editor does not treat line breaks right after <code> and before
+        # </code> as part of the code and strips them on load. Entries saved by
+        # earlier versions of the plugin still have them in the text, and in view
+        # mode they produced an empty line above and below the block - strip them
+        # here as well, so that view mode matches the editor.
+        #
+        # Texts written in CKEditor (the redmine_ckeditor plugin) are shown the way
+        # CKEditor's own formatter showed them: its code blocks keep their language
+        # (<code class="ruby">), plain addresses become links, and such a text is
+        # wrapped in div.tiptap-legacy, whose styles give the paragraphs the spacing
+        # that CKEditor texts have (the paragraphs of this plugin's editor are
+        # closer together). Its "Special Container" (a <div> with a gray frame) is
+        # shown as a code block.
+        def to_html(*args)
+          html = @text.to_s
+                      .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
+                      .gsub(%r{\n(</code></pre>)}, '\1')
+          html = unwrap_quotes(html) if html.include?('tiptap-quote')
+          legacy = ckeditor_text?(html)
+          html = convert_special_containers(html)
+          html = name_code_languages(html)
+          html = auto_link_addresses(Sanitizer.call(html))
+          html = run_redmine_scrubbers(html)
+          legacy ? %(<div class="tiptap-legacy">#{html}</div>) : html
+        end
+
+        private
+
+        # Redmine 7 moved into its formatters what Redmine 6 does by itself for any
+        # format: the "Copy" button of a code block (Redmine 6 adds it with JavaScript
+        # when the page opens), pictures given by the file name of an attachment and
+        # hi-res pictures (Redmine 6: textilizable), and sortable tables (new in
+        # Redmine 7, off by default). Its formatters run these scrubbers on the HTML
+        # they make, and so does this one, otherwise on Redmine 7 the pictures of the
+        # editor (it saves them as <img src="file name">) would not show and code
+        # blocks would have no "Copy" button. Redmine 6 has none of these classes, so
+        # nothing is done there. SyntaxHighlightScrubber is left out: code blocks are
+        # colored in the browser (tiptap_codeblock.js), on Redmine 6 as well.
+        def redmine_scrubbers
+          formatting = Redmine::WikiFormatting
+          available = ->(name) { formatting.const_defined?(name, false) }
+          scrubbers = []
+          scrubbers << formatting::CopypreScrubber.new if available.(:CopypreScrubber)
+          scrubbers << formatting::TablesortScrubber.new if available.(:TablesortScrubber)
+          scrubbers << formatting::InlineAttachmentsScrubber.new(@options) if available.(:InlineAttachmentsScrubber)
+          scrubbers << formatting::HiresImagesScrubber.new if available.(:HiresImagesScrubber)
+          scrubbers
+        end
+
+        # The same way as Redmine 7 runs them in its own formatters.
+        def run_redmine_scrubbers(html)
+          scrubbers = redmine_scrubbers
+          return html if scrubbers.empty?
+
+          fragment = Loofah.html5_fragment(html)
+          fragment.scrub!(Loofah::Scrubber.new do |node|
+            scrubbers.each do |scrubber|
+              result = scrubber.scrub(node)
+              break result if result == Loofah::Scrubber::STOP
+              break if node.parent.nil?
+            end
+          end)
+          fragment.to_s
+        end
+
+        def ckeditor_text?(html)
+          html.match?(CKEDITOR_SIGNS)
+        end
+
+        # <div style="background:#eee; ...">text</div> becomes
+        # <pre><code class="language-plaintext">text</code></pre>. A container that
+        # holds another <div> or a macro stays as it is (a code block shows no macros).
+        def convert_special_containers(html)
+          return html unless html.match?(/<div\b/i)
+
+          html.gsub(SPECIAL_CONTAINER_RE) do
+            whole, style, inner = Regexp.last_match(0), Regexp.last_match(2), Regexp.last_match(3)
+            next whole if inner.include?('{{macro_') || !special_container_style?(style)
+
+            %(<pre><code class="language-plaintext">#{container_code(inner)}</code></pre>)
+          end
+        end
+
+        def special_container_style?(style)
+          declarations = style.split(';').filter_map do |declaration|
+            property, value = declaration.split(':', 2)
+            "#{property.strip.downcase}:#{css_value(value)}" if value
+          end
+          declarations.sort == SPECIAL_CONTAINER_STYLE.sort
+        end
+
+        # #eee, #eeeeee and rgb(238, 238, 238) are one value.
+        def css_value(value)
+          value = value.downcase.sub(/\s*!important\s*\z/, '').gsub(/\s+/, ' ').strip
+          value = value.gsub(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/) do
+            format('#%02x%02x%02x', Regexp.last_match(1).to_i, Regexp.last_match(2).to_i, Regexp.last_match(3).to_i)
+          end
+          value.gsub(/#([0-9a-f])([0-9a-f])([0-9a-f])(?![0-9a-f])/) do
+            "##{Regexp.last_match(1) * 2}#{Regexp.last_match(2) * 2}#{Regexp.last_match(3) * 2}"
+          end
+        end
+
+        # The content of the container as the text of a code block: a line break and the
+        # end of a block begin a new line, spaces are collapsed the way a browser shows
+        # them, the inline formatting (bold, links, colors) stays, the block tags go.
+        # Same as containerCode in tiptap_legacy.js.
+        def container_code(html)
+          html.gsub(/[ \t\r\n\f]+/, ' ')
+              .gsub(/ ?<br\b[^>]*> ?/i, "\n")
+              .gsub(%r{ ?</(?:p|div|h[1-6]|li|blockquote|address|pre)> ?}i, "\n")
+              .gsub(%r{ ?</?(?:p|div|h[1-6]|ul|ol|li|blockquote|address|pre)\b[^>]*> ?}i, '')
+              .gsub(/\A[ \n]+|[ \n]+\z/, '')
+        end
+
+        # <pre><code class="ruby"> (CKEditor) becomes <pre><code class="language-ruby">,
+        # the way this plugin saves the language of a code block.
+        def name_code_languages(html)
+          html.gsub(%r{(<pre\b[^>]*>\s*<code\s+class=")([^"]*)(")}i) do
+            whole, head, classes, tail = Regexp.last_match(0), Regexp.last_match(1), Regexp.last_match(2), Regexp.last_match(3)
+            names = classes.split
+            next whole if names.empty? || names.any? { |name| name.start_with?('language-') }
+
+            language = names.find { |name| name.match?(/\A[\w+#.-]+\z/) && !%w[syntaxhl hljs].include?(name) }
+            next whole unless language
+
+            language = language.downcase
+            "#{head}language-#{CODE_LANGUAGE_ALIASES.fetch(language, language)}#{tail}"
+          end
+        end
+
+        # Plain http(s) and www. addresses become links, as in every format of
+        # Redmine. Code and what is already a link stay as they are.
+        def auto_link_addresses(html)
+          return html unless html.include?('http') || html.include?('www.')
+
+          parts = html.split(%r{(<pre\b.*?</pre>|<code\b.*?</code>|<a\b.*?</a>)}im)
+          parts.each_with_index.map do |part, index|
+            next part if index.odd?
+
+            text = part.dup
+            auto_link!(text)
+            text
+          end.join
+        end
+
+        # Earlier versions of the editor wrapped a quote block in one more plain
+        # <blockquote> every time a saved text was opened (see tiptap_quote.js),
+        # so texts saved with them show the quote nested several levels deep.
+        # Drop such wrappers: a plain blockquote with nothing but a quote block
+        # (or another wrapper) inside.
+        def unwrap_quotes(html)
+          fragment = Nokogiri::HTML::DocumentFragment.parse(html)
+          changed = false
+          while (wrapper = fragment.css('blockquote').find { |el| wraps_only_quote?(el) })
+            wrapper.replace(wrapper.element_children.first)
+            changed = true
+          end
+          changed ? fragment.to_html : html
+        end
+
+        def wraps_only_quote?(el)
+          return false if quote_block?(el)
+          return false if el.children.any? { |node| node.text? && node.text.strip != '' }
+
+          children = el.element_children
+          return false unless children.size == 1 && children.first.name == 'blockquote'
+
+          quote_block?(children.first) || wraps_only_quote?(children.first)
+        end
+
+        def quote_block?(el)
+          el['class'].to_s.split.include?('tiptap-quote')
+        end
+      end
+
+      module Helper
+        def wikitoolbar_for(field_id, preview_url = preview_text_path)
+          heads_for_wiki_formatter
+          nil
+        end
+
+        def heads_for_wiki_formatter
+          unless @heads_for_wiki_formatter_included
+            content_for :header_tags do
+              javascript_tag(
+                "var wikiImageMimeTypes = #{Redmine::MimeType.by_type('image').to_json};"
+              )
+            end
+            @heads_for_wiki_formatter_included = true
+          end
+          # Both helpers are called from views as <%= ... %>, so return nil,
+          # otherwise the result of the last expression ("true") ends up in the markup.
+          nil
+        end
+
+        def initial_page_content(page)
+          page.pretty_title.to_s
+        end
+      end
+    end
+  end
+end

@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Mongolian (Монгол).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+mn:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Эх код (HTML)"
+      paragraph_style: "Догол мөрийн хэв маяг"
+      align: "Зэрэгцүүлэлт"
+      outdent: "Догол зайг багасгах"
+      indent: "Догол зайг нэмэгдүүлэх"
+      subscript: "Доод индекс"
+      superscript: "Дээд индекс"
+      bold: "Тод"
+      italic: "Налуу"
+      underline: "Доогуур зураас"
+      strike: "Дундуур зураас"
+      font: "Фонт"
+      font_size: "Фонтын хэмжээ"
+      text_color: "Текстийн өнгө"
+      background_color: "Текстийн дэвсгэр өнгө"
+      undo: "Буцаах"
+      redo: "Дахин хийх"
+      collapsible: "Эвхэгддэг блок"
+      code: "Код"
+      code_block: "Кодын блок"
+      horizontal_rule: "Хэвтээ шугам"
+      quote: "Ишлэл"
+      link: "Холбоос"
+      unlink: "Холбоосыг арилгах"
+      list: "Жагсаалт"
+      insert_table: "Хүснэгт оруулах"
+      insert_attachment: "Хавсралт оруулах"
+      insert_image: "Хавсралтаас зураг оруулах"
+
+    paragraph_styles:
+      heading1: "Гарчиг 1"
+      heading2: "Гарчиг 2"
+      heading3: "Гарчиг 3"
+      normal: "Энгийн текст"
+      subheading4: "Дэд гарчиг 4"
+      subheading5: "Дэд гарчиг 5"
+      subheading6: "Дэд гарчиг 6"
+      monospace: "Тогтмол өргөнтэй"
+
+    align_options:
+      left: "Зүүнд зэрэгцүүлэх"
+      center: "Төвд байрлуулах"
+      right: "Баруунд зэрэгцүүлэх"
+      justify: "Хоёр талд зэрэгцүүлэх"
+
+    font_options:
+      default: "Анхдагч"
+      size_placeholder: "Хэм."
+
+    color_picker:
+      reset: "Анхны төлөвт"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Даалгаврын жагсаалт"
+      bullet_disc: "• Цэгэн тэмдэг (дугуй)"
+      bullet_circle: "◦ Цэгэн тэмдэг (тойрог)"
+      bullet_square: "▪ Цэгэн тэмдэг (дөрвөлжин)"
+      decimal: "1. Дугаарлалт (1, 2, 3)"
+      decimal_zero: "01. Дугаарлалт (01, 02)"
+      lower_alpha: "a. Дугаарлалт (a, b, c)"
+      upper_alpha: "A. Дугаарлалт (A, B, C)"
+      lower_roman: "i. Дугаарлалт (i, ii, iii)"
+      upper_roman: "I. Дугаарлалт (I, II, III)"
+      lower_greek: "α. Дугаарлалт (α, β, γ)"
+
+    dialog:
+      insert: "Оруулах"
+
+    link_dialog:
+      title: "Холбоос оруулах"
+      text: "Текст"
+      text_placeholder: "Холбоосын текст"
+      url: "URL"
+
+    table_dialog:
+      title: "Хүснэгт оруулах"
+      rows: "Мөр"
+      columns: "Багана"
+      header_row: "Эхний мөр нь гарчиг"
+
+    attachment_dialog:
+      title: "Хавсралт оруулах"
+      empty: "Байршуулсан хавсралт алга"
+
+    image_dialog:
+      title: "Зураг оруулах"
+      empty: "Байршуулсан зураг алга"
+
+    table_menu:
+      add_column_left: "Зүүн талд багана нэмэх"
+      add_column_right: "Баруун талд багана нэмэх"
+      delete_column: "Баганыг устгах"
+      add_row_above: "Дээр нь мөр нэмэх"
+      add_row_below: "Доор нь мөр нэмэх"
+      delete_row: "Мөрийг устгах"
+      merge_cells: "Нүднүүдийг нэгтгэх"
+      split_cell: "Нүдийг хуваах"
+      header_row: "Эхний мөр нь гарчиг"
+      header_column: "Эхний багана нь гарчиг"
+      delete_table: "Хүснэгтийг устгах"
+
+    quote:
+      default_header: "Зохиогч, огноо"
+      default_text: "Ишлэлийн текст"
+
+    collapsible:
+      default_title: "Гарчиг"
+      default_content: "Агуулга"
+
+    code_block:
+      badge_title: "Кодын блокийн хэл: сонгохын тулд дарна уу"
+      badge_empty: "хэл"
+      search_language: "Хэл хайх"
+      nothing_found: "Юу ч олдсонгүй"
+      no_highlighting: "Тодруулгагүй (plaintext)"
+      recent: "Сүүлийн"
+      frequent: "Түгээмэл"
+      all_languages: "Бүх хэл"
+
+    resizer:
+      title: "Засварлагчийн өндрийг өөрчлөхийн тулд чирнэ үү, автомат өндрийг сэргээхийн тулд хоёр дарна уу"

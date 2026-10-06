@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Romanian (Română).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+ro:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Cod sursă (HTML)"
+      paragraph_style: "Stil de paragraf"
+      align: "Aliniere"
+      outdent: "Micșorează indentarea"
+      indent: "Mărește indentarea"
+      subscript: "Indice"
+      superscript: "Exponent"
+      bold: "Aldin"
+      italic: "Cursiv"
+      underline: "Subliniat"
+      strike: "Tăiat"
+      font: "Font"
+      font_size: "Dimensiunea fontului"
+      text_color: "Culoarea textului"
+      background_color: "Culoarea de fundal a textului"
+      undo: "Anulează"
+      redo: "Refă"
+      collapsible: "Bloc pliabil"
+      code: "Cod în linie"
+      code_block: "Bloc de cod"
+      horizontal_rule: "Linie orizontală"
+      quote: "Citat"
+      link: "Link"
+      unlink: "Elimină linkul"
+      list: "Listă"
+      insert_table: "Inserează tabel"
+      insert_attachment: "Inserează atașament"
+      insert_image: "Inserează imagine din atașamente"
+
+    paragraph_styles:
+      heading1: "Titlu 1"
+      heading2: "Titlu 2"
+      heading3: "Titlu 3"
+      normal: "Text normal"
+      subheading4: "Subtitlu 4"
+      subheading5: "Subtitlu 5"
+      subheading6: "Subtitlu 6"
+      monospace: "Monospațiat"
+
+    align_options:
+      left: "Aliniază la stânga"
+      center: "Centrează"
+      right: "Aliniază la dreapta"
+      justify: "Aliniază stânga-dreapta"
+
+    font_options:
+      default: "Implicit"
+      size_placeholder: "Dim."
+
+    color_picker:
+      reset: "Resetează"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Listă de sarcini"
+      bullet_disc: "• Marcatori (discuri)"
+      bullet_circle: "◦ Marcatori (cercuri)"
+      bullet_square: "▪ Marcatori (pătrate)"
+      decimal: "1. Numerotare (1, 2, 3)"
+      decimal_zero: "01. Numerotare (01, 02)"
+      lower_alpha: "a. Numerotare (a, b, c)"
+      upper_alpha: "A. Numerotare (A, B, C)"
+      lower_roman: "i. Numerotare (i, ii, iii)"
+      upper_roman: "I. Numerotare (I, II, III)"
+      lower_greek: "α. Numerotare (α, β, γ)"
+
+    dialog:
+      insert: "Inserează"
+
+    link_dialog:
+      title: "Inserează link"
+      text: "Text"
+      text_placeholder: "Textul linkului"
+      url: "URL"
+
+    table_dialog:
+      title: "Inserează tabel"
+      rows: "Rânduri"
+      columns: "Coloane"
+      header_row: "Primul rând este antet"
+
+    attachment_dialog:
+      title: "Inserează atașament"
+      empty: "Niciun atașament încărcat"
+
+    image_dialog:
+      title: "Inserează imagine"
+      empty: "Nicio imagine încărcată"
+
+    table_menu:
+      add_column_left: "Adaugă o coloană la stânga"
+      add_column_right: "Adaugă o coloană la dreapta"
+      delete_column: "Șterge coloana"
+      add_row_above: "Adaugă un rând deasupra"
+      add_row_below: "Adaugă un rând dedesubt"
+      delete_row: "Șterge rândul"
+      merge_cells: "Îmbină celulele"
+      split_cell: "Împarte celula"
+      header_row: "Primul rând este antet"
+      header_column: "Prima coloană este antet"
+      delete_table: "Șterge tabelul"
+
+    quote:
+      default_header: "Autor, dată"
+      default_text: "Textul citatului"
+
+    collapsible:
+      default_title: "Titlu"
+      default_content: "Conținut"
+
+    code_block:
+      badge_title: "Limbajul blocului de cod: faceți clic pentru a-l alege"
+      badge_empty: "limbaj"
+      search_language: "Caută un limbaj"
+      nothing_found: "Nu s-a găsit nimic"
+      no_highlighting: "Fără evidențiere (plaintext)"
+      recent: "Recente"
+      frequent: "Frecvente"
+      all_languages: "Toate limbajele"
+
+    resizer:
+      title: "Trageți pentru a modifica înălțimea editorului, faceți dublu clic pentru a reveni la înălțimea automată"

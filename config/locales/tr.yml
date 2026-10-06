@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Turkish (Türkçe).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+tr:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Kaynak kodu (HTML)"
+      paragraph_style: "Paragraf stili"
+      align: "Hizalama"
+      outdent: "Girintiyi azalt"
+      indent: "Girintiyi artır"
+      subscript: "Alt simge"
+      superscript: "Üst simge"
+      bold: "Kalın"
+      italic: "İtalik"
+      underline: "Altı çizili"
+      strike: "Üstü çizili"
+      font: "Yazı tipi"
+      font_size: "Yazı tipi boyutu"
+      text_color: "Metin rengi"
+      background_color: "Metin arka plan rengi"
+      undo: "Geri al"
+      redo: "Yinele"
+      collapsible: "Daraltılabilir bölüm"
+      code: "Satır içi kod"
+      code_block: "Kod bloğu"
+      horizontal_rule: "Yatay çizgi"
+      quote: "Alıntı"
+      link: "Bağlantı"
+      unlink: "Bağlantıyı kaldır"
+      list: "Liste"
+      insert_table: "Tablo ekle"
+      insert_attachment: "Dosya ekle"
+      insert_image: "Ekli dosyalardan resim ekle"
+
+    paragraph_styles:
+      heading1: "Başlık 1"
+      heading2: "Başlık 2"
+      heading3: "Başlık 3"
+      normal: "Normal metin"
+      subheading4: "Alt başlık 4"
+      subheading5: "Alt başlık 5"
+      subheading6: "Alt başlık 6"
+      monospace: "Eş aralıklı metin"
+
+    align_options:
+      left: "Sola hizala"
+      center: "Ortala"
+      right: "Sağa hizala"
+      justify: "İki yana yasla"
+
+    font_options:
+      default: "Varsayılan"
+      size_placeholder: "Boyut"
+
+    color_picker:
+      reset: "Sıfırla"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Görev listesi"
+      bullet_disc: "• Madde işaretleri (dolu daireler)"
+      bullet_circle: "◦ Madde işaretleri (boş daireler)"
+      bullet_square: "▪ Madde işaretleri (kareler)"
+      decimal: "1. Numaralandırma (1, 2, 3)"
+      decimal_zero: "01. Numaralandırma (01, 02)"
+      lower_alpha: "a. Numaralandırma (a, b, c)"
+      upper_alpha: "A. Numaralandırma (A, B, C)"
+      lower_roman: "i. Numaralandırma (i, ii, iii)"
+      upper_roman: "I. Numaralandırma (I, II, III)"
+      lower_greek: "α. Numaralandırma (α, β, γ)"
+
+    dialog:
+      insert: "Ekle"
+
+    link_dialog:
+      title: "Bağlantı ekle"
+      text: "Metin"
+      text_placeholder: "Bağlantı metni"
+      url: "URL"
+
+    table_dialog:
+      title: "Tablo ekle"
+      rows: "Satır sayısı"
+      columns: "Sütun sayısı"
+      header_row: "İlk satır başlık satırı"
+
+    attachment_dialog:
+      title: "Dosya ekle"
+      empty: "Yüklenmiş dosya yok"
+
+    image_dialog:
+      title: "Resim ekle"
+      empty: "Yüklenmiş resim yok"
+
+    table_menu:
+      add_column_left: "Sola sütun ekle"
+      add_column_right: "Sağa sütun ekle"
+      delete_column: "Sütunu sil"
+      add_row_above: "Üste satır ekle"
+      add_row_below: "Alta satır ekle"
+      delete_row: "Satırı sil"
+      merge_cells: "Hücreleri birleştir"
+      split_cell: "Hücreyi böl"
+      header_row: "İlk satır başlık satırı"
+      header_column: "İlk sütun başlık sütunu"
+      delete_table: "Tabloyu sil"
+
+    quote:
+      default_header: "Yazar, tarih"
+      default_text: "Alıntı metni"
+
+    collapsible:
+      default_title: "Başlık"
+      default_content: "İçerik"
+
+    code_block:
+      badge_title: "Kod bloğunun dili - seçmek için tıklayın"
+      badge_empty: "dil"
+      search_language: "Dil ara"
+      nothing_found: "Sonuç bulunamadı"
+      no_highlighting: "Vurgulamasız (plaintext)"
+      recent: "Son kullanılanlar"
+      frequent: "Sık kullanılanlar"
+      all_languages: "Tüm diller"
+
+    resizer:
+      title: "Düzenleyicinin yüksekliğini değiştirmek için sürükleyin, otomatik yüksekliğe dönmek için çift tıklayın"

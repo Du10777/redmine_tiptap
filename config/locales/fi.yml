@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Finnish (Suomi).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+fi:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Lähdekoodi (HTML)"
+      paragraph_style: "Kappaletyyli"
+      align: "Tasaus"
+      outdent: "Pienennä sisennystä"
+      indent: "Suurenna sisennystä"
+      subscript: "Alaindeksi"
+      superscript: "Yläindeksi"
+      bold: "Lihavointi"
+      italic: "Kursivointi"
+      underline: "Alleviivaus"
+      strike: "Yliviivaus"
+      font: "Fontti"
+      font_size: "Fonttikoko"
+      text_color: "Tekstin väri"
+      background_color: "Tekstin taustaväri"
+      undo: "Kumoa"
+      redo: "Tee uudelleen"
+      collapsible: "Kutistettava lohko"
+      code: "Koodi"
+      code_block: "Koodilohko"
+      horizontal_rule: "Vaakaviiva"
+      quote: "Lainaus"
+      link: "Linkki"
+      unlink: "Poista linkki"
+      list: "Luettelo"
+      insert_table: "Lisää taulukko"
+      insert_attachment: "Lisää liite"
+      insert_image: "Lisää kuva liitteistä"
+
+    paragraph_styles:
+      heading1: "Otsikko 1"
+      heading2: "Otsikko 2"
+      heading3: "Otsikko 3"
+      normal: "Normaali teksti"
+      subheading4: "Alaotsikko 4"
+      subheading5: "Alaotsikko 5"
+      subheading6: "Alaotsikko 6"
+      monospace: "Tasalevyinen teksti"
+
+    align_options:
+      left: "Tasaa vasemmalle"
+      center: "Keskitä"
+      right: "Tasaa oikealle"
+      justify: "Tasaa molemmat reunat"
+
+    font_options:
+      default: "Oletus"
+      size_placeholder: "Koko"
+
+    color_picker:
+      reset: "Nollaa"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Tehtäväluettelo"
+      bullet_disc: "• Luettelomerkit (pallot)"
+      bullet_circle: "◦ Luettelomerkit (ympyrät)"
+      bullet_square: "▪ Luettelomerkit (neliöt)"
+      decimal: "1. Numerointi (1, 2, 3)"
+      decimal_zero: "01. Numerointi (01, 02)"
+      lower_alpha: "a. Numerointi (a, b, c)"
+      upper_alpha: "A. Numerointi (A, B, C)"
+      lower_roman: "i. Numerointi (i, ii, iii)"
+      upper_roman: "I. Numerointi (I, II, III)"
+      lower_greek: "α. Numerointi (α, β, γ)"
+
+    dialog:
+      insert: "Lisää"
+
+    link_dialog:
+      title: "Lisää linkki"
+      text: "Teksti"
+      text_placeholder: "Linkin teksti"
+      url: "URL"
+
+    table_dialog:
+      title: "Lisää taulukko"
+      rows: "Rivit"
+      columns: "Sarakkeet"
+      header_row: "Ensimmäinen rivi otsikkona"
+
+    attachment_dialog:
+      title: "Lisää liite"
+      empty: "Ei ladattuja liitteitä"
+
+    image_dialog:
+      title: "Lisää kuva"
+      empty: "Ei ladattuja kuvia"
+
+    table_menu:
+      add_column_left: "Lisää sarake vasemmalle"
+      add_column_right: "Lisää sarake oikealle"
+      delete_column: "Poista sarake"
+      add_row_above: "Lisää rivi yläpuolelle"
+      add_row_below: "Lisää rivi alapuolelle"
+      delete_row: "Poista rivi"
+      merge_cells: "Yhdistä solut"
+      split_cell: "Jaa solu"
+      header_row: "Ensimmäinen rivi otsikkona"
+      header_column: "Ensimmäinen sarake otsikkona"
+      delete_table: "Poista taulukko"
+
+    quote:
+      default_header: "Tekijä, päivämäärä"
+      default_text: "Lainauksen teksti"
+
+    collapsible:
+      default_title: "Otsikko"
+      default_content: "Sisältö"
+
+    code_block:
+      badge_title: "Koodilohkon kieli – valitse napsauttamalla"
+      badge_empty: "kieli"
+      search_language: "Hae kieltä"
+      nothing_found: "Mitään ei löytynyt"
+      no_highlighting: "Ei syntaksikorostusta (plaintext)"
+      recent: "Viimeksi käytetyt"
+      frequent: "Usein käytetyt"
+      all_languages: "Kaikki kielet"
+
+    resizer:
+      title: "Muuta editorin korkeutta vetämällä, palauta automaattinen korkeus kaksoisnapsauttamalla"

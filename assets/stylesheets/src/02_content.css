@@ -1,0 +1,284 @@
+.tiptap-content {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  /* Do not let the editor grow with the amount of text: it never gets taller than
+     the screen, past that it scrolls inside. JS sets the exact value on .tiptap-wrapper;
+     the value in var() is a fallback in case JS has not run yet. */
+  /* --tiptap-height is set only after the user has dragged the resize handle;
+     normally the height follows the content and is capped by max-height. */
+  height: var(--tiptap-height, auto);
+  max-height: var(--tiptap-max-height, calc(100vh - 260px));
+  overflow-y: auto;
+}
+
+.tiptap-content p {
+  padding-left: 0 !important;
+}
+
+.ProseMirror {
+  padding: 8px;
+  min-height: 150px;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.ProseMirror p { margin-top: 0 !important; margin-bottom: 2px !important; min-height: 0 !important; }
+.ProseMirror h1 { font-size: 1.6em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h2 { font-size: 1.3em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h3 { font-size: 1.1em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h4 { font-size: 1em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h5 { font-size: 0.9em; font-weight: bold; margin: 8px 0 4px; }
+.ProseMirror h6 { font-size: 0.85em; font-weight: bold; margin: 8px 0 4px; color: #555; }
+/* Code styling in the editor. The same look is forced on view mode as well -
+   see the "Code in view mode" block below, which also explains why. */
+.ProseMirror code {
+  background: #f0f0f0;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+  /* same as Redmine in view mode: spaces inside inline code are not collapsed */
+  white-space: pre-wrap;
+}
+.ProseMirror pre {
+  background: #f0f0f0;
+  padding: 8px;
+  border-radius: 3px;
+  overflow-x: auto;
+}
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  white-space: pre;
+}
+
+/* --- Code in view mode -----------------------------------------------------
+   Redmine renders saved code with its own rules div.wiki pre and
+   div.wiki *:not(pre)>code: a light background, a border and a 1.6em left
+   margin. The editor looks different, and the same block looked different
+   before and after saving. Here view mode is made to look like the editor.
+   The scope is narrowed by body[data-text-formatting]: if the text formatting
+   is switched to textile or markdown, Redmine keeps its native styling.
+   The selector is also more specific than the original one, so it does not
+   depend on the order in which the stylesheets are loaded. */
+body[data-text-formatting="tiptap"] div.wiki pre {
+  margin: 1em 0;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 3px;
+  line-height: 1.25;
+}
+
+body[data-text-formatting="tiptap"] div.wiki *:not(pre) > code,
+body[data-text-formatting="tiptap"] div.wiki > code {
+  background: #f0f0f0;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* The right offset of the copy button was calculated for margin: 1em on pre,
+   and we removed the right margin - otherwise the button drifts into the block. */
+body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
+  inset-inline-end: 3px;
+}
+.ProseMirror ul { padding-left: 20px; list-style: disc; }
+.ProseMirror ol { padding-left: 20px; list-style: decimal; }
+.ProseMirror li { margin: 0 !important; }
+.ProseMirror li > p { margin: 0 !important; }
+
+/* Line spacing in the saved view. Only the vertical margins are set: a paragraph may
+   have a margin on the left (the indent) that must stay. */
+div.wiki p,
+div.wiki-page p {
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
+  line-height: 1.25 !important;
+}
+
+div.wiki li,
+div.wiki-page li {
+  margin: 0 !important;
+}
+
+div.wiki li > p,
+div.wiki-page li > p {
+  margin: 0 !important;
+}
+
+/* A text written in CKEditor (the formatter wraps it in div.tiptap-legacy) keeps the
+   spacing it had there, the default of Redmine: more room between paragraphs and list
+   items than the editor of this plugin leaves. */
+div.wiki .tiptap-legacy p,
+div.wiki-page .tiptap-legacy p {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li,
+div.wiki-page .tiptap-legacy li {
+  margin-bottom: 0.125rem !important;
+  line-height: 1.6 !important;
+}
+
+div.wiki .tiptap-legacy li > p,
+div.wiki-page .tiptap-legacy li > p {
+  margin: 0 !important;
+}
+
+/* Source mode (tiptap_source.js): the textarea with the HTML lies over a copy of its
+   text that is colored; the textarea's own text is transparent. The two must lay
+   the text out exactly alike - the least difference here moves the colors off the
+   letters. */
+.tiptap-source-box {
+  position: relative;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tiptap-source,
+.tiptap-source-mirror {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 19px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-indent: 0;
+  text-transform: none;
+  tab-size: 4;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.tiptap-source {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 150px;
+  height: var(--tiptap-height, auto);
+  max-height: var(--tiptap-max-height, calc(100vh - 260px));
+  overflow: auto;
+  border: 1px solid #ccc !important;
+  border-radius: 3px;
+  outline: none;
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #333;
+  /* the size is changed by the shared .tiptap-resizer handle; the native textarea
+     corner is removed, otherwise one field ends up with two different resizers */
+  resize: none;
+}
+
+/* The selection must not hide the colored letters under it. */
+.tiptap-source::selection {
+  background: rgba(98, 141, 182, 0.35);
+  color: transparent;
+}
+
+.tiptap-source-mirror {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  color: #333;
+  pointer-events: none;
+}
+
+.tiptap-source-mirror code {
+  all: unset;
+}
+
+/* Bold and italic letters are not always as wide as the usual ones: they would
+   push the rest of the line off the textarea's text. The colors say enough. */
+.tiptap-source-mirror * {
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+/* No colors (a huge text, or no highlight languages): the textarea shows its text. */
+.tiptap-source-plain .tiptap-source-mirror {
+  display: none;
+}
+
+.tiptap-source-plain .tiptap-source {
+  color: inherit !important;
+}
+
+.tiptap-source-plain .tiptap-source::selection {
+  background: Highlight;
+  color: HighlightText;
+}
+
+/* Task list (checkboxes): editor and view mode */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 4px;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+ul[data-type="taskList"] li > label {
+  user-select: none;
+}
+
+ul[data-type="taskList"] li > label input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* in the editor, shift the checkboxes inside the area */
+.ProseMirror ul[data-type="taskList"] {
+  padding-left: 24px;
+}
+
+/* outside the editor the checkbox is unclickable and dimmed right away (before JS runs) */
+ul[data-type="taskList"] li > label input {
+  pointer-events: none;
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.ProseMirror ul[data-type="taskList"] li > label input {
+  pointer-events: auto;
+  filter: none;
+  opacity: 1;
+}
+
+ul[data-type="taskList"] li > div {
+  flex: 1;
+}
+
+ul[data-type="taskList"] li > div > p {
+  margin: 0;
+}
+
+ul[data-type="taskList"] li[data-checked="true"] > div {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.ProseMirror a,
+.wiki .tiptap a { color: #169; text-decoration: underline; }
+.ProseMirror u { text-decoration: underline; }
+
+.ProseMirror hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 8px 0;
+}

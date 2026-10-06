@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Croatian (Hrvatski).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+hr:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Izvorni kôd (HTML)"
+      paragraph_style: "Stil odlomka"
+      align: "Poravnanje"
+      outdent: "Smanji uvlaku"
+      indent: "Povećaj uvlaku"
+      subscript: "Donji indeks"
+      superscript: "Gornji indeks"
+      bold: "Podebljano"
+      italic: "Kurziv"
+      underline: "Podcrtano"
+      strike: "Precrtano"
+      font: "Font"
+      font_size: "Veličina fonta"
+      text_color: "Boja teksta"
+      background_color: "Boja pozadine teksta"
+      undo: "Poništi"
+      redo: "Ponovi"
+      collapsible: "Sklopivi blok"
+      code: "Kôd"
+      code_block: "Blok kôda"
+      horizontal_rule: "Vodoravna crta"
+      quote: "Citat"
+      link: "Poveznica"
+      unlink: "Ukloni poveznicu"
+      list: "Popis"
+      insert_table: "Umetni tablicu"
+      insert_attachment: "Umetni privitak"
+      insert_image: "Umetni sliku iz privitaka"
+
+    paragraph_styles:
+      heading1: "Naslov 1"
+      heading2: "Naslov 2"
+      heading3: "Naslov 3"
+      normal: "Normalni tekst"
+      subheading4: "Podnaslov 4"
+      subheading5: "Podnaslov 5"
+      subheading6: "Podnaslov 6"
+      monospace: "Font fiksne širine"
+
+    align_options:
+      left: "Poravnaj lijevo"
+      center: "Centriraj"
+      right: "Poravnaj desno"
+      justify: "Obostrano poravnaj"
+
+    font_options:
+      default: "Zadano"
+      size_placeholder: "Vel."
+
+    color_picker:
+      reset: "Resetiraj"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Popis zadataka"
+      bullet_disc: "• Grafičke oznake (točke)"
+      bullet_circle: "◦ Grafičke oznake (kružići)"
+      bullet_square: "▪ Grafičke oznake (kvadratići)"
+      decimal: "1. Numeriranje (1, 2, 3)"
+      decimal_zero: "01. Numeriranje (01, 02)"
+      lower_alpha: "a. Numeriranje (a, b, c)"
+      upper_alpha: "A. Numeriranje (A, B, C)"
+      lower_roman: "i. Numeriranje (i, ii, iii)"
+      upper_roman: "I. Numeriranje (I, II, III)"
+      lower_greek: "α. Numeriranje (α, β, γ)"
+
+    dialog:
+      insert: "Umetni"
+
+    link_dialog:
+      title: "Umetni poveznicu"
+      text: "Tekst"
+      text_placeholder: "Tekst poveznice"
+      url: "URL"
+
+    table_dialog:
+      title: "Umetni tablicu"
+      rows: "Retci"
+      columns: "Stupci"
+      header_row: "Prvi redak kao zaglavlje"
+
+    attachment_dialog:
+      title: "Umetni privitak"
+      empty: "Nema prenesenih privitaka"
+
+    image_dialog:
+      title: "Umetni sliku"
+      empty: "Nema prenesenih slika"
+
+    table_menu:
+      add_column_left: "Dodaj stupac lijevo"
+      add_column_right: "Dodaj stupac desno"
+      delete_column: "Obriši stupac"
+      add_row_above: "Dodaj redak iznad"
+      add_row_below: "Dodaj redak ispod"
+      delete_row: "Obriši redak"
+      merge_cells: "Spoji ćelije"
+      split_cell: "Podijeli ćeliju"
+      header_row: "Prvi redak kao zaglavlje"
+      header_column: "Prvi stupac kao zaglavlje"
+      delete_table: "Obriši tablicu"
+
+    quote:
+      default_header: "Autor, datum"
+      default_text: "Tekst citata"
+
+    collapsible:
+      default_title: "Naslov"
+      default_content: "Sadržaj"
+
+    code_block:
+      badge_title: "Jezik bloka kôda – kliknite za odabir"
+      badge_empty: "jezik"
+      search_language: "Traži jezik"
+      nothing_found: "Ništa nije pronađeno"
+      no_highlighting: "Bez isticanja sintakse (plaintext)"
+      recent: "Nedavno korišteni"
+      frequent: "Često korišteni"
+      all_languages: "Svi jezici"
+
+    resizer:
+      title: "Povucite za promjenu visine uređivača, dvokliknite za vraćanje automatske visine"

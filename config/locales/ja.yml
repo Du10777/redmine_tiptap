@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Japanese (日本語).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+ja:
+  redmine_tiptap:
+
+    toolbar:
+      source: "ソースコード (HTML)"
+      paragraph_style: "段落スタイル"
+      align: "配置"
+      outdent: "インデントを減らす"
+      indent: "インデントを増やす"
+      subscript: "下付き文字"
+      superscript: "上付き文字"
+      bold: "太字"
+      italic: "斜体"
+      underline: "下線"
+      strike: "取り消し線"
+      font: "フォント"
+      font_size: "フォントサイズ"
+      text_color: "文字の色"
+      background_color: "文字の背景色"
+      undo: "元に戻す"
+      redo: "やり直し"
+      collapsible: "折りたたみブロック"
+      code: "インラインコード"
+      code_block: "コードブロック"
+      horizontal_rule: "横線"
+      quote: "引用"
+      link: "リンク"
+      unlink: "リンクを解除"
+      list: "リスト"
+      insert_table: "表を挿入"
+      insert_attachment: "添付ファイルを挿入"
+      insert_image: "添付ファイルから画像を挿入"
+
+    paragraph_styles:
+      heading1: "見出し 1"
+      heading2: "見出し 2"
+      heading3: "見出し 3"
+      normal: "標準テキスト"
+      subheading4: "小見出し 4"
+      subheading5: "小見出し 5"
+      subheading6: "小見出し 6"
+      monospace: "等幅テキスト"
+
+    align_options:
+      left: "左揃え"
+      center: "中央揃え"
+      right: "右揃え"
+      justify: "両端揃え"
+
+    font_options:
+      default: "デフォルト"
+      size_placeholder: "サイズ"
+
+    color_picker:
+      reset: "リセット"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ タスクリスト"
+      bullet_disc: "• 箇条書き (黒丸)"
+      bullet_circle: "◦ 箇条書き (白丸)"
+      bullet_square: "▪ 箇条書き (黒四角)"
+      decimal: "1. 番号付け (1, 2, 3)"
+      decimal_zero: "01. 番号付け (01, 02)"
+      lower_alpha: "a. 番号付け (a, b, c)"
+      upper_alpha: "A. 番号付け (A, B, C)"
+      lower_roman: "i. 番号付け (i, ii, iii)"
+      upper_roman: "I. 番号付け (I, II, III)"
+      lower_greek: "α. 番号付け (α, β, γ)"
+
+    dialog:
+      insert: "挿入"
+
+    link_dialog:
+      title: "リンクを挿入"
+      text: "テキスト"
+      text_placeholder: "リンクテキスト"
+      url: "URL"
+
+    table_dialog:
+      title: "表を挿入"
+      rows: "行数"
+      columns: "列数"
+      header_row: "先頭行を見出しにする"
+
+    attachment_dialog:
+      title: "添付ファイルを挿入"
+      empty: "アップロードされた添付ファイルはありません"
+
+    image_dialog:
+      title: "画像を挿入"
+      empty: "アップロードされた画像はありません"
+
+    table_menu:
+      add_column_left: "左に列を挿入"
+      add_column_right: "右に列を挿入"
+      delete_column: "列を削除"
+      add_row_above: "上に行を挿入"
+      add_row_below: "下に行を挿入"
+      delete_row: "行を削除"
+      merge_cells: "セルを結合"
+      split_cell: "セルを分割"
+      header_row: "先頭行を見出しにする"
+      header_column: "先頭列を見出しにする"
+      delete_table: "表を削除"
+
+    quote:
+      default_header: "作成者、日付"
+      default_text: "引用文"
+
+    collapsible:
+      default_title: "タイトル"
+      default_content: "内容"
+
+    code_block:
+      badge_title: "コードブロックの言語（クリックして選択）"
+      badge_empty: "言語"
+      search_language: "言語を検索"
+      nothing_found: "見つかりません"
+      no_highlighting: "ハイライトなし (plaintext)"
+      recent: "最近使用"
+      frequent: "よく使う"
+      all_languages: "すべての言語"
+
+    resizer:
+      title: "ドラッグでエディターの高さを変更、ダブルクリックで自動調整に戻す"

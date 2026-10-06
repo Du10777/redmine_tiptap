@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Dutch (Nederlands).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+nl:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Broncode (HTML)"
+      paragraph_style: "Alineastijl"
+      align: "Uitlijning"
+      outdent: "Inspringing verkleinen"
+      indent: "Inspringing vergroten"
+      subscript: "Subscript"
+      superscript: "Superscript"
+      bold: "Vet"
+      italic: "Cursief"
+      underline: "Onderstrepen"
+      strike: "Doorhalen"
+      font: "Lettertype"
+      font_size: "Lettergrootte"
+      text_color: "Tekstkleur"
+      background_color: "Achtergrondkleur van tekst"
+      undo: "Ongedaan maken"
+      redo: "Opnieuw"
+      collapsible: "Uitklapbaar blok"
+      code: "Code"
+      code_block: "Codeblok"
+      horizontal_rule: "Horizontale lijn"
+      quote: "Citaat"
+      link: "Link"
+      unlink: "Link verwijderen"
+      list: "Lijst"
+      insert_table: "Tabel invoegen"
+      insert_attachment: "Bijlage invoegen"
+      insert_image: "Afbeelding uit bijlagen invoegen"
+
+    paragraph_styles:
+      heading1: "Kop 1"
+      heading2: "Kop 2"
+      heading3: "Kop 3"
+      normal: "Normale tekst"
+      subheading4: "Subkop 4"
+      subheading5: "Subkop 5"
+      subheading6: "Subkop 6"
+      monospace: "Vaste tekenbreedte"
+
+    align_options:
+      left: "Links uitlijnen"
+      center: "Centreren"
+      right: "Rechts uitlijnen"
+      justify: "Uitvullen"
+
+    font_options:
+      default: "Standaard"
+      size_placeholder: "Maat"
+
+    color_picker:
+      reset: "Herstellen"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Takenlijst"
+      bullet_disc: "• Opsomming (bolletjes)"
+      bullet_circle: "◦ Opsomming (cirkeltjes)"
+      bullet_square: "▪ Opsomming (vierkantjes)"
+      decimal: "1. Nummering (1, 2, 3)"
+      decimal_zero: "01. Nummering (01, 02)"
+      lower_alpha: "a. Nummering (a, b, c)"
+      upper_alpha: "A. Nummering (A, B, C)"
+      lower_roman: "i. Nummering (i, ii, iii)"
+      upper_roman: "I. Nummering (I, II, III)"
+      lower_greek: "α. Nummering (α, β, γ)"
+
+    dialog:
+      insert: "Invoegen"
+
+    link_dialog:
+      title: "Link invoegen"
+      text: "Tekst"
+      text_placeholder: "Linktekst"
+      url: "URL"
+
+    table_dialog:
+      title: "Tabel invoegen"
+      rows: "Rijen"
+      columns: "Kolommen"
+      header_row: "Eerste rij als koprij"
+
+    attachment_dialog:
+      title: "Bijlage invoegen"
+      empty: "Geen geüploade bijlagen"
+
+    image_dialog:
+      title: "Afbeelding invoegen"
+      empty: "Geen geüploade afbeeldingen"
+
+    table_menu:
+      add_column_left: "Kolom links invoegen"
+      add_column_right: "Kolom rechts invoegen"
+      delete_column: "Kolom verwijderen"
+      add_row_above: "Rij hierboven invoegen"
+      add_row_below: "Rij hieronder invoegen"
+      delete_row: "Rij verwijderen"
+      merge_cells: "Cellen samenvoegen"
+      split_cell: "Cel splitsen"
+      header_row: "Eerste rij als koprij"
+      header_column: "Eerste kolom als kopkolom"
+      delete_table: "Tabel verwijderen"
+
+    quote:
+      default_header: "Auteur, datum"
+      default_text: "Citaattekst"
+
+    collapsible:
+      default_title: "Titel"
+      default_content: "Inhoud"
+
+    code_block:
+      badge_title: "Taal van het codeblok – klik om te kiezen"
+      badge_empty: "taal"
+      search_language: "Taal zoeken"
+      nothing_found: "Niets gevonden"
+      no_highlighting: "Geen syntaxismarkering (plaintext)"
+      recent: "Recent gebruikt"
+      frequent: "Vaak gebruikt"
+      all_languages: "Alle talen"
+
+    resizer:
+      title: "Sleep om de hoogte van de editor te wijzigen, dubbelklik om de automatische hoogte te herstellen"

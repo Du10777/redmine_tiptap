@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Hungarian (Magyar).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+hu:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Forráskód (HTML)"
+      paragraph_style: "Bekezdésstílus"
+      align: "Igazítás"
+      outdent: "Behúzás csökkentése"
+      indent: "Behúzás növelése"
+      subscript: "Alsó index"
+      superscript: "Felső index"
+      bold: "Félkövér"
+      italic: "Dőlt"
+      underline: "Aláhúzott"
+      strike: "Áthúzott"
+      font: "Betűtípus"
+      font_size: "Betűméret"
+      text_color: "Szövegszín"
+      background_color: "Szöveg háttérszíne"
+      undo: "Visszavonás"
+      redo: "Újra"
+      collapsible: "Összecsukható blokk"
+      code: "Kód"
+      code_block: "Kódblokk"
+      horizontal_rule: "Vízszintes vonal"
+      quote: "Idézet"
+      link: "Hivatkozás"
+      unlink: "Hivatkozás eltávolítása"
+      list: "Lista"
+      insert_table: "Táblázat beszúrása"
+      insert_attachment: "Melléklet beszúrása"
+      insert_image: "Kép beszúrása a mellékletekből"
+
+    paragraph_styles:
+      heading1: "Címsor 1"
+      heading2: "Címsor 2"
+      heading3: "Címsor 3"
+      normal: "Normál szöveg"
+      subheading4: "Alcím 4"
+      subheading5: "Alcím 5"
+      subheading6: "Alcím 6"
+      monospace: "Fix szélességű szöveg"
+
+    align_options:
+      left: "Balra igazítás"
+      center: "Középre igazítás"
+      right: "Jobbra igazítás"
+      justify: "Sorkizárás"
+
+    font_options:
+      default: "Alapértelmezett"
+      size_placeholder: "Méret"
+
+    color_picker:
+      reset: "Visszaállítás"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Feladatlista"
+      bullet_disc: "• Felsorolás (teli körök)"
+      bullet_circle: "◦ Felsorolás (üres körök)"
+      bullet_square: "▪ Felsorolás (négyzetek)"
+      decimal: "1. Számozás (1, 2, 3)"
+      decimal_zero: "01. Számozás (01, 02)"
+      lower_alpha: "a. Számozás (a, b, c)"
+      upper_alpha: "A. Számozás (A, B, C)"
+      lower_roman: "i. Számozás (i, ii, iii)"
+      upper_roman: "I. Számozás (I, II, III)"
+      lower_greek: "α. Számozás (α, β, γ)"
+
+    dialog:
+      insert: "Beszúrás"
+
+    link_dialog:
+      title: "Hivatkozás beszúrása"
+      text: "Szöveg"
+      text_placeholder: "Hivatkozás szövege"
+      url: "URL"
+
+    table_dialog:
+      title: "Táblázat beszúrása"
+      rows: "Sorok"
+      columns: "Oszlopok"
+      header_row: "Az első sor fejléc"
+
+    attachment_dialog:
+      title: "Melléklet beszúrása"
+      empty: "Nincs feltöltött melléklet"
+
+    image_dialog:
+      title: "Kép beszúrása"
+      empty: "Nincs feltöltött kép"
+
+    table_menu:
+      add_column_left: "Oszlop beszúrása balra"
+      add_column_right: "Oszlop beszúrása jobbra"
+      delete_column: "Oszlop törlése"
+      add_row_above: "Sor beszúrása fölé"
+      add_row_below: "Sor beszúrása alá"
+      delete_row: "Sor törlése"
+      merge_cells: "Cellák egyesítése"
+      split_cell: "Cella felosztása"
+      header_row: "Az első sor fejléc"
+      header_column: "Az első oszlop fejléc"
+      delete_table: "Táblázat törlése"
+
+    quote:
+      default_header: "Szerző, dátum"
+      default_text: "Idézet szövege"
+
+    collapsible:
+      default_title: "Cím"
+      default_content: "Tartalom"
+
+    code_block:
+      badge_title: "Kódblokk nyelve – kattintson a kiválasztáshoz"
+      badge_empty: "nyelv"
+      search_language: "Nyelv keresése"
+      nothing_found: "Nincs találat"
+      no_highlighting: "Kiemelés nélkül (plaintext)"
+      recent: "Legutóbb használt"
+      frequent: "Gyakran használt"
+      all_languages: "Minden nyelv"
+
+    resizer:
+      title: "Húzza a szerkesztő magasságának módosításához, kattintson duplán az automatikus magasság visszaállításához"

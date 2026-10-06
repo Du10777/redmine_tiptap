@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Korean (한국어).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+ko:
+  redmine_tiptap:
+
+    toolbar:
+      source: "소스 코드 (HTML)"
+      paragraph_style: "단락 스타일"
+      align: "정렬"
+      outdent: "들여쓰기 줄이기"
+      indent: "들여쓰기 늘리기"
+      subscript: "아래 첨자"
+      superscript: "위 첨자"
+      bold: "굵게"
+      italic: "기울임꼴"
+      underline: "밑줄"
+      strike: "취소선"
+      font: "글꼴"
+      font_size: "글꼴 크기"
+      text_color: "텍스트 색상"
+      background_color: "텍스트 배경색"
+      undo: "실행 취소"
+      redo: "다시 실행"
+      collapsible: "접을 수 있는 블록"
+      code: "인라인 코드"
+      code_block: "코드 블록"
+      horizontal_rule: "가로선"
+      quote: "인용"
+      link: "링크"
+      unlink: "링크 제거"
+      list: "목록"
+      insert_table: "표 삽입"
+      insert_attachment: "첨부파일 삽입"
+      insert_image: "첨부파일에서 이미지 삽입"
+
+    paragraph_styles:
+      heading1: "제목 1"
+      heading2: "제목 2"
+      heading3: "제목 3"
+      normal: "일반 텍스트"
+      subheading4: "소제목 4"
+      subheading5: "소제목 5"
+      subheading6: "소제목 6"
+      monospace: "고정폭 텍스트"
+
+    align_options:
+      left: "왼쪽 정렬"
+      center: "가운데 정렬"
+      right: "오른쪽 정렬"
+      justify: "양쪽 정렬"
+
+    font_options:
+      default: "기본값"
+      size_placeholder: "크기"
+
+    color_picker:
+      reset: "초기화"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ 할 일 목록"
+      bullet_disc: "• 글머리 기호 (채워진 원)"
+      bullet_circle: "◦ 글머리 기호 (빈 원)"
+      bullet_square: "▪ 글머리 기호 (사각형)"
+      decimal: "1. 번호 매기기 (1, 2, 3)"
+      decimal_zero: "01. 번호 매기기 (01, 02)"
+      lower_alpha: "a. 번호 매기기 (a, b, c)"
+      upper_alpha: "A. 번호 매기기 (A, B, C)"
+      lower_roman: "i. 번호 매기기 (i, ii, iii)"
+      upper_roman: "I. 번호 매기기 (I, II, III)"
+      lower_greek: "α. 번호 매기기 (α, β, γ)"
+
+    dialog:
+      insert: "삽입"
+
+    link_dialog:
+      title: "링크 삽입"
+      text: "텍스트"
+      text_placeholder: "링크 텍스트"
+      url: "URL"
+
+    table_dialog:
+      title: "표 삽입"
+      rows: "행 수"
+      columns: "열 수"
+      header_row: "첫 행을 머리글로 사용"
+
+    attachment_dialog:
+      title: "첨부파일 삽입"
+      empty: "업로드된 첨부파일이 없습니다"
+
+    image_dialog:
+      title: "이미지 삽입"
+      empty: "업로드된 이미지가 없습니다"
+
+    table_menu:
+      add_column_left: "왼쪽에 열 삽입"
+      add_column_right: "오른쪽에 열 삽입"
+      delete_column: "열 삭제"
+      add_row_above: "위에 행 삽입"
+      add_row_below: "아래에 행 삽입"
+      delete_row: "행 삭제"
+      merge_cells: "셀 병합"
+      split_cell: "셀 분할"
+      header_row: "첫 행을 머리글로 사용"
+      header_column: "첫 열을 머리글로 사용"
+      delete_table: "표 삭제"
+
+    quote:
+      default_header: "작성자, 날짜"
+      default_text: "인용문"
+
+    collapsible:
+      default_title: "제목"
+      default_content: "내용"
+
+    code_block:
+      badge_title: "코드 블록 언어 - 클릭하여 선택"
+      badge_empty: "언어"
+      search_language: "언어 검색"
+      nothing_found: "검색 결과 없음"
+      no_highlighting: "구문 강조 없음 (plaintext)"
+      recent: "최근 사용"
+      frequent: "자주 사용"
+      all_languages: "모든 언어"
+
+    resizer:
+      title: "드래그하여 편집기 높이 조절, 더블클릭하여 자동 높이로 복원"

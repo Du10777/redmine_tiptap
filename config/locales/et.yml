@@ -1,0 +1,129 @@
+# Interface strings of the TipTap editor: Estonian (Eesti).
+# A draft translation made with the help of an AI model, not yet reviewed by a native speaker:
+# corrections are welcome. The keys are the same as in en.yml; only the values are translated.
+et:
+  redmine_tiptap:
+
+    toolbar:
+      source: "Lähtekood (HTML)"
+      paragraph_style: "Lõigustiil"
+      align: "Joondus"
+      outdent: "Vähenda taanet"
+      indent: "Suurenda taanet"
+      subscript: "Allindeks"
+      superscript: "Ülaindeks"
+      bold: "Paks"
+      italic: "Kursiiv"
+      underline: "Allakriipsutus"
+      strike: "Läbikriipsutus"
+      font: "Font"
+      font_size: "Fondi suurus"
+      text_color: "Teksti värv"
+      background_color: "Teksti taustavärv"
+      undo: "Võta tagasi"
+      redo: "Tee uuesti"
+      collapsible: "Kokkuvolditav plokk"
+      code: "Kood"
+      code_block: "Koodiplokk"
+      horizontal_rule: "Horisontaaljoon"
+      quote: "Tsitaat"
+      link: "Link"
+      unlink: "Eemalda link"
+      list: "Loend"
+      insert_table: "Lisa tabel"
+      insert_attachment: "Lisa manus"
+      insert_image: "Lisa pilt manustest"
+
+    paragraph_styles:
+      heading1: "Pealkiri 1"
+      heading2: "Pealkiri 2"
+      heading3: "Pealkiri 3"
+      normal: "Tavatekst"
+      subheading4: "Alapealkiri 4"
+      subheading5: "Alapealkiri 5"
+      subheading6: "Alapealkiri 6"
+      monospace: "Püsisammkiri"
+
+    align_options:
+      left: "Joonda vasakule"
+      center: "Joonda keskele"
+      right: "Joonda paremale"
+      justify: "Rööpjoonda"
+
+    font_options:
+      default: "Vaikimisi"
+      size_placeholder: "Mõõt"
+
+    color_picker:
+      reset: "Lähtesta"
+
+    # The first characters (the marker, and the examples in brackets) are part of the text: keep them.
+    list_options:
+      task: "☑ Ülesannete loend"
+      bullet_disc: "• Täpid (täidetud ringid)"
+      bullet_circle: "◦ Täpid (ringid)"
+      bullet_square: "▪ Täpid (ruudud)"
+      decimal: "1. Nummerdus (1, 2, 3)"
+      decimal_zero: "01. Nummerdus (01, 02)"
+      lower_alpha: "a. Nummerdus (a, b, c)"
+      upper_alpha: "A. Nummerdus (A, B, C)"
+      lower_roman: "i. Nummerdus (i, ii, iii)"
+      upper_roman: "I. Nummerdus (I, II, III)"
+      lower_greek: "α. Nummerdus (α, β, γ)"
+
+    dialog:
+      insert: "Lisa"
+
+    link_dialog:
+      title: "Lisa link"
+      text: "Tekst"
+      text_placeholder: "Lingi tekst"
+      url: "URL"
+
+    table_dialog:
+      title: "Lisa tabel"
+      rows: "Ridu"
+      columns: "Veerge"
+      header_row: "Esimene rida on päis"
+
+    attachment_dialog:
+      title: "Lisa manus"
+      empty: "Manuseid pole veel üles laaditud"
+
+    image_dialog:
+      title: "Lisa pilt"
+      empty: "Pilte pole veel üles laaditud"
+
+    table_menu:
+      add_column_left: "Lisa veerg vasakule"
+      add_column_right: "Lisa veerg paremale"
+      delete_column: "Kustuta veerg"
+      add_row_above: "Lisa rida ülespoole"
+      add_row_below: "Lisa rida allapoole"
+      delete_row: "Kustuta rida"
+      merge_cells: "Ühenda lahtrid"
+      split_cell: "Tükelda lahter"
+      header_row: "Esimene rida on päis"
+      header_column: "Esimene veerg on päis"
+      delete_table: "Kustuta tabel"
+
+    quote:
+      default_header: "Autor, kuupäev"
+      default_text: "Tsitaadi tekst"
+
+    collapsible:
+      default_title: "Pealkiri"
+      default_content: "Sisu"
+
+    code_block:
+      badge_title: "Koodiploki keel – klõpsa valimiseks"
+      badge_empty: "keel"
+      search_language: "Otsi keelt"
+      nothing_found: "Midagi ei leitud"
+      no_highlighting: "Ilma esiletõstuta (plaintext)"
+      recent: "Hiljuti kasutatud"
+      frequent: "Sageli kasutatud"
+      all_languages: "Kõik keeled"
+
+    resizer:
+      title: "Lohista redaktori kõrguse muutmiseks, topeltklõpsa automaatse kõrguse taastamiseks"
