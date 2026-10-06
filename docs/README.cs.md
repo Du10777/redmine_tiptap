@@ -46,6 +46,10 @@
 
 Toto je textový editor pro Redmine založený na TipTap https://github.com/ueberdosis/tiptap
 
+**[Vyzkoušejte editor online](https://du10777.github.io/redmine_tiptap/)**: na ukázkové stránce běží editor tohoto pluginu přímo ve vašem prohlížeči, na stránce vytvořené jako formulář Redmine. Pište a formátujte text, vložte obrázek, otevřete kartu „Náhled“ a uvidíte, jak bude text vypadat po uložení, přepněte jazyk rozhraní nebo vyberte ukázkový text. Nic není třeba instalovat a nic se nikam neodesílá.
+
+[![Editor na ukázkové stránce](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+
 Editor: **TipTap 3.31.4**. Všechny balíčky `@tiptap/*` jsou v `package.json` a `package-lock.json` připnuty na tuto přesnou verzi a musí být vždy aktualizovány společně na stejnou verzi.
 
 **Obsah**

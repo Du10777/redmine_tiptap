@@ -46,6 +46,10 @@
 
 Bu, Redmine üçün TipTap (https://github.com/ueberdosis/tiptap) əsasında hazırlanmış mətn redaktorudur.
 
+**[Redaktoru onlayn sınayın](https://du10777.github.io/redmine_tiptap/)**: demo səhifəsində bu plaginin redaktoru birbaşa brauzerinizdə, Redmine formasına bənzər bir səhifədə işləyir. Mətn yazın və formatlayın, şəkil yapışdırın, mətnin saxlandıqdan sonra necə görünəcəyini görmək üçün «İlkin baxış» tabını açın, interfeys dilini dəyişin və ya nümunə mətn seçin. Heç nə quraşdırmaq lazım deyil və heç nə heç yerə göndərilmir.
+
+[![Demo səhifəsində redaktor](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+
 Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
 
 **Mündəricat**

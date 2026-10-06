@@ -46,6 +46,10 @@
 
 這是用於 Redmine 的文字編輯器，基於 TipTap https://github.com/ueberdosis/tiptap
 
+**[線上試用編輯器](https://du10777.github.io/redmine_tiptap/)**：示範頁面直接在您的瀏覽器中執行本外掛程式的編輯器，頁面仿照 Redmine 的表單製作。您可以輸入並設定文字格式、貼上圖片、開啟「預覽」分頁查看文字儲存後的樣子、切換介面語言，或選擇範例文字。無需安裝任何東西，也不會傳送任何資料。
+
+[![示範頁面上的編輯器](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+
 編輯器引擎：**TipTap 3.31.4**。所有 `@tiptap/*` 套件在 `package.json` 和 `package-lock.json` 中都固定為此精確版本，並且必須始終一起升級至同一版本。
 
 **目錄**

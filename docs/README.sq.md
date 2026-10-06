@@ -46,6 +46,10 @@
 
 Ky është një përpunues teksti për Redmine, i bazuar në TipTap https://github.com/ueberdosis/tiptap
 
+**[Provoni përpunuesin në internet](https://du10777.github.io/redmine_tiptap/)**: faqja e demonstrimit e ekzekuton përpunuesin e kësaj shtojce drejtpërdrejt në shfletuesin tuaj, në një faqe të bërë si një formular i Redmine-it. Shkruani dhe formatoni tekst, ngjitni një figurë, hapni skedën «Paraparje» për të parë si do të duket teksti pasi të ruhet, ndërroni gjuhën e ndërfaqes ose zgjidhni një tekst shembull. Asgjë për të instaluar dhe asgjë nuk dërgohet askund.
+
+[![Përpunuesi në faqen e demonstrimit](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+
 Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
 
 **Përmbajtja**

@@ -46,6 +46,10 @@
 
 Ovo je tekstualni editor za Redmine, temeljen na TipTap https://github.com/ueberdosis/tiptap
 
+**[Isprobajte editor online](https://du10777.github.io/redmine_tiptap/)**: na demo stranici editor ovog dodatka radi izravno u vašem pregledniku, na stranici napravljenoj kao obrazac Redminea. Pišite i oblikujte tekst, zalijepite sliku, otvorite karticu „Brzi pregled” da vidite kako će tekst izgledati nakon spremanja, promijenite jezik sučelja ili odaberite primjer teksta. Ništa ne treba instalirati i ništa se nikamo ne šalje.
+
+[![Editor na demo stranici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+
 Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu točnu verziju u `package.json` i `package-lock.json` i moraju se uvijek ažurirati zajedno, na istu verziju.
 
 **Sadržaj**

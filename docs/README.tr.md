@@ -46,6 +46,10 @@
 
 Bu, TipTap tabanlı Redmine için bir metin düzenleyicidir https://github.com/ueberdosis/tiptap
 
+**[Düzenleyiciyi çevrimiçi deneyin](https://du10777.github.io/redmine_tiptap/)**: tanıtım sayfası, bu eklentinin düzenleyicisini doğrudan tarayıcınızda, Redmine formuna benzeyen bir sayfada çalıştırır. Metin yazıp biçimlendirin, bir resim yapıştırın, metnin kaydedildikten sonra nasıl görüneceğini görmek için "Önizleme" sekmesini açın, arayüz dilini değiştirin veya örnek bir metin seçin. Kurulacak bir şey yok ve hiçbir şey hiçbir yere gönderilmez.
+
+[![Tanıtım sayfasındaki düzenleyici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/)
+
 Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
 
 **İçindekiler**
