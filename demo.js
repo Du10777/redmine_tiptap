@@ -6,8 +6,10 @@
  *     build_demo.py from config/locales/*.yml of the plugin, with the same fallbacks: pt-BR -> pt -> en);
  *   - the functions of Redmine the editor calls when a picture is pasted or dropped (attachments.js): here
  *     the picture stays in the browser, there is no server to upload it to;
- *   - the texts of the page (field names, the tabs) from Redmine's own translations.
- * The "Preview" tab is in preview.js. The text, the example and the language are kept in localStorage.
+ *   - the texts of the page (field names, the tabs) from Redmine's own translations, and the texts of the demo
+ *     itself (the note on top, the examples) from page_texts.json, as window.DemoPage.
+ * The "Preview" tab is in preview.js. The text and the example are kept in localStorage. The language is the one
+ * in the address (?lang=fr, the links of the README give it), English when there is none.
  */
 (function () {
   'use strict';
@@ -35,20 +37,13 @@
 
   var codes = LANGUAGES.map(function (l) { return l[0]; });
 
+  // Only the address chooses the language, not the browser or an earlier visit: a link opens the page in the
+  // language it names, and a link without one in English, the language everyone can be expected to read.
   function pickLanguage() {
-    var asked = new URLSearchParams(window.location.search).get('lang');
-    if (asked && codes.indexOf(asked) >= 0) return asked;
-    var stored = load('lang');
-    if (stored && codes.indexOf(stored) >= 0) return stored;
-    var wanted = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
-    for (var i = 0; i < wanted.length; i++) {
-      var w = String(wanted[i]).toLowerCase();
-      var exact = codes.filter(function (c) { return c.toLowerCase() === w; })[0];
-      if (exact) return exact;
-      var base = codes.filter(function (c) { return c.toLowerCase() === w.split('-')[0]; })[0];
-      if (base) return base;
-    }
-    return 'en';
+    var asked = String(new URLSearchParams(window.location.search).get('lang') || '').toLowerCase();
+    var exact = codes.filter(function (c) { return c.toLowerCase() === asked; })[0];
+    var base = codes.filter(function (c) { return c.toLowerCase() === asked.split('-')[0]; })[0];
+    return exact || base || 'en';
   }
 
   var lang = pickLanguage();
@@ -86,9 +81,29 @@
     return texts[key] || fallback;
   }
 
+  // the texts of the demo itself (page_texts.json, with the same fallbacks)
+  function p(key, fallback) {
+    var texts = window.DemoPage || {};
+    return texts[key] || fallback;
+  }
+
   function setText(id, text) {
     var el = document.getElementById(id);
     if (el) el.textContent = text;
+  }
+
+  // A translated text with %{link} in it: the link is made as an element, the rest stays text.
+  function setTextWithLink(el, text, href, label) {
+    el.textContent = '';
+    text.split('%{link}').forEach(function (part, i) {
+      if (i > 0) {
+        var a = document.createElement('a');
+        a.href = href;
+        a.textContent = label;
+        el.appendChild(a);
+      }
+      el.appendChild(document.createTextNode(part));
+    });
   }
 
   function applyTexts() {
@@ -102,6 +117,24 @@
     setText('demo-tab-edit', r('button_edit', 'Edit'));
     setText('demo-tab-preview', r('label_preview', 'Preview'));
     document.getElementById('demo-create').value = r('button_create', 'Create');
+
+    var readme = p('readme', 'https://github.com/Du10777/redmine_tiptap');   // the README in this language
+    document.title = p('title', document.title);
+    var github = document.getElementById('demo-github');
+    github.textContent = p('github', github.textContent);
+    github.href = readme;
+    var menu = document.getElementById('demo-menu');
+    menu.textContent = p('demo', menu.textContent);
+    menu.href = '?lang=' + encodeURIComponent(lang);
+    if (p('about')) setTextWithLink(document.getElementById('demo-about'), p('about'), readme, 'redmine_tiptap');
+    var subject = document.getElementById('issue_subject');
+    subject.value = p('subject', subject.value);
+    Array.prototype.forEach.call(document.getElementById('demo-sample').options, function (option) {
+      option.textContent = p('sample.' + option.value, option.textContent);
+    });
+    setText('demo-footer-editor', p('footer.editor', 'Editor:'));
+    var look = document.getElementById('demo-footer-look');
+    look.textContent = p('footer.look', look.textContent).replace('%{redmine}', look.getAttribute('data-redmine'));
   }
 
   // --- the tabs above the editor and the preview under it ----------------------------------------------
@@ -140,7 +173,6 @@
     });
     languageSelect.value = lang;
     languageSelect.addEventListener('change', function () {
-      store('lang', languageSelect.value);
       store('text', textarea.value);
       var url = new URL(window.location.href);
       url.searchParams.set('lang', languageSelect.value);
