@@ -46,7 +46,30 @@
 
 Đây là trình soạn thảo văn bản cho Redmine, dựa trên TipTap https://github.com/ueberdosis/tiptap
 
-Các phiên bản Redmine được hỗ trợ:
+Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
+
+**Mục lục**
+
+- [Các phiên bản Redmine được hỗ trợ](#các-phiên-bản-redmine-được-hỗ-trợ)
+- [Tính năng](#tính-năng)
+  - [Định dạng văn bản](#định-dạng-văn-bản)
+  - [Danh sách](#danh-sách)
+  - [Bảng](#bảng)
+  - [Hình ảnh và tệp đính kèm](#hình-ảnh-và-tệp-đính-kèm)
+  - [Mã](#mã)
+  - [Khối](#khối)
+  - [Biên tập](#biên-tập)
+  - [Tích hợp Redmine](#tích-hợp-redmine)
+- [Tô sáng cú pháp](#tô-sáng-cú-pháp)
+- [Ngôn ngữ giao diện](#ngôn-ngữ-giao-diện)
+- [Cài đặt](#cài-đặt)
+- [Cập nhật](#cập-nhật)
+  - [Đã cài đặt với git (được khuyên dùng)](#đã-cài-đặt-với-git-được-khuyên-dùng)
+  - [Được cài đặt từ một kho lưu trữ](#được-cài-đặt-từ-một-kho-lưu-trữ)
+  - [Sau khi cập nhật](#sau-khi-cập-nhật)
+- [Chuyển từ CKEditor](#chuyển-từ-ckeditor)
+
+## Các phiên bản Redmine được hỗ trợ
 
 | Redmine | Hỗ trợ | Đã kiểm thử trên |
 |---|---|---|
@@ -56,11 +79,9 @@ Các phiên bản Redmine được hỗ trợ:
 
 Phiên bản chính mới (8.x trở đi) chỉ được hỗ trợ sau khi plugin đã được kiểm thử trên phiên bản đó. Trước đó, Redmine phiên bản này sẽ không khởi động khi đã cài plugin: nó dừng lại với lỗi nêu rõ các phiên bản được hỗ trợ.
 
-Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
-
 ## Tính năng
 
-**Định dạng văn bản**
+### Định dạng văn bản
 - Đậm, in nghiêng, gạch chân, gạch bỏ, chỉ số dưới và chỉ số trên (Ctrl+, và Ctrl+.), mã nội tuyến.
 - Màu văn bản và màu nền: bảng màu 64 màu hoặc bất kỳ giá trị hex nào.
 - Họ phông chữ (13 phông) và kích thước phông chữ (các kích thước từ 8 đến 72 px hoặc bất kỳ giá trị nào).
@@ -69,45 +90,45 @@ Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tipta
 - Liên kết: chèn, chỉnh sửa, loại bỏ.
 - Đường nằm ngang, hoàn tác và làm lại.
 
-**Danh sách**
+### Danh sách
 - Danh sách dấu gạch ngang với dấu tròn đặc, tròn rỗng hoặc hình vuông.
 - Danh sách được đánh số: 1, 01, a, A, i, I, α.
 - Danh sách tác vụ với hộp kiểm; các tác vụ hoàn thành sẽ bị gạch bỏ.
 - Danh sách lồng nhau (Tab / Shift+Tab).
 
-**Bảng**
+### Bảng
 - Chèn bảng bất kỳ kích thước nào, có hoặc không có hàng tiêu đề.
 - Menu nhấp chuột phải trong ô: thêm và xóa hàng và cột, hợp nhất và tách ô, hàng tiêu đề và cột tiêu đề, xóa bảng.
 - Độ rộng cột có thể được thay đổi bằng cách kéo các viền ô.
 - Dán từ Excel sẽ giữ lại độ rộng cột, căn chỉnh và kích thước phông chữ; bảng được sao chép từ Redmine dán vào Excel với các đường viền.
 
-**Hình ảnh và tệp đính kèm**
+### Hình ảnh và tệp đính kèm
 - Dán hình ảnh từ khay nhớ tạm: nó được tải lên dưới dạng tệp đính kèm và xuất hiện trong văn bản.
 - Hình ảnh được đính kèm bằng trường tệp của Redmine hoặc được thả vào nó sẽ được chèn vào văn bản.
 - Chèn hình ảnh từ các tệp đính kèm (bộ chọn hình ảnh nhỏ) hoặc liên kết đến bất kỳ tệp đính kèm nào.
 - Thay đổi kích thước hình ảnh bằng cách kéo các góc của nó.
 
-**Mã**
+### Mã
 - Khối mã có tô sáng cú pháp trong trình soạn thảo và trên các trang đã lưu: 52 ngôn ngữ, và bạn có thể thêm nhiều hơn (xem [Tô sáng cú pháp](#tô-sáng-cú-pháp)).
 - Ngôn ngữ của khối được chọn từ một huy hiệu ở góc của nó, với tìm kiếm, ngôn ngữ gần đây và thường xuyên.
 - Tab và Shift+Tab thụt lề và loại bỏ thụt lề các dòng trong khối mã; chữ đậm, liên kết và màu sắc bên trong mã vẫn được giữ lại.
 
-**Khối**
+### Khối
 - Khối có thể thu gọn: tiêu đề với nội dung ẩn (`<details>`). Thu gọn trên các trang đã lưu, mở rộng trong trình soạn thảo.
 - Khối trích dẫn có dòng tác giả và ngày tháng.
 
-**Biên tập**
+### Biên tập
 - Chế độ `<HTML>` để xem và chỉnh sửa mã nguồn HTML: các khối lồng nhau được thụt lề, một dòng trống ngăn cách các khối chiếm nhiều dòng, cú pháp được tô màu theo cùng quy tắc như khối mã HTML, và phím Enter giữ nguyên thụt lề của dòng.
 - Gõ kiểu Markdown: `#` cho tiêu đề, `-` và `1.` cho danh sách, `[ ]` cho tác vụ, ```` ```python ```` cho khối mã (bất kỳ tên ngôn ngữ nào hoặc không), `**bold**`, `---` cho đường nằm ngang. Các phím tắt tiêu chuẩn: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z và các phím khác.
 - Trình soạn thảo không bao giờ cao hơn cửa sổ: thanh công cụ và nút biểu mẫu luôn trong tầm nhìn, và văn bản cuộn bên trong. Chiều cao tuân theo kích thước cửa sổ và mức độ phóng to của trang.
 - Tay cầm thay đổi kích thước ở góc dưới cùng bên phải đặt chiều cao theo cách thủ công. Chiều cao được ghi nhớ; nhấp đôi lần sẽ trở lại chiều cao tự động.
 
-**Tích hợp Redmine**
+### Tích hợp Redmine
 - Hoạt động trong tất cả các trường văn bản của Redmine có hỗ trợ định dạng: mô tả và ghi chú vấn đề, trang wiki, tin tức, tin nhắn diễn đàn, tài liệu, mô tả dự án, trường văn bản tùy chỉnh dài, bao gồm các trường xuất hiện trên trang sau đó.
 - Văn bản được lưu trữ dưới dạng HTML. Để sử dụng trình soạn thảo, hãy chọn *TipTap HTML* làm định dạng bài viết trong phần thiết lập Redmine.
 - Giao diện (mẹo công cụ, menu, hộp thoại) tuân theo ngôn ngữ trong hồ sơ Redmine của người dùng. 47 trong số 50 ngôn ngữ của Redmine đi kèm với plugin: Tiếng Anh và Tiếng Nga đầy đủ, 45 ngôn ngữ còn lại là bản nháp được tạo bằng mô hình AI mà những người bản xứ rất sẵn lòng sửa chữa. Ba ngôn ngữ viết từ phải sang trái (Tiếng Ả Rập, Tiếng Do Thái, Tiếng Ba Tư) cố ý không được hỗ trợ (xem [Ngôn ngữ giao diện](#ngôn-ngữ-giao-diện)).
 - Vẫn nhanh chóng trên các văn bản lớn: các trình soạn thảo trong các biểu mẫu ẩn chỉ được tạo khi biểu mẫu được mở, và các khối mã dài được tô sáng khi chúng cuộn vào chế độ xem.
-- Các tệp văn bản được viết trong CKEditor (plugin redmine_ckeditor) được hiển thị theo cách chúng có và mở trong trình soạn thảo với định dạng của chúng: không có chuyển đổi, xem [Chuyển sang từ CKEditor](#chuyển-sang-từ-ckeditor).
+- Các tệp văn bản được viết trong CKEditor (plugin redmine_ckeditor) được hiển thị theo cách chúng có và mở trong trình soạn thảo với định dạng của chúng: không có chuyển đổi, xem [Chuyển từ CKEditor](#chuyển-từ-ckeditor).
 - Các văn bản đã lưu được hiển thị mà không có HTML không an toàn: các tập lệnh, trình xử lý sự kiện và các liên kết `javascript:` được xóa khi hiển thị trang, chỉ giữ lại những gì trình soạn thảo tạo. Điều này cũng bao gồm các văn bản đi qua REST API hoặc chế độ `<HTML>`.
 
 ## Tô sáng cú pháp
@@ -185,7 +206,7 @@ Bước 2 rất quan trọng. Khi khởi động, Redmine chỉ xuất bản cá
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
 
-## Chuyển sang từ CKEditor
+## Chuyển từ CKEditor
 
 Nếu Redmine của bạn đã sử dụng [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), bạn có thể chuyển sang plugin này và giữ lại mọi văn bản đã được viết: vấn đề, ghi chú, trang wiki, tin tức, tin nhắn, tài liệu. Không có chuyển đổi nào và cơ sở dữ liệu sẽ không bị chạm vào. CKEditor lưu trữ các văn bản của nó dưới dạng HTML và plugin này cũng vậy, vì vậy một văn bản được lưu trữ chỉ được hiển thị bởi định dạng mới.
 

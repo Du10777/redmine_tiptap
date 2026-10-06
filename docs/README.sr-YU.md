@@ -46,7 +46,30 @@
 
 Ovo je uređivač teksta za Redmine, zasnovan na TipTap-u https://github.com/ueberdosis/tiptap
 
-Podržane verzije Redmine-a:
+Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
+
+**Sadržaj**
+
+- [Podržane verzije Redmine-a](#podržane-verzije-redmine-a)
+- [Mogućnosti](#mogućnosti)
+  - [Oblikovanje teksta](#oblikovanje-teksta)
+  - [Liste](#liste)
+  - [Tabele](#tabele)
+  - [Slike i priložene datoteke](#slike-i-priložene-datoteke)
+  - [Kod](#kod)
+  - [Blokovi](#blokovi)
+  - [Uređivanje](#uređivanje)
+  - [Integracija sa Redmine-om](#integracija-sa-redmine-om)
+- [Isticanje sintakse](#isticanje-sintakse)
+- [Jezik interfejsa](#jezik-interfejsa)
+- [Instalacija](#instalacija)
+- [Ažuriranje](#ažuriranje)
+  - [Inštalirano pomoću git-a (preporučeno)](#inštalirano-pomoću-git-a-preporučeno)
+  - [Inštalirano iz arhive](#inštalirano-iz-arhive)
+  - [Posle ažuriranja](#posle-ažuriranja)
+- [Prelazak sa CKEditor-a](#prelazak-sa-ckeditor-a)
+
+## Podržane verzije Redmine-a
 
 | Redmine | Podrška | Testirano na |
 |---|---|---|
@@ -56,11 +79,9 @@ Podržane verzije Redmine-a:
 
 Nova glavna verzija (8.x i novije) postaje podržana tek kada se dodatna komponenta testira na njoj. Do tada se Redmine te verzije ne pokreće sa instaliranom dodatnom komponentom: zaustavlja se sa greškom u kojoj su navedene podržane verzije.
 
-Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
-
 ## Mogućnosti
 
-**Oblikovanje teksta**
+### Oblikovanje teksta
 - Podebljano, kurziv, podvučeno, precrtano, donji i gornji indeks (Ctrl+, i Ctrl+.), kod unutar teksta.
 - Boja teksta i boja pozadine: paleta od 64 boje ili bilo koja heksadecimalna vrednost.
 - Font (13 fontova) i veličina fonta (unapred zadati vrednosti od 8 do 72 px ili bilo koja vrednost).
@@ -69,40 +90,40 @@ Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na
 - Veze: umetanje, izmena, uklanjanje.
 - Horizontalna linija, opozivanje i ponavljanje.
 
-**Liste**
+### Liste
 - Liste sa nabrajanjem, sa markerima u obliku diska, kruga ili kvadrata.
 - Numerisane liste: 1, 01, a, A, i, I, α.
 - Liste zadataka sa poljima za potvrdu; završeni zadaci su precrtani.
 - Ugneždene liste (Tab / Shift+Tab).
 
-**Tabele**
+### Tabele
 - Umetanje tabele bilo koje veličine, sa redom zaglavlja ili bez njega.
 - Kontekstni meni desnog klika u ćeliji: dodavanje i brisanje redova i kolona, spajanje i deljenje ćelija, red zaglavlja i kolona zaglavlja, brisanje tabele.
 - Širine kolona menjaju se prevlačenjem ivica ćelija.
 - Pri nalepljivanju iz Excel-a zadržavaju se širine kolona, poravnanje i veličine fonta; tabela kopirana iz Redmine-a nalepljuje se u Excel sa ivicama.
 
-**Slike i priložene datoteke**
+### Slike i priložene datoteke
 - Nalepljivanje slike iz klipborda: otprema se kao priložena datoteka i pojavljuje se u tekstu.
 - Slike priložene pomoću Redmine-ovog polja "Datoteke" ili prevučene na njega takodje se umećuuu u tekst.
 - Umetanje slike iz priloženih datoteka (izbor pomoću sličica) ili veze ka bilo kojoj priloženoj datoteci.
 - Promena veličine slike prevlačenjem njenih uglova.
 
-**Kod**
-- Blokovi koda sa ističanjem sintakse u uređivaču i na sačuvanim stranicama: 52 jezika, a možete dodati i druge (pogledajte [Ističanje sintakse](#ističanje-sintakse)).
+### Kod
+- Blokovi koda sa ističanjem sintakse u uređivaču i na sačuvanim stranicama: 52 jezika, a možete dodati i druge (pogledajte [Isticanje sintakse](#isticanje-sintakse)).
 - Jezik bloka bira se pomoću znački u njegovu uglom, uz pretragu, kao i nedavno i često korišćene jezike.
 - Tab i Shift+Tab povećavaju, odnosno smanjuju uvlačenje redova unutar bloka koda; podebljani tekst, veze i boje unutar koda se zadržavaju.
 
-**Blokovi**
+### Blokovi
 - Sklopivi blok: naslov sa skrivenim sadržajem (`<details>`). Na sačuvanim stranicama je sklopljen, a u uređivaču rasklopljeν.
 - Blok citata sa redom za autora i datum.
 
-**Uređivanje**
+### Uređivanje
 - Režim `<HTML>` za pregled i izmenu HTML izvornog koda: ugneždeni blokovi su uvučeni, prazan red razdvaja blokove koji zauzimaju više redova, sintaksa je obojena po istim pravilima kao u HTML bloku koda, a Enter zadržava uvlačenje reda.
 - Kucanje u stilu Markdown-а: `#` za naslove, `-` i `1.` za liste, `[ ]` za zadatke, ```` ```python ```` za blok koda (bilo koje ime jezika ili bez njega), `**bold**`, `---` za horizontalnu liniju. Standardne prečice na tastaturi: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i druge.
 - Uređivač nikada ne postaje viši od prozora: traka sa alatama i dugmad obrasca ostaju u vidnom polju, a tekst se pomera unutar uređivača. Visina prati veličinu prozora i zum stranice.
 - Ručica za promenu veličine u donjem desnom uglu služi za ručno podešavanje visine. Visina se pamti; dvostruki klik vraća automatsku visinu.
 
-**Integracija sa Redmine-om**
+### Integracija sa Redmine-om
 - Radi u svim Redmine-ovim tekstualnim poljima sa oblikovanjem: opisi i beleške problema, wiki stranice, vesti, poruke na forumima, dokumenti, opisi projekata, prilagođena polja sa dugim tekstom, uključujući i polja koja se na stranici pojave kasnije.
 - Tekst se čuva kao HTML. Da biste koristili uređivač, u podešavanjima Redmine-a izaberite *TipTap HTML* kao oblikovanje teksta.
 - Interfejs (opisi alata, meniji, dijalozi) prati jezik iz Redmine profila korisnika. Sa dodatnom komponentom dolazi 47 od 50 jezika Redmine-a: engleski i ruski su potpuni, a ostalih 45 su nacrti napravljeni uz pomoć modela veštačke inteligencije, a izvorni govorioci su dobrodošli da ih isprave. Tri jezika koja se pišu zdesna nalevo (arapski, hebrejski, persijski) namerno nisu podržana (pogledajte [Jezik interfejsa](#jezik-interfejsa)).
@@ -110,7 +131,7 @@ Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na
 - Tekstovi napisani u CKEditor-u (dodatna komponenta redmine_ckeditor) prikazuju se onako kako su bili i otvaraju se u uređivaču sa svojim oblikovanjem: nema konverzije, videti [Prelazak sa CKEditor-a](#prelazak-sa-ckeditor-a).
 - Sačuvani tekstovi prikazuju se bez nebezbednog HTML-a: skripte, rukovalci događajima i `javascript:` veze uklanjaju se kada se stranica prikazuje, a zadržava se samo ono što sam uređivač proizvodi. Ovo obuhvata i tekstove koji stižu preko REST API-ja ili režima `<HTML>`.
 
-## Ističanje sintakse
+## Isticanje sintakse
 
 Sintaksa u blokovima koda istakuje se podjednako i u uređivaču i na sačuvanim stranicama. Jezik bloka bira se pomoću znački u njegovu gornjem desnom uglu; lista ima polje za pretragu i pamti nedavno i često korišćene jezike.
 

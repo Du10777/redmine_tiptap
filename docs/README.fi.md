@@ -46,7 +46,30 @@
 
 Tämä on tekstieditori Redminelle, joka perustuu TipTapiin https://github.com/ueberdosis/tiptap
 
-Tuetut Redmine-versiot:
+Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
+
+**Sisällys**
+
+- [Tuetut Redmine-versiot](#tuetut-redmine-versiot)
+- [Ominaisuudet](#ominaisuudet)
+  - [Tekstin muotoilu](#tekstin-muotoilu)
+  - [Luettelot](#luettelot)
+  - [Taulukot](#taulukot)
+  - [Kuvat ja liitetiedostot](#kuvat-ja-liitetiedostot)
+  - [Koodi](#koodi)
+  - [Lohkot](#lohkot)
+  - [Muokkaus](#muokkaus)
+  - [Redminen integraatio](#redminen-integraatio)
+- [Syntaksivalaistus](#syntaksivalaistus)
+- [Käyttöliittymän kieli](#käyttöliittymän-kieli)
+- [Asennus](#asennus)
+- [Päivitys](#päivitys)
+  - [Asennettu git-ohjelmalla (suositeltu)](#asennettu-git-ohjelmalla-suositeltu)
+  - [Asennettu arkistosta](#asennettu-arkistosta)
+  - [Päivityksen jälkeen](#päivityksen-jälkeen)
+- [Siirtyminen CKEditorista](#siirtyminen-ckeditorista)
+
+## Tuetut Redmine-versiot
 
 | Redmine | Tuettu | Testattu versioilla |
 |---|---|---|
@@ -56,11 +79,9 @@ Tuetut Redmine-versiot:
 
 Uusi pääversio (8.x ja myöhemmät) tulee tuetuksi vasta, kun liitännäinen on testattu sillä. Siihen asti tämän version Redmine ei käynnisty, kun liitännäinen on asennettu: se pysähtyy virheeseen, jossa mainitaan tuetut versiot.
 
-Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
-
 ## Ominaisuudet
 
-**Tekstin muotoilu**
+### Tekstin muotoilu
 - Lihavointi, kursivointi, alleviivaus, yliviivaus, alaindeksi ja yläindeksi (Ctrl+, ja Ctrl+.), rivinsisäinen koodi.
 - Tekstin väri ja taustaväri: 64 värin paneeli tai mikä tahansa hex-arvo.
 - Kirjasimen perhe (13 kirjasinta) ja koko (esiasetukset 8-72 pikseliä tai mikä tahansa arvo).
@@ -69,40 +90,40 @@ Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty 
 - Linkit: lisää, muokkaa, poista.
 - Vaakasuora viiva, kumoa ja toista.
 
-**Luettelot**
+### Luettelot
 - Luettelot, joissa on levy-, ympyrä- tai neliömerkit.
 - Numeroitut luettelot: 1, 01, a, A, i, I, α.
 - Tehtäväluettelot, joissa on valintaruudut; valmiit tehtävät on yliviivattu.
 - Sisäkkäiset luettelot (sarkain / Shift+sarkain).
 
-**Taulukot**
+### Taulukot
 - Lisää mikä tahansa kokoinen taulukko, jossa on tai ilman otsikkorivi.
 - Hiiren oikean painikkeen valikko solusa: lisää ja poista rivejä ja sarakkeita, yhdistä ja jaa soluja, otsikko rivi ja otsikko sarake, poista taulukko.
 - Sarakkeiden leveyksiä muutetaan vetämällä solun rajoja.
 - Excelin liittäminen säilyttää sarakkeiden leveydet, tasauksen ja fonttikoot; Redminesta kopioitu taulukko liitetään Exceliin reunuksilla.
 
-**Kuvat ja liitetiedostot**
+### Kuvat ja liitetiedostot
 - Liitä kuva leikepöydältä: se ladataan liitetiedostoksi ja näkyy tekstissä.
 - Kuvat, jotka on liitetty Redminen tiedostokenttään tai pudotettu siihen, lisätään myös tekstiin.
 - Lisää kuva liitetiedostoista (pienoiskuvavälitsin) tai linkki mihin tahansa liitetiedostoon.
 - Muuta kuvan kokoa vetämällä sen kulmia.
 
-**Koodi**
+### Koodi
 - Koodilohkot syntaksivalairalla editorissa ja tallentavissa sivuissa: 52 kieltä ja voit lisätä lisää (katso [Syntaksivalaistus](#syntaksivalaistus)).
 - Lohkon kieli valitaan sen kulmassa olevasta merkistä, hakua, viime aikojen ja usein käytettyjä kieliä.
 - Sarkain ja Shift+sarkain pienentävät ja suurentavat rivejä koodilohkossa; lihavointi, linkit ja värit koodin sisällä säilytetään.
 
-**Lohkot**
+### Lohkot
 - Taitettava lohko: otsikko piilotetulla sisällöllä (`<details>`). Taitettu tallennetuissa sivuissa, laajennettu editorissa.
 - Lainaustaulukko, jossa on kirjoittaja- ja päivämäärärivi.
 
-**Muokkaus**
+### Muokkaus
 - `<HTML>`-tila HTML-lähteen katselemiseen ja muokkaamiseen: sisäkkäiset lohkot sisennetään, usealle riville ulottuvat lohkot erotetaan toisistaan tyhjällä rivillä, syntaksi väritetään samoilla säännöillä kuin HTML-koodilohkossa, ja Enter säilyttää rivin sisennyksen.
 - Markdown-tyylinen kirjoitus: `#` otsikoille, `-` ja `1.` luetteloille, `[ ]` tehtäville, ```` ```python ```` koodilohkolle (mikä tahansa kielentunnus tai ei mitään), `**bold**`, `---` vaakasuoralle viivalle. Vakiokiilentäppäimistön pikakuvakkeet: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z ja muut.
 - Editor ei ole koskaan korkeampi kuin ikkuna: työkalupalkki ja lomakkeen painikkeet pysyvät näkyvissä ja teksti vierittää sisällä. Korkeus seuraa ikkunan kokoa ja sivun zoomausta.
 - Koon muuttamisen kahva oikeassa alakulmassa asettaa korkeuden käsin. Korkeus muistetaan; kaksoisnapsautus palaa automaattiseen korkeuteen.
 
-**Redminen integraatio**
+### Redminen integraatio
 - Toimii kaikissa Redmine-tekstikentissä, joissa on muotoilu: tehtävien kuvaukset ja huomautukset, wikisivut, uutiset, keskustelupalstien viestit, asiakirjat, projektien kuvaukset, pitkän tekstin mukautetut kentät, mukaan lukien kentät, jotka ilmestyvät sivulle myöhemmin.
 - Teksti tallennetaan HTML-muodossa. Käyttääksesi editoria, valitse *TipTap HTML* tekstinmuotoiluna Redminen asetuksissa.
 - Käyttöliittymä (vinkit, valikot, valintaikkunat) noudattaa käyttäjän Redmine-profiilin kieltä. 47 Redminen 50 kielestä tulee liitännäisen kanssa: englanti ja venäjä ovat täydellisiä, loput 45 ovat luonnoksia, jotka on tehty tekoälymallin avulla ja äidinkieliset puhujat voivat korjata. Kolmea oikealta vasemmalle kirjoitettua kieltä (arabia, hepraea, persia) ei tueta tarkoituksella (katso [Käyttöliittymän kieli](#käyttöliittymän-kieli)).

@@ -46,7 +46,30 @@
 
 Det här är en texteditor för Redmine, baserad på TipTap https://github.com/ueberdosis/tiptap
 
-Versioner av Redmine som stöds:
+Motorn för redigeraren: **TipTap 3.31.4**. Alla `@tiptap/*`-paket är låsta till exakt denna version i `package.json` och `package-lock.json` och måste alltid uppgraderas tillsammans till en och samma version.
+
+**Innehåll**
+
+- [Versioner av Redmine som stöds](#versioner-av-redmine-som-stöds)
+- [Funktioner](#funktioner)
+  - [Textformatering](#textformatering)
+  - [Listor](#listor)
+  - [Tabeller](#tabeller)
+  - [Bilder och bifogade filer](#bilder-och-bifogade-filer)
+  - [Kod](#kod)
+  - [Block](#block)
+  - [Redigering](#redigering)
+  - [Redmine-integration](#redmine-integration)
+- [Syntaxmarkering](#syntaxmarkering)
+- [Gränssnittsspråk](#gränssnittsspråk)
+- [Installation](#installation)
+- [Uppdatering](#uppdatering)
+  - [Installerat med git (rekommenderas)](#installerat-med-git-rekommenderas)
+  - [Installerat från ett arkiv](#installerat-från-ett-arkiv)
+  - [Efter uppdatering](#efter-uppdatering)
+- [Migration från CKEditor](#migration-från-ckeditor)
+
+## Versioner av Redmine som stöds
 
 | Redmine | Stöds | Testad på |
 |---|---|---|
@@ -56,11 +79,9 @@ Versioner av Redmine som stöds:
 
 En ny huvudversion (8.x och senare) stöds först när plugin-modulen har testats på den. Fram till dess startar inte Redmine i den versionen med plugin-modulen installerad: det stannar med ett fel som anger de versioner som stöds.
 
-Motorn för redigeraren: **TipTap 3.31.4**. Alla `@tiptap/*`-paket är låsta till exakt denna version i `package.json` och `package-lock.json` och måste alltid uppgraderas tillsammans till en och samma version.
-
 ## Funktioner
 
-**Textformatering**
+### Textformatering
 - Fet, kursiv, understruken, genomstruken, nedsänkt och upphöjd text (Ctrl+, och Ctrl+.), infogad kod.
 - Textfärg och bakgrundsfärg: en palett med 64 färger eller något valfritt hex-värde.
 - Typsnittsfamilj (13 typsnitt) och teckenstorlek (förinställda från 8 till 72 px, eller något värde).
@@ -69,40 +90,40 @@ Motorn för redigeraren: **TipTap 3.31.4**. Alla `@tiptap/*`-paket är låsta ti
 - Länkar: infoga, redigera, ta bort.
 - Horisontell linje, ångra och upprepa.
 
-**Listor**
+### Listor
 - Punktlistor med skiva, cirkel eller fyrkant markörer.
 - Numrerade listor: 1, 01, a, A, i, I, α.
 - Uppgiftslistor med kryssrutor; slutförda uppgifter är genomstrukna.
 - Kapslade listor (Tab / Skift+Tab).
 
-**Tabeller**
+### Tabeller
 - Infoga en tabell av valfri storlek, med eller utan en rubrikrad.
 - Högerklicksmeny i en cell: lägg till och ta bort rader och kolumner, slå samman och dela celler, rubrikrad och rubrikkolumn, ta bort tabellen.
 - Kolumnbredder ändras genom att dra cellgränser.
 - Inklistring från Excel behåller kolumnbredder, justering och teckenstorlekar; en tabell kopierad från Redmine klistras in i Excel med gränser.
 
-**Bilder och bifogade filer**
+### Bilder och bifogade filer
 - Klistra in en bild från urklipp: den laddas upp som en bifogad fil och visas i texten.
 - Bilder bifogade med Redmines filfield, eller släppade på den, infogas även i texten.
 - Infoga en bild från bifogade filer (en miniatyrväljar) eller en länk till någon bifogad fil.
 - Ändra storlek på en bild genom att dra dess hörn.
 
-**Kod**
+### Kod
 - Kodblock med syntaxmarkering i redigeraren och på sparade sidor: 52 språk, och du kan lägga till fler (se [Syntaxmarkering](#syntaxmarkering)).
 - Språket i ett block väljs från en märke i dess hörn, med sökning, senaste och ofta använda språk.
 - Tab och Skift+Tab drar in och drar ut rader inuti ett kodblock; fet, länkar och färger inuti kod bevaras.
 
-**Block**
+### Block
 - Sammanfällbart block: en titel med dolt innehål (`<details>`). Sammanfallt på sparade sidor, utökat i redigeraren.
 - Citatlblock med en författar- och datumrad.
 
-**Redigering**
+### Redigering
 - `<HTML>`-läge för att visa och redigera HTML-källan: kapslade block dras in, block som upptar flera rader skiljs åt av en tom rad, syntaxen färgläggs enligt samma regler som i ett HTML-kodblock, och Enter behåller radens indrag.
 - Markdown-inspirerad skrivning: `#` för rubriker, `-` och `1.` för listor, `[ ]` för uppgifter, ```` ```python ```` för ett kodblock (ett språknamn eller inget), `**bold**`, `---` för en horisontell linje. Standardtangentbordets genvägar: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z och andra.
 - Redigeraren blir aldrig högre än fönstret: verktygsfältet och formulärknapparna förblir synliga, och texten rullas inuti. Höjden följer fönsterstorleken och sidans zoomning.
 - En storleksförändringsgreppad i det nedre högra hörnet ställer in höjden för hand. Höjden är ihågkommen; dubbelklick återgår till automatisk höjd.
 
-**Redmine-integration**
+### Redmine-integration
 - Fungerar i alla Redminetextfält med formatering: ärendebeskrivningar och anteckningar, wikisidor, nyheter, forummeddelanden, dokument, projektbeskrivningar, långa textkustomfält, inklusive fält som visas på sidan senare.
 - Text lagras som HTML. För att använda redigeraren, välj *TipTap HTML* som textformatering i Redmine-inställningarna.
 - Gränssnittet (tips, menyer, dialogrutor) följer språket i användarens Redmine-profil. 47 av Redmines 50 språk levereras med plugin: engelska och ryska är fullständiga, de andra 45 är utkast gjorda med en AI-modell som modersmålstalare är välkomna att korrigera. De tre språken skrivna från höger till vänster (arabiska, hebreiska, persiska) stöds avsiktligt inte (se [Gränssnittsspråk](#gränssnittsspråk)).

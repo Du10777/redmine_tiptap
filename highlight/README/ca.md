@@ -192,7 +192,7 @@ sh highlight/_compile.sh
 - Primer l'script verifica cada llenguatge: el compila separadament, el carrega, el registra al mateix motor que executa al navegador, i ressalta un text de mostra. Si un llenguatge és trencador (un error al codi, una expressió regular no vàlida, un `id` ja pres), l'script en nomena el fitxer i la raó i s'atura; el anterior `tiptap_highlight.js` es manté en lloc.
 - Després l'script empaqueta tots els llenguatges a `assets/javascripts/tiptap_highlight.js`.
 
-Després de la compilació, reinicieu Redmine: es publicarà els fitxers del complement a l'inici (veieu "Actualitzar" al [README principal](../../docs/README.ca.md#actualitzar) pels comandos). Els navegadors obtenen el fitxer nou immediatament, perquè el seu URL conté una empremta del contingut.
+Després de la compilació, reinicieu Redmine: es publicarà els fitxers del complement a l'inici (veieu "Actualitzar" al [README principal](../../docs/README.ca.md#actualització) pels comandos). Els navegadors obtenen el fitxer nou immediatament, perquè el seu URL conté una empremta del contingut.
 
 Si el servidor de Redmine ni té Docker ni Node.js, compileu en qualsevol màquina que en tingui un (una còpia de la carpeta del complement és suficient) i poseu el resultat `assets/javascripts/tiptap_highlight.js` al servidor.
 

@@ -43,7 +43,30 @@
 
 This is text editor for Redmine, based on TipTap https://github.com/ueberdosis/tiptap
 
-Supported Redmine versions:
+Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this exact version in `package.json` and `package-lock.json` and must always be upgraded together, to one and the same version.
+
+**Contents**
+
+- [Supported Redmine versions](#supported-redmine-versions)
+- [Features](#features)
+  - [Text formatting](#text-formatting)
+  - [Lists](#lists)
+  - [Tables](#tables)
+  - [Images and attachments](#images-and-attachments)
+  - [Code](#code)
+  - [Blocks](#blocks)
+  - [Editing](#editing)
+  - [Redmine integration](#redmine-integration)
+- [Syntax highlighting](#syntax-highlighting)
+- [Interface language](#interface-language)
+- [Installation](#installation)
+- [Updating](#updating)
+  - [Installed with git (recommended)](#installed-with-git-recommended)
+  - [Installed from an archive](#installed-from-an-archive)
+  - [After updating](#after-updating)
+- [Migrating from CKEditor](#migrating-from-ckeditor)
+
+## Supported Redmine versions
 
 | Redmine | Supported | Tested on |
 |---|---|---|
@@ -53,11 +76,9 @@ Supported Redmine versions:
 
 A newer major version (8.x and later) becomes supported only after the plugin has been tested on it. Until then, Redmine of that version does not start with the plugin installed: it stops with an error that names the supported versions.
 
-Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this exact version in `package.json` and `package-lock.json` and must always be upgraded together, to one and the same version.
-
 ## Features
 
-**Text formatting**
+### Text formatting
 - Bold, italic, underline, strikethrough, subscript and superscript (Ctrl+, and Ctrl+.), inline code.
 - Text color and background color: a 64-color palette or any hex value.
 - Font family (13 fonts) and font size (presets from 8 to 72 px, or any value).
@@ -66,40 +87,40 @@ Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this ex
 - Links: insert, edit, remove.
 - Horizontal rule, undo and redo.
 
-**Lists**
+### Lists
 - Bulleted lists with disc, circle or square markers.
 - Numbered lists: 1, 01, a, A, i, I, α.
 - Task lists with checkboxes; completed tasks are struck through.
 - Nested lists (Tab / Shift+Tab).
 
-**Tables**
+### Tables
 - Insert a table of any size, with or without a header row.
 - Right-click menu in a cell: add and delete rows and columns, merge and split cells, header row and header column, delete the table.
 - Column widths are changed by dragging cell borders.
 - Pasting from Excel keeps column widths, alignment and font sizes; a table copied from Redmine pastes into Excel with borders.
 
-**Images and attachments**
+### Images and attachments
 - Paste an image from the clipboard: it is uploaded as an attachment and appears in the text.
 - Images attached with Redmine's file field, or dropped onto it, are inserted into the text as well.
 - Insert an image from the attachments (a thumbnail picker) or a link to any attachment.
 - Resize an image by dragging its corners.
 
-**Code**
+### Code
 - Code blocks with syntax highlighting in the editor and on saved pages: 52 languages, and you can add more (see [Syntax highlighting](#syntax-highlighting)).
 - The language of a block is chosen from a badge in its corner, with search, recent and frequent languages.
 - Tab and Shift+Tab indent and outdent lines inside a code block; bold, links and colors inside code are kept.
 
-**Blocks**
+### Blocks
 - Collapsible block: a title with hidden content (`<details>`). Collapsed on saved pages, expanded in the editor.
 - Quote block with an author and date line.
 
-**Editing**
+### Editing
 - `<HTML>` mode to view and edit the HTML source: nested blocks are indented, a blank line separates the blocks that take several lines, the syntax is colored by the same rules as an HTML code block, and Enter keeps the indent of the line.
 - Markdown-style typing: `#` for headings, `-` and `1.` for lists, `[ ]` for tasks, ```` ```python ```` for a code block (any language name or none), `**bold**`, `---` for a horizontal rule. Standard keyboard shortcuts: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z and others.
 - The editor never grows taller than the window: the toolbar and the form buttons stay in view, and the text scrolls inside. The height follows the window size and page zoom.
 - A resize grip in the bottom right corner sets the height by hand. The height is remembered; double-click returns to automatic height.
 
-**Redmine integration**
+### Redmine integration
 - Works in all Redmine text fields with formatting: issue descriptions and notes, wiki pages, news, forum messages, documents, project descriptions, long text custom fields, including fields that appear on the page later.
 - Text is stored as HTML. To use the editor, choose *TipTap HTML* as the text formatting in Redmine settings.
 - The interface (tooltips, menus, dialogs) follows the language in the user's Redmine profile. 47 of the 50 languages of Redmine come with the plugin: English and Russian are complete, the other 45 are drafts made with an AI model that native speakers are welcome to correct. The three languages written right to left (Arabic, Hebrew, Persian) are deliberately not supported (see [Interface language](#interface-language)).

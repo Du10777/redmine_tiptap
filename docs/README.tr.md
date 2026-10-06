@@ -46,7 +46,30 @@
 
 Bu, TipTap tabanlı Redmine için bir metin düzenleyicidir https://github.com/ueberdosis/tiptap
 
-Desteklenen Redmine sürümleri:
+Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
+
+**İçindekiler**
+
+- [Desteklenen Redmine sürümleri](#desteklenen-redmine-sürümleri)
+- [Özellikler](#özellikler)
+  - [Metin biçimi](#metin-biçimi)
+  - [Listeler](#listeler)
+  - [Tablolar](#tablolar)
+  - [Resimler ve ekler](#resimler-ve-ekler)
+  - [Kod](#kod)
+  - [Bloklar](#bloklar)
+  - [Düzenleme](#düzenleme)
+  - [Redmine entegrasyonu](#redmine-entegrasyonu)
+- [Söz dizimi vurgulaması](#söz-dizimi-vurgulaması)
+- [Arayüz dili](#arayüz-dili)
+- [Kurulum](#kurulum)
+- [Güncelleme](#güncelleme)
+  - [Git ile kurulu (önerilir)](#git-ile-kurulu-önerilir)
+  - [Arşivden kurulu](#arşivden-kurulu)
+  - [Güncellemeden sonra](#güncellemeden-sonra)
+- [CKEditor'dan Geçiş](#ckeditordan-geçiş)
+
+## Desteklenen Redmine sürümleri
 
 | Redmine | Destek | Test edilen sürümler |
 |---|---|---|
@@ -56,11 +79,9 @@ Desteklenen Redmine sürümleri:
 
 Yeni bir ana sürüm (8.x ve sonrası), ancak eklenti o sürümde test edildikten sonra desteklenir. O zamana kadar o sürümdeki Redmine, eklenti kuruluyken başlamaz: desteklenen sürümleri belirten bir hatayla durur.
 
-Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
-
 ## Özellikler
 
-**Metin biçimi**
+### Metin biçimi
 - Kalın, italik, altı çizili, üstü çizili, alt simge ve üst simge (Ctrl+, ve Ctrl+.), satır içi kod.
 - Metin rengi ve arka plan rengi: 64 renkli palet veya herhangi bir hex değeri.
 - Font ailesi (13 yazı tipi) ve font boyutu (8'den 72 px'e kadar ön ayarlar veya herhangi bir değer).
@@ -69,40 +90,40 @@ Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json
 - Bağlantılar: ekle, düzenle, kaldır.
 - Yatay çizgi, geri al ve yinele.
 
-**Listeler**
+### Listeler
 - Disk, daire veya kare işaretleri olan madde işaretli listeler.
 - Numaralandırılmış listeler: 1, 01, a, A, i, I, α.
 - Onay kutuları olan görev listeleri; tamamlanan görevler üstü çizilidir.
 - İç içe listeler (Tab / Shift+Tab).
 
-**Tablolar**
+### Tablolar
 - Başlık satırı olan veya olmayan herhangi bir boyutta tablo ekle.
 - Hücrede sağ tık menüsü: satır ve sütun ekle ve sil, hücreleri birleştir ve böl, başlık satırını ayarla, tabloyu sil.
 - Sütun genişlikleri hücre kenarlığını sürükleyerek değiştirilir.
 - Excel'den yapıştırıldığında sütun genişlikleri, hizalama ve yazı tipi boyutları korunur; Redmine'den kopyalanan tablo, sınırlarla Excel'e yapıştırılır.
 
-**Resimler ve ekler**
+### Resimler ve ekler
 - Panodan bir resim yapıştırıldığında: dosya olarak yüklenir ve metinde görünür.
 - Redmine'nin dosya alanıyla eklenen veya üzerine atılan resimler de metne eklenir.
 - Ekli dosyalardan resim ekle (küçük resim seçici) veya herhangi bir dosyaya bağlantı.
 - Köşelerini sürükleyerek resimi yeniden boyutlandırın.
 
-**Kod**
+### Kod
 - Düzenleyicide ve kaydedilen sayfalarda söz dizimi vurgulaması olan kod blokları: 52 dil ve daha fazlasını ekleyebilirsiniz ([Syntax highlighting](#söz-dizimi-vurgulaması) bölümüne bakın).
 - Bir bloğun dili, köşesindeki rozet çizgisinden seçilir; listede arama, son kullanılan ve sık kullanılan diller vardır.
 - Kod bloğu içinde Tab ve Shift+Tab satırları girintiler; kod içindeki kalın, bağlantılar ve renkler korunur.
 
-**Bloklar**
+### Bloklar
 - Çöktürülebilir blok: başlığı olan gizli içerik (`<details>`). Kaydedilen sayfalarda kapalı, düzenleyicide açık.
 - Yazar ve tarih satırı olan alıntı bloğu.
 
-**Düzenleme**
+### Düzenleme
 - `<HTML>` modu HTML kaynağını görmek ve düzenlemek içindir: iç içe bloklar girintilenir, birden çok satır kaplayan bloklar boş bir satırla ayrılır, söz dizimi bir HTML kod bloğuyla aynı kurallara göre renklendirilir ve Enter satırın girintisini korur.
 - Markdown benzeri yazma: başlıklar için `#`, listeler için `-` ve `1.`, görevler için `[ ]`, kod bloğu için ```` ```python ````, `**bold**`, yatay çizgi için `---`. Standart klavye kısayolları: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z vb.
 - Düzenleyici hiçbir zaman pencerenin ötesinde büyümez: araç çubuğu ve form düğmeleri görünür kalır, metin içinde kaydırılır. Yükseklik, pencere boyutunu ve sayfa yakınlaştırmasını takip eder.
 - Sağ alt köşedeki yeniden boyutlandırma tutacağı yüksekliği elle ayarlar. Yükseklik hatırlanır; çift tıklama otomatik yüksekliğe döner.
 
-**Redmine entegrasyonu**
+### Redmine entegrasyonu
 - Redmine'nin metin formatıyla tüm metin alanlarında çalışır: görev açıklamaları ve notları, wiki sayfaları, haberler, forum iletileri, belgeler, proje açıklamaları, uzun metin özel alanları, daha sonra sayfada görünen alanlar da dahil olmak üzere.
 - Metin HTML olarak depolanır. Düzenleyiciyi kullanmak için Redmine ayarlarında metin biçimini *TipTap HTML* seçin.
 - Arayüz (ipuçları, menüler, iletişim kutuları) kullanıcının Redmine profilindeki dili takip eder. Redmine'nin 50 dilinden 47'si eklentiyle birlikte gelir: İngilizce ve Rusça tamamdır, diğer 45'i yapay zeka modeli tarafından hazırlanan taslaklar olup yerli konuşmacılar tarafından düzeltilmesi beklenmektedir. Sağdan sola yazılan üç dil (Arapça, İbranice, Farsça) bilerek desteklenmez ([Interface language](#arayüz-dili) bölümüne bakın).

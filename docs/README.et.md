@@ -46,7 +46,30 @@
 
 See on tekstiredaktor Redmine'i jaoks, mis põhineb TipTapil https://github.com/ueberdosis/tiptap
 
-Toetatud Redmine'i versioonid:
+Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud selle täpsele versioonile `package.json` ja `package-lock.json` ning neid tuleb alati koos täiendada ühele ja samale versioonile.
+
+**Sisukord**
+
+- [Toetatud Redmine'i versioonid](#toetatud-redminei-versioonid)
+- [Funktsioonid](#funktsioonid)
+  - [Teksti vormindamine](#teksti-vormindamine)
+  - [Loendid](#loendid)
+  - [Tabelid](#tabelid)
+  - [Pildid ja manustamised](#pildid-ja-manustamised)
+  - [Kood](#kood)
+  - [Plokid](#plokid)
+  - [Redigeerimine](#redigeerimine)
+  - [Redmine'i integreerimine](#redminei-integreerimine)
+- [Süntaksvärvitus](#süntaksvärvitus)
+- [Liidese keel](#liidese-keel)
+- [Paigaldus](#paigaldus)
+- [Värskendamine](#värskendamine)
+  - [Paigaldatud giti abil (soovitatav)](#paigaldatud-giti-abil-soovitatav)
+  - [Paigaldatud arhiivist](#paigaldatud-arhiivist)
+  - [Pärast värskendamist](#pärast-värskendamist)
+- [Üleminek CKEditorilt](#üleminek-ckeditorilt)
+
+## Toetatud Redmine'i versioonid
 
 | Redmine | Toetatud | Testitud versioonidel |
 |---|---|---|
@@ -56,11 +79,9 @@ Toetatud Redmine'i versioonid:
 
 Uus põhiversioon (8.x ja hilisemad) saab toetatuks alles pärast seda, kui pistikut on sellel testitud. Seni ei käivitu selle versiooni Redmine paigaldatud pistikuga: see peatub veaga, mis nimetab toetatud versioonid.
 
-Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud selle täpsele versioonile `package.json` ja `package-lock.json` ning neid tuleb alati koos täiendada ühele ja samale versioonile.
-
 ## Funktsioonid
 
-**Teksti vormindamine**
+### Teksti vormindamine
 - Paks, kaldkiri, allajoon, läbijoonitud, alaindeks ja ülaindeks (Ctrl+, ja Ctrl+.), tekstisisene kood.
 - Teksti värvus ja tausta värvus: 64-värvine palett või mis tahes kuueteistkümnendsüsteemi väärtus.
 - Kirjatüüp (13 fonti) ja kirjasuuruse (eelseadistused 8 kuni 72 px või mis tahes väärtus).
@@ -69,45 +90,45 @@ Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud sel
 - Lingid: sisestamine, redigeerimine, eemaldamine.
 - Horisontaalne joon, võta tagasi ja tee uuesti.
 
-**Loendid**
+### Loendid
 - Täpiloenelud ketta, ringi või ruudu markeritega.
 - Nummerdatud loendid: 1, 01, a, A, i, I, α.
 - Ülesandeloendelid märkekastidega; lõpetatud ülesanded on läbijoonitud.
 - Pesastatud loendid (Tab / Shift+Tab).
 
-**Tabelid**
+### Tabelid
 - Sisestage mis tahes suurusega tabel, päiserida või ilma.
 - Paremklõpsu menüü lahtris: ridade ja veergude lisamine ja kustutamine, lahtrite ühendamine ja jagamine, päiserida ja päiseveerg, tabeli kustutamine.
 - Veergude laiuseid muudetakse lahtri piiride lohistamisel.
 - Excelist kleepimisega säilitatakse veergude laiused, joondamine ja fondi suurused; Redmine'ist kopeeritud tabel liimitakse Exceli piiridega.
 
-**Pildid ja manustamised**
+### Pildid ja manustamised
 - Kleepige pilt lõikepuhvrist: see laetakse üles manustamisena ja kuvatakse tekstis.
 - Pildid, mis on manustatud Redmine'i failivalja abil või loobitud sellele, lisatakse samuti tekstisse.
 - Sisestage pilt manustamistest (pisipildi valija) või link mis tahes manustamisele.
 - Muutke pildi suurust, lohistades selle nurki.
 
-**Kood**
+### Kood
 - Koodiblokid süntaksivärvitusega redaktoris ja salvestatud lehtedel: 52 keelt ja te võite lisada rohkem (vt [Süntaksvärvitus](#süntaksvärvitus)).
 - Ploki keel valitakse selle nurga märgist, otsing, viimased ja sagedased keeled.
 - Tab ja Shift+Tab taandasid ja väljundsid jooned koodiplokkides; paks, lingid ja värvid koodis säilitatakse.
 
-**Plokid**
+### Plokid
 - Volditav plokk: pealkiri peidetud sisuga (`<details>`). Salvestatud lehtedel kokku pandud, redaktoris avatud.
 - Tsitaat-plokk koos autori ja kuupäeva reaga.
 
-**Redigeerimine**
+### Redigeerimine
 - `<HTML>` režiim HTML-i allika vaatamiseks ja redigeerimiseks: pesastatud plokid taandatakse, mitmest reast koosnevad plokid eraldatakse tühja reaga, süntaksit värvitakse samade reeglite järgi nagu HTML-koodiplokis ning Enter säilitab rea taande.
 - Markdown-stiilis sisestus: `#` pealkirjade jaoks, `-` ja `1.` loendite jaoks, `[ ]` ülesannete jaoks, ```` ```python ```` koodiplokkide jaoks (mis tahes keele nimi või mitte), `**bold**`, `---` horisontaalse joone jaoks. Standardsed klaviatuurikäsud: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z ja teised.
 - Redaktor ei kasva kunagi aknasoole kõrgemale: tööriistariba ja vormi nupud jäävad nähtavaks ning tekst skrollub sisemises. Kõrgus järgib akna suurust ja lehe suumi.
 - Redaktori parempoolses alumises nurgas on suuruse muutmise käepide. Kõrgus jäetakse meelde; topeltklõps naaseb automaatsele kõrgusele.
 
-**Redmine'i integreerimine**
+### Redmine'i integreerimine
 - Töötab kõigis Redmine'i tekstiväljade vormindamisega: teema kirjeldused ja märkused, viki lehed, uudised, foorumi sõnumid, dokumendid, projekti kirjeldused, pikad tekstilised kohandatud väljad, sealhulgas väljad, mis kuvatakse lehel hiljem.
 - Tekst salvestatakse HTML-ina. Redaktori kasutamiseks valige Redmine'i seadetes *TipTap HTML* teksti vormindamisena.
 - Liides (näpunäited, menüüd, dialoogid) järgib kasutaja Redmine'i profiilis valitud keelt. 47 Redmine'i 50 keelest sisaldab pistikut: inglise keel ja vene keel on täielikud, ülejäänud 45 on mustandi, mille on teinud tehisintellekt, mida emakeelsed kõnelejad on teretulnud parandama. Kolm paremalalt vasakule kirjutatud keelt (Araabia, Heebrea, Persia) ei ole tahtlikult toetatud (vt [Liidese keel](#liidese-keel)).
 - Jääb kiireks suurte tekstidega: redaktoreid varjatud vormidel luuakse alles siis, kui vorm avatakse, ja pikad koodiplokid esiletõstetakse, kui nad vaatesse skrollitavad.
-- Tekstid, mis on kirjutatud CKEditoris (redmine_ckeditor plugin), kuvatakse nii nagu olid ja avatakse redaktoris nende vormindamisega: konversiooni ei ole, vt [CKEditorist üleminekul](#ckeditorist-üleminekul).
+- Tekstid, mis on kirjutatud CKEditoris (redmine_ckeditor plugin), kuvatakse nii nagu olid ja avatakse redaktoris nende vormindamisega: konversiooni ei ole, vt [Üleminek CKEditorilt](#üleminek-ckeditorilt).
 - Salvestatud tekstid kuvatakse ilma ebaturvalise HTML-ita: skriptid, sündmuste käsitlejad ja `javascript:` lingid eemaldatakse lehe kuvamisel, säilitatakse ainult see, mida redaktor ise loob. See hõlmab ka tekste, mis tulevad REST API-t või `<HTML>` režiimit.
 
 ## Süntaksvärvitus
@@ -185,7 +206,7 @@ Teine samm on oluline. Käivitamisel avaldab Redmine pistiku varad ainult siis, 
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
 
-## CKEditorist üleminekul
+## Üleminek CKEditorilt
 
 Kui teie Redmine kasutas [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), saate vahetada selle pistikule ja hoida iga teksti, mis on kirjutatud: teemad, märkused, viki lehed, uudised, sõnumid, dokumendid. Midagi ei teisendita ja andmebaas ei puuduta. CKEditor salvestab oma tekstid HTML-ina ja nii teeb see pistik, seega salvestatud tekst kuvatakse lihtsalt uue vormindaja poolt.
 

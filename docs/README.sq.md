@@ -46,7 +46,30 @@
 
 Ky është një përpunues teksti për Redmine, i bazuar në TipTap https://github.com/ueberdosis/tiptap
 
-Versionet e mbështetura të Redmine-it:
+Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
+
+**Përmbajtja**
+
+- [Versionet e mbështetura të Redmine-it](#versionet-e-mbështetura-të-redmine-it)
+- [Veçoritë](#veçoritë)
+  - [Formatimi i tekstit](#formatimi-i-tekstit)
+  - [Listat](#listat)
+  - [Tabelat](#tabelat)
+  - [Figurat dhe bashkëngjitjet](#figurat-dhe-bashkëngjitjet)
+  - [Kodi](#kodi)
+  - [Blloqet](#blloqet)
+  - [Përpunimi](#përpunimi)
+  - [Integrimi me Redmine](#integrimi-me-redmine)
+- [Theksimi i sintaksës](#theksimi-i-sintaksës)
+- [Gjuha e ndërfaqes](#gjuha-e-ndërfaqes)
+- [Instalimi](#instalimi)
+- [Përditësimi](#përditësimi)
+  - [Instaluar me git (e rekomanduar)](#instaluar-me-git-e-rekomanduar)
+  - [Instaluar nga një arkiv](#instaluar-nga-një-arkiv)
+  - [Pas përditësimit](#pas-përditësimit)
+- [Migrimi nga CKEditor](#migrimi-nga-ckeditor)
+
+## Versionet e mbështetura të Redmine-it
 
 | Redmine | Mbështetet | Testuar në |
 |---|---|---|
@@ -56,11 +79,9 @@ Versionet e mbështetura të Redmine-it:
 
 Një version i ri kryesor (8.x e më pas) mbështetet vetëm pasi shtojca të jetë testuar në të. Deri atëherë, Redmine i atij versioni nuk niset me shtojcën të instaluar: ndalet me një gabim që përmend versionet e mbështetura.
 
-Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
-
 ## Veçoritë
 
-**Formatimi i tekstit**
+### Formatimi i tekstit
 - Të trasha, të pjerrëta, të nënvizuara, me vijë në mes, indeks i poshtëm dhe i sipërm (Ctrl+, dhe Ctrl+.), kod brenda rreshtit.
 - Ngjyra e tekstit dhe ngjyra e sfondit: një paletë me 64 ngjyra ose çdo vlerë heksadecimale.
 - Familja e shkronjave (13 fonte) dhe madhësia e shkronjave (vlera të paracaktuara nga 8 deri në 72 px, ose çdo vlerë).
@@ -69,40 +90,40 @@ Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë f
 - Lidhjet: futje, përpunim, heqje.
 - Vijë horizontale, zhbërje dhe ribërje.
 
-**Listat**
+### Listat
 - Lista me pika, me shënues në formë disku, rrethi ose katrori.
 - Lista të numëruara: 1, 01, a, A, i, I, α.
 - Lista detyrash me kuti shënimi; detyrat e kryera shfaqen me vijë në mes.
 - Lista brenda listash (Tab / Shift+Tab).
 
-**Tabelat**
+### Tabelat
 - Futni një tabelë me çfarëdo madhësie, me ose pa rresht kreu.
 - Menuja me klikim të djathtë në një qelizë: shtim dhe fshirje rreshtash e shtyllash, bashkim dhe ndarje qelizash, rresht kreu dhe shtyllë kreu, fshirje e tabelës.
 - Gjerësia e shtyllave ndryshohet duke tërhequr kufijtë e qelizave.
 - Ngjitja nga Excel ruan gjerësinë e shtyllave, rreshtimin dhe madhësitë e shkronjave; një tabelë e kopjuar nga Redmine ngjitet në Excel me kufij.
 
-**Figurat dhe bashkëngjitjet**
+### Figurat dhe bashkëngjitjet
 - Ngjitni një figurë nga clipboard-i: ngarkohet si bashkëngjitje dhe shfaqet në tekst.
 - Figurat e bashkëngjitura përmes fushës së kartelave të Redmine-it, ose të lëshuara mbi të, futen gjithashtu në tekst.
 - Futni një figurë nga bashkëngjitjet (një përzgjedhës me miniatura) ose një lidhje me çfarëdo bashkëngjitjeje.
 - Ndryshoni madhësinë e një figure duke tërhequr cepat e saj.
 
-**Kodi**
+### Kodi
 - Blloqe kodi me theksim sintakse në përpunues dhe në faqet e ruajtura: 52 gjuhë, dhe mund të shtoni të tjera (shihni [Theksimi i sintaksës](#theksimi-i-sintaksës)).
 - Gjuha e një blloku zgjidhet nga një etiketë në cepin e tij, me kërkim, si dhe me gjuhët e përdorura së fundi dhe më shpesh.
 - Tab dhe Shift+Tab shtojnë dhe heqin kryeradhën e rreshtave brenda një blloku kodi; shkronjat e trasha, lidhjet dhe ngjyrat brenda kodit ruhen.
 
-**Blloqet**
+### Blloqet
 - Bllok i palosshëm: një titull me përmbajtje të fshehur (`<details>`). I palosur në faqet e ruajtura, i shpalosur në përpunues.
 - Bllok citimi me një rresht për autorin dhe datën.
 
-**Përpunimi**
+### Përpunimi
 - Mënyra `<HTML>` për të parë dhe përpunuar kodin burimor HTML: blloqet brenda blloqeve shfaqen me kryeradhë, një rresht bosh i ndan blloqet që zënë disa rreshta, sintaksa ngjyroset sipas të njëjtave rregulla si në një bllok kodi HTML dhe Enter e ruan kryeradhën e rreshtit.
 - Shkrim në stilin Markdown: `#` për tituj, `-` dhe `1.` për lista, `[ ]` për detyra, ```` ```python ```` për një bllok kodi (me emrin e çfarëdo gjuhe ose pa emër), `**bold**`, `---` për vijë horizontale. Shkurtesa standarde të tastierës: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z dhe të tjera.
 - Përpunuesi nuk bëhet kurrë më i lartë se dritarja: shiriti i veglave dhe butonat e formularit mbeten të dukshëm, ndërsa teksti rrëshqet brenda tij. Lartësia ndjek madhësinë e dritares dhe zmadhimin e faqes.
 - Një dorezë ndryshimi të madhësisë në cepin e poshtëm djathtas e vendos lartësinë me dorë. Lartësia mbahet mend; me dyklikim kthehet te lartësia automatike.
 
-**Integrimi me Redmine**
+### Integrimi me Redmine
 - Punon në të gjitha fushat e tekstit të Redmine-it me formatim: përshkrimet dhe shënimet e çështjeve, faqet wiki, lajmet, mesazhet e forumeve, dokumentet, përshkrimet e projekteve, fushat vetjake me tekst të gjatë, përfshirë fushat që shfaqen më vonë në faqe.
 - Teksti ruhet si HTML. Për të përdorur përpunuesin, zgjidhni *TipTap HTML* si formatim tekstesh në rregullimet e Redmine-it.
 - Ndërfaqja (këshillat e veglave, menutë, dialogët) ndjek gjuhën në profilin e përdoruesit në Redmine. Me shtojcën vijnë 47 nga 50 gjuhët e Redmine-it: anglishtja dhe rusishtja janë të plota, 45 të tjerat janë përkthime paraprake të bëra me një model të inteligjencës artificiale, që folësit amtarë janë të mirëpritur t'i korrigjojnë. Tri gjuhët që shkruhen nga e djathta në të majtë (arabishtja, hebraishtja, persishtja) nuk mbështeten qëllimisht (shihni [Gjuha e ndërfaqes](#gjuha-e-ndërfaqes)).

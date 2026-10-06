@@ -46,7 +46,30 @@
 
 Ovo je tekstualni editor za Redmine, temeljen na TipTap https://github.com/ueberdosis/tiptap
 
-Podržane verzije Redminea:
+Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu točnu verziju u `package.json` i `package-lock.json` i moraju se uvijek ažurirati zajedno, na istu verziju.
+
+**Sadržaj**
+
+- [Podržane verzije Redminea](#podržane-verzije-redminea)
+- [Značajke](#značajke)
+  - [Oblikovanje teksta](#oblikovanje-teksta)
+  - [Popisi](#popisi)
+  - [Tablice](#tablice)
+  - [Slike i prilozi](#slike-i-prilozi)
+  - [Kod](#kod)
+  - [Blokovi](#blokovi)
+  - [Uređivanje](#uređivanje)
+  - [Integracija u Redmine](#integracija-u-redmine)
+- [Isticanje sintakse](#isticanje-sintakse)
+- [Jezik sučelja](#jezik-sučelja)
+- [Instalacija](#instalacija)
+- [Ažuriranje](#ažuriranje)
+  - [Instaliran sa git-om (preporučeno)](#instaliran-sa-git-om-preporučeno)
+  - [Instaliran iz arhive](#instaliran-iz-arhive)
+  - [Nakon ažuriranja](#nakon-ažuriranja)
+- [Migracija sa CKEditora](#migracija-sa-ckeditora)
+
+## Podržane verzije Redminea
 
 | Redmine | Podrška | Testirano na |
 |---|---|---|
@@ -56,11 +79,9 @@ Podržane verzije Redminea:
 
 Nova glavna verzija (8.x i novije) postaje podržana tek nakon što se dodatak testira na njoj. Do tada se Redmine te verzije ne pokreće s instaliranim dodatkom: zaustavlja se s pogreškom u kojoj su navedene podržane verzije.
 
-Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu točnu verziju u `package.json` i `package-lock.json` i moraju se uvijek ažurirati zajedno, na istu verziju.
-
 ## Značajke
 
-**Oblikovanje teksta**
+### Oblikovanje teksta
 - Podebljano, kurzivno, podcrtano, precrtano, donji i gornji indeks (Ctrl+, i Ctrl+.), tekst sa inline kodom.
 - Boja teksta i boja pozadine: paleta od 64 boje ili bilo koja heksadecimalna vrijednost.
 - Obitelj fontova (13 fontova) i veličina fonta (unaprijed postavljene vrijednosti od 8 do 72 px, ili bilo koja vrijednost).
@@ -69,40 +90,40 @@ Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu
 - Veze: umetnite, uredite, uklonite.
 - Vodoravna crta, poništi i ponovi.
 
-**Popisi**
+### Popisi
 - Popisi s grafičkim znamenima sa diska, kruga ili kvadrata.
 - Brojani popisi: 1, 01, a, A, i, I, α.
 - Popisi zadataka sa checkboxima; dovršeni zadaci su precrtani.
 - Ugniježđeni popisi (Tab / Shift+Tab).
 
-**Tablice**
+### Tablice
 - Umetnite tablicu bilo koje veličine, sa ili bez reda zaglavlja.
 - Kontekstni izbornik u ćeliji: dodajte i brišite redove i stupce, spojite i podijelite ćelije, red zaglavlja i stupac zaglavlja, izbrišite tablicu.
 - Širine stupaca se mijenjaju povlačenjem granica ćelija.
 - Lijepljenje iz Excela čuva širine stupaca, poravnanje i veličine fontova; tablica kopirana iz Redminea se lijepi u Excel sa granicama.
 
-**Slike i prilozi**
+### Slike i prilozi
 - Lijepi sliku iz međuspremnika: učitava se kao prilog i pojavljuje se u tekstu.
 - Slike priložene poljem Redminea ili ispuštene na njega, umjećuju se i u tekst.
 - Umetnite sliku iz priloga (birač sličica) ili vezu do bilo kojeg priloga.
 - Promijenite veličinu slike povlačenjem njenih uglova.
 
-**Kod**
+### Kod
 - Blokovi koda sa isticanjem sintakse u editoru i na spremljenim stranicama: 52 jezika, i možete dodati više (vidi [Isticanje sintakse](#isticanje-sintakse)).
 - Jezik bloka odabire se iz znaka u njegovom kutu sa pretraživanjem, nedavnim i često korišćenim jezicima.
 - Tab i Shift+Tab povlače i uvlače linije unutar bloka koda; podebljano, veze i boje u kodu se čuvaju.
 
-**Blokovi**
+### Blokovi
 - Skupljiv blok: naslov sa skrivenim sadržajem (`<details>`). Skupljen na spremljenim stranicama, otvoren u editoru.
 - Blok citata sa linijom autora i datuma.
 
-**Uređivanje**
+### Uređivanje
 - `<HTML>` mod za prikaz i uređivanje HTML izvora: ugniježđeni blokovi su uvučeni, prazna linija odvaja blokove koji zauzimaju više linija, sintaksa je obojena po istim pravilima kao u HTML bloku koda, a Enter zadržava uvlaku linije.
 - Pisanje u Markdown stilu: `#` za naslove, `-` i `1.` za popise, `[ ]` za zadatke, ```` ```python ```` za blok koda (bilo koji naziv jezika ili ništa), `**bold**`, `---` za vodoravnu crtu. Standardne tipkovničke prečice: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i ostale.
 - Editor nikada ne raste viši od prozora: alatna traka i gumbi formi ostaju vidljivi, a tekst se klizi unutar. Visina slijedi veličinu prozora i razinu zuma stranice.
 - Ručica za promjenu veličine u donjem desnom kutu postavlja visinu ručno. Visina se pamti; dvostruki klik vraća automatsku visinu.
 
-**Integracija u Redmine**
+### Integracija u Redmine
 - Radi u svim poljima Redminea za oblikovanje teksta: opisi predmeta i napomene, wiki stranice, novosti, poruke foruma, dokumenti, opisi projekata, polja sa dugim tekstom po korisniku, uključujući polja koja se pojavljuju na stranici kasnije.
 - Tekst se pohranjuje kao HTML. Da koristite editor, odaberite *TipTap HTML* kao oblikovanje teksta u Redmine postavkama.
 - Sučelje (savjeti, izbornici, dijalozi) prati jezik u korisnički Redmine profilu. 47 od 50 jezika Redminea dolazi sa dodatkom: Engleski i Ruski su potpuni, ostalih 45 su skice napravljene sa AI modelom koje su izvorni govornici dobrodošli da isprave. Tri jezika napisana s desna na lijevo (Arapski, Hebrejski, Perzijski) su namjerno nepodržani (vidi [Jezik sučelja](#jezik-sučelja)).

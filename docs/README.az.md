@@ -46,7 +46,30 @@
 
 Bu, Redmine üçün TipTap (https://github.com/ueberdosis/tiptap) əsasında hazırlanmış mətn redaktorudur.
 
-Dəstəklənən Redmine versiyaları:
+Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
+
+**Mündəricat**
+
+- [Dəstəklənən Redmine versiyaları](#dəstəklənən-redmine-versiyaları)
+- [Xüsusiyyətlər](#xüsusiyyətlər)
+  - [Mətnin formatlaşdırılması](#mətnin-formatlaşdırılması)
+  - [Siyahılar](#siyahılar)
+  - [Cədvəllər](#cədvəllər)
+  - [Şəkillər və qoşulmuş fayllar](#şəkillər-və-qoşulmuş-fayllar)
+  - [Kod](#kod)
+  - [Bloklar](#bloklar)
+  - [Redaktə](#redaktə)
+  - [Redmine ilə inteqrasiya](#redmine-ilə-inteqrasiya)
+- [Sintaksisin vurğulanması](#sintaksisin-vurğulanması)
+- [İnterfeys dili](#i̇nterfeys-dili)
+- [Quraşdırma](#quraşdırma)
+- [Yeniləmə](#yeniləmə)
+  - [git ilə quraşdırıldıqda (tövsiyə olunur)](#git-ilə-quraşdırıldıqda-tövsiyə-olunur)
+  - [Arxivdən quraşdırıldıqda](#arxivdən-quraşdırıldıqda)
+  - [Yenilədikdən sonra](#yenilədikdən-sonra)
+- [CKEditor-dan miqrasiya](#ckeditor-dan-miqrasiya)
+
+## Dəstəklənən Redmine versiyaları
 
 | Redmine | Dəstəklənir | Sınaqdan keçirilib |
 |---|---|---|
@@ -56,11 +79,9 @@ Dəstəklənən Redmine versiyaları:
 
 Yeni əsas versiya (8.x və sonrakılar) yalnız plagin onun üzərində sınaqdan keçirildikdən sonra dəstəklənir. O vaxta qədər həmin versiyalı Redmine plagin quraşdırılmış halda işə düşmür: dəstəklənən versiyaları göstərən xəta ilə dayanır.
 
-Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
-
 ## Xüsusiyyətlər
 
-**Mətnin formatlaşdırılması**
+### Mətnin formatlaşdırılması
 - Qalın, kursiv, altından xətt çəkilmiş, üstündən xətt çəkilmiş mətn, alt və üst indekslər (Ctrl+, və Ctrl+.), sətirdaxili kod.
 - Mətn rəngi və fon rəngi: 64 rəngli palitra və ya istənilən hex dəyəri.
 - Şrift ailəsi (13 şrift) və şrift ölçüsü (8-dən 72 px-ə qədər hazır dəyərlər və ya istənilən dəyər).
@@ -69,40 +90,40 @@ Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `packa
 - Keçidlər: daxil etmək, redaktə etmək, silmək.
 - Üfüqi xətt, geri qaytarma və təkrar etmə.
 
-**Siyahılar**
+### Siyahılar
 - Markerli siyahılar: dolu dairə, boş dairə və ya kvadrat markerlərlə.
 - Nömrələnmiş siyahılar: 1, 01, a, A, i, I, α.
 - Seçim qutuları olan tapşırıq siyahıları; yerinə yetirilmiş tapşırıqların üstündən xətt çəkilir.
 - İç-içə siyahılar (Tab / Shift+Tab).
 
-**Cədvəllər**
+### Cədvəllər
 - İstənilən ölçüdə cədvəl daxil etmək: başlıq sətri ilə və ya onsuz.
 - Xanada sağ klik menyusu: sətir və sütunların əlavə edilməsi və silinməsi, xanaların birləşdirilməsi və bölünməsi, başlıq sətri və başlıq sütunu, cədvəlin silinməsi.
 - Sütunların eni xanaların sərhədlərini sürükləməklə dəyişdirilir.
 - Excel-dən yapışdırma zamanı sütunların eni, düzləndirmə və şrift ölçüləri saxlanılır; Redmine-dən kopyalanmış cədvəl Excel-ə haşiyələrlə yapışdırılır.
 
-**Şəkillər və qoşulmuş fayllar**
+### Şəkillər və qoşulmuş fayllar
 - Şəkli mübadilə buferindən yapışdırmaq: o, qoşulmuş fayl kimi yüklənir və mətndə görünür.
 - Redmine-in fayl sahəsi ilə qoşulan və ya onun üzərinə buraxılan şəkillər də mətnə daxil edilir.
 - Qoşulmuş fayllardan şəkil (miniatür seçimi ilə) və ya istənilən qoşulmuş fayla keçid daxil etmək.
 - Şəklin ölçüsünü künclərindən sürükləməklə dəyişmək.
 
-**Kod**
+### Kod
 - Redaktorda və saxlanmış səhifələrdə sintaksisin vurğulanması ilə kod blokları: 52 dil, daha çoxunu özünüz əlavə edə bilərsiniz (bax: [Sintaksisin vurğulanması](#sintaksisin-vurğulanması)).
 - Blokun dili küncündəki nişandan seçilir: axtarış, son istifadə olunan və tez-tez istifadə olunan dillər.
 - Tab və Shift+Tab kod blokunun içində sətirlərin girintisini artırır və azaldır; kodun içindəki qalın mətn, keçidlər və rənglər saxlanılır.
 
-**Bloklar**
+### Bloklar
 - Yığıla bilən blok: gizlədilmiş məzmunlu başlıq (`<details>`). Saxlanmış səhifələrdə yığılmış, redaktorda isə açılmış olur.
 - Müəllif və tarix sətri olan sitat bloku.
 
-**Redaktə**
+### Redaktə
 - HTML mənbə kodunu görmək və redaktə etmək üçün `<HTML>` rejimi: iç-içə bloklar girintili yazılır, bir neçə sətir tutan blokları boş sətir ayırır, sintaksis HTML kod bloku ilə eyni qaydalar üzrə rənglənir və Enter sətrin girintisini saxlayır.
 - Markdown üslubunda yazma: başlıqlar üçün `#`, siyahılar üçün `-` və `1.`, tapşırıqlar üçün `[ ]`, kod bloku üçün ```` ```python ```` (istənilən dil adı ilə və ya dil adı olmadan), `**bold**`, üfüqi xətt üçün `---`. Standart klaviatura qısayolları: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z və digərləri.
 - Redaktor heç vaxt pəncərədən hündür olmur: alətlər paneli və formanın düymələri görünən qalır, mətn isə redaktorun daxilində sürüşdürülür. Hündürlük pəncərənin ölçüsünə və səhifənin miqyasına uyğun dəyişir.
 - Aşağı sağ küncdəki ölçü dəyişdirmə tutacağı hündürlüyü əl ilə təyin etməyə imkan verir. Hündürlük yadda saxlanılır; iki dəfə klik avtomatik hündürlüyə qaytarır.
 
-**Redmine ilə inteqrasiya**
+### Redmine ilə inteqrasiya
 - Formatlaşdırma imkanı olan bütün Redmine mətn sahələrində işləyir: tapşırıqların təsvirləri və qeydləri, wiki səhifələri, xəbərlər, forum mesajları, sənədlər, layihələrin təsvirləri, uzun mətn tipli sazlanan sahələr, o cümlədən səhifədə sonradan görünən sahələr.
 - Mətn HTML şəklində saxlanılır. Redaktordan istifadə etmək üçün Redmine sazlamalarında mətnin formatlaşdırılması kimi *TipTap HTML* seçin.
 - İnterfeys (alət məsləhətləri, menyular, dialoqlar) istifadəçinin Redmine profilindəki dilə uyğunlaşır. Redmine-in 50 dilindən 47-si plaginə daxildir: ingilis və rus dilləri tam hazırdır, qalan 45-i süni intellekt modeli ilə hazırlanmış qaralamalardır və dil daşıyıcılarının düzəlişləri məmnuniyyətlə qarşılanır. Sağdan sola yazılan üç dil (ərəb, ivrit, fars) qəsdən dəstəklənmir (bax: [İnterfeys dili](#i̇nterfeys-dili)).

@@ -46,7 +46,30 @@
 
 Ez egy szövegszerkesztő a Redmine-hez, amely a TipTap alapján készült https://github.com/ueberdosis/tiptap
 
-Támogatott Redmine verziók:
+Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
+
+**Tartalom**
+
+- [Támogatott Redmine verziók](#támogatott-redmine-verziók)
+- [Funkciók](#funkciók)
+  - [Szöveg formázás](#szöveg-formázás)
+  - [Listák](#listák)
+  - [Táblázatok](#táblázatok)
+  - [Képek és csatolmányok](#képek-és-csatolmányok)
+  - [Kód](#kód)
+  - [Blokkok](#blokkok)
+  - [Szerkesztés](#szerkesztés)
+  - [Redmine integráció](#redmine-integráció)
+- [Szintaxiskiemelés](#szintaxiskiemelés)
+- [Interfész nyelve](#interfész-nyelve)
+- [Telepítés](#telepítés)
+- [Frissítés](#frissítés)
+  - [Git-tel telepítve (ajánlott)](#git-tel-telepítve-ajánlott)
+  - [Archívumból telepítve](#archívumból-telepítve)
+  - [Frissítés után](#frissítés-után)
+- [Migrálás a CKEditor-ból](#migrálás-a-ckeditor-ból)
+
+## Támogatott Redmine verziók
 
 | Redmine | Támogatott | Tesztelt verziók |
 |---|---|---|
@@ -56,11 +79,9 @@ Támogatott Redmine verziók:
 
 Egy új főverzió (8.x és újabb) csak azután lesz támogatott, hogy a bővítményt tesztelték rajta. Addig az ilyen verziójú Redmine nem indul el telepített bővítménnyel: hibával leáll, amely megnevezi a támogatott verziókat.
 
-Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
-
 ## Funkciók
 
-**Szöveg formázás**
+### Szöveg formázás
 - Félkövér, dőlt, aláhúzott, áthúzott, alsó és felső index (Ctrl+, és Ctrl+.), soron belüli kód.
 - Szövegszín és háttérszín: 64 szín palettája vagy tetszőleges hex érték.
 - Betűtípus családja (13 betűtípus) és betűméret (8–72 px közötti előbeállítások vagy tetszőleges érték).
@@ -69,40 +90,40 @@ Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` 
 - Hivatkozások: beszúrás, szerkesztés, eltávolítás.
 - Vízszintes vonal, visszavonás és ismétlés.
 
-**Listák**
+### Listák
 - Felsorolásos listák: korong, kör vagy négyzet jelöléssel.
 - Számozott listák: 1, 01, a, A, i, I, α.
 - Feladatlisták jelölőnégyzetekkel; az elvégzett feladatok áthúzottak.
 - Beágyazott listák (Tab / Shift+Tab).
 
-**Táblázatok**
+### Táblázatok
 - Tetszőleges méretű táblázat beszúrása fejlécsort tartalmazva vagy anélkül.
 - Jobb kattintásos menü egy cellában: sorok és oszlopok hozzáadása és törlése, cellák összevonása és felosztása, fejlécsor és fejlécoszlop, táblázat törlése.
 - Oszlopszélességek megváltoztathatók a cellaszegélyek húzásával.
 - Az Excelből való beillesztés megőrzi az oszlopszélességeket, az igazítást és a betűméreteket; a Redmine-ből másolt táblázat szegélyekkel illeszthető be az Excelbe.
 
-**Képek és csatolmányok**
+### Képek és csatolmányok
 - Kép beillesztése a vágólapról: feltöltésre kerül csatolmányként és megjelenik a szövegben.
 - A Redmine fájl mezővel csatolt képek vagy rá dobott képek szintén beillesztésre kerülnek a szövegbe.
 - Kép beszúrása a csatolmányokból (egy miniatűr választó) vagy bármely csatolmányra mutató hivatkozás.
 - Kép átméretezése a sarkainak húzásával.
 
-**Kód**
+### Kód
 - Kódblokkok szintaxiskiemelésével a szerkesztőben és a mentett oldalakon: 52 nyelv, és hozzáadhat többet (lásd [Szintaxiskiemelés](#szintaxiskiemelés)).
 - Egy blokk nyelvét a jobb felső sarkában lévő jelvényben választhatja ki, keresésből, nemrég és gyakran használt nyelvekből.
 - A Tab és Shift+Tab behúzza és kihagy sorokat egy kódblokkon belül; a félkövér, a hivatkozások és a szövegek színei a kódban megmaradnak.
 
-**Blokkok**
+### Blokkok
 - Összecsukható blokk: cím rejtett tartalommal (`<details>`). A mentett oldalakon összecsukott, a szerkesztőben kibontva.
 - Idézet blokk szerzővel és dátum sorral.
 
-**Szerkesztés**
+### Szerkesztés
 - `<HTML>` mód a HTML forrás megtekintéséhez és szerkesztéséhez: a beágyazott blokkok be vannak húzva, a több sorból álló blokkokat üres sor választja el egymástól, a szintaxist ugyanazok a szabályok színezik, mint egy HTML kódblokkban, és az Enter megtartja a sor behúzását.
 - Markdown stílusú gépelés: `#` fejlécekhez, `-` és `1.` listákhoz, `[ ]` feladatokhoz, ```` ```python ```` kódblokk (tetszőleges nyelvnév vagy semmi), `**bold**` félkövetéshez, `---` vízszintes vonalhoz. Szabványos billentyűparancsok: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z és mások.
 - A szerkesztő soha nem nő meg nagyobbá, mint az ablak: az eszköztár és a formgombok láthatók maradnak, és a szöveg belül görget. A magasság követi az ablak méretét és az oldal nagyítását.
 - A jobb alsó sarokban egy átméretezési fogantyú kézzel állítja a magasságot. A magasság megjegyzésre kerül; kettős kattintás az automatikus magasságra való visszatéréshez.
 
-**Redmine integráció**
+### Redmine integráció
 - Minden formázott Redmine szövegmezőben működik: feladat leírások és feljegyzések, wiki oldalak, hírek, fórum üzenetek, dokumentumok, projekt leírások, hosszú szövegű egyéni mezők, beleértve az oldalakon később megjelenő mezőket.
 - A szöveg HTML formátumban van tárolva. A szerkesztő használatához válassza a *TipTap HTML* szövegformázást a Redmine beállításaiban.
 - Az interfész (tippek, menük, párbeszédablakok) a felhasználó Redmine profiljában beállított nyelvhez igazodik. A Redmine 50 nyelvéből 47 szerepel a bővítményben: az angol és az orosz teljes, a további 45 az AI-modellel készült vázlatok, amelyeket a beszélők szívesen javíthatnak. A három jobbról balra írt nyelv (arab, héber, perzsa) szándékosan nem támogatott (lásd [Interfész nyelve](#interfész-nyelve)).

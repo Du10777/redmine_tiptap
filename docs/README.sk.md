@@ -46,7 +46,30 @@
 
 Toto je textový editor pre Redmine založený na TipTap https://github.com/ueberdosis/tiptap
 
-Podporované verzie Redmine:
+Editor: **TipTap 3.31.4**. Všetky balíčky `@tiptap/*` sú v `package.json` a `package-lock.json` pripnuté na túto presnú verziu a musia byť vždy aktualizované spolu na rovnakú verziu.
+
+**Obsah**
+
+- [Podporované verzie Redmine](#podporované-verzie-redmine)
+- [Funkcie](#funkcie)
+  - [Formátovanie textu](#formátovanie-textu)
+  - [Zoznamy](#zoznamy)
+  - [Tabuľky](#tabuľky)
+  - [Obrázky a prílohy](#obrázky-a-prílohy)
+  - [Kód](#kód)
+  - [Bloky](#bloky)
+  - [Úpravy](#úpravy)
+  - [Integrácia s Redmine](#integrácia-s-redmine)
+- [Zvýrazňovanie syntaxe](#zvýrazňovanie-syntaxe)
+- [Jazyk rozhrania](#jazyk-rozhrania)
+- [Inštalácia](#inštalácia)
+- [Aktualizácia](#aktualizácia)
+  - [Nainštalované pomocou git (odporúčané)](#nainštalované-pomocou-git-odporúčané)
+  - [Nainštalované z archívu](#nainštalované-z-archívu)
+  - [Po aktualizácii](#po-aktualizácii)
+- [Migrácia z CKEditoru](#migrácia-z-ckeditoru)
+
+## Podporované verzie Redmine
 
 | Redmine | Podpora | Testované na |
 |---|---|---|
@@ -56,11 +79,9 @@ Podporované verzie Redmine:
 
 Nová hlavná verzia (8.x a novšie) je podporovaná až potom, ako sa na nej plugin otestuje. Dovtedy sa Redmine tejto verzie s nainštalovaným pluginom nespustí: zastaví sa s chybou, ktorá uvádza podporované verzie.
 
-Editor: **TipTap 3.31.4**. Všetky balíčky `@tiptap/*` sú v `package.json` a `package-lock.json` pripnuté na túto presnú verziu a musia byť vždy aktualizované spolu na rovnakú verziu.
-
 ## Funkcie
 
-**Formátovanie textu**
+### Formátovanie textu
 - Tučný, kurzíva, podčiarknutie, prečiarknutie, dolný index a horný index (Ctrl+, a Ctrl+.), vložený kód.
 - Farba textu a farba pozadia: paleta 64 farieb alebo ľubovoľná hex hodnota.
 - Rodina písma (13 písem) a veľkosť písma (prednastavenia od 8 do 72 px, alebo ľubovoľná hodnota).
@@ -69,40 +90,40 @@ Editor: **TipTap 3.31.4**. Všetky balíčky `@tiptap/*` sú v `package.json` a 
 - Odkazy: vloženie, úpravy, odstránenie.
 - Vodorovná čiara, vrátenie späť a opakovanie.
 
-**Zoznamy**
+### Zoznamy
 - Zoznamy s odrážkami s guľaťatými, kruhovými alebo štvorcovými značkami.
 - Číslované zoznamy: 1, 01, a, A, i, I, α.
 - Zoznamy úloh so zaškrtávacími poľami; dokončené úlohy sú prečiarknuté.
 - Vnorené zoznamy (Tab / Shift+Tab).
 
-**Tabuľky**
+### Tabuľky
 - Vloženie tabuľky ľubovoľnej veľkosti, s riadkom hlavičky alebo bez nej.
 - Kontextová ponuka v bunke: pridanie a odstránenie riadkov a stĺpcov, zlúčenie a rozdelenie buniek, riadok a stĺpec hlavičky, odstránenie tabuľky.
 - Šírky stĺpcov sa menia ťahaním hraníc buniek.
 - Vloženie z Excelu zachováva šírky stĺpcov, zarovnanie a veľkosti písem; tabuľka skopírovaná z Redmine sa vloží do Excelu s okrajmi.
 
-**Obrázky a prílohy**
+### Obrázky a prílohy
 - Vloženie obrázka zo schránky: je nahraný ako príloha a v texte sa zobrazuje.
 - Obrázky pripojené cez pole súboru Redmine alebo pretiahnuté na neho sa v texte tiež vloží.
 - Vloženie obrázka z príloh (výber miniatúr) alebo odkaz na ľubovolnú prílohu.
 - Zmena veľkosti obrázka ťahaním jeho rohov.
 
-**Kód**
+### Kód
 - Bloky kódu so zvýrazňovaním syntaxe v editore a na uložených stránkach: 52 jazykov a môžete pridať ďalšie (pozri [Zvýrazňovanie syntaxe](#zvýrazňovanie-syntaxe)).
 - Jazyk bloku sa vybiera z odznaču v jeho rohu, s vyhľadávaním, nedávnymi a často používanými jazykmi.
 - Tab a Shift+Tab odsadzujú a oddialujú riadky v bloku kódu; tučný text, odkazy a farby v kóde sa zachovávajú.
 
-**Bloky**
+### Bloky
 - Zbaliteľný blok: nadpis so skrytým obsahom (`<details>`). Zbalený na uložených stránkach, rozbalený v editore.
 - Citačný blok s riadkom autora a dátumu.
 
-**Úpravy**
+### Úpravy
 - Režim `<HTML>` pre zobrazenie a úpravy zdrojového kódu HTML: vnorené bloky sú odsadené, prázdny riadok oddeľuje bloky, ktoré zaberajú viac riadkov, syntax sa farebne zvýrazňuje podľa rovnakých pravidiel ako v bloku kódu HTML a Enter zachováva odsadenie riadka.
 - Psaní v štýle Markdown: `#` pre nadpisy, `-` a `1.` pre zoznamy, `[ ]` pre úlohy, ```` ```python ```` pre blok kódu (ľubovoľný názov jazyka alebo žiadny), `**bold**`, `---` pre vodorovnú čiaru. Štandardné klávesové skratky: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z a ďalšie.
 - Editor nikdy nie je vyšší ako okno: panel nástrojov a tlačítka formulára zostávajú v zobrazení a text sa posúva vnútri. Výška sa prispôsobuje veľkosti okna a priblíženiu stránky.
 - Úchytka na zmenu veľkosti v pravom dolnom rohu nastavuje výšku ručne. Výška sa zapamätá; dvojklik sa vracia k automatickej výške.
 
-**Integrácia s Redmine**
+### Integrácia s Redmine
 - Funguje vo všetkých Redmine textových poliach s formátovaním: popisy úloh a poznámky, wiki stránky, novinky, príspevky na fóre, dokumenty, popisy projektov, vlastné polia dlhého textu, vrátane polí, ktoré sa na stránke objavujú neskôr.
 - Text sa ukladá ako HTML. Ak chcete editor používať, vyberte *TipTap HTML* ako formátovanie textu v nastavení Redmine.
 - Rozhranie (tipy nástrojov, ponuky, dialógové okná) sa riadi jazykom v profile používateľa Redmine. 47 z 50 jazykov Redmine prichádza s pluginom: angličtina a ruština sú úplné, ostatných 45 sú návrhy vytvorené s modelom AI, ktoré rád opraví rodný hovorca. Tri jazyky písané sprava doľava (arabčina, hebrejčina, perzština) sú zámerne nepodporované (pozri [Jazyk rozhrania](#jazyk-rozhrania)).

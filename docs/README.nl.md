@@ -46,7 +46,30 @@
 
 Dit is een teksteditor voor Redmine, gebaseerd op TipTap https://github.com/ueberdosis/tiptap
 
-Ondersteunde Redmine-versies:
+Editor-engine: **TipTap 3.31.4**. Alle `@tiptap/*`-pakketten zijn in `package.json` en `package-lock.json` vastgesteld op deze exacte versie en moeten altijd samen naar dezelfde versie worden bijgewerkt.
+
+**Inhoud**
+
+- [Ondersteunde Redmine-versies](#ondersteunde-redmine-versies)
+- [Functies](#functies)
+  - [Tekstopmaak](#tekstopmaak)
+  - [Lijsten](#lijsten)
+  - [Tabellen](#tabellen)
+  - [Afbeeldingen en bijlagen](#afbeeldingen-en-bijlagen)
+  - [Code](#code)
+  - [Blokken](#blokken)
+  - [Bewerking](#bewerking)
+  - [Redmine-integratie](#redmine-integratie)
+- [Syntaxmarkering](#syntaxmarkering)
+- [Interfacetaal](#interfacetaal)
+- [Installatie](#installatie)
+- [Bijwerken](#bijwerken)
+  - [Geïnstalleerd met git (aanbevolen)](#geïnstalleerd-met-git-aanbevolen)
+  - [Geïnstalleerd vanuit een archief](#geïnstalleerd-vanuit-een-archief)
+  - [Na het bijwerken](#na-het-bijwerken)
+- [Migratie vanuit CKEditor](#migratie-vanuit-ckeditor)
+
+## Ondersteunde Redmine-versies
 
 | Redmine | Ondersteund | Getest op |
 |---|---|---|
@@ -56,11 +79,9 @@ Ondersteunde Redmine-versies:
 
 Een nieuwe hoofdversie (8.x en later) wordt pas ondersteund nadat de plugin erop is getest. Tot die tijd start Redmine van die versie niet met de plugin geïnstalleerd: het stopt met een foutmelding die de ondersteunde versies noemt.
 
-Editor-engine: **TipTap 3.31.4**. Alle `@tiptap/*`-pakketten zijn in `package.json` en `package-lock.json` vastgesteld op deze exacte versie en moeten altijd samen naar dezelfde versie worden bijgewerkt.
-
 ## Functies
 
-**Tekstopmaak**
+### Tekstopmaak
 - Vet, cursief, onderstreept, doorgehaald, subscript en superscript (Ctrl+, en Ctrl+.), inline-code.
 - Tekstkleur en achtergrondkleur: een palet met 64 kleuren of een willekeurige hexadecimale waarde.
 - Lettertype (13 lettertypen) en lettergrootte (standaardinstellingen van 8 tot 72 px of een willekeurige waarde).
@@ -69,40 +90,40 @@ Editor-engine: **TipTap 3.31.4**. Alle `@tiptap/*`-pakketten zijn in `package.js
 - Hyperlinks: invoegen, bewerken, verwijderen.
 - Horizontale lijn, ongedaan maken en opnieuw uitvoeren.
 
-**Lijsten**
+### Lijsten
 - Ongeordende lijsten met ronde, vierkante of cirkelvormige markeringen.
 - Genummerde lijsten: 1, 01, a, A, i, I, α.
 - Takenlijsten met selectievakjes; voltooide taken worden doorgehaald.
 - Geneste lijsten (Tab / Shift+Tab).
 
-**Tabellen**
+### Tabellen
 - Een tabel van elke grootte invoegen, met of zonder een koptabelrij.
 - Contextmenu in een cel (met rechtermuisknop): rijen en kolommen toevoegen en verwijderen, cellen samenvoegen en splitsen, koptabelrij en kopkolom, tabel verwijderen.
 - Kolombreedte wordt gewijzigd door tabelcelranden te slepen.
 - Plakken van Excel behoudt kolombreedte, uitlijning en tekengroottes; een tabel die uit Redmine is gekopieerd, wordt met randen in Excel ingeplakt.
 
-**Afbeeldingen en bijlagen**
+### Afbeeldingen en bijlagen
 - Een afbeelding vanuit het klembord plakken: deze wordt geüpload als bijlage en verschijnt in de tekst.
 - Afbeeldingen die zijn toegevoegd aan het bestandsveld van Redmine of erop zijn gesleept, worden ook in de tekst ingevoegd.
 - Een afbeelding invoegen uit de bijlagen (een miniatuurselectie) of een koppeling naar een willekeurige bijlage.
 - Het formaat van een afbeelding wijzigen door aan de hoeken te slepen.
 
-**Code**
+### Code
 - Codeblokken met syntaxmarkering in de editor en op opgeslagen pagina's: 52 talen, en u kunt er meer toevoegen (zie [Syntaxmarkering](#syntaxmarkering)).
 - De taal van een blok wordt gekozen via een badge in de hoek, met zoeken, onlangs gebruikte en veelgebruikte talen.
 - Tab en Shift+Tab vouwen lijnen in een codeblok in en uit; vet, koppelingen en kleuren in code blijven behouden.
 
-**Blokken**
+### Blokken
 - Opvouwbaar blok: een titel met verborgen inhoud (`<details>`). Op opgeslagen pagina's is het ingevouwen, in de editor uitgevouwen.
 - Citaatblok met een auteur- en datumregel.
 
-**Bewerking**
+### Bewerking
 - Modus `<HTML>` om HTML-broncode weer te geven en te bewerken: geneste blokken zijn ingesprongen, een lege regel scheidt de blokken die meerdere regels beslaan, de syntaxis wordt op dezelfde manier gekleurd als in een HTML-codeblok, en Enter behoudt de inspringing van de regel.
 - Markdown-stijltekstinvoer: `#` voor koppelingen, `-` en `1.` voor lijsten, `[ ]` voor taken, ```` ```python ```` voor een codeblok (elke taalname of geen), `**bold**`, `---` voor een horizontale lijn. Standaardtoetscombinaties: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z en anderen.
 - De editor wordt nooit hoger dan het venster: de werkbalk en de formulierknoppen blijven zichtbaar, en de tekst schuift binnenin. De hoogte volgt de venstergrootte en pagina's zoomfactor.
 - Een sleepgreep in de rechterbenedenhoek stelt de hoogte handmatig in. De hoogte wordt onthouden; dubbelklikken geeft de automatische hoogte terug.
 
-**Redmine-integratie**
+### Redmine-integratie
 - Werkt in alle tekstvelden van Redmine met opmaak: issuebeschrijvingen en notities, wikipagina's, nieuws, forumberichten, documenten, projectbeschrijvingen, vrije tekstvelden, inclusief velden die later op de pagina verschijnen.
 - Tekst wordt opgeslagen als HTML. Kies *TipTap HTML* als tekstformaat in de Redmine-instellingen om de editor te gebruiken.
 - De interface (tooltips, menu's, dialogen) volgt de taal in het Redmine-profiel van de gebruiker. 47 van de 50 talen van Redmine worden met de plugin geleverd: Engels en Russisch zijn volledig, de andere 45 zijn concepten gemaakt met een AI-model dat inheemse sprekers welkom zijn om te corrigeren. De drie talen die van rechts naar links schrijven (Arabisch, Hebreeuws, Perzisch) worden opzettelijk niet ondersteund (zie [Interfacetaal](#interfacetaal)).

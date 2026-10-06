@@ -46,7 +46,30 @@
 
 Acesta este un editor de text pentru Redmine, bazat pe TipTap https://github.com/ueberdosis/tiptap
 
-Versiuni Redmine acceptate:
+Motor editor: **TipTap 3.31.4**. Toate pachetele `@tiptap/*` sunt fixate la această versiune exactă în `package.json` și `package-lock.json` și trebuie întotdeauna actualizate împreună, la aceeași versiune.
+
+**Cuprins**
+
+- [Versiuni Redmine acceptate](#versiuni-redmine-acceptate)
+- [Funcționalități](#funcționalități)
+  - [Formatare text](#formatare-text)
+  - [Liste](#liste)
+  - [Tabele](#tabele)
+  - [Imagini și fișiere atașate](#imagini-și-fișiere-atașate)
+  - [Cod](#cod)
+  - [Blocuri](#blocuri)
+  - [Editare](#editare)
+  - [Integrare Redmine](#integrare-redmine)
+- [Evidențiere de sintaxă](#evidențiere-de-sintaxă)
+- [Limba interfeței](#limba-interfeței)
+- [Instalare](#instalare)
+- [Actualizare](#actualizare)
+  - [Instalat cu git (recomandat)](#instalat-cu-git-recomandat)
+  - [Instalat dintr-o arhivă](#instalat-dintr-o-arhivă)
+  - [După actualizare](#după-actualizare)
+- [Migrare de la CKEditor](#migrare-de-la-ckeditor)
+
+## Versiuni Redmine acceptate
 
 | Redmine | Acceptată | Testat pe |
 |---|---|---|
@@ -56,11 +79,9 @@ Versiuni Redmine acceptate:
 
 O nouă versiune majoră (8.x și ulterioare) devine acceptată doar după ce pluginul a fost testat pe ea. Până atunci, Redmine în acea versiune nu pornește cu pluginul instalat: se oprește cu o eroare care indică versiunile acceptate.
 
-Motor editor: **TipTap 3.31.4**. Toate pachetele `@tiptap/*` sunt fixate la această versiune exactă în `package.json` și `package-lock.json` și trebuie întotdeauna actualizate împreună, la aceeași versiune.
-
 ## Funcționalități
 
-**Formatare text**
+### Formatare text
 - Îngroșat, cursiv, subliniat, tăiat, indice și exponent (Ctrl+, și Ctrl+.), cod inline.
 - Culoarea textului și culoarea de fundal: o paletă de 64 de culori sau orice valoare hex.
 - Familie de fonturi (13 fonturi) și dimensiune de font (presetări de la 8 la 72 px, sau orice valoare).
@@ -69,40 +90,40 @@ Motor editor: **TipTap 3.31.4**. Toate pachetele `@tiptap/*` sunt fixate la acea
 - Linkuri: inserare, editare, ștergere.
 - Linie orizontală, anulare și refacere.
 
-**Liste**
+### Liste
 - Liste cu puncte marcate cu disc, cerc sau pătrat.
 - Liste numerotate: 1, 01, a, A, i, I, α.
 - Liste de sarcini cu casete de selectare; sarcinile completate sunt tăiate.
 - Liste imbricate (Tab / Shift+Tab).
 
-**Tabele**
+### Tabele
 - Inserare a unui tabel de orice dimensiune, cu sau fără o rând de antet.
 - Meniu cu clic dreapta într-o celulă: adăugare și ștergere de rânduri și coloane, fuzionare și separare de celule, rând și coloană de antet, ștergere a tabelului.
 - Lățimile coloanelor sunt modificate prin tragerea marginilor celulelor.
 - Lipirea din Excel păstrează lățimile coloanelor, aliniere și dimensiuni de font; un tabel copiat din Redmine se lipește în Excel cu margini.
 
-**Imagini și fișiere atașate**
+### Imagini și fișiere atașate
 - Lipire o imagine din clipboard: este încărcată ca fișier atașat și apare în text.
 - Imagini atașate cu câmpul de fișiere al Redmine, sau plasate peste el, sunt, de asemenea, inserate în text.
 - Inserare o imagine din fișierele atașate (un selector de miniaturi) sau un link la orice fișier atașat.
 - Redimensionare o imagine prin tragerea colțurilor acesteia.
 
-**Cod**
+### Cod
 - Blocuri de cod cu evidențiere de sintaxă în editor și pe paginile salvate: 52 de limbi, și puteți adăuga mai multe (consultați [Evidențiere de sintaxă](#evidențiere-de-sintaxă)).
 - Limba unui bloc este aleasă dintr-o insignă în colțul său din dreapta sus, cu căutare, limbi recente și frecvente.
 - Tab și Shift+Tab indentează și dezindentează liniile din interiorul unui bloc de cod; textul îngroșat, link-urile și culorile din interiorul codului sunt păstrate.
 
-**Blocuri**
+### Blocuri
 - Bloc pliabil: un titlu cu conținut ascuns (`<details>`). Pliabil pe paginile salvate, desfășurat în editor.
 - Bloc de citat cu o linie de autor și dată.
 
-**Editare**
+### Editare
 - Modul `<HTML>` pentru vizualizare și editare a sursei HTML: blocurile imbricate sunt indentate, o linie goală separă blocurile care ocupă mai multe linii, sintaxa este colorată după aceleași reguli ca într-un bloc de cod HTML, iar Enter păstrează indentarea liniei.
 - Tastare în stil Markdown: `#` pentru titluri, `-` și `1.` pentru liste, `[ ]` pentru sarcini, ```` ```python ```` pentru un bloc de cod (orice nume de limbă sau niciunul), `**bold**`, `---` pentru o linie orizontală. Scurtături de tastatură standard: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z și altele.
 - Editorul nu crește niciodată mai înalt decât fereastra: bara de instrumente și butoanele formularului rămân în vedere, iar textul se derulează în interior. Înălțimea urmează dimensiunea ferestrei și zoom-ul paginii.
 - O apucătură de redimensionare în colțul din dreapta jos stabilește înălțimea manual. Înălțimea este reținută; dublu-clic revine la înălțime automată.
 
-**Integrare Redmine**
+### Integrare Redmine
 - Funcționează în toate câmpurile de text Redmine cu formatare: descrieri și note de tichete, pagini wiki, știri, mesaje forum, documente, descrieri de proiecte, câmpuri personalizate de text lung, inclusiv câmpuri care apar pe pagină mai târziu.
 - Textul este stocat ca HTML. Pentru a folosi editorul, alegeți *TipTap HTML* ca formatare text în setările Redmine.
 - Interfața (tooltip-uri, meniuri, dialoguri) urmărește limba din profilul Redmine al utilizatorului. 47 din cele 50 de limbi ale Redmine sunt incluse în plugin: engleza și rusa sunt complete, celelalte 45 sunt schițe realizate cu un model AI care vorbitorii nativi sunt bineveniți să corecteze. Cele trei limbi scrise de la dreapta la stânga (arabă, ebraică, persană) nu sunt intenționat acceptate (consultați [Limba interfeței](#limba-interfeței)).

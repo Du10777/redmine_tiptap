@@ -46,7 +46,30 @@
 
 Es un editor de text per a Redmine, basat en TipTap https://github.com/ueberdosis/tiptap
 
-Versions de Redmine compatibles:
+Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen a aquesta versió exacta a `package.json` i `package-lock.json` i sempre s'han d'actualitzar junts, a la mateixa versió.
+
+**Índex**
+
+- [Versions de Redmine compatibles](#versions-de-redmine-compatibles)
+- [Funcionalitats](#funcionalitats)
+  - [Format del text](#format-del-text)
+  - [Llistes](#llistes)
+  - [Taules](#taules)
+  - [Imatges i fitxers adjunts](#imatges-i-fitxers-adjunts)
+  - [Codi](#codi)
+  - [Blocs](#blocs)
+  - [Edició](#edició)
+  - [Integració amb Redmine](#integració-amb-redmine)
+- [Ressaltat de sintaxi](#ressaltat-de-sintaxi)
+- [Idioma de la interfície](#idioma-de-la-interfície)
+- [Instal·lació](#installació)
+- [Actualització](#actualització)
+  - [Instal·lat amb git (recomanat)](#installat-amb-git-recomanat)
+  - [Instal·lat des d'un arxiu](#installat-des-dun-arxiu)
+  - [Després d'actualitzar](#després-dactualitzar)
+- [Migració des de CKEditor](#migració-des-de-ckeditor)
+
+## Versions de Redmine compatibles
 
 | Redmine | Compatible | Provat a |
 |---|---|---|
@@ -56,11 +79,9 @@ Versions de Redmine compatibles:
 
 Una nova versió principal (8.x i posteriors) només és compatible després de provar-hi el complement. Fins aleshores, el Redmine d'aquesta versió no s'inicia amb el complement instal·lat: s'atura amb un error que indica les versions compatibles.
 
-Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen a aquesta versió exacta a `package.json` i `package-lock.json` i sempre s'han d'actualitzar junts, a la mateixa versió.
-
 ## Funcionalitats
 
-**Format del text**
+### Format del text
 - Negreta, cursiva, subratllat, ratllat, subíndex i superíndex (Ctrl+, i Ctrl+.), codi en línia.
 - Color del text i color de fons: una paleta de 64 colors o qualsevol valor hexadecimal.
 - Tipus de lletra (13 tipus) i mida de lletra (presets de 8 a 72 px, o qualsevol valor).
@@ -69,45 +90,45 @@ Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen 
 - Enllaços: inserir, editar, suprimir.
 - Línia horitzontal, desfer i refer.
 
-**Llistes**
+### Llistes
 - Llistes de viñetes amb marcadors de disc, cercle o quadrat.
 - Llistes numerades: 1, 01, a, A, i, I, α.
 - Llistes de tasques amb caselles de verificació; les tasques completades es ratllaven.
 - Llistes imbricades (Tab / Maj+Tab).
 
-**Taules**
+### Taules
 - Inserir una taula de qualsevol mida, amb o sense fila de capçalera.
 - Menú de clic dret en una cel·la: afegir i suprimir files i columnes, fusionar i separar cel·les, fila de capçalera i columna de capçalera, suprimir la taula.
 - L'amplada de les columnes es canvia arrossegant les vores de les cel·les.
 - Enganxar des d'Excel conserva l'amplada de les columnes, l'alineació i les mides de lletra; una taula copiada desde Redmine s'enganxa a Excel amb vores.
 
-**Imatges i fitxers adjunts**
+### Imatges i fitxers adjunts
 - Enganxar una imatge del porta-retalls: es carrega com a fitxer adjunt i apareix al text.
 - Les imatges adjuntes amb el camp de fitxers de Redmine, o dipositades a aquest camp, també s'insereixen al text.
 - Inserir una imatge des dels fitxers adjunts (selector de miniatures) o un enllaç a qualsevol fitxer adjunt.
 - Canviar la mida d'una imatge arrossegant les seves cantonades.
 
-**Codi**
+### Codi
 - Blocs de codi amb ressaltat de sintaxi a l'editor i a les pàgines guardades: 52 llenguatges, i podeu afegir-ne més (veieu [Ressaltat de sintaxi](#ressaltat-de-sintaxi)).
 - El llenguatge d'un bloc es tria desde una insígnia a la seva cantonada, amb cercar, llenguatges recents i freqüents.
 - Tab i Maj+Tab sagnaten i desfan el sagnament de línies dins d'un bloc de codi; la negreta, els enllaços i els colors dins del codi es conserven.
 
-**Blocs**
+### Blocs
 - Bloc col·lapsible: un títol amb contingut amagat (`<details>`). Col·lapsat a les pàgines guardades, expandit a l'editor.
 - Bloc de cita amb una línia per a autor i data.
 
-**Edició**
+### Edició
 - Mode `<HTML>` per veure i editar el codi HTML font: els blocs imbricats estan sagnats, una línia en blanc separa els blocs que ocupen diverses línies, la sintaxi es colora amb les mateixes regles que en un bloc de codi HTML, i Enter manté el sagnat de la línia.
 - Escriptura d'estil Markdown: `#` per a encapçalaments, `-` i `1.` per a llistes, `[ ]` per a tasques, ```` ```python ```` per a un bloc de codi (qualsevol nom de llenguatge o cap), `**bold**`, `---` per a una línia horitzontal. Dreceres de teclat estàndard: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z i altres.
 - L'editor mai es fa més alt que la finestra: la barra d'eines i els botons del formulari romanen visibles, i el text es desplaça dins. L'altura segueix la mida de la finestra i el zoom de la pàgina.
 - Una nansa de redimensionament a la cantonada inferior dreta estableix l'altura manualment. L'altura es recorda; fer doble clic torna a l'altura automàtica.
 
-**Integració amb Redmine**
+### Integració amb Redmine
 - Funciona a tots els camps de text de Redmine amb format: descripcions i notes de demandes, pàgines wiki, noticies, missatges de fòrum, documents, descripcions de projectes, camps personalitzats de text llarg, inclosos els camps que apareixen més tard a la pàgina.
 - El text es guarda com a HTML. Per utilitzar l'editor, trieu *TipTap HTML* com a format del text a la configuració de Redmine.
 - La interfície (consells d'eines, menús, diàlegs) segueix l'idioma del perfil de Redmine de l'usuari. 47 de les 50 llengues de Redmine s'inclouen al complement: l'anglès i el rus són complets, les altres 45 són esborranys fets amb un model d'IA que els parlants nadius són benvinguts a corregir. Les tres llengues que s'escriuen de dreta a esquerra (àrab, hebreu, persa) no es suporten deliberadament (veieu [Idioma de la interfície](#idioma-de-la-interfície)).
 - Es manté ràpid amb textos grans: els editors dels formularis ocults es creen només quan s'obri el formulari, i els blocs de codi llargs es ressalten quan es desplacen cap a la vista.
-- Els textos escrits en CKEditor (el complement redmine_ckeditor) es mostren tal com eren i s'obren a l'editor amb el seu format: sense conversió, veieu [Migrant desde CKEditor](#migrant-desde-ckeditor).
+- Els textos escrits en CKEditor (el complement redmine_ckeditor) es mostren tal com eren i s'obren a l'editor amb el seu format: sense conversió, veieu [Migració des de CKEditor](#migració-des-de-ckeditor).
 - Els textos guardats es mostren sense HTML insegur: els scripts, els gestors d'events i els enllaços `javascript:` es treuen quan es mostra una pàgina, es conserva només allò que produeix l'editor mateix. Això cobreix els textos que arribin a través de la REST API o del mode `<HTML>`.
 
 ## Ressaltat de sintaxi
@@ -145,7 +166,7 @@ Detalls i llista de llengues de Redmine: [config/locales/README.md](../config/lo
 2. Reinicieu Redmine.
 3. A la configuració de Redmine (redmine.selfhosted/_settings_), trieu Format del text: *TipTap HTML*.
 
-## Actualitzar
+## Actualització
 
 El complement no té migracions de base de dades, i el feix de JavaScript compilat i l'estil de full de codi són part del dipòsit. L'actualització no necessita ni npm ni compilació al servidor: només reemplaceu els fitxers del complement i reinicieu Redmine.
 
@@ -185,7 +206,7 @@ El pas 2 és important. A l'inici, Redmine republicar els elements del complemen
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
 
-## Migrant desde CKEditor
+## Migració des de CKEditor
 
 Si el vostre Redmine va usar [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), podeu canviar a aquest complement i mantenir tots els textos que s'han escrit: demandes, notes, pàgines wiki, noticies, missatges, documents. Res no es converteix i la base de dades no es toca. CKEditor guarda els seus textos com a HTML i igual fa aquest complement, de manera que un text guardat simplement es mostra pel nou formador.
 

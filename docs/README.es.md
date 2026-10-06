@@ -46,7 +46,30 @@
 
 Este es un editor de texto para Redmine, basado en TipTap https://github.com/ueberdosis/tiptap
 
-Versiones de Redmine compatibles:
+Motor del editor: **TipTap 3.31.4**. Todos los paquetes `@tiptap/*` están fijados a esta versión exacta en `package.json` y `package-lock.json` y siempre deben actualizarse juntos, a la misma versión exacta.
+
+**Contenido**
+
+- [Versiones de Redmine compatibles](#versiones-de-redmine-compatibles)
+- [Características](#características)
+  - [Formato de texto](#formato-de-texto)
+  - [Listas](#listas)
+  - [Tablas](#tablas)
+  - [Imágenes y adjuntos](#imágenes-y-adjuntos)
+  - [Código](#código)
+  - [Bloques](#bloques)
+  - [Edición](#edición)
+  - [Integración con Redmine](#integración-con-redmine)
+- [Resaltado de sintaxis](#resaltado-de-sintaxis)
+- [Idioma de la interfaz](#idioma-de-la-interfaz)
+- [Instalación](#instalación)
+- [Actualización](#actualización)
+  - [Instalado con git (recomendado)](#instalado-con-git-recomendado)
+  - [Instalado desde un archivo](#instalado-desde-un-archivo)
+  - [Después de actualizar](#después-de-actualizar)
+- [Migración desde CKEditor](#migración-desde-ckeditor)
+
+## Versiones de Redmine compatibles
 
 | Redmine | Compatible | Probado en |
 |---|---|---|
@@ -56,11 +79,9 @@ Versiones de Redmine compatibles:
 
 Una nueva versión mayor (8.x y posteriores) solo pasa a ser compatible después de probar el complemento en ella. Hasta entonces, Redmine de esa versión no arranca con el complemento instalado: se detiene con un error que indica las versiones compatibles.
 
-Motor del editor: **TipTap 3.31.4**. Todos los paquetes `@tiptap/*` están fijados a esta versión exacta en `package.json` y `package-lock.json` y siempre deben actualizarse juntos, a la misma versión exacta.
-
 ## Características
 
-**Formato de texto**
+### Formato de texto
 - Negrita, cursiva, subrayado, tachado, subíndice y superíndice (Ctrl+, y Ctrl+.), código en línea.
 - Color de texto y color de fondo: una paleta de 64 colores o cualquier valor hexadecimal.
 - Familia de fuentes (13 fuentes) y tamaño de fuente (valores preestablecidos de 8 a 72 px, u otro valor).
@@ -69,40 +90,40 @@ Motor del editor: **TipTap 3.31.4**. Todos los paquetes `@tiptap/*` están fijad
 - Enlaces: insertar, editar, eliminar.
 - Línea horizontal, deshacer y rehacer.
 
-**Listas**
+### Listas
 - Listas con viñetas con marcadores de disco, círculo o cuadrado.
 - Listas numeradas: 1, 01, a, A, i, I, α.
 - Listas de tareas con casillas de verificación; las tareas completadas están tachadas.
 - Listas anidadas (Tab / Mayús+Tab).
 
-**Tablas**
+### Tablas
 - Insertar una tabla de cualquier tamaño, con o sin fila de encabezado.
 - Menú del botón derecho en una celda: agregar y eliminar filas y columnas, combinar y dividir celdas, fila de encabezado y columna de encabezado, eliminar la tabla.
 - El ancho de las columnas se cambia arrastrando los bordes de las celdas.
 - Pegando desde Excel se conservan el ancho de las columnas, la alineación y los tamaños de fuente; una tabla copiada desde Redmine se pega en Excel con bordes.
 
-**Imágenes y adjuntos**
+### Imágenes y adjuntos
 - Pegar una imagen desde el portapapeles: se carga como un adjunto y aparece en el texto.
 - Las imágenes adjuntas con el campo de archivo de Redmine, o arrastradas sobre él, también se insertan en el texto.
 - Insertar una imagen desde los adjuntos (selector de miniaturas) o un enlace a cualquier adjunto.
 - Redimensionar una imagen arrastrando sus esquinas.
 
-**Código**
+### Código
 - Bloques de código con resaltado de sintaxis en el editor y en las páginas guardadas: 52 idiomas, y puedes agregar más (ver [Resaltado de sintaxis](#resaltado-de-sintaxis)).
 - El idioma de un bloque se elige desde una insignia en su esquina, con búsqueda, idiomas recientes y frecuentes.
 - Tab y Mayús+Tab indenta y desindenta líneas dentro de un bloque de código; se mantienen la negrita, los enlaces y los colores dentro del código.
 
-**Bloques**
+### Bloques
 - Bloque contraíble: un título con contenido oculto (`<details>`). Contraído en las páginas guardadas, expandido en el editor.
 - Bloque de cita con una línea de autor y fecha.
 
-**Edición**
+### Edición
 - Modo `<HTML>` para ver y editar la fuente HTML: los bloques anidados se indentan, una línea en blanco separa los bloques que ocupan varias líneas, la sintaxis se colorea con las mismas reglas que un bloque de código HTML, y Enter mantiene la indentación de la línea.
 - Escritura al estilo Markdown: `#` para encabezados, `-` y `1.` para listas, `[ ]` para tareas, ```` ```python ```` para un bloque de código (cualquier nombre de idioma o ninguno), `**bold**`, `---` para una línea horizontal. Atajos de teclado estándar: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z y otros.
 - El editor nunca crece más alto que la ventana: la barra de herramientas y los botones del formulario permanecen visibles, y el texto se desplaza dentro. La altura sigue el tamaño de la ventana y el zoom de la página.
 - Un tirador de redimensionamiento en la esquina inferior derecha permite establecer la altura manualmente. La altura se recuerda; hacer doble clic vuelve a la altura automática.
 
-**Integración con Redmine**
+### Integración con Redmine
 - Funciona en todos los campos de texto de Redmine con formato: descripciones y notas de peticiones, páginas wiki, noticias, mensajes del foro, documentos, descripciones de proyectos, campos personalizados de texto largo, incluidos los campos que aparecen en la página más adelante.
 - El texto se almacena como HTML. Para usar el editor, elige *TipTap HTML* como formato de texto en la configuración de Redmine.
 - La interfaz (información sobre herramientas, menús, diálogos) sigue el idioma en el perfil de Redmine del usuario. 47 de los 50 idiomas de Redmine se incluyen con el complemento: inglés y ruso están completos, los otros 45 son borradores hechos con un modelo de IA que los hablantes nativos pueden corregir. Los tres idiomas escritos de derecha a izquierda (árabe, hebreo, persa) deliberadamente no son compatibles (ver [Idioma de la interfaz](#idioma-de-la-interfaz)).

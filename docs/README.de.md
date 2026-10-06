@@ -46,7 +46,30 @@
 
 Dies ist ein Texteditor für Redmine auf Basis von TipTap https://github.com/ueberdosis/tiptap
 
-Unterstützte Redmine-Versionen:
+Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json` und `package-lock.json` auf genau diese Version festgelegt und müssen immer gemeinsam auf ein und dieselbe Version aktualisiert werden.
+
+**Inhalt**
+
+- [Unterstützte Redmine-Versionen](#unterstützte-redmine-versionen)
+- [Funktionen](#funktionen)
+  - [Textformatierung](#textformatierung)
+  - [Listen](#listen)
+  - [Tabellen](#tabellen)
+  - [Bilder und Anhänge](#bilder-und-anhänge)
+  - [Code](#code)
+  - [Blöcke](#blöcke)
+  - [Bearbeitung](#bearbeitung)
+  - [Redmine-Integration](#redmine-integration)
+- [Syntaxhervorhebung](#syntaxhervorhebung)
+- [Oberflächensprache](#oberflächensprache)
+- [Installation](#installation)
+- [Aktualisierung](#aktualisierung)
+  - [Mit git installiert (empfohlen)](#mit-git-installiert-empfohlen)
+  - [Aus einem Archiv installiert](#aus-einem-archiv-installiert)
+  - [Nach der Aktualisierung](#nach-der-aktualisierung)
+- [Migrieren von CKEditor](#migrieren-von-ckeditor)
+
+## Unterstützte Redmine-Versionen
 
 | Redmine | Unterstützt | Getestet mit |
 |---|---|---|
@@ -56,11 +79,9 @@ Unterstützte Redmine-Versionen:
 
 Eine neue Hauptversion (8.x und später) wird erst unterstützt, nachdem das Plugin darauf getestet wurde. Bis dahin startet Redmine in dieser Version mit installiertem Plugin nicht: Es bricht mit einer Fehlermeldung ab, die die unterstützten Versionen nennt.
 
-Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json` und `package-lock.json` auf genau diese Version festgelegt und müssen immer gemeinsam auf ein und dieselbe Version aktualisiert werden.
-
 ## Funktionen
 
-**Textformatierung**
+### Textformatierung
 - Fett, kursiv, unterstrichen, durchgestrichen, tiefgestellt und hochgestellt (Ctrl+, und Ctrl+.), Inline-Code.
 - Textfarbe und Hintergrundfarbe: eine Palette mit 64 Farben oder ein beliebiger Hex-Wert.
 - Schriftart (13 Schriften) und Schriftgröße (Voreinstellungen von 8 bis 72 px oder ein beliebiger Wert).
@@ -69,40 +90,40 @@ Editor-Engine: **TipTap 3.31.4**. Alle `@tiptap/*`-Pakete sind in `package.json`
 - Links: einfügen, bearbeiten, entfernen.
 - Horizontale Linie, Rückgängig machen und Wiederholen.
 
-**Listen**
+### Listen
 - Aufzählungslisten mit Punkten, Kreisen oder Quadraten als Aufzählungszeichen.
 - Nummerierte Listen: 1, 01, a, A, i, I, α.
 - Aufgabenlisten mit Kontrollkästchen; erledigte Aufgaben werden durchgestrichen.
 - Verschachtelte Listen (Tab / Shift+Tab).
 
-**Tabellen**
+### Tabellen
 - Eine Tabelle beliebiger Größe einfügen, mit oder ohne Kopfzeile.
 - Kontextmenü per Rechtsklick in einer Zelle: Zeilen und Spalten hinzufügen und löschen, Zellen verbinden und teilen, Kopfzeile und Kopfspalte, Tabelle löschen.
 - Die Spaltenbreite wird durch Ziehen der Zellränder geändert.
 - Beim Einfügen aus Excel bleiben Spaltenbreiten, Ausrichtung und Schriftgrößen erhalten; eine aus Redmine kopierte Tabelle wird mit Rahmen in Excel eingefügt.
 
-**Bilder und Anhänge**
+### Bilder und Anhänge
 - Ein Bild aus der Zwischenablage einfügen: Es wird als Anhang hochgeladen und erscheint im Text.
 - Bilder, die über das Feld „Dateien“ von Redmine angehängt oder auf dieses Feld gezogen werden, werden ebenfalls in den Text eingefügt.
 - Ein Bild aus den Anhängen einfügen (Auswahl über Miniaturansichten) oder einen Link auf einen beliebigen Anhang.
 - Die Größe eines Bildes durch Ziehen an den Ecken ändern.
 
-**Code**
+### Code
 - Codeblöcke mit Syntaxhervorhebung im Editor und auf gespeicherten Seiten: 52 Sprachen, weitere können Sie hinzufügen (siehe [Syntaxhervorhebung](#syntaxhervorhebung)).
 - Die Sprache eines Blocks wird über ein Badge in seiner Ecke gewählt, mit Suchfunktion sowie den zuletzt und den häufig verwendeten Sprachen.
 - Mit Tab und Shift+Tab wird der Einzug von Zeilen in einem Codeblock vergrößert bzw. verkleinert; Fettschrift, Links und Farben im Code bleiben erhalten.
 
-**Blöcke**
+### Blöcke
 - Aufklappbarer Block: ein Titel mit verborgenem Inhalt (`<details>`). Auf gespeicherten Seiten ist er zugeklappt, im Editor aufgeklappt.
 - Zitatblock mit einer Zeile für Autor und Datum.
 
-**Bearbeitung**
+### Bearbeitung
 - Modus `<HTML>` zum Anzeigen und Bearbeiten des HTML-Quellcodes: Verschachtelte Blöcke werden eingerückt, eine Leerzeile trennt Blöcke, die sich über mehrere Zeilen erstrecken, die Syntax wird nach denselben Regeln eingefärbt wie in einem HTML-Codeblock, und mit Enter bleibt der Einzug der Zeile erhalten.
 - Eingabe im Markdown-Stil: `#` für Überschriften, `-` und `1.` für Listen, `[ ]` für Aufgaben, ```` ```python ```` für einen Codeblock (beliebiger Sprachname oder keiner), `**bold**`, `---` für eine horizontale Linie. Gängige Tastenkombinationen: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z und weitere.
 - Der Editor wird nie höher als das Fenster: Die Symbolleiste und die Schaltflächen des Formulars bleiben sichtbar, und der Text wird innerhalb des Editors gescrollt. Die Höhe folgt der Fenstergröße und dem Seitenzoom.
 - Mit dem Ziehpunkt in der unteren rechten Ecke lässt sich die Höhe von Hand einstellen. Die Höhe wird gespeichert; ein Doppelklick stellt die automatische Höhe wieder her.
 
-**Redmine-Integration**
+### Redmine-Integration
 - Funktioniert in allen Textfeldern von Redmine mit Formatierung: Beschreibungen und Kommentare von Tickets, Wiki-Seiten, News, Forenbeiträge, Dokumente, Projektbeschreibungen, benutzerdefinierte Felder mit langem Text – auch Felder, die erst später auf der Seite erscheinen.
 - Der Text wird als HTML gespeichert. Um den Editor zu verwenden, wählen Sie in der Redmine-Konfiguration *TipTap HTML* als Textformatierung.
 - Die Oberfläche (Tooltips, Menüs, Dialoge) richtet sich nach der Sprache im Redmine-Profil des Benutzers. 47 der 50 Sprachen von Redmine werden mit dem Plugin ausgeliefert: Englisch und Russisch sind vollständig, die übrigen 45 sind mit einem KI-Modell erstellte Entwürfe; Korrekturen durch Muttersprachler sind willkommen. Die drei Sprachen mit Schreibrichtung von rechts nach links (Arabisch, Hebräisch, Persisch) werden bewusst nicht unterstützt (siehe [Oberflächensprache](#oberflächensprache)).

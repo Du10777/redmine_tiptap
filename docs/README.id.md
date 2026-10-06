@@ -46,7 +46,30 @@
 
 Ini adalah editor teks untuk Redmine, berdasarkan TipTap https://github.com/ueberdosis/tiptap
 
-Versi Redmine yang didukung:
+Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yang sama persis dalam `package.json` dan `package-lock.json` dan harus selalu ditingkatkan bersama, ke satu versi yang sama.
+
+**Daftar isi**
+
+- [Versi Redmine yang didukung](#versi-redmine-yang-didukung)
+- [Fitur](#fitur)
+  - [Format teks](#format-teks)
+  - [Daftar](#daftar)
+  - [Tabel](#tabel)
+  - [Gambar dan berkas](#gambar-dan-berkas)
+  - [Kode](#kode)
+  - [Blok](#blok)
+  - [Penyuntingan](#penyuntingan)
+  - [Integrasi Redmine](#integrasi-redmine)
+- [Penyorotan sintaks](#penyorotan-sintaks)
+- [Bahasa antarmuka](#bahasa-antarmuka)
+- [Instalasi](#instalasi)
+- [Pembaruan](#pembaruan)
+  - [Dipasang dengan git (direkomendasikan)](#dipasang-dengan-git-direkomendasikan)
+  - [Dipasang dari arsip](#dipasang-dari-arsip)
+  - [Setelah memperbarui](#setelah-memperbarui)
+- [Migrasi dari CKEditor](#migrasi-dari-ckeditor)
+
+## Versi Redmine yang didukung
 
 | Redmine | Didukung | Diuji di |
 |---|---|---|
@@ -56,11 +79,9 @@ Versi Redmine yang didukung:
 
 Versi mayor baru (8.x dan seterusnya) baru didukung setelah plugin diuji di versi tersebut. Sampai saat itu, Redmine versi tersebut tidak dapat berjalan dengan plugin terpasang: Redmine berhenti dengan galat yang menyebutkan versi yang didukung.
 
-Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yang sama persis dalam `package.json` dan `package-lock.json` dan harus selalu ditingkatkan bersama, ke satu versi yang sama.
-
 ## Fitur
 
-**Format teks**
+### Format teks
 - Tebal, miring, garis bawah, coretan, subscript dan superscript (Ctrl+, dan Ctrl+.), kode dalam baris.
 - Warna teks dan warna latar belakang: palet 64 warna atau nilai heksadesimal apa pun.
 - Keluarga font (13 font) dan ukuran font (preset dari 8 hingga 72 px, atau nilai apa pun).
@@ -69,40 +90,40 @@ Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yan
 - Tautan: sisipkan, sunting, hapus.
 - Garis horizontal, batalkan, dan ulangi.
 
-**Daftar**
+### Daftar
 - Daftar berpoin dengan penanda cakram, lingkaran, atau bujur sangkar.
 - Daftar bernomor: 1, 01, a, A, i, I, α.
 - Daftar tugas dengan kotak centang; tugas yang diselesaikan dicoret.
 - Daftar bersarang (Tab / Shift+Tab).
 
-**Tabel**
+### Tabel
 - Sisipkan tabel dengan ukuran apa pun, dengan atau tanpa baris header.
 - Menu klik kanan dalam sel: tambahkan dan hapus baris dan kolom, gabungkan dan pisahkan sel, baris header dan kolom header, hapus tabel.
 - Lebar kolom diubah dengan menyeret batas sel.
 - Menempel dari Excel mempertahankan lebar kolom, penyelarasan, dan ukuran font; tabel yang disalin dari Redmine menempel ke Excel dengan batas.
 
-**Gambar dan berkas**
+### Gambar dan berkas
 - Tempel gambar dari papan klip: gambar diunggah sebagai berkas dan muncul dalam teks.
 - Gambar yang dilampirkan dengan field file Redmine, atau dijatuhkan ke dalamnya, juga dimasukkan ke dalam teks.
 - Sisipkan gambar dari berkas (pemilih thumbnail) atau tautan ke berkas apa pun.
 - Ubah ukuran gambar dengan menyeret sudutnya.
 
-**Kode**
+### Kode
 - Blok kode dengan penyorotan sintaks di editor dan di halaman yang disimpan: 52 bahasa, dan Anda dapat menambahkan lebih banyak (lihat [Penyorotan sintaks](#penyorotan-sintaks)).
 - Bahasa blok dipilih dari badge di sudut kanannya, dengan pencarian, bahasa terbaru dan sering digunakan.
 - Tab dan Shift+Tab indent dan outdent baris dalam blok kode; tebal, tautan, dan warna dalam kode dipertahankan.
 
-**Blok**
+### Blok
 - Blok yang dapat disembunyikan: judul dengan konten tersembunyi (`<details>`). Disembunyikan di halaman yang disimpan, diperluas di editor.
 - Blok kutipan dengan baris penulis dan tanggal.
 
-**Penyuntingan**
+### Penyuntingan
 - Mode `<HTML>` untuk melihat dan menyunting sumber HTML: blok bersarang diberi indentasi, satu baris kosong memisahkan blok yang terdiri dari beberapa baris, sintaks diwarnai dengan aturan yang sama seperti blok kode HTML, dan Enter mempertahankan indentasi baris.
 - Pengetikan gaya Markdown: `#` untuk tajuk, `-` dan `1.` untuk daftar, `[ ]` untuk tugas, ```` ```python ```` untuk blok kode (nama bahasa apa pun atau tidak ada), `**bold**`, `---` untuk garis horizontal. Pintasan papan ketik standar: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z dan lainnya.
 - Editor tidak pernah tumbuh lebih tinggi dari jendela: bilah alat dan tombol formulir tetap terlihat, dan teks bergulir di dalamnya. Tinggi mengikuti ukuran jendela dan perbesar halaman.
 - Gagang pengubah ukuran di sudut kanan bawah mengatur tinggi dengan tangan. Tinggi diingat; klik ganda kembali ke tinggi otomatis.
 
-**Integrasi Redmine**
+### Integrasi Redmine
 - Bekerja di semua field teks Redmine dengan format: deskripsi masalah dan catatan, halaman wiki, berita, pesan forum, dokumen, deskripsi proyek, field teks panjang kustom, termasuk field yang muncul di halaman nanti.
 - Teks disimpan sebagai HTML. Untuk menggunakan editor, pilih *TipTap HTML* sebagai format teks dalam pengaturan Redmine.
 - Antarmuka (tooltip, menu, dialog) mengikuti bahasa dalam profil Redmine pengguna. 47 dari 50 bahasa Redmine dilengkapi dengan plugin: Bahasa Inggris dan Rusia lengkap, 45 lainnya adalah draf yang dibuat dengan model AI yang penutur asli diundang untuk mengoreksi. Tiga bahasa yang ditulis dari kanan ke kiri (Arab, Ibrani, Persia) sengaja tidak didukung (lihat [Bahasa antarmuka](#bahasa-antarmuka)).

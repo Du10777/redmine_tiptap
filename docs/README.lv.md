@@ -46,7 +46,30 @@
 
 Šis ir Redmine teksta redaktors, kas balstīts uz TipTap https://github.com/ueberdosis/tiptap
 
-Atbalstītās Redmine versijas:
+Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
+
+**Saturs**
+
+- [Atbalstītās Redmine versijas](#atbalstītās-redmine-versijas)
+- [Iespējas](#iespējas)
+  - [Teksta formatēšana](#teksta-formatēšana)
+  - [Saraksti](#saraksti)
+  - [Tabulas](#tabulas)
+  - [Attēli un pielikumi](#attēli-un-pielikumi)
+  - [Kods](#kods)
+  - [Bloki](#bloki)
+  - [Rediģēšana](#rediģēšana)
+  - [Integrācija ar Redmine](#integrācija-ar-redmine)
+- [Sintakses izcelšana](#sintakses-izcelšana)
+- [Saskarnes valoda](#saskarnes-valoda)
+- [Instalēšana](#instalēšana)
+- [Atjaunināšana](#atjaunināšana)
+  - [Instalēts ar git (ieteicams)](#instalēts-ar-git-ieteicams)
+  - [Instalēts no arhīva](#instalēts-no-arhīva)
+  - [Pēc atjaunināšanas](#pēc-atjaunināšanas)
+- [Migrēšana no CKEditor](#migrēšana-no-ckeditor)
+
+## Atbalstītās Redmine versijas
 
 | Redmine | Atbalstīta | Testēts versijās |
 |---|---|---|
@@ -56,11 +79,9 @@ Atbalstītās Redmine versijas:
 
 Jauna galvenā versija (8.x un jaunākas) tiek atbalstīta tikai pēc tam, kad spraudnis tajā ir pārbaudīts. Līdz tam šīs versijas Redmine ar instalētu spraudni nestartē: tas apstājas ar kļūdu, kurā nosauktas atbalstītās versijas.
 
-Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
-
 ## Iespējas
 
-**Teksta formatēšana**
+### Teksta formatēšana
 - Treknraksts, slīpraksts, pasvītrojums, pārsvītrojums, apakšraksts un augšraksts (Ctrl+, un Ctrl+.), iekļautais kods.
 - Teksta krāsa un fona krāsa: 64 krāsu palete vai jebkura hex vērtība.
 - Fonts (13 fonti) un fonta lielums (gatavie lielumi no 8 līdz 72 px vai jebkura vērtība).
@@ -69,40 +90,40 @@ Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `packag
 - Saites: ievietošana, rediģēšana, noņemšana.
 - Horizontāla līnija, darbību atsaukšana un atkārtošana.
 
-**Saraksti**
+### Saraksti
 - Aizzīmju saraksti ar aizpildītu apļu, tukšu apļu vai kvadrātu aizzīmēm.
 - Numurētie saraksti: 1, 01, a, A, i, I, α.
 - Uzdevumu saraksti ar izvēles rūtiņām; izpildītie uzdevumi tiek pārsvītroti.
 - Ligzdoti saraksti (Tab / Shift+Tab).
 
-**Tabulas**
+### Tabulas
 - Jebkura izmēra tabulas ievietošana ar galvenes rindu vai bez tās.
 - Izvēlne šūnā ar peles labo pogu: rindu un kolonnu pievienošana un dzēšana, šūnu apvienošana un sadalīšana, galvenes rinda un galvenes kolonna, tabulas dzēšana.
 - Kolonnu platumu maina, velkot šūnu apmales.
 - Ielīmējot no Excel, saglabājas kolonnu platumi, līdzinājums un fontu izmēri; no Redmine nokopēta tabula tiek ielīmēta Excel ar apmalēm.
 
-**Attēli un pielikumi**
+### Attēli un pielikumi
 - Attēla ielīmēšana no starpliktuves: tas tiek augšupielādēts kā pielikums un parādās tekstā.
 - Attēli, kas pievienoti ar Redmine pielikumu lauku vai nomesti uz tā, arī tiek ievietoti tekstā.
 - Attēla ievietošana no pielikumiem (sīktēlu izvēle) vai saites uz jebkuru pielikumu.
 - Attēla izmēru maina, velkot tā stūrus.
 
-**Kods**
+### Kods
 - Koda bloki ar sintakses izcelšanu redaktorā un saglabātajās lapās: 52 valodas, un var pievienot vēl (skatiet [Sintakses izcelšana](#sintakses-izcelšana)).
 - Bloka valodu izvēlas no nozīmītes tā stūrī; ir meklēšana, nesen un bieži lietotās valodas.
 - Tab un Shift+Tab koda blokā palielina un samazina rindu atkāpi; treknraksts, saites un krāsas kodā tiek saglabātas.
 
-**Bloki**
+### Bloki
 - Sakļaujams bloks: virsraksts ar slēptu saturu (`<details>`). Saglabātajās lapās ir sakļauts, redaktorā — izvērsts.
 - Citāta bloks ar autora un datuma rindu.
 
-**Rediģēšana**
+### Rediģēšana
 - `<HTML>` režīms HTML pirmkoda skatīšanai un rediģēšanai: ligzdotie bloki tiek attēloti ar atkāpēm; bloki, kas aizņem vairākas rindas, tiek atdalīti ar tukšu rindu; sintakse tiek iekrāsota pēc tiem pašiem noteikumiem kā HTML koda blokā; Enter saglabā rindas atkāpi.
 - Rakstīšana Markdown stilā: `#` virsrakstiem, `-` un `1.` sarakstiem, `[ ]` uzdevumiem, ```` ```python ```` koda blokam (jebkurš valodas nosaukums vai bez tā), `**bold**`, `---` horizontālai līnijai. Standarta īsinājumtaustiņi: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z un citi.
 - Redaktors nekad nekļūst augstāks par logu: rīkjosla un veidlapas pogas paliek redzamas, bet teksts ritinās iekšpusē. Augstums pielāgojas loga izmēram un lapas tālummaiņai.
 - Izmēra maiņas rokturis apakšējā labajā stūrī ļauj iestatīt augstumu ar roku. Augstums tiek atcerēts; dubultklikšķis atjauno automātisko augstumu.
 
-**Integrācija ar Redmine**
+### Integrācija ar Redmine
 - Darbojas visos Redmine teksta laukos, kas atbalsta formatēšanu: uzdevumu aprakstos un piezīmēs, viki lapās, ziņās, foruma ziņojumos, dokumentos, projektu aprakstos, garā teksta pielāgojamajos laukos, tostarp laukos, kas lapā parādās vēlāk.
 - Teksts tiek glabāts kā HTML. Lai izmantotu redaktoru, Redmine iestatījumos kā teksta formatēšanu izvēlieties *TipTap HTML*.
 - Saskarne (ekrānpadomi, izvēlnes, dialoglodziņi) seko valodai lietotāja Redmine profilā. Kopā ar spraudni tiek piegādātas 47 no Redmine 50 valodām: angļu un krievu valodas ir pilnīgas, pārējās 45 ir melnraksti, kas izveidoti ar mākslīgā intelekta modeli un ko dzimtās valodas runātāji ir laipni aicināti labot. Trīs valodas, kuras raksta no labās uz kreiso pusi (arābu, ivrits, persiešu), apzināti netiek atbalstītas (skatiet [Saskarnes valoda](#saskarnes-valoda)).

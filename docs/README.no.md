@@ -46,7 +46,30 @@
 
 Dette er en teksteditor for Redmine, basert på TipTap https://github.com/ueberdosis/tiptap
 
-Støttede Redmine-versjoner:
+Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksakte versjonen i `package.json` og `package-lock.json` og må alltid oppgraderes sammen til samme versjon.
+
+**Innhold**
+
+- [Støttede Redmine-versjoner](#støttede-redmine-versjoner)
+- [Funksjoner](#funksjoner)
+  - [Tekstformatering](#tekstformatering)
+  - [Lister](#lister)
+  - [Tabeller](#tabeller)
+  - [Bilder og vedlegg](#bilder-og-vedlegg)
+  - [Kode](#kode)
+  - [Blokker](#blokker)
+  - [Redigering](#redigering)
+  - [Integrasjon med Redmine](#integrasjon-med-redmine)
+- [Syntaksfremheving](#syntaksfremheving)
+- [Grensesnittspråk](#grensesnittspråk)
+- [Installasjon](#installasjon)
+- [Oppdatering](#oppdatering)
+  - [Installert med git (anbefalt)](#installert-med-git-anbefalt)
+  - [Installert fra et arkiv](#installert-fra-et-arkiv)
+  - [Etter oppdatering](#etter-oppdatering)
+- [Overgang fra CKEditor](#overgang-fra-ckeditor)
+
+## Støttede Redmine-versjoner
 
 | Redmine | Støttet | Testet på |
 |---|---|---|
@@ -56,11 +79,9 @@ Støttede Redmine-versjoner:
 
 En ny hovedversjon (8.x og senere) støttes først etter at programtillegget er testet på den. Inntil da starter ikke Redmine i den versjonen med programtillegget installert: den stopper med en feil som oppgir de støttede versjonene.
 
-Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksakte versjonen i `package.json` og `package-lock.json` og må alltid oppgraderes sammen til samme versjon.
+## Funksjoner
 
-## Features
-
-**Text formatting**
+### Tekstformatering
 - Fet, kursiv, understreket, gjennomstreket, subscript og superscript (Ctrl+, og Ctrl+.), inline-kode.
 - Tekstfarge og bakgrunnsfarge: en palett med 64 farger eller en hvilken som helst heksverdi.
 - Skrifttype (13 skrifttyper) og skriftstørrelse (forhåndsinnstillinger fra 8 til 72 piksler eller en hvilken som helst verdi).
@@ -69,48 +90,48 @@ Editormotor: **TipTap 3.31.4**. Alle `@tiptap/*`-pakker er festet til denne eksa
 - Lenker: sett inn, rediger, fjern.
 - Vannrett linje, angre og gjør på nytt.
 
-**Lists**
+### Lister
 - Punktlister med prikk, sirkel eller firkant-markører.
 - Nummererte lister: 1, 01, a, A, i, I, α.
 - Gjøremålslister med avmerkingsbokser; fullførte gjøremål er gjennomstreket.
 - Nestede lister (Tab / Shift+Tab).
 
-**Tables**
+### Tabeller
 - Sett inn en tabell av hvilken som helst størrelse, med eller uten headerrad.
 - Høyreklikkmeny i en celle: legg til og slett rader og kolonner, slå sammen og del celler, headerrad og headerkolonne, slett tabellen.
 - Kolonnebredder endres ved å dra cellegränser.
 - Liming fra Excel bevarer kolonnebredder, justering og skriftstørrelser; en tabell kopiert fra Redmine limes inn i Excel med kanter.
 
-**Images and attachments**
+### Bilder og vedlegg
 - Lim inn et bilde fra utklippstavlen: det lastes opp som en vedlegg og vises i teksten.
 - Bilder vedlagt med Redmines filfelt eller droppet på det settes inn i teksten også.
 - Sett inn et bilde fra vedleggene (en miniatyrviser) eller en lenke til et vedlegg.
 - Endre bildesstørrelse ved å dra hjørnene.
 
-**Code**
-- Kodeblokkjer med syntaksmarkering i editoren og på lagrede sider: 52 språk, og du kan legge til flere (se [Syntax highlighting](#syntax-highlighting)).
+### Kode
+- Kodeblokkjer med syntaksmarkering i editoren og på lagrede sider: 52 språk, og du kan legge til flere (se [Syntaksfremheving](#syntaksfremheving)).
 - Språket i en blokk velges fra et badge i hjørnet, med søk, nylig brukte og hyppige språk.
 - Tab og Shift+Tab innrykker og minsker linjer innenfor en kodeblokk; fet, lenker og farger i kode beholdes.
 
-**Blocks**
+### Blokker
 - Kollapsbar blokk: en tittel med skjult innhold (`<details>`). Lukket på lagrede sider, utvidet i editoren.
 - Sitatblokk med forfatter- og datolin.
 
-**Editing**
+### Redigering
 - `<HTML>`-modus for å vise og redigere HTML-kilden: nestede blokker er rykket inn, en tom linje skiller blokkene som går over flere linjer, syntaksen farges etter de samme reglene som i en HTML-kodeblokk, og Enter beholder innrykket på linjen.
 - Markdown-stil skrivstil: `#` for overskrifter, `-` og `1.` for lister, `[ ]` for gjøremål, ```` ```python ```` for en kodeblokk (alle språknavn eller ingen), `**bold**`, `---` for en vannrett linje. Standardtastatursnarvei: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z og andre.
 - Editoren blir aldri høyere enn vinduet: verktøylinjen og skjemaknappene forblir synlige, og teksten ruller innenfor. Høyden følger vinduesstørrelse og sideskalering.
 - Et endringsgreb i nederste høyre hjørne stiller høyden manuelt inn. Høyden huskes; dobbeltklikk går tilbake til automatisk høyde.
 
-**Redmine integration**
+### Integrasjon med Redmine
 - Fungerer i alle Redmine-tekstfelt med formatering: sagsbeskrivelser og notater, wiki-sider, nyheter, forumbudskap, dokumenter, prosjektbeskrivelser, lange tekst-egendefinerte felt, inkludert felt som vises på siden senere.
 - Tekst lagres som HTML. For å bruke editoren velger du *TipTap HTML* som tekstformatering i Redmine-innstillingene.
-- Grensesnittet (verktøytips, menyer, dialoger) følger språket i brukerens Redmine-profil. 47 av de 50 Redmine-språkene kommer med programtillegget: engelsk og russisk er fullstendige, de øvrige 45 er utkast laget med en AI-modell som morsmålstalere gjerne kan korrigere. De tre språkene som skrives fra høyre til venstre (arabisk, hebraisk, persisk) støttes ikke bevisst (se [Interface language](#interface-language)).
+- Grensesnittet (verktøytips, menyer, dialoger) følger språket i brukerens Redmine-profil. 47 av de 50 Redmine-språkene kommer med programtillegget: engelsk og russisk er fullstendige, de øvrige 45 er utkast laget med en AI-modell som morsmålstalere gjerne kan korrigere. De tre språkene som skrives fra høyre til venstre (arabisk, hebraisk, persisk) støttes ikke bevisst (se [Grensesnittspråk](#grensesnittspråk)).
 - Forblir raskt på store tekster: editorer i skjulte skjemaer opprettes bare når skjemaet åpnes, og lange kodeblokkjer fremheves når de ruller inn i synsfeltet.
-- Tekster skrevet i CKEditor (programtillegget redmine_ckeditor) vises som de var og åpnes i editoren med formatteringen: ingen konvertering, se [Migrating from CKEditor](#migrating-from-ckeditor).
+- Tekster skrevet i CKEditor (programtillegget redmine_ckeditor) vises som de var og åpnes i editoren med formatteringen: ingen konvertering, se [Overgang fra CKEditor](#overgang-fra-ckeditor).
 - Lagrede tekster vises uten usikker HTML: skript, hendelsesbehandlere og `javascript:`-lenker fjernes når en side vises, bare det editoren selv produserer beholdes. Dette dekker tekster som kommer gjennom REST API eller `<HTML>`-modus også.
 
-## Syntax highlighting
+## Syntaksfremheving
 
 Kodeblokkjer fremheves i editoren og på lagrede sider på samme måte. Språket i en blokk velges fra badgene i det øverste høyre hjørnet; listen har en søkeboks og husker nylig og hyppig brukte språk.
 
@@ -125,7 +146,7 @@ sh highlight/_compile.sh
 
 Detaljer: [highlight/README/no.md](../highlight/README/no.md).
 
-## Interface language
+## Grensesnittspråk
 
 Editoren taler språket valgt i brukerens Redmine-profil (Min konto → Språk). Filer for 47 av de 50 Redmine-språkene kommer med programtillegget i `config/locales/`. Engelsk er kilden og russisk er forfatterens eget; de øvrige 45 er utkast laget med hjelp fra en AI-modell og ikke ennå gjennomgått av morsmålstalere, så forventer du en merkelig setning her og der. En tekst som mangler fra en fil vises på engelsk.
 
@@ -135,7 +156,7 @@ For å korrigere en oversettelse endrer du verdiene i `config/locales/<code>.yml
 
 Detaljer og liste over Redmine-språk: [config/locales/README.md](../config/locales/README.md).
 
-## Installation
+## Installasjon
 
 1. Sett programtillegget i Redmines mappe `plugins`. Mappen må hete `redmine_tiptap`. Den enkleste måten er git, som gjør oppdateringer til en kommando:
    ```sh
@@ -145,13 +166,13 @@ Detaljer og liste over Redmine-språk: [config/locales/README.md](../config/loca
 2. Start Redmine på nytt.
 3. I Redmine-innstillingene (redmine.selfhosted/_settings_) velger du Tekstformatering: *TipTap HTML*.
 
-## Updating
+## Oppdatering
 
 Programtillegget har ingen databasemigrasjoner, og det innbundne JavaScript-buntet og stilarket er en del av arkivet. Oppdatering krever ikke npm eller et bygg på serveren: erstatt programtilleggfilene og start Redmine på nytt.
 
 Før oppdatering kontrollerer du at den nye versjonen støtter din Redmine-versjon (se "Støttede Redmine-versjoner" ovenfor).
 
-### Installed with git (recommended)
+### Installert med git (anbefalt)
 
 ```sh
 cd /path/to/redmine/plugins/redmine_tiptap
@@ -168,7 +189,7 @@ docker compose restart redmine          # Docker
 
 For å holde deg på en bestemt versjon i stedet for den nyeste commit: `git fetch && git checkout <tag-or-commit>`.
 
-### Installed from an archive
+### Installert fra et arkiv
 
 1. Slett den gamle mappen `plugins/redmine_tiptap` og pakk ut den nye versjonen på sin plass. Sletting først sikrer at filer fjernet i den nye versjonen ikke henger igjen.
 2. Slett `public/assets/.manifest.json` i Redmine-mappen.
@@ -176,7 +197,7 @@ For å holde deg på en bestemt versjon i stedet for den nyeste commit: `git fet
 
 Trinn 2 betyr noe. Ved oppstart gjenleggs Redmine-programtilleggets eiendeler bare hvis filene deres er nyere enn dette manifestet. Filer pakket ut fra et arkiv beholder sine opprinnelige tidsstempler, så uten trinn 2 kan Redmine fortsette å servere den gamle editoren. Manifestet gjenopprettes automatisk ved oppstart. Med `git pull` er dette trinnet ikke nødvendig: git gir endrede filer det nåværende tidsstemplet.
 
-### After updating
+### Etter oppdatering
 
 - Editorens skript og stilark serveres med et innholdsfingeravtrykk i URL-adressene, så nettlesere laster den nye versjonen rett etter omstarten. Brukere trenger ikke å tømme nettlesercachen.
 - Hvis *Mellomlagre formattert tekst* er aktivert i Redmine-innstillingene (Administrasjon → Innstillinger → Generell), tøm Redmines hurtigminne en gang etter oppdatering til en versjon som endrer hvordan tekster vises (HTML-rensing, støtte til CKEditor-tekster): `bundle exec rake tmp:cache:clear RAILS_ENV=production` i Redmine-mappen. Ellers kan sider gjengitt før oppdateringen vises fra hurtigminnet, urenset, til teksten endres.
@@ -185,7 +206,7 @@ Trinn 2 betyr noe. Ved oppstart gjenleggs Redmine-programtilleggets eiendeler ba
   rm -f /path/to/redmine/public/tiptap_bundle.js /path/to/redmine/public/tiptap_bundle.js.map
   ```
 
-## Migrating from CKEditor
+## Overgang fra CKEditor
 
 Hvis din Redmine brukte [redmine_ckeditor](https://github.com/a-ono/redmine_ckeditor), kan du bytte til dette programtillegget og beholde hver tekst som er skrevet: sager, notater, wiki-sider, nyheter, meldinger, dokumenter. Ingenting konverteres og databasen berøres ikke. CKEditor lagrer tekstene som HTML, og det gjør dette programtillegget også, så en lagret tekst vises ganske enkelt av den nye formatteren.
 

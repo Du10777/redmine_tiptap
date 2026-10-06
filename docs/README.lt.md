@@ -46,7 +46,30 @@
 
 Tai tekstų redaktorius „Redmine", pagrįstas „TipTap" https://github.com/ueberdosis/tiptap
 
-Palaikomos „Redmine" versijos:
+Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
+
+**Turinys**
+
+- [Palaikomos „Redmine" versijos](#palaikomos-redmine-versijos)
+- [Funkcijos](#funkcijos)
+  - [Teksto formatavimas](#teksto-formatavimas)
+  - [Sąrašai](#sąrašai)
+  - [Lentelės](#lentelės)
+  - [Paveikslai ir priedai](#paveikslai-ir-priedai)
+  - [Kodas](#kodas)
+  - [Blokai](#blokai)
+  - [Redagavimas](#redagavimas)
+  - [„Redmine" integracija](#redmine-integracija)
+- [Sintaksės paryškinimas](#sintaksės-paryškinimas)
+- [Sąsajos kalba](#sąsajos-kalba)
+- [Diegimas](#diegimas)
+- [Atnaujinimas](#atnaujinimas)
+  - [Diegta su git (rekomenduojama)](#diegta-su-git-rekomenduojama)
+  - [Diegta iš archyvo](#diegta-iš-archyvo)
+  - [Po atnaujinimo](#po-atnaujinimo)
+- [Migracija iš „CKEditor"](#migracija-iš-ckeditor)
+
+## Palaikomos „Redmine" versijos
 
 | Redmine | Palaikoma | Testuota su |
 |---|---|---|
@@ -56,11 +79,9 @@ Palaikomos „Redmine" versijos:
 
 Nauja pagrindinė versija (8.x ir vėlesnės) palaikoma tik tada, kai įskiepis joje išbandomas. Iki tol tos versijos „Redmine" su įdiegtu įskiepiu nepasileidžia: sustoja su klaida, kurioje nurodytos palaikomos versijos.
 
-Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
-
 ## Funkcijos
 
-**Teksto formatavimas**
+### Teksto formatavimas
 - Pusjuodis, kursyvas, pabraukimas, perbraukimas, apatinis ir viršutinis indeksas (Ctrl+, ir Ctrl+.), vidinis kodas.
 - Teksto spalva ir fono spalva: 64 spalvų paletė arba bet kokia šešioliktainė reikšmė.
 - Šrifto šeima (13 šriftų) ir šrifto dydis (iš 8 iki 72 pikselių arba bet kokia reikšmė).
@@ -69,40 +90,40 @@ Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti
 - Nuorodos: įterpti, redaguoti, pašalinti.
 - Horizontali linija, atsaukti ir pakartoti.
 
-**Sąrašai**
+### Sąrašai
 - Ženkleliai sąrašai su diskiniais, apskriamais arba kvadratiniais žymenimis.
 - Numatyti sąrašai: 1, 01, a, A, i, I, α.
 - Užduočių sąrašai su žymimaisiais laukeliais; baigtos užduotys yra peršamos.
 - Vidiniai sąrašai (Tab / Shift+Tab).
 
-**Lentelės**
+### Lentelės
 - Įterpti bet kokio dydžio lentelę, su arba be antraštės eilutės.
 - Dešiniuoju pelenu meniu langelyje: pridėti ir pašalinti eilutes ir stulpelius, sujungti ir padalinti langelius, antraštės eilutę ir antraštės stulpelį, panaikinti lentelę.
 - Stulpelių plotis keičiamas vilkdami langelio ribas.
 - Klijavimas iš „Excel" išsaugo stulpelių plotį, lygiavimą ir šrifto dydžius; lentelė, nukopijuota iš „Redmine", klijuojama į „Excel" su ribomis.
 
-**Paveikslai ir priedai**
+### Paveikslai ir priedai
 - Klijuoti paveikslą iš mainų: jis yra įkeltas kaip priedas ir atsiranda tekste.
 - Paveikslai pritvirtinti naudojant „Redmine" failų lauką arba į jį nuleisus, taip pat įterpiami į tekstą.
 - Įterpti paveikslą iš priedų (miniatiūrų pasirinkiklis) arba nuorodą į bet kurį priedą.
 - Paveikslą perrašyti vilkdami jo kampus.
 
-**Kodas**
+### Kodas
 - Kodų blokai su sintaksės paryškintu redaktoriuje ir išsaugotose puslapiuose: 52 kalbos, ir galite pridėti daugiau (žr. [Sintaksės paryškinimas](#sintaksės-paryškinimas)).
 - Bloko kalba pasirenkama iš ženklelio jo kampyje su paieška, neseniai ir dažnai naudojamomis kalbomis.
 - Tab ir Shift+Tab įdengia ir neidengia eilutes kodų bloke; **pusjuodis**, nuorodos ir spalvos viduje kodo yra išsaugotos.
 
-**Blokai**
+### Blokai
 - Supainiojamas blok: antraštė su paslėptu turiniu (`<details>`). Susupainiojamas išsaugotose puslapiuose, išskleistas redaktoriuje.
 - Citatos blokas su autoriaus ir datos eilute.
 
-**Redagavimas**
+### Redagavimas
 - `<HTML>` režimas HTML šaltinio peržiūrai ir redagavimui: įdėtieji blokai rodomi su įtrauka, tuščia eilutė atskiria blokus, užimančius kelias eilutes, sintaksė spalvinama pagal tas pačias taisykles kaip HTML kodų bloke, o Enter išsaugo eilutės įtrauką.
 - Žymeklio stiliaus rašymas: `#` antraštėms, `-` ir `1.` sąrašams, `[ ]` užduotims, ```` ```python ```` kodų blokui (bet kokia kalba arba nė viena), `**bold**`, `---` horizontaliai linijai. Standartiniai klaviatūros nuotolinat: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z ir kiti.
 - Redaktorius niekada neauga aukščiau nei langas: įrankių juosta ir formos mygtukai lieka akivaizdūs, ir tekstas slenka viduje. Aukštis keičiasi pagal lango dydį ir puslapio mastelio keitimą.
 - Dydžio rankena apatiniame dešiniajame kampe nustato aukštį rankiniu būdu. Aukštis yra įsimenamas; dvigubas spustelėjimas grąžina automatinį aukštį.
 
-**„Redmine" integracija**
+### „Redmine" integracija
 - Veikia visuose „Redmine" tekstiniuose laukuose su formatavimu: darbų aprašuose ir pastabose, wiki puslapiuose, naujienose, forumų žinučiose, dokumentuose, projekto aprašuose, ilgo teksto tinkiniuose laukuose, taip pat laukuose, kurie vėliau rodomi puslapyje.
 - Tekstas saugomas kaip HTML. Norint naudoti redaktorių, pasirinkite *TipTap HTML* kaip teksto formatavimą „Redmine" nustatymuose.
 - Sąsaja (patarimai, meniu, dialogo langai) seka vartotojo „Redmine" profilio kalbą. 47 iš 50 „Redmine" kalbų yra kartu su įskiepiu: anglų ir rusų kalbos yra pilnos, kitos 45 yra juodraščiai, padaryti naudojant dirbtinį intelektą, kuriuos mielai pataisys gimtakalbiai. Trys kalbos, rašomos iš dešinės į kairę (arabų, hebrajų, persų), sąmoningai nepalaikomos (žr. [Sąsajos kalba](#sąsajos-kalba)).

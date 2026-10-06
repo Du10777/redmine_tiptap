@@ -46,7 +46,30 @@
 
 Il s’agit d’un éditeur de texte pour Redmine, basé sur TipTap https://github.com/ueberdosis/tiptap
 
-Versions de Redmine prises en charge :
+Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont épinglés à cette version exacte dans `package.json` et `package-lock.json` et doivent toujours être mis à jour ensemble, vers une seule et même version.
+
+**Sommaire**
+
+- [Versions de Redmine prises en charge](#versions-de-redmine-prises-en-charge)
+- [Fonctionnalités](#fonctionnalités)
+  - [Formatage du texte](#formatage-du-texte)
+  - [Listes](#listes)
+  - [Tableaux](#tableaux)
+  - [Images et fichiers joints](#images-et-fichiers-joints)
+  - [Code](#code)
+  - [Blocs](#blocs)
+  - [Édition](#édition)
+  - [Intégration à Redmine](#intégration-à-redmine)
+- [Coloration syntaxique](#coloration-syntaxique)
+- [Langue de l’interface](#langue-de-linterface)
+- [Installation](#installation)
+- [Mise à jour](#mise-à-jour)
+  - [Installé avec git (recommandé)](#installé-avec-git-recommandé)
+  - [Installé à partir d’une archive](#installé-à-partir-dune-archive)
+  - [Après la mise à jour](#après-la-mise-à-jour)
+- [Migration depuis CKEditor](#migration-depuis-ckeditor)
+
+## Versions de Redmine prises en charge
 
 | Redmine | Prise en charge | Testé sur |
 |---|---|---|
@@ -56,11 +79,9 @@ Versions de Redmine prises en charge :
 
 Une nouvelle version majeure (8.x et suivantes) n'est prise en charge qu'après que le plugin y a été testé. D'ici là, Redmine dans cette version ne démarre pas avec le plugin installé : il s'arrête sur une erreur qui indique les versions prises en charge.
 
-Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont épinglés à cette version exacte dans `package.json` et `package-lock.json` et doivent toujours être mis à jour ensemble, vers une seule et même version.
-
 ## Fonctionnalités
 
-**Formatage du texte**
+### Formatage du texte
 - Gras, italique, souligné, barré, indice et exposant (Ctrl+, et Ctrl+.), code en ligne.
 - Couleur du texte et couleur d’arrière-plan : une palette de 64 couleurs ou n’importe quelle valeur hexadécimale.
 - Police (13 polices) et taille de police (valeurs prédéfinies de 8 à 72 px, ou n’importe quelle valeur).
@@ -69,40 +90,40 @@ Moteur de l’éditeur : **TipTap 3.31.4**. Tous les packages `@tiptap/*` sont �
 - Liens : insérer, modifier, supprimer.
 - Ligne horizontale, annuler et rétablir.
 
-**Listes**
+### Listes
 - Listes à puces avec des marqueurs en forme de disque, de cercle ou de carré.
 - Listes numérotées : 1, 01, a, A, i, I, α.
 - Listes de tâches avec cases à cocher ; les tâches terminées sont barrées.
 - Listes imbriquées (Tab / Shift+Tab).
 
-**Tableaux**
+### Tableaux
 - Insérer un tableau de n’importe quelle taille, avec ou sans ligne d’en-tête.
 - Menu du clic droit dans une cellule : ajouter et supprimer des lignes et des colonnes, fusionner et fractionner des cellules, ligne d’en-tête et colonne d’en-tête, supprimer le tableau.
 - La largeur des colonnes se modifie en faisant glisser les bordures des cellules.
 - Le collage depuis Excel conserve la largeur des colonnes, l’alignement et les tailles de police ; un tableau copié depuis Redmine se colle dans Excel avec ses bordures.
 
-**Images et fichiers joints**
+### Images et fichiers joints
 - Coller une image depuis le presse-papiers : elle est téléversée comme fichier joint et apparaît dans le texte.
 - Les images jointes avec le champ « Fichiers » de Redmine, ou déposées sur ce champ, sont elles aussi insérées dans le texte.
 - Insérer une image depuis les fichiers joints (sélecteur de miniatures) ou un lien vers n’importe quel fichier joint.
 - Redimensionner une image en faisant glisser ses coins.
 
-**Code**
+### Code
 - Blocs de code avec coloration syntaxique dans l’éditeur et sur les pages enregistrées : 52 langages, et vous pouvez en ajouter d’autres (voir [Coloration syntaxique](#coloration-syntaxique)).
 - Le langage d’un bloc se choisit depuis un badge placé dans son coin, avec une recherche et les langages récents et fréquents.
 - Tab et Shift+Tab augmentent et diminuent le retrait des lignes dans un bloc de code ; le gras, les liens et les couleurs à l’intérieur du code sont conservés.
 
-**Blocs**
+### Blocs
 - Bloc repliable : un titre avec un contenu masqué (`<details>`). Replié sur les pages enregistrées, déplié dans l’éditeur.
 - Bloc de citation avec une ligne pour l’auteur et la date.
 
-**Édition**
+### Édition
 - Mode `<HTML>` pour afficher et modifier le code source HTML : les blocs imbriqués sont mis en retrait, une ligne vide sépare les blocs qui occupent plusieurs lignes, la syntaxe est colorée selon les mêmes règles que dans un bloc de code HTML, et Enter conserve le retrait de la ligne.
 - Saisie de type Markdown : `#` pour les titres, `-` et `1.` pour les listes, `[ ]` pour les tâches, ```` ```python ```` pour un bloc de code (n’importe quel nom de langage, ou aucun), `**bold**`, `---` pour une ligne horizontale. Raccourcis clavier standard : Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z et d’autres.
 - L’éditeur ne devient jamais plus haut que la fenêtre : la barre d’outils et les boutons du formulaire restent visibles, et le texte défile à l’intérieur. La hauteur suit la taille de la fenêtre et le zoom de la page.
 - Une poignée de redimensionnement dans le coin inférieur droit permet de régler la hauteur à la main. La hauteur est mémorisée ; un double-clic rétablit la hauteur automatique.
 
-**Intégration à Redmine**
+### Intégration à Redmine
 - Fonctionne dans tous les champs de texte de Redmine qui prennent en charge le formatage : descriptions et notes des demandes, pages wiki, annonces, messages des forums, documents, descriptions des projets, champs personnalisés de type texte long, y compris les champs qui apparaissent plus tard sur la page.
 - Le texte est stocké en HTML. Pour utiliser l’éditeur, choisissez *TipTap HTML* comme formatage du texte dans la configuration de Redmine.
 - L’interface (info-bulles, menus, boîtes de dialogue) suit la langue du profil Redmine de l’utilisateur. 47 des 50 langues de Redmine sont fournies avec le plugin : l’anglais et le russe sont complets, les 45 autres sont des ébauches réalisées avec un modèle d’IA, dont la correction par des locuteurs natifs est la bienvenue. Les trois langues qui s’écrivent de droite à gauche (arabe, hébreu, persan) ne sont volontairement pas prises en charge (voir [Langue de l’interface](#langue-de-linterface)).

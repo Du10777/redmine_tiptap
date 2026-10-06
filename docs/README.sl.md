@@ -46,7 +46,30 @@
 
 To je urejevalnik besedil za Redmine, ki temelji na TipTap https://github.com/ueberdosis/tiptap
 
-Podprte različice Redmineja:
+Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
+
+**Kazalo**
+
+- [Podprte različice Redmineja](#podprte-različice-redmineja)
+- [Zmožnosti](#zmožnosti)
+  - [Oblikovanje besedila](#oblikovanje-besedila)
+  - [Seznami](#seznami)
+  - [Tabele](#tabele)
+  - [Slike in priložene datoteke](#slike-in-priložene-datoteke)
+  - [Kod](#kod)
+  - [Bloki](#bloki)
+  - [Urejanje](#urejanje)
+  - [Integracija Redmineja](#integracija-redmineja)
+- [Poudarjanje skladnje](#poudarjanje-skladnje)
+- [Jezik vmesnika](#jezik-vmesnika)
+- [Namestitev](#namestitev)
+- [Posodabljanje](#posodabljanje)
+  - [Nameščeno z git (priporočeno)](#nameščeno-z-git-priporočeno)
+  - [Nameščeno iz arhiva](#nameščeno-iz-arhiva)
+  - [Po posodobitvi](#po-posodobitvi)
+- [Migracija iz urejevalnika CKEditor](#migracija-iz-urejevalnika-ckeditor)
+
+## Podprte različice Redmineja
 
 | Redmine | Podpora | Testirano na |
 |---|---|---|
@@ -56,11 +79,9 @@ Podprte različice Redmineja:
 
 Nova glavna različica (8.x in novejše) postane podprta šele, ko je redmine_tiptap na njej preizkušen. Do takrat se Redmine te različice z nameščenim redmine_tiptap ne zažene: ustavi se z napako, ki navede podprte različice.
 
-Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
-
 ## Zmožnosti
 
-**Oblikovanje besedila**
+### Oblikovanje besedila
 - Krepko, ležeče, podčrtano, prečrtano, spodnji in zgornji indeks (Ctrl+, in Ctrl+.), vgrajeni kod.
 - Barva besedila in barva ozadja: 64-barvna paleta ali poljubna heksadecimalna vrednost.
 - Pisava (13 pisav) in velikost pisave (prednastavke od 8 do 72 px ali poljubno vrednost).
@@ -69,40 +90,40 @@ Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json
 - Povezave: vstavi, uredi, odstrani.
 - Vodoravna črta, razveljavi in ponovi.
 
-**Seznami**
+### Seznami
 - Seznami z oznakami s pikami, krogi ali kvadrati.
 - Oštevilčeni seznami: 1, 01, a, A, i, I, α.
 - Seznam nalog s potrditvenimi polji; zaključeni nalogi so prečrtani.
 - Ugnezdeni seznami (Tab / Shift+Tab).
 
-**Tabele**
+### Tabele
 - Vstavite tabelo poljubne velikosti, z ali brez vrstice glave.
 - Desna gumba v celici: dodaj in izbriši vrstice in stolpce, združi in razdeli celice, vrsta in stolpec glave, izbriši tabelo.
 - Širine stolpcev se spreminjajo z vlečenjem robov celic.
 - Lepljenje iz Excela ohrani širine stolpcev, poravnavo in velikosti pisav; tabela, kopirana iz Redmineja, se v Excelov liplji s področji.
 
-**Slike in priložene datoteke**
+### Slike in priložene datoteke
 - Prilepite sliko iz odložiča: naložena je kot priložena datoteka in se pojavi v besedilu.
 - Slike, priložene z poljem datoteke Redmineja ali spuščene nanj, se prav tako vstavijo v besedilo.
 - Vstavite sliko iz priloženih datotek (pregledovalnik sličic) ali povezavo do poljubne priložene datoteke.
 - Spremenite velikost slike z vlečenjem vogalov.
 
-**Kod**
+### Kod
 - Bloki kode s poudarjanjem skladnje v urejevalniku in na shranjenih straneh: 52 jezikov, in lahko dodate več (glejte [Poudarjanje skladnje](#poudarjanje-skladnje)).
 - Jezik bloka je izbran iz značke v njegovem vogalu, z iskanjem, nedavnimi in pogostimi jeziki.
 - Tab in Shift+Tab zamakneta in razveljavi vrstice znotraj bloka kode; krepko, povezave in barve znotraj kode so ohranjene.
 
-**Bloki**
+### Bloki
 - Skrčni blok: naslov s skritim vsebino (`<details>`). Skrčen na shranjenih straneh, razširjen v urejevalniku.
 - Blok navedka z avtorsko in datumsko vrstico.
 
-**Urejanje**
+### Urejanje
 - Način `<HTML>` za prikaz in urejanje vira HTML: ugnezdeni bloki so zamaknjeni, prazna vrstica ločuje bloke, ki zavzemajo več vrstic, skladnja je obarvana po istih pravilih kot v bloku kode HTML, Enter pa ohranja zamik vrstice.
 - Tipkanje v slogu Markdown: `#` za naslove, `-` in `1.` za sezname, `[ ]` za naloge, ```` ```python ```` za blok kode (katero koli ime jezika ali ne), `**bold**`, `---` za vodoravno črto. Standardni tipkovni bližnjici: Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+Z in drugi.
 - Urejevalnik nikoli ne postane višji od okna: orodna vrstica in gumbi obrazca ostanejo na vidiku, besedilo pa se pomika znotraj. Višina sledi velikosti okna in povečavi strani.
 - Ročica za spreminjanje velikosti v spodnjem desnem kotu nastavi višino ročno. Višina se zapomni; dvojni klik se vrne na samodejno višino.
 
-**Integracija Redmineja**
+### Integracija Redmineja
 - Deluje v vseh poljih besedila Redmineja z oblikovanjem: opis zahtevka in zabeležka, predstavitvene strani, novice, sporočila foruma, dokumenti, opisi projektov, polja po meri z dolgim besedilom, vključno s polji, ki se na strani pojavijo kasneje.
 - Besedilo je shranjeno kot HTML. Če želite uporabiti urejevalnik, v nastavitvah Redmineja izberite *TipTap HTML* kot oblikovanje besedila.
 - Vmesnik (nasveti, meniji, pogovorna okna) sledi jeziku v profilu uporabnika Redmineja. Plaginom je priloženo 47 od 50 jezikov Redmineja: angleščina in ruščina sta popolni, ostalih 45 so osnutki, narejeni z modelom umetne inteligence, ki jih bodo naravni govorci z veseljem popravili. Tri jeziki, napisani od desne proti levi (arabščina, hebrejščina, perzijščina), namerno niso podprti (glejte [Jezik vmesnika](#jezik-vmesnika)).

@@ -1,4 +1,4 @@
-# Syntax highlighting: languages
+# Syntaksmarkering: sprog
 
 **Read this in other languages:**
 [English](en.md) ·
@@ -48,9 +48,9 @@
 
 Kodeblokke markeres både i editoren og på gemte sider (sager, noter, wiki), og de ser ens ud på begge. Sproget i en blok vælges fra badgene i dens øverste højre hjørne. Listen over sprog defineres af filerne i mappen `highlight/`: en fil er et sprog.
 
-Plugin'et leveres med 52 sprog. Du kan tilføje mere: konverter en klar highlight.js-grammatik med et script (se [Tilføjelse af et sprog fra highlight.js](#adding-a-language-from-highlightjs)) eller skriv dit eget.
+Plugin'et leveres med 52 sprog. Du kan tilføje mere: konverter en klar highlight.js-grammatik med et script (se [Tilføjelse af et sprog fra highlight.js](#tilføj-et-sprog-fra-highlightjs)) eller skriv dit eget.
 
-## How it works
+## Sådan virker det
 
 - Markering udføres af [highlight.js](https://highlightjs.org) (gennem [lowlight](https://github.com/wooorm/lowlight)). Editoren og de gemte sider bruger samme motor, så farverne matcher.
 - `_compile.sh` samler alle sprogfiler i en fil, `assets/javascripts/tiptap_highlight.js`. Denne fil er allerede bygget i arkivet, så installation af plugin'et kræver ikke build. Du skal kun bygge det, når du ændrer sættet af sprog.
@@ -60,7 +60,7 @@ Plugin'et leveres med 52 sprog. Du kan tilføje mere: konverter en klar highligh
 - Der er ingen sproggenkendelse: en blok uden et sprog vises som almindelig tekst. Det gør også en blok, hvis sprog ikke er i `highlight/` (for eksempel blev sprogets fil slettet); dets badge holder på at vise `id`'et. Hvis sprogets fil kommer tilbage, det gør farverne også.
 - Farver. highlight.js markerer tekst med klasser som `hljs-keyword`, `hljs-string`, `hljs-comment`. Deres farver indstilles i `assets/stylesheets/src/06_code.css`, ved brug af paletten af Redmines egen syntaksmarkering.
 
-## Language file
+## Sprogfil
 
 For eksempel `routeros.js`:
 
@@ -103,7 +103,7 @@ Filer og mapper hvis navne begynder med `_` er ikke sprog:
 
 Mappen `README/` indeholder denne dokumentation.
 
-## Adding a language from highlight.js
+## Tilføj et sprog fra highlight.js
 
 Klar grammatikker (mere end 190) er her: https://github.com/highlightjs/highlight.js/tree/main/src/languages. Deres navne og aliaser er angivet i [SUPPORTED_LANGUAGES.md](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md), sammen med omkring hundrede tredjepartsgrammatikker gemt i separate arkiver. Scriptet `_convert_grammar.py` i denne mappe konverterer enhver af dem til plugin'ets format.
 
@@ -115,7 +115,7 @@ python3 highlight/_convert_grammar.py erlang
 sh highlight/_compile.sh
 ```
 
-Argumentet `erlang` er filnavnet i `src/languages` uden `.js`. Den anden kommando bygger sproget og kontrollerer det. Genstart derefter Redmine (se [Building and applying](#building-and-applying)). I Windows, brug `py` eller `python` i stedet for `python3`.
+Argumentet `erlang` er filnavnet i `src/languages` uden `.js`. Den anden kommando bygger sproget og kontrollerer det. Genstart derefter Redmine (se [Bygning og anvendelse](#bygning-og-anvendelse)). I Windows, brug `py` eller `python` i stedet for `python3`.
 
 Eksempler:
 
@@ -152,7 +152,7 @@ python3 highlight/_convert_grammar.py erlang --npm
 python3 highlight/_convert_grammar.py erlang --dry-run
 ```
 
-### What the script does
+### Hvad scriptet gør
 
 1. Downloader `src/languages/<name>.js` af highlight.js-versionen plugin'et kører på. Versionen læses fra `package-lock.json` (pt. 11.12.0), fordi grammatikker skrives til motorens version. `--ref` vælger en anden version, branch eller commit.
 2. Tager sproganavn fra `Language:`-linjen i grammatiks header og søgeord fra dets aliaser (`aliases`). `id`'et er grammatiks filnavn.
@@ -163,7 +163,7 @@ python3 highlight/_convert_grammar.py erlang --dry-run
 
 Efter konvertering kan sproget redigeres direkte i sin fil.
 
-### Options
+### Tilvalg
 
 | Mulighed | Hvad det gør |
 |---|---|
@@ -182,7 +182,7 @@ Efter konvertering kan sproget redigeres direkte i sin fil.
 
 **Kopier eller `--npm`?** En kopi viser reglerne direkte i filen: du kan redigere dem, tage en grammatik nyere end den installeret pakke, eller en tredjepartsgrammatik. En kopi ændrer sig ikke, når plugin'et opgraderes highlight.js; for at opdatere det skal du konvertere sproget igen med `--force`. En fil lavet med `--npm` er nogle få linjer lang, og dens grammatik opgraderes sammen med plugin'et.
 
-## Building and applying
+## Bygning og anvendelse
 
 ```sh
 sh highlight/_compile.sh
@@ -192,11 +192,11 @@ sh highlight/_compile.sh
 - Først kontrollerer scriptet hvert sprog: bygger det adskilt, indlæser det, registrerer det i samme motor, der kører i browseren, og fremhæver en eksempel-tekst. Hvis et sprog er ødelagt (en fejl i koden, et ugyldigt regulært udtryk, en `id`, der allerede er optaget), navngiver scriptet filen og årsagen og stopper; den tidligere `tiptap_highlight.js` forbliver på plads.
 - Derefter samler scriptet alle sprog i `assets/javascripts/tiptap_highlight.js`.
 
-Efter bygningen skal du genstarte Redmine: det publicerer plugin-filer ved opstart (se "Opdatering" i [hovedREADME](../../docs/README.da.md#updating) for kommandoerne). Browsere får den nye fil med det samme, fordi dens URL indeholder et fingeraftryk af indholdet.
+Efter bygningen skal du genstarte Redmine: det publicerer plugin-filer ved opstart (se "Opdatering" i [hovedREADME](../../docs/README.da.md#opdatering) for kommandoerne). Browsere får den nye fil med det samme, fordi dens URL indeholder et fingeraftryk af indholdet.
 
 Hvis Redmine-serveren hverken har Docker eller Node.js, skal du bygge på en maskine, der har det (en kopi af plugin-mappen er nok) og sætte den resulterende `assets/javascripts/tiptap_highlight.js` på serveren.
 
-## Removing a language
+## Fjern et sprog
 
 Slet sprogets fil fra `highlight/`, bygge og genstart Redmine. Gemte blokke på dette sprog forbliver som de er og vises som almindelig tekst. Filer i `_vendor/`, der ikke længere er nødvendige, fjernes med:
 
@@ -204,14 +204,14 @@ Slet sprogets fil fra `highlight/`, bygge og genstart Redmine. Gemte blokke på 
 python3 highlight/_convert_grammar.py --prune
 ```
 
-## Own grammars and editing rules
+## Egne grammatikker og redigering af regler
 
 - En grammatik er en funktion, der modtager objektet `hljs` og returnerer en sproges definition: hvilke stykker tekst der skal markeres og hvordan. Vejledning: https://highlightjs.readthedocs.io/en/latest/language-guide.html, reference: https://highlightjs.readthedocs.io/en/latest/mode-reference.html. Eksempler: `log.js`, `journalctl.js`, `cisco-ios.js`.
 - highlight.js forbinder de regulære udtryk af alle regler på et sprog i en og ignorerer deres egne flag. Så store og små bogstaver-uafhængig matching skal staves (eller `[Ee]rror`) eller aktiveres til hele sproget med `case_insensitive: true`.
 - Foretrække de standard-token-klasser (`keyword`, `string`, `number`, `comment`, `title`, `attr`, `variable`, `built_in`, `literal`, `meta`, `symbol`, `type` og så videre): de har allerede farver. En klasse af dine egne (for eksempel producerer `scope: 'log-error'` klassen `hljs-log-error`) kræver en regel i `assets/stylesheets/src/06_code.css` og et CSS-genbygg (`assets/stylesheets/src/_build.sh`).
 - For at tilbyde en klar grammatik under et andet navn, skal du gøre som `cmd.js` gør: kald den oprindelige grammatik og ændre `name` og `aliases` i resultatet. Hvis aliaserne ikke erstattes, overtager det nye sprog dem fra originalen.
 
-## Updating the plugin when you have added languages
+## Opdatering af plugin'et, når du har tilføjet sprog
 
 git lader dine filer i `highlight/` alene. Men `assets/javascripts/tiptap_highlight.js` i den nye plugin-version er bygget uden dine sprog, og dit byg af denne fil kommer i vejen for `git pull`. Så:
 
@@ -226,6 +226,6 @@ Den første kommando kaster dit byg bort, den sidste bygger sproget igen, herund
 
 Hvis plugin'et blev installeret fra et arkiv, skal du gemme dine sprogets filer og mappen `_vendor/` før du erstatter plugin-mappen, sætte dem tilbage bagefter og bygger sproget.
 
-## Size
+## Størrelse
 
 Alle sprog er samlet i en fil; browseren downloader den en gang og tager den derefter fra cachen. I øjeblikket er det 226 KB for 52 sprog. De fleste sprog tager 1–10 KB, det største er 1C (55 KB).
