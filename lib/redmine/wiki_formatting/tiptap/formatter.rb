@@ -69,10 +69,48 @@ module Redmine
           html = convert_special_containers(html)
           html = name_code_languages(html)
           html = auto_link_addresses(Sanitizer.call(html))
+          html = run_redmine_scrubbers(html)
           legacy ? %(<div class="tiptap-legacy">#{html}</div>) : html
         end
 
         private
+
+        # Redmine 7 moved into its formatters what Redmine 6 does by itself for any
+        # format: the "Copy" button of a code block (Redmine 6 adds it with JavaScript
+        # when the page opens), pictures given by the file name of an attachment and
+        # hi-res pictures (Redmine 6: textilizable), and sortable tables (new in
+        # Redmine 7, off by default). Its formatters run these scrubbers on the HTML
+        # they make, and so does this one, otherwise on Redmine 7 the pictures of the
+        # editor (it saves them as <img src="file name">) would not show and code
+        # blocks would have no "Copy" button. Redmine 6 has none of these classes, so
+        # nothing is done there. SyntaxHighlightScrubber is left out: code blocks are
+        # colored in the browser (tiptap_codeblock.js), on Redmine 6 as well.
+        def redmine_scrubbers
+          formatting = Redmine::WikiFormatting
+          available = ->(name) { formatting.const_defined?(name, false) }
+          scrubbers = []
+          scrubbers << formatting::CopypreScrubber.new if available.(:CopypreScrubber)
+          scrubbers << formatting::TablesortScrubber.new if available.(:TablesortScrubber)
+          scrubbers << formatting::InlineAttachmentsScrubber.new(@options) if available.(:InlineAttachmentsScrubber)
+          scrubbers << formatting::HiresImagesScrubber.new if available.(:HiresImagesScrubber)
+          scrubbers
+        end
+
+        # The same way as Redmine 7 runs them in its own formatters.
+        def run_redmine_scrubbers(html)
+          scrubbers = redmine_scrubbers
+          return html if scrubbers.empty?
+
+          fragment = Loofah.html5_fragment(html)
+          fragment.scrub!(Loofah::Scrubber.new do |node|
+            scrubbers.each do |scrubber|
+              result = scrubber.scrub(node)
+              break result if result == Loofah::Scrubber::STOP
+              break if node.parent.nil?
+            end
+          end)
+          fragment.to_s
+        end
 
         def ckeditor_text?(html)
           html.match?(CKEDITOR_SIGNS)
