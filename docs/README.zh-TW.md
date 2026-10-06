@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### 透過壓縮檔案安裝
 
-1. 下載 `release` 分支的壓縮檔：https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip 。刪除舊的 `plugins/redmine_tiptap` 資料夾，並在原位置解壓縮；壓縮檔中的資料夾名為 `redmine_tiptap-release`，請將其重新命名為 `redmine_tiptap`。先刪除可以確保新版本中已移除的檔案不會殘留。
+1. 從最新發行版下載 `redmine_tiptap.zip`：https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip 。其中的檔案與 `release` 分支相同（不含這份文件的外掛程式）。刪除舊的 `plugins/redmine_tiptap` 資料夾，並在原位置解壓縮；裡面的資料夾名稱已經是 `redmine_tiptap`。先刪除可以確保新版本中已移除的檔案不會殘留。
 2. 刪除 Redmine 資料夾中的 `public/assets/.manifest.json`。
 3. 重新啟動 Redmine。
 

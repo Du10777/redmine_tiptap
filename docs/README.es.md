@@ -198,7 +198,7 @@ Si el complemento se instaló con un `git clone` normal (la rama `main`, con la 
 
 ### Instalado desde un archivo
 
-1. Descarga el archivo de la rama `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Elimina la carpeta antigua `plugins/redmine_tiptap` y descomprime el archivo en su lugar; la carpeta del archivo se llama `redmine_tiptap-release`, cámbiale el nombre a `redmine_tiptap`. Eliminarla primero asegura que no queden archivos que la nueva versión ya no tiene.
+1. Descarga `redmine_tiptap.zip` de la última versión: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Contiene los mismos archivos que la rama `release` (el complemento sin esta documentación). Elimina la carpeta antigua `plugins/redmine_tiptap` y descomprime el archivo en su lugar; la carpeta de dentro ya se llama `redmine_tiptap`. Eliminarla primero asegura que no queden archivos que la nueva versión ya no tiene.
 2. Elimina `public/assets/.manifest.json` en la carpeta de Redmine.
 3. Reinicia Redmine.
 

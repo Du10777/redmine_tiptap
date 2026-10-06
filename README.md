@@ -195,7 +195,7 @@ If the plugin was installed with a plain `git clone` (the `main` branch, with th
 
 ### Installed from an archive
 
-1. Download the archive of the `release` branch: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Delete the old `plugins/redmine_tiptap` folder and unpack the archive in its place; the folder in the archive is named `redmine_tiptap-release`, rename it to `redmine_tiptap`. Deleting first makes sure that files removed in the new version do not linger.
+1. Download `redmine_tiptap.zip` from the latest release: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. It holds the same files as the `release` branch (the plugin without this documentation). Delete the old `plugins/redmine_tiptap` folder and unpack the archive in its place; the folder inside it is already named `redmine_tiptap`. Deleting first makes sure that files removed in the new version do not linger.
 2. Delete `public/assets/.manifest.json` in the Redmine folder.
 3. Restart Redmine.
 

@@ -198,7 +198,7 @@ Nếu plugin đã được cài bằng `git clone` thông thường (nhánh `mai
 
 ### Được cài đặt từ một kho lưu trữ
 
-1. Tải tệp nén của nhánh `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Xóa thư mục `plugins/redmine_tiptap` cũ và giải nén tệp vào đúng vị trí đó; thư mục trong tệp nén có tên `redmine_tiptap-release`, hãy đổi tên nó thành `redmine_tiptap`. Xóa trước đảm bảo rằng các tệp đã bị loại bỏ trong phiên bản mới sẽ không còn sót lại.
+1. Tải `redmine_tiptap.zip` từ bản phát hành mới nhất: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Nó chứa các tệp giống như nhánh `release` (plugin không kèm tài liệu này). Xóa thư mục `plugins/redmine_tiptap` cũ và giải nén tệp vào đúng vị trí đó; thư mục bên trong đã có tên `redmine_tiptap`. Xóa trước đảm bảo rằng các tệp đã bị loại bỏ trong phiên bản mới sẽ không còn sót lại.
 2. Xóa `public/assets/.manifest.json` trong thư mục Redmine.
 3. Khởi động lại Redmine.
 

@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### Архиваас суулгасан бол
 
-1. `release` салбарын архивыг татна: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Хуучин `plugins/redmine_tiptap` хавтсыг устгаад, түүний оронд архивыг задлана; архив доторх хавтасны нэр `redmine_tiptap-release` тул нэрийг нь `redmine_tiptap` болгож өөрчилнө. Эхлээд устгаснаар шинэ хувилбарт хасагдсан файлууд үлдэхгүй.
+1. Хамгийн сүүлийн хувилбараас `redmine_tiptap.zip`-ийг татаж авна: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Дотор нь `release` салбартай ижил файлууд (энэ баримт бичгийг оруулаагүй плагин) байна. Хуучин `plugins/redmine_tiptap` хавтсыг устгаад, түүний оронд архивыг задлана; доторх хавтас аль хэдийн `redmine_tiptap` нэртэй. Эхлээд устгаснаар шинэ хувилбарт хасагдсан файлууд үлдэхгүй.
 2. Redmine-ийн хавтас дахь `public/assets/.manifest.json` файлыг устгана.
 3. Redmine-ийг дахин эхлүүлнэ.
 

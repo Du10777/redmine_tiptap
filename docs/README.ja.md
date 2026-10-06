@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### アーカイブからインストールした場合
 
-1. `release` ブランチのアーカイブをダウンロードします: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip 。古い `plugins/redmine_tiptap` フォルダーを削除し、その場所にアーカイブを展開します。アーカイブ内のフォルダー名は `redmine_tiptap-release` なので、`redmine_tiptap` に名前を変更してください。先に削除しておくことで、新しいバージョンで削除されたファイルが残らないようにします。
+1. 最新リリースから `redmine_tiptap.zip` をダウンロードします: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip 。中身は `release` ブランチと同じファイル（このドキュメントを除いたプラグイン）です。古い `plugins/redmine_tiptap` フォルダーを削除し、その場所にアーカイブを展開します。中のフォルダー名はすでに `redmine_tiptap` です。先に削除しておくことで、新しいバージョンで削除されたファイルが残らないようにします。
 2. Redmine のフォルダー内の `public/assets/.manifest.json` を削除します。
 3. Redmine を再起動します。
 

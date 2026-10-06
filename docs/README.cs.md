@@ -198,7 +198,7 @@ Pokud byl plugin nainstalován obyčejným `git clone` (větev `main`, s dokumen
 
 ### Nainstalováno z archivu
 
-1. Stáhněte archiv větve `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Smažte starou složku `plugins/redmine_tiptap` a rozbalte archiv na její místo; složka v archivu se jmenuje `redmine_tiptap-release`, přejmenujte ji na `redmine_tiptap`. Smazání předem zajistí, že nezůstanou soubory, které nová verze už nemá.
+1. Stáhněte `redmine_tiptap.zip` z posledního vydání: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Obsahuje stejné soubory jako větev `release` (plugin bez této dokumentace). Smažte starou složku `plugins/redmine_tiptap` a rozbalte archiv na její místo; složka uvnitř se už jmenuje `redmine_tiptap`. Smazání předem zajistí, že nezůstanou soubory, které nová verze už nemá.
 2. Odstraňte `public/assets/.manifest.json` v složce Redmine.
 3. Restartujte Redmine.
 

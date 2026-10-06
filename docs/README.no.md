@@ -198,7 +198,7 @@ Hvis programtillegget ble installert med en vanlig `git clone` (grenen `main`, m
 
 ### Installert fra et arkiv
 
-1. Last ned arkivet for grenen `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Slett den gamle mappen `plugins/redmine_tiptap` og pakk ut arkivet på samme sted; mappen i arkivet heter `redmine_tiptap-release`, gi den nytt navn til `redmine_tiptap`. Når den slettes først, blir ikke filer som er fjernet i den nye versjonen, liggende igjen.
+1. Last ned `redmine_tiptap.zip` fra den nyeste utgivelsen: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Den har de samme filene som grenen `release` (programtillegget uten denne dokumentasjonen). Slett den gamle mappen `plugins/redmine_tiptap` og pakk ut arkivet på samme sted; mappen inni heter allerede `redmine_tiptap`. Når den slettes først, blir ikke filer som er fjernet i den nye versjonen, liggende igjen.
 2. Slett `public/assets/.manifest.json` i Redmine-mappen.
 3. Start Redmine på nytt.
 

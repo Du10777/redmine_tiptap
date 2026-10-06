@@ -198,7 +198,7 @@ Ak bol plugin nainštalovaný obyčajným `git clone` (vetva `main`, s dokument�
 
 ### Nainštalované z archívu
 
-1. Stiahnite archív vetvy `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Odstráňte starý priečinok `plugins/redmine_tiptap` a rozbaľte archív na jeho miesto; priečinok v archíve sa volá `redmine_tiptap-release`, premenujte ho na `redmine_tiptap`. Predchádzajúce odstránenie zaistí, že nezostanú súbory, ktoré už nová verzia nemá.
+1. Stiahnite `redmine_tiptap.zip` z najnovšieho vydania: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Obsahuje rovnaké súbory ako vetva `release` (plugin bez tejto dokumentácie). Odstráňte starý priečinok `plugins/redmine_tiptap` a rozbaľte archív na jeho miesto; priečinok vnútri sa už volá `redmine_tiptap`. Predchádzajúce odstránenie zaistí, že nezostanú súbory, ktoré už nová verzia nemá.
 2. Odstráňte `public/assets/.manifest.json` v zložke Redmine.
 3. Restartujte Redmine.
 

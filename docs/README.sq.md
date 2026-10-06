@@ -198,7 +198,7 @@ Nëse shtojca është instaluar me një `git clone` të zakonshëm (dega `main`,
 
 ### Instaluar nga një arkiv
 
-1. Shkarkoni arkivin e degës `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Fshini dosjen e vjetër `plugins/redmine_tiptap` dhe çpaketoni arkivin në vend të saj; dosja në arkiv quhet `redmine_tiptap-release`, riemërtojeni në `redmine_tiptap`. Fshirja paraprake siguron që kartelat e hequra në versionin e ri të mos mbeten aty.
+1. Shkarkoni `redmine_tiptap.zip` nga hedhja më e fundit: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Përmban të njëjtat kartela si dega `release` (shtojca pa këtë dokumentim). Fshini dosjen e vjetër `plugins/redmine_tiptap` dhe çpaketoni arkivin në vend të saj; dosja brenda tij quhet tashmë `redmine_tiptap`. Fshirja paraprake siguron që kartelat e hequra në versionin e ri të mos mbeten aty.
 2. Fshini `public/assets/.manifest.json` në dosjen e Redmine-it.
 3. Rinisni Redmine-in.
 

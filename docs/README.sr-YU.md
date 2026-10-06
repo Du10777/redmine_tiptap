@@ -198,7 +198,7 @@ Ako je dodatna komponenta instalirana običnim `git clone` (grana `main`, sa dok
 
 ### Inštalirano iz arhive
 
-1. Preuzmite arhivu grane `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Izbrišite staru fasciklu `plugins/redmine_tiptap` i na njeno mesto raspakujte arhivu; fascikla u arhivi se zove `redmine_tiptap-release`, preimenujte je u `redmine_tiptap`. Prethodno brisanje obezbeđuje da datoteke uklonjene u novoj verziji ne zaostanu.
+1. Preuzmite `redmine_tiptap.zip` iz poslednjeg izdanja: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Sadrži iste datoteke kao grana `release` (dodatna komponenta bez ove dokumentacije). Izbrišite staru fasciklu `plugins/redmine_tiptap` i na njeno mesto raspakujte arhivu; fascikla unutra već se zove `redmine_tiptap`. Prethodno brisanje obezbeđuje da datoteke uklonjene u novoj verziji ne zaostanu.
 2. Izbrišite `public/assets/.manifest.json` u fascikli Redmine-a.
 3. Ponovo pokrenite Redmine.
 

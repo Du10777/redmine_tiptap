@@ -198,7 +198,7 @@ Eklenti sıradan bir `git clone` ile kurulduysa (`main` dalı, belgeler ve tüm 
 
 ### Arşivden kurulu
 
-1. `release` dalının arşivini indirin: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Eski `plugins/redmine_tiptap` klasörünü silin ve arşivi onun yerine çıkarın; arşivdeki klasörün adı `redmine_tiptap-release`'dir, adını `redmine_tiptap` olarak değiştirin. Önce silmek, yeni sürümde kaldırılan dosyaların geride kalmamasını sağlar.
+1. En son sürümden `redmine_tiptap.zip` dosyasını indirin: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. İçinde `release` dalıyla aynı dosyalar var (bu belgeler olmadan eklenti). Eski `plugins/redmine_tiptap` klasörünü silin ve arşivi onun yerine çıkarın; içindeki klasörün adı zaten `redmine_tiptap`. Önce silmek, yeni sürümde kaldırılan dosyaların geride kalmamasını sağlar.
 2. Redmine klasöründe `public/assets/.manifest.json` dosyasını silin.
 3. Redmine'yi yenidenibaşlatın.
 

@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### 아카이브에서 설치함
 
-1. `release` 브랜치의 아카이브를 내려받습니다: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. 기존 `plugins/redmine_tiptap` 폴더를 삭제하고 그 자리에 아카이브를 압축 해제합니다. 아카이브 안의 폴더 이름은 `redmine_tiptap-release`이므로 `redmine_tiptap`으로 이름을 바꿉니다. 먼저 삭제하면 새 버전에서 제거된 파일이 남지 않습니다.
+1. 최신 릴리스에서 `redmine_tiptap.zip`을 내려받습니다: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. `release` 브랜치와 같은 파일(이 문서를 제외한 플러그인)이 들어 있습니다. 기존 `plugins/redmine_tiptap` 폴더를 삭제하고 그 자리에 아카이브를 압축 해제합니다. 안의 폴더 이름은 이미 `redmine_tiptap`입니다. 먼저 삭제하면 새 버전에서 제거된 파일이 남지 않습니다.
 2. Redmine 폴더의 `public/assets/.manifest.json`을 삭제하세요.
 3. Redmine을 다시 시작하세요.
 

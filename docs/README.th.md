@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### ติดตั้งจากไฟล์เก็บถาวร
 
-1. ดาวน์โหลดไฟล์เก็บถาวรของสาขา `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip ลบโฟลเดอร์ `plugins/redmine_tiptap` เดิม แล้วแตกไฟล์เก็บถาวรลงในตำแหน่งเดียวกัน โฟลเดอร์ในไฟล์เก็บถาวรชื่อ `redmine_tiptap-release` ให้เปลี่ยนชื่อเป็น `redmine_tiptap` การลบก่อนช่วยให้แน่ใจว่าไฟล์ที่ถูกนำออกไปในเวอร์ชันใหม่จะไม่ตกค้างอยู่
+1. ดาวน์โหลด `redmine_tiptap.zip` จากรุ่นล่าสุด: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip ภายในมีไฟล์เดียวกับสาขา `release` (ปลั๊กอินโดยไม่มีเอกสารนี้) ลบโฟลเดอร์ `plugins/redmine_tiptap` เดิม แล้วแตกไฟล์เก็บถาวรลงในตำแหน่งเดียวกัน โฟลเดอร์ข้างในชื่อ `redmine_tiptap` อยู่แล้ว การลบก่อนช่วยให้แน่ใจว่าไฟล์ที่ถูกนำออกไปในเวอร์ชันใหม่จะไม่ตกค้างอยู่
 2. ลบ `public/assets/.manifest.json` ในโฟลเดอร์ Redmine
 3. รีสตาร์ต Redmine
 

@@ -198,7 +198,7 @@ Om plugin-modulen installerades med en vanlig `git clone` (grenen `main`, med do
 
 ### Installerat från ett arkiv
 
-1. Hämta arkivet för grenen `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Ta bort den gamla mappen `plugins/redmine_tiptap` och packa upp arkivet på dess plats; mappen i arkivet heter `redmine_tiptap-release`, byt namn på den till `redmine_tiptap`. Att ta bort först ser till att filer som tagits bort i den nya versionen inte ligger kvar.
+1. Hämta `redmine_tiptap.zip` från den senaste utgåvan: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Den har samma filer som grenen `release` (plugin-modulen utan den här dokumentationen). Ta bort den gamla mappen `plugins/redmine_tiptap` och packa upp arkivet på dess plats; mappen inuti heter redan `redmine_tiptap`. Att ta bort först ser till att filer som tagits bort i den nya versionen inte ligger kvar.
 2. Ta bort `public/assets/.manifest.json` i Redmine-mappen.
 3. Starta om Redmine.
 

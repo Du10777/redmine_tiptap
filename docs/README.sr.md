@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### Инсталирано из архиве
 
-1. Преузмите архиву гране `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Избришите стару фасциклу `plugins/redmine_tiptap` и на њено место распакујте архиву; фасцикла у архиви се зове `redmine_tiptap-release`, преименујте је у `redmine_tiptap`. Претходно брисање обезбеђује да датотеке уклоњене у новој верзији не заостану.
+1. Преузмите `redmine_tiptap.zip` из последњег издања: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Садржи исте датотеке као грана `release` (додатна компонента без ове документације). Избришите стару фасциклу `plugins/redmine_tiptap` и на њено место распакујте архиву; фасцикла унутра већ се зове `redmine_tiptap`. Претходно брисање обезбеђује да датотеке уклоњене у новој верзији не заостану.
 2. Избришите `public/assets/.manifest.json` у фасцикли Redmine-а.
 3. Поново покрените Redmine.
 

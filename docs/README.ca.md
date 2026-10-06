@@ -198,7 +198,7 @@ Si el complement es va instal·lar amb un `git clone` normal (la branca `main`, 
 
 ### Instal·lat des d'un arxiu
 
-1. Baixeu l'arxiu de la branca `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Suprimiu l'antiga carpeta `plugins/redmine_tiptap` i descomprimiu l'arxiu al seu lloc; la carpeta de l'arxiu es diu `redmine_tiptap-release`, canvieu-li el nom a `redmine_tiptap`. Suprimir-la primer garanteix que no quedin fitxers que la nova versió ja no té.
+1. Baixeu `redmine_tiptap.zip` de l'última versió: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Conté els mateixos fitxers que la branca `release` (el complement sense aquesta documentació). Suprimiu l'antiga carpeta `plugins/redmine_tiptap` i descomprimiu l'arxiu al seu lloc; la carpeta de dins ja es diu `redmine_tiptap`. Suprimir-la primer garanteix que no quedin fitxers que la nova versió ja no té.
 2. Supprimiu `public/assets/.manifest.json` a la carpeta de Redmine.
 3. Reinicieu Redmine.
 

@@ -196,7 +196,7 @@ docker compose restart redmine          # Docker
 
 ### Если плагин установлен из архива
 
-1. Скачайте архив ветки `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Удалите старую папку `plugins/redmine_tiptap` и распакуйте архив на её место; папка в архиве называется `redmine_tiptap-release`, переименуйте её в `redmine_tiptap`. Удалять сначала нужно, чтобы не остались файлы, которых в новой версии уже нет.
+1. Скачайте `redmine_tiptap.zip` из последнего релиза: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. В нём те же файлы, что в ветке `release` (плагин без этой документации). Удалите старую папку `plugins/redmine_tiptap` и распакуйте архив на её место; папка внутри него уже называется `redmine_tiptap`. Удалять сначала нужно, чтобы не остались файлы, которых в новой версии уже нет.
 2. Удалите `public/assets/.manifest.json` в папке Redmine.
 3. Перезапустите Redmine.
 

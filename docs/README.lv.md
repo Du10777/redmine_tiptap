@@ -198,7 +198,7 @@ Ja spraudnis tika instalēts ar parastu `git clone` (zars `main`, ar dokumentāc
 
 ### Instalēts no arhīva
 
-1. Lejupielādējiet zara `release` arhīvu: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Izdzēsiet veco mapi `plugins/redmine_tiptap` un tās vietā izpakojiet arhīvu; mape arhīvā saucas `redmine_tiptap-release`, pārdēvējiet to par `redmine_tiptap`. Vispirms izdzēšot, tiek nodrošināts, ka faili, kas jaunajā versijā ir noņemti, nepaliek.
+1. Lejupielādējiet `redmine_tiptap.zip` no jaunākā laidiena: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Tajā ir tie paši faili, kas zarā `release` (spraudnis bez šīs dokumentācijas). Izdzēsiet veco mapi `plugins/redmine_tiptap` un tās vietā izpakojiet arhīvu; iekšā esošā mape jau saucas `redmine_tiptap`. Vispirms izdzēšot, tiek nodrošināts, ka faili, kas jaunajā versijā ir noņemti, nepaliek.
 2. Izdzēsiet `public/assets/.manifest.json` Redmine mapē.
 3. Pārstartējiet Redmine.
 

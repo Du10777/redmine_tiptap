@@ -198,7 +198,7 @@ Jos liitännäinen asennettiin tavallisella `git clone` -komennolla (haara `main
 
 ### Asennettu arkistosta
 
-1. Lataa haaran `release` arkisto: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Poista vanha kansio `plugins/redmine_tiptap` ja pura arkisto sen tilalle; arkistossa olevan kansion nimi on `redmine_tiptap-release`, nimeä se uudelleen nimelle `redmine_tiptap`. Kun kansio poistetaan ensin, uudesta versiosta poistetut tiedostot eivät jää jäljelle.
+1. Lataa `redmine_tiptap.zip` uusimmasta julkaisusta: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Siinä on samat tiedostot kuin haarassa `release` (liitännäinen ilman tätä dokumentaatiota). Poista vanha kansio `plugins/redmine_tiptap` ja pura arkisto sen tilalle; sisällä oleva kansio on jo nimeltään `redmine_tiptap`. Kun kansio poistetaan ensin, uudesta versiosta poistetut tiedostot eivät jää jäljelle.
 2. Poista `public/assets/.manifest.json` Redmine-kansiosta.
 3. Käynnistä Redmine uudelleen.
 

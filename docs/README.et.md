@@ -198,7 +198,7 @@ Kui pistik paigaldati tavalise `git clone` käsuga (haru `main` koos dokumentats
 
 ### Paigaldatud arhiivist
 
-1. Laadige alla haru `release` arhiiv: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Kustutage vana kaust `plugins/redmine_tiptap` ja pakkige arhiiv selle asemele lahti; arhiivis oleva kausta nimi on `redmine_tiptap-release`, nimetage see ümber: `redmine_tiptap`. Kui kaust enne kustutada, ei jää alles faile, mis uuest versioonist on eemaldatud.
+1. Laadige alla `redmine_tiptap.zip` viimasest väljalaskest: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Selles on samad failid mis harus `release` (pistik ilma selle dokumentatsioonita). Kustutage vana kaust `plugins/redmine_tiptap` ja pakkige arhiiv selle asemele lahti; sees olev kaust kannab juba nime `redmine_tiptap`. Kui kaust enne kustutada, ei jää alles faile, mis uuest versioonist on eemaldatud.
 2. Kustutage `public/assets/.manifest.json` Redmine'i kaustas.
 3. Taaskäivitage Redmine.
 

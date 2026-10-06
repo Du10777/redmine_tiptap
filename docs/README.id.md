@@ -198,7 +198,7 @@ Jika plugin dipasang dengan `git clone` biasa (cabang `main`, dengan dokumentasi
 
 ### Dipasang dari arsip
 
-1. Unduh arsip cabang `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Hapus folder lama `plugins/redmine_tiptap` dan ekstrak arsip di tempatnya; folder di dalam arsip bernama `redmine_tiptap-release`, ganti namanya menjadi `redmine_tiptap`. Menghapus lebih dulu memastikan bahwa file yang sudah tidak ada di versi baru tidak tertinggal.
+1. Unduh `redmine_tiptap.zip` dari rilis terbaru: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Isinya file yang sama dengan cabang `release` (plugin tanpa dokumentasi ini). Hapus folder lama `plugins/redmine_tiptap` dan ekstrak arsip di tempatnya; folder di dalamnya sudah bernama `redmine_tiptap`. Menghapus lebih dulu memastikan bahwa file yang sudah tidak ada di versi baru tidak tertinggal.
 2. Hapus `public/assets/.manifest.json` di folder Redmine.
 3. Restart Redmine.
 

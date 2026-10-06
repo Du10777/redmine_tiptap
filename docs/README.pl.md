@@ -198,7 +198,7 @@ Jeśli wtyczka została zainstalowana zwykłym `git clone` (gałąź `main`, z d
 
 ### Zainstalowana z archiwum
 
-1. Pobierz archiwum gałęzi `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Usuń stary folder `plugins/redmine_tiptap` i rozpakuj archiwum w jego miejscu; folder w archiwum nazywa się `redmine_tiptap-release`, zmień jego nazwę na `redmine_tiptap`. Wcześniejsze usunięcie gwarantuje, że nie zostaną pliki, których nowa wersja już nie ma.
+1. Pobierz `redmine_tiptap.zip` z najnowszego wydania: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Zawiera te same pliki co gałąź `release` (wtyczka bez tej dokumentacji). Usuń stary folder `plugins/redmine_tiptap` i rozpakuj archiwum w jego miejscu; folder w środku nazywa się już `redmine_tiptap`. Wcześniejsze usunięcie gwarantuje, że nie zostaną pliki, których nowa wersja już nie ma.
 2. Usuń `public/assets/.manifest.json` w folderze Redmine.
 3. Uruchom ponownie Redmine.
 

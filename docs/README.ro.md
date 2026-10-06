@@ -198,7 +198,7 @@ Dacă pluginul a fost instalat cu un `git clone` obișnuit (ramura `main`, cu do
 
 ### Instalat dintr-o arhivă
 
-1. Descărcați arhiva ramurii `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Ștergeți dosarul vechi `plugins/redmine_tiptap` și dezarhivați arhiva în locul lui; dosarul din arhivă se numește `redmine_tiptap-release`, redenumiți-l în `redmine_tiptap`. Ștergerea în prealabil asigură că nu rămân fișiere pe care versiunea nouă nu le mai are.
+1. Descărcați `redmine_tiptap.zip` din cea mai recentă versiune: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Conține aceleași fișiere ca ramura `release` (pluginul fără această documentație). Ștergeți dosarul vechi `plugins/redmine_tiptap` și dezarhivați arhiva în locul lui; dosarul dinăuntru se numește deja `redmine_tiptap`. Ștergerea în prealabil asigură că nu rămân fișiere pe care versiunea nouă nu le mai are.
 2. Ștergeți `public/assets/.manifest.json` în dosarul Redmine.
 3. Reporniți Redmine.
 

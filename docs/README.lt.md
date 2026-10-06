@@ -198,7 +198,7 @@ Jei įskiepis buvo įdiegtas paprastu `git clone` (šaka `main`, su dokumentacij
 
 ### Diegta iš archyvo
 
-1. Atsisiųskite šakos `release` archyvą: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Ištrinkite seną aplanką `plugins/redmine_tiptap` ir išskleiskite archyvą jo vietoje; archyve esantis aplankas vadinasi `redmine_tiptap-release`, pervadinkite jį į `redmine_tiptap`. Ištrynus iš anksto, neliks failų, kurių naujoje versijoje nebėra.
+1. Atsisiųskite `redmine_tiptap.zip` iš naujausios laidos: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Jame yra tie patys failai kaip šakoje `release` (įskiepis be šios dokumentacijos). Ištrinkite seną aplanką `plugins/redmine_tiptap` ir išskleiskite archyvą jo vietoje; viduje esantis aplankas jau vadinasi `redmine_tiptap`. Ištrynus iš anksto, neliks failų, kurių naujoje versijoje nebėra.
 2. Panaikinkite `public/assets/.manifest.json` „Redmine" aplanke.
 3. Paleiskite „Redmine" iš naujo.
 

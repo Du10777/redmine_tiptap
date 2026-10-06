@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### Nameščeno iz arhiva
 
-1. Prenesite arhiv veje `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Izbrišite staro mapo `plugins/redmine_tiptap` in na njeno mesto razpakirajte arhiv; mapa v arhivu se imenuje `redmine_tiptap-release`, preimenujte jo v `redmine_tiptap`. Predhodno brisanje zagotovi, da ne ostanejo datoteke, ki jih nova različica nima več.
+1. Prenesite `redmine_tiptap.zip` iz zadnje izdaje: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Vsebuje iste datoteke kot veja `release` (redmine_tiptap brez te dokumentacije). Izbrišite staro mapo `plugins/redmine_tiptap` in na njeno mesto razpakirajte arhiv; mapa v njem se že imenuje `redmine_tiptap`. Predhodno brisanje zagotovi, da ne ostanejo datoteke, ki jih nova različica nima več.
 2. Izbrišite `public/assets/.manifest.json` v mapi Redmineja.
 3. Ponovno zaženite Redmine.
 

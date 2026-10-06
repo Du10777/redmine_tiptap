@@ -198,7 +198,7 @@ Plagin adi `git clone` ilə quraşdırılıbsa (`main` budağı, sənədlər və
 
 ### Arxivdən quraşdırıldıqda
 
-1. `release` budağının arxivini yükləyin: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Köhnə `plugins/redmine_tiptap` qovluğunu silin və arxivi onun yerinə açın; arxivdəki qovluğun adı `redmine_tiptap-release`-dir, onun adını `redmine_tiptap` olaraq dəyişin. Əvvəlcə silmək yeni versiyada çıxarılmış faylların qalmamasını təmin edir.
+1. Son relizdən `redmine_tiptap.zip` faylını yükləyin: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Onun içində `release` budağındakı ilə eyni fayllar var (plagin bu sənədlər olmadan). Köhnə `plugins/redmine_tiptap` qovluğunu silin və arxivi onun yerinə açın; içindəki qovluq artıq `redmine_tiptap` adlanır. Əvvəlcə silmək yeni versiyada çıxarılmış faylların qalmamasını təmin edir.
 2. Redmine qovluğundakı `public/assets/.manifest.json` faylını silin.
 3. Redmine-i yenidən işə salın.
 

@@ -198,7 +198,7 @@ Is de plugin geïnstalleerd met een gewone `git clone` (de branch `main`, met de
 
 ### Geïnstalleerd vanuit een archief
 
-1. Download het archief van de branch `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Verwijder de oude map `plugins/redmine_tiptap` en pak het archief op dezelfde plek uit; de map in het archief heet `redmine_tiptap-release`, hernoem die naar `redmine_tiptap`. Door eerst te verwijderen, zorgt u ervoor dat bestanden die in de nieuwe versie zijn verwijderd, niet achterblijven.
+1. Download `redmine_tiptap.zip` van de nieuwste release: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Het bevat dezelfde bestanden als de branch `release` (de plugin zonder deze documentatie). Verwijder de oude map `plugins/redmine_tiptap` en pak het archief op dezelfde plek uit; de map erin heet al `redmine_tiptap`. Door eerst te verwijderen, zorgt u ervoor dat bestanden die in de nieuwe versie zijn verwijderd, niet achterblijven.
 2. Verwijder `public/assets/.manifest.json` in de Redmine-map.
 3. Start Redmine opnieuw op.
 

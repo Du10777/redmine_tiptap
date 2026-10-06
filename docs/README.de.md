@@ -198,7 +198,7 @@ Wurde das Plugin mit einem einfachen `git clone` installiert (der Branch `main`,
 
 ### Aus einem Archiv installiert
 
-1. Laden Sie das Archiv des Branches `release` herunter: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Löschen Sie den alten Ordner `plugins/redmine_tiptap` und entpacken Sie das Archiv an seiner Stelle; der Ordner im Archiv heißt `redmine_tiptap-release`, benennen Sie ihn in `redmine_tiptap` um. Durch das vorherige Löschen ist sichergestellt, dass in der neuen Version entfernte Dateien nicht zurückbleiben.
+1. Laden Sie `redmine_tiptap.zip` aus der neuesten Veröffentlichung herunter: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Es enthält dieselben Dateien wie der Branch `release` (das Plugin ohne diese Dokumentation). Löschen Sie den alten Ordner `plugins/redmine_tiptap` und entpacken Sie das Archiv an seiner Stelle; der Ordner darin heißt bereits `redmine_tiptap`. Durch das vorherige Löschen ist sichergestellt, dass in der neuen Version entfernte Dateien nicht zurückbleiben.
 2. Löschen Sie `public/assets/.manifest.json` im Redmine-Ordner.
 3. Starten Sie Redmine neu.
 

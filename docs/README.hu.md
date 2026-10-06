@@ -198,7 +198,7 @@ Ha a bővítményt egyszerű `git clone` paranccsal telepítette (a `main` ág, 
 
 ### Archívumból telepítve
 
-1. Töltse le a `release` ág archívumát: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Törölje a régi `plugins/redmine_tiptap` mappát, és csomagolja ki a helyére az archívumot; az archívumban lévő mappa neve `redmine_tiptap-release`, nevezze át `redmine_tiptap` névre. Az előzetes törlés biztosítja, hogy ne maradjanak meg olyan fájlok, amelyek az új verzióban már nincsenek.
+1. Töltse le a `redmine_tiptap.zip` fájlt a legújabb kiadásból: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Ugyanazokat a fájlokat tartalmazza, mint a `release` ág (a bővítmény e dokumentáció nélkül). Törölje a régi `plugins/redmine_tiptap` mappát, és csomagolja ki az archívumot a helyére; a benne lévő mappa neve már `redmine_tiptap`. Az előzetes törlés biztosítja, hogy ne maradjanak meg olyan fájlok, amelyek az új verzióban már nincsenek.
 2. Töröljék a `public/assets/.manifest.json` fájlt a Redmine mappában.
 3. Indítsa újra a Redmine-t.
 

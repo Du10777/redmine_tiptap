@@ -198,7 +198,7 @@ Ako je plugin instaliran običnim `git clone` (grana `main`, s dokumentacijom i 
 
 ### Instaliran iz arhive
 
-1. Preuzmite arhivu grane `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Obrišite stari folder `plugins/redmine_tiptap` i raspakujte arhivu na njegovo mjesto; folder u arhivi zove se `redmine_tiptap-release`, preimenujte ga u `redmine_tiptap`. Brisanje najprije osigurava da datoteke uklonjene u novoj verziji ne ostanu.
+1. Preuzmite `redmine_tiptap.zip` iz posljednjeg izdanja: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. U njemu su iste datoteke kao u grani `release` (plugin bez ove dokumentacije). Obrišite stari folder `plugins/redmine_tiptap` i raspakujte arhivu na njegovo mjesto; folder unutra već se zove `redmine_tiptap`. Brisanje najprije osigurava da datoteke uklonjene u novoj verziji ne ostanu.
 2. Obrisite `public/assets/.manifest.json` u Redmine fascikli.
 3. Restartujte Redmine.
 

@@ -198,7 +198,7 @@ docker compose restart redmine          # Docker
 
 ### Εγκατεστημένο από ένα αρχείο
 
-1. Κατεβάστε το αρχείο του κλάδου `release`: https://github.com/Du10777/redmine_tiptap/archive/refs/heads/release.zip. Διαγράψτε τον παλιό φάκελο `plugins/redmine_tiptap` και αποσυμπιέστε το αρχείο στη θέση του· ο φάκελος μέσα στο αρχείο λέγεται `redmine_tiptap-release`, μετονομάστε τον σε `redmine_tiptap`. Η διαγραφή πρώτα εξασφαλίζει ότι δεν μένουν αρχεία που αφαιρέθηκαν στη νέα έκδοση.
+1. Κατεβάστε το `redmine_tiptap.zip` από την τελευταία έκδοση: https://github.com/Du10777/redmine_tiptap/releases/latest/download/redmine_tiptap.zip. Περιέχει τα ίδια αρχεία με τον κλάδο `release` (το redmine_tiptap χωρίς αυτή την τεκμηρίωση). Διαγράψτε τον παλιό φάκελο `plugins/redmine_tiptap` και αποσυμπιέστε το αρχείο στη θέση του· ο φάκελος μέσα λέγεται ήδη `redmine_tiptap`. Η διαγραφή πρώτα εξασφαλίζει ότι δεν μένουν αρχεία που αφαιρέθηκαν στη νέα έκδοση.
 2. Διαγράψτε `public/assets/.manifest.json` στο φάκελο Redmine.
 3. Επανεκκινήστε το Redmine.
 
