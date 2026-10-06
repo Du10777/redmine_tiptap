@@ -37,8 +37,13 @@ module Redmine
           'background:#eeeeee', 'border:1px solid #cccccc', 'padding:5px 10px'
         ].freeze
 
-        # <div style="..."> with no other <div> inside (an innermost one).
-        SPECIAL_CONTAINER_RE = %r{<div\s+style\s*=\s*(["'])(.*?)\1\s*>((?:(?!</?div\b).)*)</div>}mi
+        # <div style="..."> with no other <div> inside (an innermost one). The style value
+        # is "everything up to the closing quote" written as (?:(?!\1)[^<>])* rather than a
+        # lazy .*? : a lazy match of the value combined with /m, on a text of many opening
+        # <div style=...> and no matching </div>, backtracks across the whole document at
+        # each opening tag - O(n^2), seconds of CPU on a few hundred kilobytes. Barring < and >
+        # keeps the value inside its own tag, so the scan is bounded.
+        SPECIAL_CONTAINER_RE = %r{<div\s+style\s*=\s*(["'])((?:(?!\1)[^<>])*)\1\s*>((?:(?!</?div\b).)*)</div>}mi
 
         # Redmine 7 calls the formatter as new(text, options),
         # Redmine 6 as new(text). The second argument is optional.
@@ -61,9 +66,23 @@ module Redmine
         # closer together). Its "Special Container" (a <div> with a gray frame) is
         # shown as a code block.
         def to_html(*args)
-          html = @text.to_s
-                      .gsub(%r{(<pre><code[^>]*>)\n}, '\1')
-                      .gsub(%r{\n(</code></pre>)}, '\1')
+          render(@text.to_s)
+        rescue StandardError => e
+          # The render must never raise: whatever is stored (the <HTML> mode, the REST
+          # API or an old version can store any HTML), a page that shows it must not go
+          # to a 500. The one input that reached here is HTML nested past Nokogiri's tree
+          # depth limit (~400) - a few hundred nested tags, which anyone who can write a
+          # text could store, making every view of that page fail. Fall back to the text
+          # shown escaped, as plain text: nothing is interpreted, so it stays safe.
+          Rails.logger.warn("redmine_tiptap: showing the text as plain text (#{e.class}: #{e.message})") if defined?(Rails)
+          "<pre class=\"tiptap-unparsable\">#{CGI.escapeHTML(@text.to_s)}</pre>"
+        end
+
+        private
+
+        def render(text)
+          html = text.gsub(%r{(<pre><code[^>]*>)\n}, '\1')
+                     .gsub(%r{\n(</code></pre>)}, '\1')
           html = unwrap_quotes(html) if html.include?('tiptap-quote')
           legacy = ckeditor_text?(html)
           html = convert_special_containers(html)
@@ -72,8 +91,6 @@ module Redmine
           html = run_redmine_scrubbers(html)
           legacy ? %(<div class="tiptap-legacy">#{html}</div>) : html
         end
-
-        private
 
         # Redmine 7 moved into its formatters what Redmine 6 does by itself for any
         # format: the "Copy" button of a code block (Redmine 6 adds it with JavaScript
@@ -120,7 +137,11 @@ module Redmine
         # <pre><code class="language-plaintext">text</code></pre>. A container that
         # holds another <div> or a macro stays as it is (a code block shows no macros).
         def convert_special_containers(html)
-          return html unless html.match?(/<div\b/i)
+          # A special container needs both an opening <div ...> and a closing </div>;
+          # with no </div> there is nothing to convert and nothing to scan for. The match
+          # of the closing tag is case-insensitive, like the regex, so an uppercase </DIV>
+          # is not skipped here.
+          return html unless html.match?(/<div\b/i) && html.match?(%r{</div}i)
 
           html.gsub(SPECIAL_CONTAINER_RE) do
             whole, style, inner = Regexp.last_match(0), Regexp.last_match(2), Regexp.last_match(3)
