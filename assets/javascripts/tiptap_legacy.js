@@ -1,6 +1,7 @@
 import { Extension, Node, Mark, mergeAttributes } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { indentOf } from './tiptap_indent.js';
+import { inertElement } from './tiptap_inert.js';
 
 // Texts written in CKEditor (the redmine_ckeditor plugin) hold HTML that this
 // editor's schema does not know. ProseMirror drops whatever its schema lacks, so
@@ -65,7 +66,7 @@ export function restoreMacros(container, format) {
   var nonce = Math.random().toString(36).slice(2);
   container.querySelectorAll('span[data-redmine-macro]').forEach(function(span) {
     sources.push(decodeSource(span.getAttribute('data-redmine-macro')));
-    span.replaceWith(document.createTextNode('@@tiptap-macro-' + nonce + '-' + (sources.length - 1) + '@@'));
+    span.replaceWith(container.ownerDocument.createTextNode('@@tiptap-macro-' + nonce + '-' + (sources.length - 1) + '@@'));
   });
   var html = container.innerHTML;
   if (format) html = format(html);
@@ -257,13 +258,15 @@ function containerCode(html) {
 }
 
 export function convertSpecialContainers(container) {
+  // made in the document of the container: the text being loaded is kept in one that loads nothing
+  var doc = container.ownerDocument;
   container.querySelectorAll('div[style]').forEach(function(div) {
     if (div.querySelector('div, [data-redmine-macro]')) return;
     if (styleSignature(div.getAttribute('style')) !== SPECIAL_CONTAINER_SIGNATURE) return;
-    var code = document.createElement('code');
+    var code = doc.createElement('code');
     code.className = 'language-plaintext';
     code.innerHTML = containerCode(div.innerHTML);
-    var pre = document.createElement('pre');
+    var pre = doc.createElement('pre');
     pre.appendChild(code);
     div.replaceWith(pre);
   });
@@ -352,7 +355,7 @@ export function flattenForeignDivs(container) {
       while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
       el.remove();
     } else {
-      var paragraph = document.createElement('p');
+      var paragraph = container.ownerDocument.createElement('p');
       while (el.firstChild) paragraph.appendChild(el.firstChild);
       el.replaceWith(paragraph);
     }
@@ -370,7 +373,7 @@ export const LegacyPaste = Extension.create({
           transformPastedHTML(html) {
             // ProseMirror marks what was copied inside the editor
             if (html.indexOf('data-pm-slice') !== -1 || !/<(?:div|address)\b/i.test(html)) return html;
-            var holder = document.createElement('div');
+            var holder = inertElement();     // loads nothing: the editor shows the pictures itself
             holder.innerHTML = html;
             flattenForeignDivs(holder);
             return holder.innerHTML;
@@ -488,7 +491,7 @@ export function flattenTableExtras(container) {
   container.querySelectorAll('table').forEach(function(table) {
     var caption = table.querySelector(':scope > caption');
     if (caption) {
-      var paragraph = document.createElement('p');
+      var paragraph = container.ownerDocument.createElement('p');
       paragraph.setAttribute('style', 'text-align: center');
       paragraph.innerHTML = caption.innerHTML;
       table.parentNode.insertBefore(paragraph, table);

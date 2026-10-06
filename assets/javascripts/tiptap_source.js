@@ -1,4 +1,5 @@
 import { lowlight, textTokens } from './tiptap_codeblock.js';
+import { inertElement } from './tiptap_inert.js';
 
 // The source mode (the <HTML> button): the HTML of the text in a plain textarea, with
 // its syntax colored by the highlighter of the code blocks ("HTML / XML" in their
@@ -83,7 +84,7 @@ function endTag(el) {
 }
 
 function inlineHTML(nodes) {
-  var holder = document.createElement('div');
+  var holder = inertElement();
   nodes.forEach(function(node) { holder.appendChild(node.cloneNode(true)); });
   return holder.innerHTML;
 }
@@ -140,7 +141,8 @@ function render(el, depth) {
 }
 
 export function formatSourceHTML(html) {
-  var holder = document.createElement('div');
+  // the text as it is stored: its pictures are given by bare file names, nothing must load
+  var holder = inertElement();
   holder.innerHTML = html;
 
   var items = [];   // the blocks of the top level: { text, multi }

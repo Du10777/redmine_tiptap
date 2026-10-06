@@ -1,10 +1,12 @@
 import { protectMacros, restoreMacros, flattenTableExtras, convertSpecialContainers } from './tiptap_legacy.js';
+import { inertElement } from './tiptap_inert.js';
 
 // The HTML of the editor as it is stored. format, if given, reshapes the HTML
 // (the source mode puts line breaks into it) without touching the macros: they
-// are put back as text only after that.
+// are put back as text only after that. Built in an element that loads nothing:
+// here a picture gets the bare file name of its attachment as its address.
 export function serializeAttachmentHTML(html, format) {
-  var div = document.createElement('div');
+  var div = inertElement();
   div.innerHTML = html;
   div.querySelectorAll('img[data-filename]').forEach(function(img) {
     img.setAttribute('src', img.getAttribute('data-filename'));
@@ -42,9 +44,10 @@ export function buildAttachmentUrlMap(textarea) {
 // The stored text as the editor takes it: attachment names become addresses, and
 // what a text of CKEditor has that the editor's schema lacks is made ready (macros
 // are protected before the HTML is parsed: their bodies are not HTML a parser may
-// touch).
+// touch). In an element that loads nothing: the stored text gives a picture by the
+// bare file name of its attachment, before it is replaced here by its address.
 export function resolveAttachmentSrcs(html, urlMap) {
-  var div = document.createElement('div');
+  var div = inertElement();
   div.innerHTML = protectMacros(html);
   div.querySelectorAll('img[src]').forEach(function(img) {
     var src = img.getAttribute('src');
