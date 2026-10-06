@@ -14,13 +14,6 @@
   border-radius: 3px;
 }
 
-.tiptap-toolbar-zone {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px;
-}
-
 .tiptap-toolbar-row {
   display: flex;
   flex-wrap: wrap;
@@ -29,7 +22,13 @@
   width: 100%;
 }
 
-.tiptap-style-wrapper {
+/* Each toolbar control that owns a dropdown is an inline-flex box the dropdown is
+   positioned against. */
+.tiptap-style-wrapper,
+.tiptap-align-wrapper,
+.tiptap-list-wrapper,
+.tiptap-font-wrapper,
+.tiptap-size-wrapper {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -70,13 +69,6 @@
   background: #d0e4ff;
 }
 
-.tiptap-align-wrapper,
-.tiptap-list-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
 .tiptap-align-btn,
 .tiptap-list-btn {
   gap: 2px;
@@ -108,12 +100,6 @@
 .tiptap-list-dropdown {
   top: 28px;
   min-width: 190px;
-}
-
-.tiptap-font-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
 }
 
 .tiptap-font-btn {
@@ -170,25 +156,6 @@
   margin: 0 4px;
   display: inline-block;
   flex-shrink: 0;
-}
-
-.tiptap-select {
-  height: 26px;
-  padding: 0 4px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  max-width: 130px;
-}
-
-.tiptap-select:hover { background: #e8e8e8; }
-
-.tiptap-size-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
 }
 
 .tiptap-size-input {
@@ -255,23 +222,6 @@
   line-height: 1;
 }
 
-.tiptap-color-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 3px;
-  background: transparent;
-  border-radius: 1px;
-}
-
-.tiptap-bg-label {
-  font-size: 13px;
-  font-weight: bold;
-  padding: 0 3px;
-  border-radius: 2px;
-  pointer-events: none;
-}
 
 .tiptap-link-input {
   width: 100%;

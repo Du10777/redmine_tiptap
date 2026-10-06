@@ -1,5 +1,5 @@
 import { lowlight, textTokens } from './tiptap_codeblock.js';
-import { inertElement } from './tiptap_inert.js';
+import { inertElement, escapeHtml } from './tiptap_inert.js';
 
 // The source mode (the <HTML> button): the HTML of the text in a plain textarea, with
 // its syntax colored by the highlighter of the code blocks ("HTML / XML" in their
@@ -211,10 +211,6 @@ function onEnter(event) {
 }
 
 // --- Coloring --------------------------------------------------------------------
-function escapeHTML(text) {
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 // The text with its tokens (see textTokens in tiptap_codeblock.js) as HTML, built as
 // one string: that is several times faster than creating the spans one by one.
 function coloredHTML(text, tokens) {
@@ -222,11 +218,11 @@ function coloredHTML(text, tokens) {
   var pos = 0;
   tokens.forEach(function(token) {
     if (token.to <= token.from || token.from < pos) return;
-    if (token.from > pos) parts.push(escapeHTML(text.slice(pos, token.from)));
-    parts.push('<span class="' + token.cls + '">' + escapeHTML(text.slice(token.from, token.to)) + '</span>');
+    if (token.from > pos) parts.push(escapeHtml(text.slice(pos, token.from)));
+    parts.push('<span class="' + token.cls + '">' + escapeHtml(text.slice(token.from, token.to)) + '</span>');
     pos = token.to;
   });
-  if (pos < text.length) parts.push(escapeHTML(text.slice(pos)));
+  if (pos < text.length) parts.push(escapeHtml(text.slice(pos)));
   return parts.join('');
 }
 

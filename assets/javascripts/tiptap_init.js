@@ -20,6 +20,7 @@ import { setupTableContextMenu } from './tiptap_table_menu.js';
 import { setupTablePaste, setupSavedTableCopy } from './tiptap_table_paste.js';
 import {
   serializeAttachmentHTML,
+  collapseDetailsOpen,
   buildAttachmentUrlMap,
   resolveAttachmentSrcs,
   setupImagePaste,
@@ -301,8 +302,7 @@ function initTextarea(textarea) {
       // No line breaks are added around the code block content: after <code> the
       // browser does not drop them (unlike <pre>), and in view mode they turned
       // into an empty line above and below the block.
-      textarea.value = serializeAttachmentHTML(props.editor.getHTML())
-        .replace(/<details open="">/g, '<details>');
+      textarea.value = collapseDetailsOpen(serializeAttachmentHTML(props.editor.getHTML()));
     },
   });
 
@@ -315,7 +315,7 @@ function initTextarea(textarea) {
   var form = textarea.closest('form');
   if (form) {
     form.addEventListener('submit', function() {
-      textarea.value = textarea.value.replace(/<details open="">/g, '<details>');
+      textarea.value = collapseDetailsOpen(textarea.value);
     });
   }
 

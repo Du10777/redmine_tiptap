@@ -1,5 +1,6 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 import { t } from './tiptap_i18n.js';
+import { blocksFromSelection, replaceSelectionWithBlock } from './tiptap_blocks.js';
 
 // Whether a plain <blockquote> holds nothing but our quote block (directly or
 // through more such wrappers). Earlier versions of the plugin produced these:
@@ -73,34 +74,13 @@ export const QuoteBody = Node.create({
 });
 
 export function insertQuote(editor) {
-  var state = editor.view.state;
-  var sel = state.selection;
-  var schema = state.schema;
-  var paragraphType = schema.nodes.paragraph;
-
-  var bodyNodes;
-  if (sel.empty) {
-    bodyNodes = [paragraphType.create(null, schema.text(t('quote.default_text')))];
-  } else {
-    var slice = sel.content();
-    var nodes = [];
-    slice.content.forEach(function(node) {
-      if (node.type.isBlock) {
-        nodes.push(node);
-      } else {
-        nodes.push(paragraphType.create(null, node));
-      }
-    });
-    bodyNodes = nodes.length > 0 ? nodes : [paragraphType.create(null, schema.text(t('quote.default_text')))];
-  }
+  var schema = editor.view.state.schema;
+  var bodyNodes = blocksFromSelection(editor.view.state, t('quote.default_text'));
 
   var block = schema.nodes.quoteBlock.create(null, [
     schema.nodes.quoteHeader.create(null, schema.text(t('quote.default_header'))),
     schema.nodes.quoteBody.create(null, bodyNodes),
   ]);
 
-  var tr = state.tr;
-  if (!sel.empty) tr = tr.deleteSelection();
-  tr = tr.replaceSelectionWith(block);
-  editor.view.dispatch(tr);
+  replaceSelectionWithBlock(editor, block);
 }

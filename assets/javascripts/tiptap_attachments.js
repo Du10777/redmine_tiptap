@@ -15,6 +15,13 @@ export function serializeAttachmentHTML(html, format) {
   return restoreMacros(div, format);
 }
 
+// A collapsible block is <details>; it is open while edited (open="true", which the
+// serializer writes as <details open="">) and collapsed when stored, so the open flag
+// is dropped before the HTML is saved.
+export function collapseDetailsOpen(html) {
+  return html.replace(/<details open="">/g, '<details>');
+}
+
 export function buildAttachmentUrlMap(textarea) {
   var map = {};
   var form = textarea.closest('form');
