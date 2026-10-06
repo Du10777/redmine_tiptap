@@ -1,7 +1,7 @@
 import { insertCollapsible } from './tiptap_collapsible.js';
 import { insertQuote } from './tiptap_quote.js';
 import { openAttachmentPicker, openImagePicker, openLinkModal, openTableModal } from './tiptap_modals.js';
-import { serializeAttachmentHTML, resolveAttachmentSrcs } from './tiptap_attachments.js';
+import { serializeAttachmentHTML, resolveAttachmentSrcs, collapseDetailsOpen } from './tiptap_attachments.js';
 import { formatSourceHTML } from './tiptap_source.js';
 import { WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 import { t } from './tiptap_i18n.js';
@@ -423,37 +423,41 @@ function makeRow1(editor) {
   sizeWrapper.appendChild(sizeDropdown);
   row.appendChild(sizeWrapper);
 
-  // --- Text color ---
-  var colorBtn = document.createElement('button');
-  colorBtn.type = 'button';
-  colorBtn.className = 'tiptap-btn tiptap-color-btn';
-  colorBtn.title = t('toolbar.text_color');
-  colorBtn.innerHTML = '<span class="tiptap-color-label">A</span>';
-  colorBtn.addEventListener('mousedown', function(e) {
-    e.preventDefault();
-    var currentColor = editor.getAttributes('textStyle').color || '#000000';
-    openColorPalette(colorBtn, currentColor, function(color) {
-      if (color) editor.chain().focus().setColor(color).run();
-      else editor.chain().focus().unsetColor().run();
+  // A color button (text color, background color): the same button that, on mousedown,
+  // opens the palette seeded with the current value and applies or clears it.
+  function makeColorButton(title, innerHTML, getCurrent, setColor, unsetColor) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tiptap-btn tiptap-color-btn';
+    btn.title = title;
+    btn.innerHTML = innerHTML;
+    btn.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      openColorPalette(btn, getCurrent(), function(color) {
+        if (color) setColor(color);
+        else unsetColor();
+      });
     });
-  });
-  row.appendChild(colorBtn);
+    return btn;
+  }
+
+  // --- Text color ---
+  row.appendChild(makeColorButton(
+    t('toolbar.text_color'),
+    '<span class="tiptap-color-label">A</span>',
+    function() { return editor.getAttributes('textStyle').color || '#000000'; },
+    function(color) { editor.chain().focus().setColor(color).run(); },
+    function() { editor.chain().focus().unsetColor().run(); }
+  ));
 
   // --- Background color ---
-  var bgBtn = document.createElement('button');
-  bgBtn.type = 'button';
-  bgBtn.className = 'tiptap-btn tiptap-color-btn';
-  bgBtn.title = t('toolbar.background_color');
-  bgBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>';
-  bgBtn.addEventListener('mousedown', function(e) {
-    e.preventDefault();
-    var currentColor = editor.getAttributes('textStyle').backgroundColor || '#ffff00';
-    openColorPalette(bgBtn, currentColor, function(color) {
-      if (color) editor.chain().focus().setBackgroundColor(color).run();
-      else editor.chain().focus().unsetBackgroundColor().run();
-    });
-  });
-  row.appendChild(bgBtn);
+  row.appendChild(makeColorButton(
+    t('toolbar.background_color'),
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>',
+    function() { return editor.getAttributes('textStyle').backgroundColor || '#ffff00'; },
+    function(color) { editor.chain().focus().setBackgroundColor(color).run(); },
+    function() { editor.chain().focus().unsetBackgroundColor().run(); }
+  ));
 
   function updateState() {
     // toggle buttons (BIUS)
@@ -533,7 +537,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     sourceMode = !sourceMode;
     if (sourceMode) {
       source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
-        return formatSourceHTML(html).replace(/<details open="">/g, '<details>');
+        return collapseDetailsOpen(formatSourceHTML(html));
       });
       editorDiv.style.display = 'none';
       source.show(true);

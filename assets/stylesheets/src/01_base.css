@@ -22,7 +22,13 @@
   width: 100%;
 }
 
-.tiptap-style-wrapper {
+/* Each toolbar control that owns a dropdown is an inline-flex box the dropdown is
+   positioned against. */
+.tiptap-style-wrapper,
+.tiptap-align-wrapper,
+.tiptap-list-wrapper,
+.tiptap-font-wrapper,
+.tiptap-size-wrapper {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -63,13 +69,6 @@
   background: #d0e4ff;
 }
 
-.tiptap-align-wrapper,
-.tiptap-list-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
 .tiptap-align-btn,
 .tiptap-list-btn {
   gap: 2px;
@@ -101,12 +100,6 @@
 .tiptap-list-dropdown {
   top: 28px;
   min-width: 190px;
-}
-
-.tiptap-font-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
 }
 
 .tiptap-font-btn {
@@ -163,12 +156,6 @@
   margin: 0 4px;
   display: inline-block;
   flex-shrink: 0;
-}
-
-.tiptap-size-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
 }
 
 .tiptap-size-input {
