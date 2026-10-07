@@ -114,6 +114,7 @@ ca:
     collapsible:
       default_title: "Títol"
       default_content: "Contingut"
+      unwrap: "Treu el bloc i conserva el text"
 
     code_block:
       badge_title: "Llenguatge del bloc de codi: feu clic per triar-lo"

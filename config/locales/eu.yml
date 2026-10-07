@@ -114,6 +114,7 @@ eu:
     collapsible:
       default_title: "Izenburua"
       default_content: "Edukia"
+      unwrap: "Kendu blokea eta mantendu testua"
 
     code_block:
       badge_title: "Kode-blokearen lengoaia: egin klik hautatzeko"

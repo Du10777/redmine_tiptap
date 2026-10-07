@@ -114,6 +114,7 @@ fi:
     collapsible:
       default_title: "Otsikko"
       default_content: "Sisältö"
+      unwrap: "Poista lohko, säilytä teksti"
 
     code_block:
       badge_title: "Koodilohkon kieli – valitse napsauttamalla"

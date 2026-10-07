@@ -114,6 +114,7 @@ bg:
     collapsible:
       default_title: "Заглавие"
       default_content: "Съдържание"
+      unwrap: "Премахване на блока, текстът остава"
 
     code_block:
       badge_title: "Език на блока с код: щракнете за избор"

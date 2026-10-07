@@ -114,6 +114,7 @@ et:
     collapsible:
       default_title: "Pealkiri"
       default_content: "Sisu"
+      unwrap: "Eemalda plokk, jäta tekst alles"
 
     code_block:
       badge_title: "Koodiploki keel – klõpsa valimiseks"

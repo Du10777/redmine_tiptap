@@ -114,6 +114,7 @@ ro:
     collapsible:
       default_title: "Titlu"
       default_content: "Conținut"
+      unwrap: "Elimină blocul, păstrează textul"
 
     code_block:
       badge_title: "Limbajul blocului de cod: faceți clic pentru a-l alege"

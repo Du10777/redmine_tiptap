@@ -114,6 +114,7 @@ id:
     collapsible:
       default_title: "Judul"
       default_content: "Isi"
+      unwrap: "Hapus blok, pertahankan teks"
 
     code_block:
       badge_title: "Bahasa blok kode – klik untuk memilih"

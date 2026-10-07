@@ -114,6 +114,7 @@ az:
     collapsible:
       default_title: "Başlıq"
       default_content: "Məzmun"
+      unwrap: "Bölməni ləğv et, mətni saxla"
 
     code_block:
       badge_title: "Kod blokunun dili - seçmək üçün klikləyin"

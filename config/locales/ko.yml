@@ -114,6 +114,7 @@ ko:
     collapsible:
       default_title: "제목"
       default_content: "내용"
+      unwrap: "블록 해제(텍스트는 유지)"
 
     code_block:
       badge_title: "코드 블록 언어 - 클릭하여 선택"

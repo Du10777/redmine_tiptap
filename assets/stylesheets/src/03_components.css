@@ -44,6 +44,37 @@
   padding: 8px 10px;
 }
 
+/* The button at the right of the title: takes the block away, keeps the text.
+   Hidden until the pointer is over the block or the cursor is in it. */
+.ProseMirror summary .tiptap-collapse-unwrap {
+  visibility: hidden;
+  flex-shrink: 0;
+  margin-left: 8px;
+  padding: 1px 2px;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  color: #777;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.ProseMirror summary .tiptap-collapse-unwrap:hover {
+  color: #222;
+  background: #dcdcdc;
+}
+
+.ProseMirror summary:hover .tiptap-collapse-unwrap,
+.ProseMirror summary.tiptap-collapse-current .tiptap-collapse-unwrap {
+  visibility: visible;
+}
+
+/* The whole block, not only its title (the innermost one when blocks are nested).
+   A rule of its own: a browser without :has() drops only this one. */
+.ProseMirror details:hover:not(:has(details:hover)) > summary .tiptap-collapse-unwrap {
+  visibility: visible;
+}
+
 /* Quote: in the editor and in the saved view */
 .tiptap-quote,
 .wiki .tiptap-quote,

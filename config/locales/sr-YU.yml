@@ -114,6 +114,7 @@ sr-YU:
     collapsible:
       default_title: "Naslov"
       default_content: "Sadržaj"
+      unwrap: "Ukloni blok, zadrži tekst"
 
     code_block:
       badge_title: "Jezik bloka koda: kliknite da biste izabrali"

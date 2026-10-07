@@ -114,6 +114,7 @@ zh:
     collapsible:
       default_title: "标题"
       default_content: "内容"
+      unwrap: "移除折叠块，保留文本"
 
     code_block:
       badge_title: "代码块语言，点击可选择"

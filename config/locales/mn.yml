@@ -114,6 +114,7 @@ mn:
     collapsible:
       default_title: "Гарчиг"
       default_content: "Агуулга"
+      unwrap: "Блокийг арилгах, текстийг үлдээх"
 
     code_block:
       badge_title: "Кодын блокийн хэл: сонгохын тулд дарна уу"

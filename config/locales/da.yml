@@ -114,6 +114,7 @@ da:
     collapsible:
       default_title: "Titel"
       default_content: "Indhold"
+      unwrap: "Fjern blokken, behold teksten"
 
     code_block:
       badge_title: "Kodeblokkens sprog – klik for at vælge"

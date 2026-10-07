@@ -114,6 +114,7 @@ sq:
     collapsible:
       default_title: "Titull"
       default_content: "Lëndë"
+      unwrap: "Hiqe bllokun, mbaje tekstin"
 
     code_block:
       badge_title: "Gjuha e bllokut të kodit: klikoni që ta zgjidhni"

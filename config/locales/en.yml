@@ -134,6 +134,8 @@ en:
     collapsible:
       default_title: "Title"
       default_content: "Content"
+      # The button at the right of the title of the block in the editor.
+      unwrap: "Remove the block, keep the text"
 
     # The language badge of a code block and the language list.
     code_block:
