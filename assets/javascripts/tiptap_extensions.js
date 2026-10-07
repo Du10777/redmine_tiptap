@@ -1,5 +1,6 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 import BaseImage from '@tiptap/extension-image';
+import { definingAsContext } from './tiptap_blocks.js';
 export { FontSize, BackgroundColor, WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 export { QuoteBlock, QuoteHeader, QuoteBody } from './tiptap_quote.js';
 export { StyledBulletList, StyledOrderedList } from './tiptap_lists.js';
@@ -185,7 +186,7 @@ export const CollapsibleBlock = Node.create({
   name: 'collapsibleBlock',
   group: 'block',
   content: 'collapsibleSummary collapsibleContent',
-  defining: true,
+  extendNodeSchema: definingAsContext('collapsibleBlock'),
 
   addAttributes() {
     return {
@@ -206,7 +207,7 @@ export const CollapsibleBlock = Node.create({
 export const CollapsibleSummary = Node.create({
   name: 'collapsibleSummary',
   content: 'inline*',
-  defining: true,
+  extendNodeSchema: definingAsContext('collapsibleSummary'),
 
   parseHTML() { return [{ tag: 'summary' }]; },
   renderHTML({ HTMLAttributes }) {
@@ -274,7 +275,7 @@ export const CollapsibleSummary = Node.create({
 export const CollapsibleContent = Node.create({
   name: 'collapsibleContent',
   content: 'block+',
-  defining: true,
+  extendNodeSchema: definingAsContext('collapsibleContent'),
 
   parseHTML() { return [{ tag: 'div[data-type="collapsible-content"]' }]; },
   renderHTML({ HTMLAttributes }) {

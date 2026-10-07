@@ -1,6 +1,6 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 import { t } from './tiptap_i18n.js';
-import { blocksFromSelection, replaceSelectionWithBlock } from './tiptap_blocks.js';
+import { blocksFromSelection, replaceSelectionWithBlock, definingAsContext } from './tiptap_blocks.js';
 
 // Whether a plain <blockquote> holds nothing but our quote block (directly or
 // through more such wrappers). Earlier versions of the plugin produced these:
@@ -23,7 +23,7 @@ export const QuoteBlock = Node.create({
   name: 'quoteBlock',
   group: 'block',
   content: 'quoteHeader quoteBody',
-  defining: true,
+  extendNodeSchema: definingAsContext('quoteBlock'),
 
   parseHTML() {
     return [
@@ -48,7 +48,7 @@ export const QuoteBlock = Node.create({
 export const QuoteHeader = Node.create({
   name: 'quoteHeader',
   content: 'inline*',
-  defining: true,
+  extendNodeSchema: definingAsContext('quoteHeader'),
 
   parseHTML() {
     return [{ tag: 'div.tiptap-quote-header' }];
@@ -62,7 +62,7 @@ export const QuoteHeader = Node.create({
 export const QuoteBody = Node.create({
   name: 'quoteBody',
   content: 'block+',
-  defining: true,
+  extendNodeSchema: definingAsContext('quoteBody'),
 
   parseHTML() {
     return [{ tag: 'div.tiptap-quote-body' }];
