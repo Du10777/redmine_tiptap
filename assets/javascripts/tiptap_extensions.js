@@ -1,5 +1,8 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 import BaseImage from '@tiptap/extension-image';
+import { definingAsContext } from './tiptap_blocks.js';
+import { unwrapCollapsible } from './tiptap_collapsible.js';
+import { t } from './tiptap_i18n.js';
 export { FontSize, BackgroundColor, WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 export { QuoteBlock, QuoteHeader, QuoteBody } from './tiptap_quote.js';
 export { StyledBulletList, StyledOrderedList } from './tiptap_lists.js';
@@ -185,7 +188,7 @@ export const CollapsibleBlock = Node.create({
   name: 'collapsibleBlock',
   group: 'block',
   content: 'collapsibleSummary collapsibleContent',
-  defining: true,
+  extendNodeSchema: definingAsContext('collapsibleBlock'),
 
   addAttributes() {
     return {
@@ -203,10 +206,23 @@ export const CollapsibleBlock = Node.create({
   },
 });
 
+// The icon of the toolbar button that inserts the block (a fold mark, a title, the
+// text), with a cross in place of the fold mark: the fold goes, the text stays.
+const UNWRAP_ICON = '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">'
+  + '<path d="M2.5 3 L5.5 6 M5.5 3 L2.5 6"/><line x1="8" y1="4.5" x2="14" y2="4.5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>';
+
+// The position of the innermost collapsible block around $pos, or null.
+function innermostCollapsible($pos) {
+  for (let d = $pos.depth; d > 0; d--) {
+    if ($pos.node(d).type.name === 'collapsibleBlock') return $pos.before(d);
+  }
+  return null;
+}
+
 export const CollapsibleSummary = Node.create({
   name: 'collapsibleSummary',
   content: 'inline*',
-  defining: true,
+  extendNodeSchema: definingAsContext('collapsibleSummary'),
 
   parseHTML() { return [{ tag: 'summary' }]; },
   renderHTML({ HTMLAttributes }) {
@@ -230,23 +246,18 @@ export const CollapsibleSummary = Node.create({
       arrow.style.marginRight = '6px';
       arrow.style.flexShrink = '0';
 
-      function updateArrow() {
+      // The block of this title: its position, or null while the title is being removed.
+      function blockPos() {
         const pos = getPos();
-        if (typeof pos !== 'number') return;
+        if (typeof pos !== 'number') return null;
         const rPos = editor.view.state.doc.resolve(pos);
-        const parentPos = rPos.before(rPos.depth);
-        const pNode = editor.view.state.doc.nodeAt(parentPos);
-        arrow.textContent = (pNode && pNode.attrs.open) ? '▼' : '▶';
+        return rPos.before(rPos.depth);
       }
-
-      updateArrow();
 
       arrow.addEventListener('mousedown', (e) => {
         e.preventDefault();
-        const pos = getPos();
-        if (typeof pos !== 'number') return;
-        const rPos = editor.view.state.doc.resolve(pos);
-        const parentPos = rPos.before(rPos.depth);
+        const parentPos = blockPos();
+        if (parentPos === null) return;
         const pNode = editor.view.state.doc.nodeAt(parentPos);
         if (pNode && pNode.type.name === 'collapsibleBlock') {
           editor.view.dispatch(
@@ -258,15 +269,50 @@ export const CollapsibleSummary = Node.create({
         }
       });
 
-      editor.on('transaction', updateArrow);
+      // At the right of the title: takes the block away and keeps its text. The CSS
+      // shows it while the pointer is over the block or the cursor is in it
+      // (tiptap-collapse-current). It is not part of the document, so it is never saved.
+      const unwrap = document.createElement('button');
+      unwrap.type = 'button';
+      unwrap.className = 'tiptap-collapse-unwrap';
+      unwrap.contentEditable = 'false';
+      unwrap.tabIndex = -1;
+      unwrap.title = t('collapsible.unwrap');
+      unwrap.setAttribute('aria-label', unwrap.title);
+      unwrap.innerHTML = UNWRAP_ICON;
+      unwrap.addEventListener('mousedown', (e) => { e.preventDefault(); });
+      unwrap.addEventListener('click', (e) => {
+        e.preventDefault();
+        const parentPos = blockPos();
+        if (parentPos !== null) unwrapCollapsible(editor, parentPos);
+      });
+
+      function update() {
+        const parentPos = blockPos();
+        if (parentPos === null) return;
+        const pNode = editor.view.state.doc.nodeAt(parentPos);
+        arrow.textContent = (pNode && pNode.attrs.open) ? '▼' : '▶';
+        dom.classList.toggle('tiptap-collapse-current',
+          innermostCollapsible(editor.view.state.selection.$from) === parentPos);
+      }
+
+      update();
+      editor.on('transaction', update);
 
       const contentDOM = document.createElement('span');
       contentDOM.style.flex = '1';
 
       dom.appendChild(arrow);
       dom.appendChild(contentDOM);
+      dom.appendChild(unwrap);
 
-      return { dom, contentDOM, ignoreMutation: () => true };
+      return {
+        dom,
+        contentDOM,
+        ignoreMutation: () => true,
+        stopEvent: (e) => unwrap.contains(e.target),
+        destroy: () => { editor.off('transaction', update); },
+      };
     };
   },
 });
@@ -274,7 +320,7 @@ export const CollapsibleSummary = Node.create({
 export const CollapsibleContent = Node.create({
   name: 'collapsibleContent',
   content: 'block+',
-  defining: true,
+  extendNodeSchema: definingAsContext('collapsibleContent'),
 
   parseHTML() { return [{ tag: 'div[data-type="collapsible-content"]' }]; },
   renderHTML({ HTMLAttributes }) {

@@ -114,6 +114,7 @@ lv:
     collapsible:
       default_title: "Virsraksts"
       default_content: "Saturs"
+      unwrap: "Noņemt bloku, saglabāt tekstu"
 
     code_block:
       badge_title: "Koda bloka valoda – noklikšķiniet, lai izvēlētos"

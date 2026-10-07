@@ -114,6 +114,7 @@ hu:
     collapsible:
       default_title: "Cím"
       default_content: "Tartalom"
+      unwrap: "A blokk megszüntetése, a szöveg megmarad"
 
     code_block:
       badge_title: "Kódblokk nyelve – kattintson a kiválasztáshoz"

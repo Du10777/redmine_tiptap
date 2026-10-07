@@ -114,6 +114,7 @@ sr:
     collapsible:
       default_title: "Наслов"
       default_content: "Садржај"
+      unwrap: "Уклони блок, задржи текст"
 
     code_block:
       badge_title: "Језик блока кода: кликните да бисте изабрали"

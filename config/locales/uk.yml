@@ -114,6 +114,7 @@ uk:
     collapsible:
       default_title: "Заголовок"
       default_content: "Вміст"
+      unwrap: "Прибрати блок, залишити текст"
 
     code_block:
       badge_title: "Мова блоку коду: натисніть, щоб вибрати"

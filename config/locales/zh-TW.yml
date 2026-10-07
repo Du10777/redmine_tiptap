@@ -114,6 +114,7 @@ zh-TW:
     collapsible:
       default_title: "標題"
       default_content: "內容"
+      unwrap: "移除摺疊區塊，保留文字"
 
     code_block:
       badge_title: "程式碼區塊語言，按一下即可選擇"

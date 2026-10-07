@@ -114,6 +114,7 @@ pl:
     collapsible:
       default_title: "Tytuł"
       default_content: "Treść"
+      unwrap: "Usuń blok, zachowaj tekst"
 
     code_block:
       badge_title: "Język bloku kodu – kliknij, aby wybrać"

@@ -114,6 +114,7 @@ nl:
     collapsible:
       default_title: "Titel"
       default_content: "Inhoud"
+      unwrap: "Blok verwijderen, tekst behouden"
 
     code_block:
       badge_title: "Taal van het codeblok – klik om te kiezen"

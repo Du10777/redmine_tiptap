@@ -114,6 +114,7 @@ vi:
     collapsible:
       default_title: "Tiêu đề"
       default_content: "Nội dung"
+      unwrap: "Bỏ khối, giữ lại văn bản"
 
     code_block:
       badge_title: "Ngôn ngữ của khối mã - nhấp để chọn"

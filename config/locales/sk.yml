@@ -114,6 +114,7 @@ sk:
     collapsible:
       default_title: "Nadpis"
       default_content: "Obsah"
+      unwrap: "Odstrániť blok, ponechať text"
 
     code_block:
       badge_title: "Jazyk bloku kódu – kliknutím vyberiete"

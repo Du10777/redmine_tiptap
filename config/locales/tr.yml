@@ -114,6 +114,7 @@ tr:
     collapsible:
       default_title: "Başlık"
       default_content: "İçerik"
+      unwrap: "Bölümü kaldır, metni koru"
 
     code_block:
       badge_title: "Kod bloğunun dili - seçmek için tıklayın"

@@ -111,6 +111,7 @@ ru:
     collapsible:
       default_title: "Заголовок"
       default_content: "Содержимое"
+      unwrap: "Убрать блок, оставить текст"
 
     code_block:
       badge_title: "Язык блока кода — нажать, чтобы выбрать"

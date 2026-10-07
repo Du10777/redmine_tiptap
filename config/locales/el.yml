@@ -114,6 +114,7 @@ el:
     collapsible:
       default_title: "Τίτλος"
       default_content: "Περιεχόμενο"
+      unwrap: "Κατάργηση της ενότητας, διατήρηση του κειμένου"
 
     code_block:
       badge_title: "Γλώσσα του μπλοκ κώδικα - κάντε κλικ για επιλογή"

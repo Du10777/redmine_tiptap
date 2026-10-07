@@ -114,6 +114,7 @@ lt:
     collapsible:
       default_title: "Pavadinimas"
       default_content: "Turinys"
+      unwrap: "Pašalinti bloką, palikti tekstą"
 
     code_block:
       badge_title: "Kodo bloko kalba – spustelėkite, kad pasirinktumėte"

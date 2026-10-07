@@ -114,6 +114,7 @@ ja:
     collapsible:
       default_title: "タイトル"
       default_content: "内容"
+      unwrap: "ブロックを解除（テキストは残す）"
 
     code_block:
       badge_title: "コードブロックの言語（クリックして選択）"

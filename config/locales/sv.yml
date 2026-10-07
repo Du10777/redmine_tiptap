@@ -114,6 +114,7 @@ sv:
     collapsible:
       default_title: "Titel"
       default_content: "Innehåll"
+      unwrap: "Ta bort blocket, behåll texten"
 
     code_block:
       badge_title: "Kodblockets språk – klicka för att välja"

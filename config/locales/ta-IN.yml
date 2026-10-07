@@ -114,6 +114,7 @@ ta-IN:
     collapsible:
       default_title: "தலைப்பு"
       default_content: "உள்ளடக்கம்"
+      unwrap: "தொகுதியை நீக்கு, உரையை வைத்திரு"
 
     code_block:
       badge_title: "குறியீட்டுத் தொகுதியின் மொழி – தேர்வுசெய்ய கிளிக் செய்யவும்"

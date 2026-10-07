@@ -114,6 +114,7 @@ th:
     collapsible:
       default_title: "หัวข้อ"
       default_content: "เนื้อหา"
+      unwrap: "เอาบล็อกออก แต่เก็บข้อความไว้"
 
     code_block:
       badge_title: "ภาษาของบล็อกโค้ด - คลิกเพื่อเลือก"

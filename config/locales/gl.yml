@@ -114,6 +114,7 @@ gl:
     collapsible:
       default_title: "Título"
       default_content: "Contido"
+      unwrap: "Quitar o bloque e conservar o texto"
 
     code_block:
       badge_title: "Linguaxe do bloque de código: prema para escoller"
