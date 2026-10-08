@@ -544,7 +544,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
       srcBtn.classList.add('active');
     } else {
       editor.commands.setContent(resolveAttachmentSrcs(source.area.value || '', urlMap));
-      editorDiv.style.display = 'block';
+      editorDiv.style.display = '';   // the display of the stylesheet (a flex column)
       source.show(false);
       srcBtn.classList.remove('active');
     }

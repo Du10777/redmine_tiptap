@@ -247,6 +247,16 @@
   height: var(--tiptap-height, auto);
   max-height: var(--tiptap-max-height, calc(100vh - 260px));
   overflow-y: auto;
+  /* A column, so that the editing area below can fill the box. */
+  display: flex;
+  flex-direction: column;
+}
+
+/* The editing area fills the box: when the grip makes the box taller than the text,
+   a click in the part it added still puts the cursor into the text. A longer text
+   makes the area taller than the box, which then scrolls. */
+.tiptap-content > .ProseMirror {
+  flex: 1 0 auto;
 }
 
 .tiptap-content p {
