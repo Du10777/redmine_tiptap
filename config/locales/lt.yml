@@ -34,6 +34,11 @@ lt:
       insert_attachment: "Įterpti priedą"
       insert_image: "Įterpti paveikslėlį iš priedų"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Antraštė 1"
       heading2: "Antraštė 2"

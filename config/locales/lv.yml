@@ -34,6 +34,11 @@ lv:
       insert_attachment: "Ievietot pielikumu"
       insert_image: "Ievietot attēlu no pielikumiem"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Virsraksts 1"
       heading2: "Virsraksts 2"

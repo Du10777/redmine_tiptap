@@ -34,6 +34,11 @@ th:
       insert_attachment: "แทรกไฟล์แนบ"
       insert_image: "แทรกรูปภาพจากไฟล์แนบ"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "หัวเรื่อง 1"
       heading2: "หัวเรื่อง 2"

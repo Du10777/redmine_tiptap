@@ -33,6 +33,11 @@ ru:
       insert_attachment: "Вставить вложение"
       insert_image: "Вставить картинку из вложений"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Заголовок 1"
       heading2: "Заголовок 2"

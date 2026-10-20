@@ -34,6 +34,11 @@ el:
       insert_attachment: "Εισαγωγή συνημμένου"
       insert_image: "Εισαγωγή εικόνας από τα συνημμένα"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Επικεφαλίδα 1"
       heading2: "Επικεφαλίδα 2"

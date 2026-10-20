@@ -34,6 +34,11 @@ it:
       insert_attachment: "Inserisci allegato"
       insert_image: "Inserisci immagine dagli allegati"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Maiusc"
+
     paragraph_styles:
       heading1: "Titolo 1"
       heading2: "Titolo 2"

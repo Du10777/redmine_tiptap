@@ -34,6 +34,11 @@ bg:
       insert_attachment: "Вмъкване на прикачен файл"
       insert_image: "Вмъкване на изображение от прикачените файлове"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Заглавие 1"
       heading2: "Заглавие 2"

@@ -34,6 +34,11 @@ bs:
       insert_attachment: "Umetni prilog"
       insert_image: "Umetni sliku iz priloga"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Naslov 1"
       heading2: "Naslov 2"

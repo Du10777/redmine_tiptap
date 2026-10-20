@@ -34,6 +34,11 @@ pt-BR:
       insert_attachment: "Inserir anexo"
       insert_image: "Inserir imagem dos anexos"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Título 1"
       heading2: "Título 2"

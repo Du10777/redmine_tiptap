@@ -34,6 +34,11 @@ az:
       insert_attachment: "Fayl daxil etmək"
       insert_image: "Qoşulmuş fayllardan şəkil daxil etmək"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Başlıq 1"
       heading2: "Başlıq 2"

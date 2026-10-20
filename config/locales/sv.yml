@@ -34,6 +34,11 @@ sv:
       insert_attachment: "Infoga bilaga"
       insert_image: "Infoga bild från bilagor"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Skift"
+
     paragraph_styles:
       heading1: "Rubrik 1"
       heading2: "Rubrik 2"

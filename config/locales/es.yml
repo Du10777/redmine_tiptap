@@ -34,6 +34,11 @@ es:
       insert_attachment: "Insertar archivo adjunto"
       insert_image: "Insertar imagen desde los archivos adjuntos"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Mayús"
+
     paragraph_styles:
       heading1: "Título 1"
       heading2: "Título 2"

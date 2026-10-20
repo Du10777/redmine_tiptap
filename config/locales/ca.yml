@@ -34,6 +34,11 @@ ca:
       insert_attachment: "Insereix un fitxer adjunt"
       insert_image: "Insereix una imatge dels fitxers adjunts"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Maj"
+
     paragraph_styles:
       heading1: "Encapçalament 1"
       heading2: "Encapçalament 2"

@@ -34,6 +34,11 @@ ta-IN:
       insert_attachment: "இணைக்கப்பட்ட கோப்பைச் செருகு"
       insert_image: "இணைக்கப்பட்ட கோப்புகளிலிருந்து படத்தைச் செருகு"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "தலைப்பு 1"
       heading2: "தலைப்பு 2"

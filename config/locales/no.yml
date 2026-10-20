@@ -34,6 +34,11 @@
       insert_attachment: "Sett inn vedlegg"
       insert_image: "Sett inn bilde fra vedlegg"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Skift"
+
     paragraph_styles:
       heading1: "Overskrift 1"
       heading2: "Overskrift 2"

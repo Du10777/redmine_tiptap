@@ -34,6 +34,11 @@ nl:
       insert_attachment: "Bijlage invoegen"
       insert_image: "Afbeelding uit bijlagen invoegen"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Kop 1"
       heading2: "Kop 2"

@@ -34,6 +34,11 @@ de:
       insert_attachment: "Anhang einfügen"
       insert_image: "Bild aus Anhängen einfügen"
 
+    shortcut_keys:
+      ctrl: "Strg"
+      alt: "Alt"
+      shift: "Umschalt"
+
     paragraph_styles:
       heading1: "Überschrift 1"
       heading2: "Überschrift 2"

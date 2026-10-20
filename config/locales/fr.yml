@@ -34,6 +34,11 @@ fr:
       insert_attachment: "Insérer un fichier joint"
       insert_image: "Insérer une image depuis les fichiers joints"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Maj"
+
     paragraph_styles:
       heading1: "Titre 1"
       heading2: "Titre 2"

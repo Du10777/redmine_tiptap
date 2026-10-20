@@ -34,6 +34,11 @@ vi:
       insert_attachment: "Chèn tệp đính kèm"
       insert_image: "Chèn ảnh từ tệp đính kèm"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Tiêu đề 1"
       heading2: "Tiêu đề 2"

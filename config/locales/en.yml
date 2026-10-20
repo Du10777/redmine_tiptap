@@ -47,6 +47,13 @@ en:
       insert_attachment: "Insert attachment"
       insert_image: "Insert image from attachments"
 
+    # The names of the keys in the shortcuts the tooltips show ("Bold (Ctrl+B)"), as they
+    # are labelled on the keyboards of the language. A Mac shows its own key symbols.
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     # Items of the paragraph style menu.
     paragraph_styles:
       heading1: "Heading 1"

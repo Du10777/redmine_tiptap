@@ -34,6 +34,11 @@ pl:
       insert_attachment: "Wstaw załącznik"
       insert_image: "Wstaw obraz z załączników"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Nagłówek 1"
       heading2: "Nagłówek 2"
