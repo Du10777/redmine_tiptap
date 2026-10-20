@@ -34,6 +34,11 @@ zh:
       insert_attachment: "插入附件"
       insert_image: "从附件插入图片"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "标题 1"
       heading2: "标题 2"

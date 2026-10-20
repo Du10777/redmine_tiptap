@@ -34,6 +34,11 @@ sq:
       insert_attachment: "Futni bashkëngjitje"
       insert_image: "Futni figurë nga bashkëngjitjet"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Titulli 1"
       heading2: "Titulli 2"

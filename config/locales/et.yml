@@ -34,6 +34,11 @@ et:
       insert_attachment: "Lisa manus"
       insert_image: "Lisa pilt manustest"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Pealkiri 1"
       heading2: "Pealkiri 2"

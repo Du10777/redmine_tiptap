@@ -34,6 +34,11 @@ cs:
       insert_attachment: "Vložit přílohu"
       insert_image: "Vložit obrázek z příloh"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Nadpis 1"
       heading2: "Nadpis 2"

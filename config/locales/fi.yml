@@ -34,6 +34,11 @@ fi:
       insert_attachment: "Lisää liite"
       insert_image: "Lisää kuva liitteistä"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Vaihto"
+
     paragraph_styles:
       heading1: "Otsikko 1"
       heading2: "Otsikko 2"

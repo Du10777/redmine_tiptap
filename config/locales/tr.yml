@@ -34,6 +34,11 @@ tr:
       insert_attachment: "Dosya ekle"
       insert_image: "Ekli dosyalardan resim ekle"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Başlık 1"
       heading2: "Başlık 2"

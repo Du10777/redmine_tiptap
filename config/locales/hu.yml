@@ -34,6 +34,11 @@ hu:
       insert_attachment: "Melléklet beszúrása"
       insert_image: "Kép beszúrása a mellékletekből"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Címsor 1"
       heading2: "Címsor 2"

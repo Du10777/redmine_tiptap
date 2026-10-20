@@ -263,6 +263,15 @@
   padding-left: 0 !important;
 }
 
+/* The rule of Redmine for the fields of a form (.tabular p, padding 3px 0 3px 180px) also
+   reaches the paragraphs of an editor in a form: none of it belongs there (the left part
+   is gone above), or a paragraph of the issue form is 6px taller than on the saved page.
+   Not !important: the padding a paragraph of an old text has in its style stays. */
+.tabular .tiptap-content p {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .ProseMirror {
   padding: 8px;
   min-height: 150px;
@@ -271,7 +280,11 @@
   line-height: 1.25;
 }
 
-.ProseMirror p { margin-top: 0 !important; margin-bottom: 2px !important; min-height: 0 !important; }
+/* Enter starts a new paragraph, Shift+Enter a new line of the same one: paragraphs are
+   half a line apart (1.5 line spacing), the lines of a paragraph are not (single spacing).
+   0.625em is half of the line height of 1.25. The saved view does the same (below). */
+.ProseMirror p { margin-top: 0 !important; margin-bottom: 0.625em !important; min-height: 0 !important; }
+.ProseMirror p:last-child { margin-bottom: 0 !important; }
 .ProseMirror h1 { font-size: 1.6em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h2 { font-size: 1.3em; font-weight: bold; margin: 8px 0 4px; }
 .ProseMirror h3 { font-size: 1.1em; font-weight: bold; margin: 8px 0 4px; }
@@ -334,24 +347,41 @@ body[data-text-formatting="tiptap"] div.pre-wrapper a.copy-pre-content-link {
 .ProseMirror ul { padding-left: 20px; list-style: disc; }
 .ProseMirror ol { padding-left: 20px; list-style: decimal; }
 .ProseMirror li { margin: 0 !important; }
-.ProseMirror li > p { margin: 0 !important; }
+/* the items of a list (also of a task list, where the paragraph is in a div) stay close */
+.ProseMirror li p { margin: 0 !important; }
 
-/* Line spacing in the saved view. Only the vertical margins are set: a paragraph may
-   have a margin on the left (the indent) that must stay. */
+/* Line spacing in the saved view, as in the editor: paragraphs half a line apart, the
+   lines of a paragraph and the items of a list close. Only the vertical margins are set:
+   a paragraph may have a margin on the left (the indent) that must stay. */
 div.wiki p,
 div.wiki-page p {
   margin-top: 0 !important;
-  margin-bottom: 2px !important;
+  margin-bottom: 0.625em !important;
   line-height: 1.25 !important;
 }
 
+div.wiki p:last-child,
+div.wiki-page p:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* An empty paragraph (Enter on an empty line) is an empty line, as in the editor, where
+   ProseMirror puts a line break into it; a saved <p></p> has nothing to give it a height. */
+div.wiki p:empty::before,
+div.wiki-page p:empty::before {
+  content: "\200b";
+}
+
+/* Redmine's list items have a line height of 1.6: the items would be farther apart than in
+   the editor, and a task item (its checkbox is in that line) farther still. */
 div.wiki li,
 div.wiki-page li {
   margin: 0 !important;
+  line-height: 1.25 !important;
 }
 
-div.wiki li > p,
-div.wiki-page li > p {
+div.wiki li p,
+div.wiki-page li p {
   margin: 0 !important;
 }
 
@@ -494,9 +524,17 @@ ul[data-type="taskList"] li > label input {
   cursor: pointer;
 }
 
-/* in the editor, shift the checkboxes inside the area */
-.ProseMirror ul[data-type="taskList"] {
-  padding-left: 24px;
+/* Redmine's rule for the labels of a form (.tabular label: floating, 175px wide, -180px to
+   the left, right aligned, bold) also reaches the checkbox of a task item in an editor in a
+   form: the item got taller than a line, and only a wider indent of the list kept the
+   checkbox in the area. None of it belongs there: the checkbox sits as on the saved page. */
+.tabular .tiptap-content ul[data-type="taskList"] li > label {
+  float: none;
+  width: auto;
+  margin: 0;
+  text-align: left;
+  font-weight: normal;
+  line-height: inherit;
 }
 
 /* outside the editor the checkbox is unclickable and dimmed right away (before JS runs) */

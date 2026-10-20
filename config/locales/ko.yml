@@ -34,6 +34,11 @@ ko:
       insert_attachment: "첨부파일 삽입"
       insert_image: "첨부파일에서 이미지 삽입"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "제목 1"
       heading2: "제목 2"

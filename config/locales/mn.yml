@@ -34,6 +34,11 @@ mn:
       insert_attachment: "Хавсралт оруулах"
       insert_image: "Хавсралтаас зураг оруулах"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Гарчиг 1"
       heading2: "Гарчиг 2"

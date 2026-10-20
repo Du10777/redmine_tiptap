@@ -6,6 +6,45 @@ import { formatSourceHTML } from './tiptap_source.js';
 import { WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 import { t } from './tiptap_i18n.js';
 
+// --- Keyboard shortcuts in the tooltips ----------------------------------------
+// The tooltip of what a shortcut also does names the shortcut: "Bold (Ctrl+B)", on a
+// Mac "Bold (⌘B)". The keys are those of the editor's keymaps (TipTap's own, and Mod-,
+// and Mod-. of tiptap_legacy.js); Ctrl, Alt and Shift are named as on the keyboards of
+// the language of the user (Strg on a German one).
+var MAC = typeof navigator !== 'undefined' && /Mac|iP(hone|[oa]d)/.test(navigator.platform);
+
+var SHORTCUTS = {
+  bold: 'Mod-b', italic: 'Mod-i', underline: 'Mod-u', strike: 'Mod-Shift-s',
+  subscript: 'Mod-,', superscript: 'Mod-.',
+  undo: 'Mod-z', redo: MAC ? 'Mod-Shift-z' : 'Mod-y',
+  code: 'Mod-e', code_block: 'Mod-Alt-c',
+  left: 'Mod-Shift-l', center: 'Mod-Shift-e', right: 'Mod-Shift-r', justify: 'Mod-Shift-j',
+  h1: 'Mod-Alt-1', h2: 'Mod-Alt-2', h3: 'Mod-Alt-3', h4: 'Mod-Alt-4', h5: 'Mod-Alt-5', h6: 'Mod-Alt-6',
+  paragraph: 'Mod-Alt-0', codeBlock: 'Mod-Alt-c',
+  task: 'Mod-Shift-9', 'ul:disc': 'Mod-Shift-8', 'ol:decimal': 'Mod-Shift-7',
+};
+
+function shortcutText(keys) {
+  var parts = keys.split('-');
+  var key = parts.pop();
+  if (key.length === 1) key = key.toUpperCase();
+  var has = function(name) { return parts.indexOf(name) >= 0; };
+  if (MAC) {
+    // the order of the Mac menus: Option, Shift, Command
+    return (has('Alt') ? '⌥' : '') + (has('Shift') ? '⇧' : '') + (has('Mod') ? '⌘' : '') + key;
+  }
+  var names = [];
+  if (has('Mod')) names.push(t('shortcut_keys.ctrl'));
+  if (has('Alt')) names.push(t('shortcut_keys.alt'));
+  if (has('Shift')) names.push(t('shortcut_keys.shift'));
+  return names.concat(key).join('+');
+}
+
+// The tooltip with the shortcut of what, if it has one.
+function withShortcut(title, what) {
+  return SHORTCUTS[what] ? title + ' (' + shortcutText(SHORTCUTS[what]) + ')' : title;
+}
+
 function makeButton(label, title, action, isActive, html) {
   var btn = document.createElement('button');
   btn.type = 'button';
@@ -203,6 +242,7 @@ function makeRow1(editor) {
     var opt = document.createElement('div');
     opt.className = 'tiptap-style-option';
     opt.textContent = t(item.labelKey);
+    if (SHORTCUTS[item.value]) opt.title = withShortcut(t(item.labelKey), item.value);
     opt.addEventListener('mousedown', function(e) {
       e.preventDefault();
       applyStyle(item.value);
@@ -257,7 +297,7 @@ function makeRow1(editor) {
     var o = document.createElement('button');
     o.type = 'button';
     o.className = 'tiptap-btn tiptap-align-option';
-    o.title = alignTitles[al];
+    o.title = withShortcut(alignTitles[al], al);
     o.innerHTML = ALIGN_SVG[al];
     o.addEventListener('mousedown', function(e) {
       e.preventDefault();
@@ -287,11 +327,11 @@ function makeRow1(editor) {
   row.appendChild(makeSep());
 
   // --- Subscript and superscript: x with a small 2 below / above the line ---
-  row.appendChild(makeToggleButton({ title: t('toolbar.subscript'),
+  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.subscript'), 'subscript'),
     html: '<span>x<span style="font-size:9px;position:relative;top:4px">2</span></span>',
     action: function() { editor.chain().focus().toggleSubscript().run(); },
     isActive: function() { return editor.isActive('subscript'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: t('toolbar.superscript'),
+  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.superscript'), 'superscript'),
     html: '<span>x<span style="font-size:9px;position:relative;top:-4px">2</span></span>',
     action: function() { editor.chain().focus().toggleSuperscript().run(); },
     isActive: function() { return editor.isActive('superscript'); } }, toggles));
@@ -299,16 +339,16 @@ function makeRow1(editor) {
   row.appendChild(makeSep());
 
   // --- B I U S ---
-  row.appendChild(makeToggleButton({ title: t('toolbar.bold'), html: '<span style="font-weight:700">B</span>',
+  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.bold'), 'bold'), html: '<span style="font-weight:700">B</span>',
     action: function() { editor.chain().focus().toggleBold().run(); },
     isActive: function() { return editor.isActive('bold'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: t('toolbar.italic'), html: '<span style="font-style:italic;font-family:Georgia,serif">I</span>',
+  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.italic'), 'italic'), html: '<span style="font-style:italic;font-family:Georgia,serif">I</span>',
     action: function() { editor.chain().focus().toggleItalic().run(); },
     isActive: function() { return editor.isActive('italic'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: t('toolbar.underline'), html: '<span style="text-decoration:underline">U</span>',
+  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.underline'), 'underline'), html: '<span style="text-decoration:underline">U</span>',
     action: function() { editor.chain().focus().toggleUnderline().run(); },
     isActive: function() { return editor.isActive('underline'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: t('toolbar.strike'), html: '<span style="text-decoration:line-through">S</span>',
+  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.strike'), 'strike'), html: '<span style="text-decoration:line-through">S</span>',
     action: function() { editor.chain().focus().toggleStrike().run(); },
     isActive: function() { return editor.isActive('strike'); } }, toggles));
 
@@ -609,6 +649,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
       var opt = document.createElement('div');
       opt.className = 'tiptap-style-option';
       opt.textContent = o.label;
+      if (SHORTCUTS[o.value]) opt.title = withShortcut(o.label, o.value);
       opt.addEventListener('mousedown', function(e) {
         e.preventDefault();
         dropdown.style.display = 'none';
@@ -651,15 +692,15 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     row2.innerHTML = '';
 
     // undo / redo
-    row2.appendChild(makeButton('\u21a9', t('toolbar.undo'),  function() { editor.chain().focus().undo().run(); }, false));
-    row2.appendChild(makeButton('\u21aa', t('toolbar.redo'), function() { editor.chain().focus().redo().run(); }, false));
+    row2.appendChild(makeButton('\u21a9', withShortcut(t('toolbar.undo'), 'undo'), function() { editor.chain().focus().undo().run(); }, false));
+    row2.appendChild(makeButton('\u21aa', withShortcut(t('toolbar.redo'), 'redo'), function() { editor.chain().focus().redo().run(); }, false));
 
     row2.appendChild(makeSep());
 
     // collapse / inline code / code block
     row2.appendChild(makeButton('', t('toolbar.collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
-    row2.appendChild(makeButton('<>', t('toolbar.code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
-    row2.appendChild(makeButton('', t('toolbar.code_block'), function() {
+    row2.appendChild(makeButton('<>', withShortcut(t('toolbar.code'), 'code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
+    row2.appendChild(makeButton('', withShortcut(t('toolbar.code_block'), 'code_block'), function() {
       if (editor.isActive('codeBlock')) {
         editor.chain().focus().liftFromCodeBlock().run();
       } else {

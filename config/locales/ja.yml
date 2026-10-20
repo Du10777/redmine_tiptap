@@ -34,6 +34,11 @@ ja:
       insert_attachment: "添付ファイルを挿入"
       insert_image: "添付ファイルから画像を挿入"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "見出し 1"
       heading2: "見出し 2"

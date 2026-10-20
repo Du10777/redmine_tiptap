@@ -156,7 +156,7 @@ export function openImagePicker(editor, urlMap) {
 
   imageFiles.forEach(function(filename) {
     var entry = urlMap[filename];
-    var thumbnailUrl = entry.id ? '/attachments/thumbnail/' + entry.id + '/200' : entry.url;
+    var thumbnailUrl = entry.thumbnail || (entry.id ? '/attachments/thumbnail/' + entry.id + '/200' : entry.url);
 
     var tile = document.createElement('div');
     tile.className = 'tiptap-image-tile';

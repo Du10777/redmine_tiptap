@@ -34,6 +34,11 @@ uk:
       insert_attachment: "Вставити вкладення"
       insert_image: "Вставити зображення з вкладень"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Заголовок 1"
       heading2: "Заголовок 2"

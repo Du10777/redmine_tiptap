@@ -34,6 +34,11 @@ da:
       insert_attachment: "Indsæt vedhæftet fil"
       insert_image: "Indsæt billede fra vedhæftede filer"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Skift"
+
     paragraph_styles:
       heading1: "Overskrift 1"
       heading2: "Overskrift 2"

@@ -22,8 +22,19 @@ export function collapseDetailsOpen(html) {
   return html.replace(/<details open="">/g, '<details>');
 }
 
+// The attachments a text of this form can show by file name: the ones of what the page
+// shows (the issue, the wiki page...), from the server (window.TiptapAttachments, see
+// hooks.rb), so also in the form that edits a note, which lists no attachments. The form
+// of an issue lists them too (#existing-attachments): what is missing above comes from
+// there. A map without a prototype: a file name is only a key.
 export function buildAttachmentUrlMap(textarea) {
-  var map = {};
+  var map = Object.create(null);
+  var known = window.TiptapAttachments || {};
+  Object.keys(known).forEach(function(filename) {
+    var entry = known[filename];
+    map[filename] = { url: entry.url, id: String(entry.id), thumbnail: entry.thumbnail };
+  });
+
   var form = textarea.closest('form');
   if (!form) return map;
 
@@ -37,7 +48,7 @@ export function buildAttachmentUrlMap(textarea) {
 
     var filename = filenameInput.value;
     var attachmentId = deleteCheckbox.value;
-    if (!filename || !attachmentId) return;
+    if (!filename || !attachmentId || map[filename]) return;
 
     map[filename] = {
       url: '/attachments/download/' + attachmentId + '/' + encodeURIComponent(filename),

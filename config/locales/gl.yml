@@ -34,6 +34,11 @@ gl:
       insert_attachment: "Inserir anexo"
       insert_image: "Inserir imaxe dos anexos"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Maiús"
+
     paragraph_styles:
       heading1: "Título 1"
       heading2: "Título 2"

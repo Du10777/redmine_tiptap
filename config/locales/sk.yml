@@ -34,6 +34,11 @@ sk:
       insert_attachment: "Vložiť prílohu"
       insert_image: "Vložiť obrázok z príloh"
 
+    shortcut_keys:
+      ctrl: "Ctrl"
+      alt: "Alt"
+      shift: "Shift"
+
     paragraph_styles:
       heading1: "Nadpis 1"
       heading2: "Nadpis 2"
