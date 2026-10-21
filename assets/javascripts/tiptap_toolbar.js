@@ -17,10 +17,10 @@ var SHORTCUTS = {
   bold: 'Mod-b', italic: 'Mod-i', underline: 'Mod-u', strike: 'Mod-Shift-s',
   subscript: 'Mod-,', superscript: 'Mod-.',
   undo: 'Mod-z', redo: MAC ? 'Mod-Shift-z' : 'Mod-y',
-  code: 'Mod-e', code_block: 'Mod-Alt-c',
+  code: 'Mod-e',
   left: 'Mod-Shift-l', center: 'Mod-Shift-e', right: 'Mod-Shift-r', justify: 'Mod-Shift-j',
   h1: 'Mod-Alt-1', h2: 'Mod-Alt-2', h3: 'Mod-Alt-3', h4: 'Mod-Alt-4', h5: 'Mod-Alt-5', h6: 'Mod-Alt-6',
-  paragraph: 'Mod-Alt-0', codeBlock: 'Mod-Alt-c',
+  paragraph: 'Mod-Alt-0',
   task: 'Mod-Shift-9', 'ul:disc': 'Mod-Shift-8', 'ol:decimal': 'Mod-Shift-7',
 };
 
