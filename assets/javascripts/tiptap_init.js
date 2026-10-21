@@ -17,6 +17,7 @@ import { buildToolbar } from './tiptap_toolbar.js';
 import { highlightSavedCodeBlocks } from './tiptap_codeblock.js';
 import { createSourceBox } from './tiptap_source.js';
 import { setupTableContextMenu } from './tiptap_table_menu.js';
+import { ToolbarShortcuts } from './tiptap_shortcuts.js';
 import { setupTablePaste, setupSavedTableCopy } from './tiptap_table_paste.js';
 import {
   serializeAttachmentHTML,
@@ -296,6 +297,7 @@ function initTextarea(textarea) {
       // what a text written in CKEditor has that the schema above lacks
       RedmineMacro, Subscript, Superscript, LegacyIframe, LegacyAttributes,
       LegacyBlock, LegacyContainer, LegacyPaste,
+      ToolbarShortcuts,
     ].concat(InlineTagMarks),
     content: '',
     onUpdate: function(props) {

@@ -8,9 +8,9 @@ import { t } from './tiptap_i18n.js';
 
 // --- Keyboard shortcuts in the tooltips ----------------------------------------
 // The tooltip of what a shortcut also does names the shortcut: "Bold (Ctrl+B)", on a
-// Mac "Bold (⌘B)". The keys are those of the editor's keymaps (TipTap's own, and Mod-,
-// and Mod-. of tiptap_legacy.js); Ctrl, Alt and Shift are named as on the keyboards of
-// the language of the user (Strg on a German one).
+// Mac "Bold (⌘B)". The keys are those of the editor's keymaps (TipTap's own, Mod-, and
+// Mod-. of tiptap_legacy.js, and those of tiptap_shortcuts.js); Ctrl, Alt and Shift are
+// named as on the keyboards of the language of the user (Strg on a German one).
 var MAC = typeof navigator !== 'undefined' && /Mac|iP(hone|[oa]d)/.test(navigator.platform);
 
 var SHORTCUTS = {
@@ -18,6 +18,7 @@ var SHORTCUTS = {
   subscript: 'Mod-,', superscript: 'Mod-.',
   undo: 'Mod-z', redo: MAC ? 'Mod-Shift-z' : 'Mod-y',
   code: 'Mod-e',
+  link: 'Mod-k', quote: 'Mod-j', collapsible: 'Mod-g', horizontal_rule: 'Mod-d',
   left: 'Mod-Shift-l', center: 'Mod-Shift-e', right: 'Mod-Shift-r', justify: 'Mod-Shift-j',
   h1: 'Mod-Alt-1', h2: 'Mod-Alt-2', h3: 'Mod-Alt-3', h4: 'Mod-Alt-4', h5: 'Mod-Alt-5', h6: 'Mod-Alt-6',
   paragraph: 'Mod-Alt-0',
@@ -698,7 +699,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     row2.appendChild(makeSep());
 
     // collapse / inline code / code block
-    row2.appendChild(makeButton('', t('toolbar.collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
+    row2.appendChild(makeButton('', withShortcut(t('toolbar.collapsible'), 'collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
     row2.appendChild(makeButton('<>', withShortcut(t('toolbar.code'), 'code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
     row2.appendChild(makeButton('', withShortcut(t('toolbar.code_block'), 'code_block'), function() {
       if (editor.isActive('codeBlock')) {
@@ -716,13 +717,13 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     row2.appendChild(makeSep());
 
     // horizontal rule / quote
-    row2.appendChild(makeButton('', t('toolbar.horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
-    row2.appendChild(makeButton('', t('toolbar.quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
+    row2.appendChild(makeButton('', withShortcut(t('toolbar.horizontal_rule'), 'horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
+    row2.appendChild(makeButton('', withShortcut(t('toolbar.quote'), 'quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
 
     row2.appendChild(makeSep());
 
     // add / remove link
-    row2.appendChild(makeButton('', t('toolbar.link'), function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
+    row2.appendChild(makeButton('', withShortcut(t('toolbar.link'), 'link'), function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
     row2.appendChild(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
 
     // list
