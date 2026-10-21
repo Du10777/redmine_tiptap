@@ -557,13 +557,18 @@ export const FormattableCodeBlock = CodeBlock.extend({
   },
 
   // Tab and Shift-Tab indent and outdent lines inside a code block; without
-  // this, Tab moved the focus out of the editor.
+  // this, Tab moved the focus out of the editor. TipTap's Ctrl+Alt+C, which
+  // makes a code block, is left out: on Windows Ctrl+Alt is AltGr, so it does
+  // nothing on a non-Latin layout (Russian, Greek...) and types a character on
+  // some Latin ones (ć in Polish). A code block is made with its button.
   addKeyboardShortcuts() {
     var editor = this.editor;
-    return Object.assign({}, this.parent?.(), {
+    var shortcuts = Object.assign({}, this.parent?.(), {
       Tab: function() { return indentCodeLines(editor, false); },
       'Shift-Tab': function() { return indentCodeLines(editor, true); },
     });
+    delete shortcuts['Mod-Alt-c'];
+    return shortcuts;
   },
 
   addNodeView() {
