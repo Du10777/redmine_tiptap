@@ -146,12 +146,17 @@ export function setupImageCopy(editorDiv, editor) {
     var img = dom && dom.querySelector ? dom.querySelector('img') : null;
     if (!img || !img.complete || !img.naturalWidth || !readablePicture(img.src)) return;
 
-    var item = { 'image/png': pictureAsPng(img) };
+    // Written once the event is over and the browser has put that HTML on the clipboard:
+    // Firefox refuses a write that is still going on when the HTML lands there (and the
+    // clipboard kept the HTML only).
     var html = e.clipboardData.getData('text/html');
-    if (html) item['text/html'] = new Blob([html], { type: 'text/html' });
-    navigator.clipboard.write([new window.ClipboardItem(item)]).catch(function() {
-      // not allowed by the browser: the HTML of the picture stays on the clipboard
-    });
+    setTimeout(function() {
+      var item = { 'image/png': pictureAsPng(img) };
+      if (html) item['text/html'] = new Blob([html], { type: 'text/html' });
+      navigator.clipboard.write([new window.ClipboardItem(item)]).catch(function() {
+        // not allowed by the browser: the HTML of the picture stays on the clipboard
+      });
+    }, 0);
   });
 }
 

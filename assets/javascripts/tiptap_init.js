@@ -37,7 +37,10 @@ import {
 // Everything is in CSS pixels, so changing the page zoom (Ctrl +/-) by itself gives
 // more or less available height - recalculating on resize is enough.
 
-var MIN_EDITOR_HEIGHT = 160;     // never go below this, even on a short screen
+// Never go below this, even on a short screen: the height of an empty editing area
+// (.ProseMirror: min-height 150px and padding 8px above and below). With 160, the grip
+// let the area be made lower than that, and it had a scrollbar while still empty.
+var MIN_EDITOR_HEIGHT = 166;
 var FALLBACK_BELOW = 220;        // room for the buttons if the form could not be found
 var EDITOR_GAP = 16;             // a small gap so the buttons do not stick to the edge
 var MIN_VIEWPORT_RATIO = 0.45;   // never make the editor smaller than this share of the screen
@@ -183,8 +186,9 @@ var HEIGHT_STORAGE_KEY = 'redmineTiptapEditorHeight';
 
 function readStoredHeight() {
   try {
+    // a height stored when the least one was lower is raised to the least one of now
     var value = parseInt(window.localStorage.getItem(HEIGHT_STORAGE_KEY), 10);
-    return value > 0 ? value : 0;
+    return value > 0 ? Math.max(value, MIN_EDITOR_HEIGHT) : 0;
   } catch (e) {
     return 0;   // localStorage may be unavailable (private mode, policy)
   }
@@ -255,6 +259,12 @@ function buildResizer(wrapper) {
   });
 
   return grip;
+}
+
+// A long text custom field (the ToDo, the Next steps... of an issue) is a field of its own
+// among others, often in one of two columns: its editor has the compact toolbar.
+function isCustomField(textarea) {
+  return /_custom_field_values_\d+$/.test(textarea.id);
 }
 
 function initTextarea(textarea) {
@@ -362,7 +372,7 @@ function initTextarea(textarea) {
     textarea.value = source.area.value;
   });
 
-  var toolbar = buildToolbar(editor, editorDiv, source, urlMap);
+  var toolbar = buildToolbar(editor, editorDiv, source, urlMap, isCustomField(textarea));
   wrapper.insertBefore(toolbar, editorDiv);
 
   setupTablePaste(editorDiv, editor);

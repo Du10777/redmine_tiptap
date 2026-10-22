@@ -203,6 +203,180 @@ var ALIGN_SVG = {
   justify: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="currentColor"><rect x="1" y="2" width="14" height="1.5"/><rect x="1" y="6" width="14" height="1.5"/><rect x="1" y="10" width="14" height="1.5"/><rect x="1" y="14" width="14" height="1.5"/></g></svg>',
 };
 
+// --- Controls of both toolbars (the whole one and the short one, see buildToolbar) ----
+
+// B I U S: their state follows the cursor (each is registered in toggles).
+function makeMarkButtons(editor, toggles) {
+  return [
+    makeToggleButton({ title: withShortcut(t('toolbar.bold'), 'bold'), html: '<span style="font-weight:700">B</span>',
+      action: function() { editor.chain().focus().toggleBold().run(); },
+      isActive: function() { return editor.isActive('bold'); } }, toggles),
+    makeToggleButton({ title: withShortcut(t('toolbar.italic'), 'italic'), html: '<span style="font-style:italic;font-family:Georgia,serif">I</span>',
+      action: function() { editor.chain().focus().toggleItalic().run(); },
+      isActive: function() { return editor.isActive('italic'); } }, toggles),
+    makeToggleButton({ title: withShortcut(t('toolbar.underline'), 'underline'), html: '<span style="text-decoration:underline">U</span>',
+      action: function() { editor.chain().focus().toggleUnderline().run(); },
+      isActive: function() { return editor.isActive('underline'); } }, toggles),
+    makeToggleButton({ title: withShortcut(t('toolbar.strike'), 'strike'), html: '<span style="text-decoration:line-through">S</span>',
+      action: function() { editor.chain().focus().toggleStrike().run(); },
+      isActive: function() { return editor.isActive('strike'); } }, toggles),
+  ];
+}
+
+// A color button (text color, background color): the same button that, on mousedown,
+// opens the palette seeded with the current value and applies or clears it.
+function makeColorButton(title, innerHTML, getCurrent, setColor, unsetColor) {
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'tiptap-btn tiptap-color-btn';
+  btn.title = title;
+  btn.innerHTML = innerHTML;
+  btn.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    openColorPalette(btn, getCurrent(), function(color) {
+      if (color) setColor(color);
+      else unsetColor();
+    });
+  });
+  return btn;
+}
+
+function makeBackgroundColorButton(editor) {
+  return makeColorButton(
+    t('toolbar.background_color'),
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>',
+    function() { return editor.getAttributes('textStyle').backgroundColor || '#ffff00'; },
+    function(color) { editor.chain().focus().setBackgroundColor(color).run(); },
+    function() { editor.chain().focus().unsetBackgroundColor().run(); }
+  );
+}
+
+function makeHistoryButtons(editor) {
+  return [
+    makeButton('↩', withShortcut(t('toolbar.undo'), 'undo'), function() { editor.chain().focus().undo().run(); }, false),
+    makeButton('↪', withShortcut(t('toolbar.redo'), 'redo'), function() { editor.chain().focus().redo().run(); }, false),
+  ];
+}
+
+// --- List: dropdown button with a numbering icon ---
+var LIST_ICON = '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><text x="0" y="3.5" style="font-size:5px;font-weight:700;fill:currentColor">1</text><text x="0" y="8.5" style="font-size:5px;font-weight:700;fill:currentColor">2</text><text x="0" y="13.5" style="font-size:5px;font-weight:700;fill:currentColor">3</text><g stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><line x1="6" y1="2" x2="13" y2="2"/><line x1="6" y1="7" x2="13" y2="7"/><line x1="6" y1="12" x2="13" y2="12"/></g></g></svg>';
+
+function makeListSelect(editor) {
+  var wrapper = document.createElement('span');
+  wrapper.className = 'tiptap-list-wrapper';
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'tiptap-btn tiptap-list-btn';
+  btn.title = t('toolbar.list');
+  btn.tabIndex = 0;
+  btn.innerHTML = LIST_ICON + '<span class="tiptap-style-arrow">▾</span>';
+
+  var dropdown = document.createElement('div');
+  dropdown.className = 'tiptap-style-dropdown tiptap-list-dropdown';
+  dropdown.style.display = 'none';
+
+  var listOptions = [
+    { value: 'task',                    label: t('list_options.task') },
+    { value: 'ul:disc',                 label: t('list_options.bullet_disc') },
+    { value: 'ul:circle',               label: t('list_options.bullet_circle') },
+    { value: 'ul:square',               label: t('list_options.bullet_square') },
+    { value: 'ol:decimal',              label: t('list_options.decimal') },
+    { value: 'ol:decimal-leading-zero', label: t('list_options.decimal_zero') },
+    { value: 'ol:lower-alpha',          label: t('list_options.lower_alpha') },
+    { value: 'ol:upper-alpha',          label: t('list_options.upper_alpha') },
+    { value: 'ol:lower-roman',          label: t('list_options.lower_roman') },
+    { value: 'ol:upper-roman',          label: t('list_options.upper_roman') },
+    { value: 'ol:lower-greek',          label: t('list_options.lower_greek') },
+  ];
+
+  function applyList(val) {
+    if (val === 'task') {
+      editor.chain().focus().toggleTaskList().run();
+    } else {
+      var parts = val.split(':');
+      var kind = parts[0], styleType = parts[1];
+      var chain = editor.chain().focus();
+      if (kind === 'ul') {
+        if (!editor.isActive('bulletList')) chain = chain.toggleBulletList();
+        chain.updateAttributes('bulletList', { listStyleType: styleType }).run();
+      } else {
+        if (!editor.isActive('orderedList')) chain = chain.toggleOrderedList();
+        chain.updateAttributes('orderedList', { listStyleType: styleType }).run();
+      }
+    }
+  }
+
+  listOptions.forEach(function(o) {
+    var opt = document.createElement('div');
+    opt.className = 'tiptap-style-option';
+    opt.textContent = o.label;
+    if (SHORTCUTS[o.value]) opt.title = withShortcut(o.label, o.value);
+    opt.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      dropdown.style.display = 'none';
+      document.removeEventListener('mousedown', closeOnOutsideClick, true);
+      applyList(o.value);
+    });
+    dropdown.appendChild(opt);
+  });
+
+  // The focus stays in the editor. Moving it to the button (as before) blurred
+  // the editor, the blur is a transaction, and row 2 is rebuilt on every
+  // transaction - together with the dropdown that had just been opened, so
+  // the first click did nothing. Clicks elsewhere close the dropdown.
+  function closeOnOutsideClick(e) {
+    if (wrapper.contains(e.target)) return;
+    dropdown.style.display = 'none';
+    document.removeEventListener('mousedown', closeOnOutsideClick, true);
+  }
+  btn.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    var show = dropdown.style.display === 'none';
+    dropdown.style.display = show ? 'block' : 'none';
+    if (show) {
+      positionDropdown(dropdown, btn);
+      document.addEventListener('mousedown', closeOnOutsideClick, true);
+    } else {
+      document.removeEventListener('mousedown', closeOnOutsideClick, true);
+    }
+  });
+
+  wrapper.appendChild(btn);
+  wrapper.appendChild(dropdown);
+  return wrapper;
+}
+
+// The <HTML> button: switches between the editor and the source mode (the HTML in the
+// textarea source.area, see tiptap_source.js). onSwitch(on) hides the other controls.
+function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
+  var on = false;
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = '<HTML>';
+  btn.title = t('toolbar.source');
+  btn.className = 'tiptap-btn';
+  btn.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    on = !on;
+    if (on) {
+      source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
+        return collapseDetailsOpen(formatSourceHTML(html));
+      });
+      editorDiv.style.display = 'none';
+      source.show(true);
+      btn.classList.add('active');
+    } else {
+      editor.commands.setContent(resolveAttachmentSrcs(source.area.value || '', urlMap));
+      editorDiv.style.display = '';   // the display of the stylesheet (a flex column)
+      source.show(false);
+      btn.classList.remove('active');
+    }
+    onSwitch(on);
+  });
+  return btn;
+}
+
 // Builds the stable toolbar row 1. Returns { row1El, updateState }.
 function makeRow1(editor) {
   var row = document.createElement('div');
@@ -340,18 +514,7 @@ function makeRow1(editor) {
   row.appendChild(makeSep());
 
   // --- B I U S ---
-  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.bold'), 'bold'), html: '<span style="font-weight:700">B</span>',
-    action: function() { editor.chain().focus().toggleBold().run(); },
-    isActive: function() { return editor.isActive('bold'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.italic'), 'italic'), html: '<span style="font-style:italic;font-family:Georgia,serif">I</span>',
-    action: function() { editor.chain().focus().toggleItalic().run(); },
-    isActive: function() { return editor.isActive('italic'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.underline'), 'underline'), html: '<span style="text-decoration:underline">U</span>',
-    action: function() { editor.chain().focus().toggleUnderline().run(); },
-    isActive: function() { return editor.isActive('underline'); } }, toggles));
-  row.appendChild(makeToggleButton({ title: withShortcut(t('toolbar.strike'), 'strike'), html: '<span style="text-decoration:line-through">S</span>',
-    action: function() { editor.chain().focus().toggleStrike().run(); },
-    isActive: function() { return editor.isActive('strike'); } }, toggles));
+  makeMarkButtons(editor, toggles).forEach(function(btn) { row.appendChild(btn); });
 
   row.appendChild(makeSep());
 
@@ -464,24 +627,6 @@ function makeRow1(editor) {
   sizeWrapper.appendChild(sizeDropdown);
   row.appendChild(sizeWrapper);
 
-  // A color button (text color, background color): the same button that, on mousedown,
-  // opens the palette seeded with the current value and applies or clears it.
-  function makeColorButton(title, innerHTML, getCurrent, setColor, unsetColor) {
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'tiptap-btn tiptap-color-btn';
-    btn.title = title;
-    btn.innerHTML = innerHTML;
-    btn.addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      openColorPalette(btn, getCurrent(), function(color) {
-        if (color) setColor(color);
-        else unsetColor();
-      });
-    });
-    return btn;
-  }
-
   // --- Text color ---
   row.appendChild(makeColorButton(
     t('toolbar.text_color'),
@@ -492,13 +637,7 @@ function makeRow1(editor) {
   ));
 
   // --- Background color ---
-  row.appendChild(makeColorButton(
-    t('toolbar.background_color'),
-    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>',
-    function() { return editor.getAttributes('textStyle').backgroundColor || '#ffff00'; },
-    function(color) { editor.chain().focus().setBackgroundColor(color).run(); },
-    function() { editor.chain().focus().unsetBackgroundColor().run(); }
-  ));
+  row.appendChild(makeBackgroundColorButton(editor));
 
   function updateState() {
     // toggle buttons (BIUS)
@@ -543,52 +682,54 @@ function makeRow1(editor) {
 }
 
 
+// The compact toolbar of a long text custom field (see initTextarea): a field of its own
+// among the attributes of an issue, often in one of two columns, where the whole toolbar
+// took four rows. The source, undo and redo, the list, B I U S and the background color,
+// in one row.
+function buildCompactToolbar(editor, editorDiv, source, urlMap) {
+  var bar = document.createElement('div');
+  bar.className = 'tiptap-toolbar';
+  var row = document.createElement('div');
+  row.className = 'tiptap-toolbar-row';
+  bar.appendChild(row);
+
+  var toggles = [];
+  var srcBtn = makeSourceButton(editor, editorDiv, source, urlMap, function(on) {
+    Array.prototype.forEach.call(row.children, function(ch) {
+      if (ch !== srcBtn) ch.style.display = on ? 'none' : '';
+    });
+  });
+  [srcBtn, makeSep()]
+    .concat(makeHistoryButtons(editor), [makeSep(), makeListSelect(editor), makeSep()],
+            makeMarkButtons(editor, toggles), [makeSep(), makeBackgroundColorButton(editor)])
+    .forEach(function(el) { row.appendChild(el); });
+
+  function updateState() {
+    toggles.forEach(function(toggle) {
+      if (toggle.isActive()) toggle.btn.classList.add('active');
+      else toggle.btn.classList.remove('active');
+    });
+  }
+  editor.on('selectionUpdate', updateState);
+  editor.on('transaction', updateState);
+  updateState();
+  return bar;
+}
+
 // source: the source mode (see tiptap_source.js): source.area is the textarea with the HTML.
-export function buildToolbar(editor, editorDiv, source, urlMap) {
+// compact: the compact toolbar (buildCompactToolbar) instead of the whole one.
+export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
+  if (compact) return buildCompactToolbar(editor, editorDiv, source, urlMap);
+
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
   var sourceMode = false;
 
   // Row 1: source code + stable formatting controls
-  var row1 = document.createElement('div');
-  row1.className = 'tiptap-toolbar-row';
-
-  var srcBtn = document.createElement('button');
-  srcBtn.type = 'button';
-  srcBtn.textContent = '<HTML>';
-  srcBtn.title = t('toolbar.source');
-  srcBtn.className = 'tiptap-btn';
-
   var fmt = makeRow1(editor);
-
-  // srcBtn and a separator go at the start of row 1, before the formatting controls
-  fmt.row1El.insertBefore(makeSep(), fmt.row1El.firstChild);
-  fmt.row1El.insertBefore(srcBtn, fmt.row1El.firstChild);
-  row1 = fmt.row1El;
-
-  // Row 2: the remaining buttons (recreated on updates)
-  var row2 = document.createElement('div');
-  row2.className = 'tiptap-toolbar-row';
-
-  bar.appendChild(row1);
-  bar.appendChild(row2);
-
-  srcBtn.addEventListener('mousedown', function(e) {
-    e.preventDefault();
-    sourceMode = !sourceMode;
-    if (sourceMode) {
-      source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
-        return collapseDetailsOpen(formatSourceHTML(html));
-      });
-      editorDiv.style.display = 'none';
-      source.show(true);
-      srcBtn.classList.add('active');
-    } else {
-      editor.commands.setContent(resolveAttachmentSrcs(source.area.value || '', urlMap));
-      editorDiv.style.display = '';   // the display of the stylesheet (a flex column)
-      source.show(false);
-      srcBtn.classList.remove('active');
-    }
+  var row1 = fmt.row1El;
+  var srcBtn = makeSourceButton(editor, editorDiv, source, urlMap, function(on) {
+    sourceMode = on;
     // hide all row 1 controls (except srcBtn) and all of row 2
     Array.prototype.forEach.call(row1.children, function(ch) {
       if (ch !== srcBtn) ch.style.display = sourceMode ? 'none' : '';
@@ -597,94 +738,16 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     refresh();
   });
 
-  // --- List: dropdown button with a numbering icon ---
-  var LIST_ICON = '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><text x="0" y="3.5" style="font-size:5px;font-weight:700;fill:currentColor">1</text><text x="0" y="8.5" style="font-size:5px;font-weight:700;fill:currentColor">2</text><text x="0" y="13.5" style="font-size:5px;font-weight:700;fill:currentColor">3</text><g stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><line x1="6" y1="2" x2="13" y2="2"/><line x1="6" y1="7" x2="13" y2="7"/><line x1="6" y1="12" x2="13" y2="12"/></g></g></svg>';
+  // srcBtn and a separator go at the start of row 1, before the formatting controls
+  row1.insertBefore(makeSep(), row1.firstChild);
+  row1.insertBefore(srcBtn, row1.firstChild);
 
-  function makeListSelect() {
-    var wrapper = document.createElement('span');
-    wrapper.className = 'tiptap-list-wrapper';
+  // Row 2: the remaining buttons (recreated on updates)
+  var row2 = document.createElement('div');
+  row2.className = 'tiptap-toolbar-row';
 
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'tiptap-btn tiptap-list-btn';
-    btn.title = t('toolbar.list');
-    btn.tabIndex = 0;
-    btn.innerHTML = LIST_ICON + '<span class="tiptap-style-arrow">▾</span>';
-
-    var dropdown = document.createElement('div');
-    dropdown.className = 'tiptap-style-dropdown tiptap-list-dropdown';
-    dropdown.style.display = 'none';
-
-    var listOptions = [
-      { value: 'task',                    label: t('list_options.task') },
-      { value: 'ul:disc',                 label: t('list_options.bullet_disc') },
-      { value: 'ul:circle',               label: t('list_options.bullet_circle') },
-      { value: 'ul:square',               label: t('list_options.bullet_square') },
-      { value: 'ol:decimal',              label: t('list_options.decimal') },
-      { value: 'ol:decimal-leading-zero', label: t('list_options.decimal_zero') },
-      { value: 'ol:lower-alpha',          label: t('list_options.lower_alpha') },
-      { value: 'ol:upper-alpha',          label: t('list_options.upper_alpha') },
-      { value: 'ol:lower-roman',          label: t('list_options.lower_roman') },
-      { value: 'ol:upper-roman',          label: t('list_options.upper_roman') },
-      { value: 'ol:lower-greek',          label: t('list_options.lower_greek') },
-    ];
-
-    function applyList(val) {
-      if (val === 'task') {
-        editor.chain().focus().toggleTaskList().run();
-      } else {
-        var parts = val.split(':');
-        var kind = parts[0], styleType = parts[1];
-        var chain = editor.chain().focus();
-        if (kind === 'ul') {
-          if (!editor.isActive('bulletList')) chain = chain.toggleBulletList();
-          chain.updateAttributes('bulletList', { listStyleType: styleType }).run();
-        } else {
-          if (!editor.isActive('orderedList')) chain = chain.toggleOrderedList();
-          chain.updateAttributes('orderedList', { listStyleType: styleType }).run();
-        }
-      }
-    }
-
-    listOptions.forEach(function(o) {
-      var opt = document.createElement('div');
-      opt.className = 'tiptap-style-option';
-      opt.textContent = o.label;
-      if (SHORTCUTS[o.value]) opt.title = withShortcut(o.label, o.value);
-      opt.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        dropdown.style.display = 'none';
-        document.removeEventListener('mousedown', closeOnOutsideClick, true);
-        applyList(o.value);
-      });
-      dropdown.appendChild(opt);
-    });
-
-    // The focus stays in the editor. Moving it to the button (as before) blurred
-    // the editor, the blur is a transaction, and row 2 is rebuilt on every
-    // transaction - together with the dropdown that had just been opened, so
-    // the first click did nothing. Clicks elsewhere close the dropdown.
-    function closeOnOutsideClick(e) {
-      if (wrapper.contains(e.target)) return;
-      dropdown.style.display = 'none';
-      document.removeEventListener('mousedown', closeOnOutsideClick, true);
-    }
-    btn.addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      var show = dropdown.style.display === 'none';
-      dropdown.style.display = show ? 'block' : 'none';
-      if (show) {
-        positionDropdown(dropdown, btn);
-        document.addEventListener('mousedown', closeOnOutsideClick, true);
-      } else {
-        document.removeEventListener('mousedown', closeOnOutsideClick, true);
-      }
-    });
-
-    wrapper.appendChild(btn);
-    wrapper.appendChild(dropdown);
-    return wrapper;
-  }
+  bar.appendChild(row1);
+  bar.appendChild(row2);
 
   function refresh() {
     fmt.updateState();
@@ -693,8 +756,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     row2.innerHTML = '';
 
     // undo / redo
-    row2.appendChild(makeButton('\u21a9', withShortcut(t('toolbar.undo'), 'undo'), function() { editor.chain().focus().undo().run(); }, false));
-    row2.appendChild(makeButton('\u21aa', withShortcut(t('toolbar.redo'), 'redo'), function() { editor.chain().focus().redo().run(); }, false));
+    makeHistoryButtons(editor).forEach(function(btn) { row2.appendChild(btn); });
 
     row2.appendChild(makeSep());
 
@@ -727,7 +789,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap) {
     row2.appendChild(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
 
     // list
-    row2.appendChild(makeListSelect());
+    row2.appendChild(makeListSelect(editor));
 
     // the rest
     var btns = [
