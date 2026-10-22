@@ -110,6 +110,14 @@
   display: inline-block;
   position: relative;
   line-height: 0;
+  max-width: 100%;
+}
+
+/* A picture wider than the text is scaled down to its width, as on the saved page
+   (Redmine: div.wiki img {max-width: 100%}) - not shown at its full size, with the
+   editor scrolled sideways to see it. */
+.tiptap-image-wrapper > img {
+  max-width: 100%;
 }
 
 .tiptap-image-selected {

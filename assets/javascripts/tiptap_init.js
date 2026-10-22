@@ -25,6 +25,7 @@ import {
   buildAttachmentUrlMap,
   resolveAttachmentSrcs,
   setupImagePaste,
+  setupImageCopy,
   setupFileInputBinding,
   patchAddInlineAttachmentMarkup,
 } from './tiptap_attachments.js';
@@ -51,6 +52,42 @@ function topOverlayHeight() {
   if (!bar) return 0;
   var h = bar.getBoundingClientRect().height;
   return h > 0 ? h : STICKY_FALLBACK;
+}
+
+// The header of the note (who and when) above the form that edits it, or null: it is
+// to stay on the screen together with the editor and the form buttons.
+function noteHeader(wrapper) {
+  if (!wrapper.closest('form[id^="journal-"][id$="-form"]')) return null;
+  var journal = wrapper.closest('.journal');
+  return journal && journal.querySelector('.note-header, h4');
+}
+
+// The top of what has to fit on the screen with the editor: the header of a note
+// being edited, otherwise the toolbar.
+function spanTop(wrapper, toolbar) {
+  return (noteHeader(wrapper) || toolbar).getBoundingClientRect().top;
+}
+
+// Opening a note for editing: the page is scrolled, if it has to be, so that the header
+// of the note is right below the top of the window (below the sticky issue header) -
+// the editor is made short enough for the form buttons to be on the screen then too.
+// Pictures that are still loading make the editor grow up to its limit: until they are
+// there, the limit is what counts.
+function revealNoteForm(wrapper) {
+  var header = noteHeader(wrapper);
+  var anchorEl = submitAnchor(wrapper);
+  var content = wrapper.querySelector('.tiptap-content');
+  if (!header || !anchorEl || !content || wrapper.getClientRects().length === 0) return;
+
+  var loading = Array.prototype.some.call(content.querySelectorAll('img'), function(img) { return !img.complete; });
+  var limit = parseFloat(getComputedStyle(content).maxHeight);
+  var growth = loading && limit > 0 ? Math.max(0, limit - content.getBoundingClientRect().height) : 0;
+  var top = header.getBoundingClientRect().top;
+  var bottom = anchorEl.getBoundingClientRect().bottom + growth;
+  var overlay = topOverlayHeight();
+  if (top < overlay || bottom > window.innerHeight - EDITOR_GAP / 2) {
+    window.scrollBy(0, top - overlay - EDITOR_GAP / 2);
+  }
 }
 
 // The form buttons ("Save"/"Create") that the editor has to "reach".
@@ -85,7 +122,7 @@ function applyMaxHeight(wrapper) {
     // Shrinking the editing area by N pixels raises the buttons by exactly as much, so
     // the needed height is obtained with a single arithmetic correction - regardless
     // of what else is on the form.
-    var span = anchorEl.getBoundingClientRect().bottom - toolbar.getBoundingClientRect().top;
+    var span = anchorEl.getBoundingClientRect().bottom - spanTop(wrapper, toolbar);
     avail = content.getBoundingClientRect().height - (span - target);
   } else {
     avail = target - toolbar.offsetHeight - FALLBACK_BELOW;
@@ -330,12 +367,16 @@ function initTextarea(textarea) {
 
   setupTablePaste(editorDiv, editor);
   setupImagePaste(editorDiv, editor, textarea);
+  setupImageCopy(editorDiv, editor);
   setupFileInputBinding(textarea, editor);
   setupTableContextMenu(editorDiv, editor);
 
   wrapper.appendChild(buildResizer(wrapper));
 
-  var stored = readStoredHeight();
+  // A height set with the grip is taken by every editor but the one that edits a note:
+  // that one opens fitted to the screen with the header of the note and the form
+  // buttons (see revealNoteForm), and no taller than its text needs.
+  var stored = noteHeader(wrapper) ? 0 : readStoredHeight();
   if (stored) {
     setManualHeight(wrapper, stored);
   } else {
@@ -343,9 +384,18 @@ function initTextarea(textarea) {
   }
   watchVisibility(wrapper);
 
-  // The editor was created for a field that already had the cursor (Redmine
-  // itself focuses the field when expanding the form) - move focus into the editor.
-  if (document.activeElement === textarea) editor.commands.focus('end');
+  // The editor was created for a field that already had the cursor (Redmine itself
+  // focuses the field when it opens a form) - move the focus into the editor: to the
+  // end, as Redmine does (a reply is written below the note it quotes). But in the form
+  // that edits a note, to its start and without scrolling: Redmine's field is as tall as
+  // the note and still shows it from the first line, while the editor is no taller than
+  // the screen - at the end it was scrolled to the last line of a long note, and the
+  // page with it.
+  if (document.activeElement === textarea) {
+    if (noteHeader(wrapper)) editor.commands.focus('start', { scrollIntoView: false });
+    else editor.commands.focus('end');
+  }
+  revealNoteForm(wrapper);
 }
 
 // --- Lazy editor creation ----------------------------------------------------
