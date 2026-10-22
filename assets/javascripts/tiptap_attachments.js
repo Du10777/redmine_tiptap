@@ -104,6 +104,10 @@ export function setupImagePaste(editorDiv, editor, textarea) {
       .filter(Boolean);
 
     if (imageFiles.length === 0) return;
+    // A picture copied in an editor (see setupImageCopy): the editor's own HTML is on
+    // the clipboard with it, and ProseMirror has pasted that already - the picture of
+    // the same attachment, which is not to be uploaded once more.
+    if ((clipboardData.getData('text/html') || '').indexOf('data-pm-slice') !== -1) return;
     e.preventDefault();
 
     var form = textarea.closest('form');
@@ -120,6 +124,58 @@ export function setupImagePaste(editorDiv, editor, textarea) {
       window.handleFileDropEvent.target = textarea;
       window.addFile($(inputEl), namedFile, true);
     });
+  });
+}
+
+// Ctrl+C on a selected picture puts the picture itself on the clipboard, as the
+// browser's "Copy image" does: another program (a messenger, a graphics editor)
+// pastes it as a picture. With it goes the HTML that ProseMirror has just put there,
+// so that pasted into an editor it is the same attachment again (see setupImagePaste).
+// A page may put a picture on the clipboard only on HTTPS (and on localhost), and only
+// a picture it can read (of this site): anywhere else the picture is copied as HTML,
+// as before.
+export function setupImageCopy(editorDiv, editor) {
+  if (!window.isSecureContext || typeof window.ClipboardItem !== 'function'
+      || !navigator.clipboard || !navigator.clipboard.write) return;
+
+  // In the bubble phase: ProseMirror has put its HTML on the clipboard by now.
+  editorDiv.addEventListener('copy', function(e) {
+    var selection = editor.state.selection;
+    if (!selection.node || selection.node.type.name !== 'image' || !e.clipboardData) return;
+    var dom = editor.view.nodeDOM(selection.from);
+    var img = dom && dom.querySelector ? dom.querySelector('img') : null;
+    if (!img || !img.complete || !img.naturalWidth || !readablePicture(img.src)) return;
+
+    var item = { 'image/png': pictureAsPng(img) };
+    var html = e.clipboardData.getData('text/html');
+    if (html) item['text/html'] = new Blob([html], { type: 'text/html' });
+    navigator.clipboard.write([new window.ClipboardItem(item)]).catch(function() {
+      // not allowed by the browser: the HTML of the picture stays on the clipboard
+    });
+  });
+}
+
+// A picture the page may draw on a canvas: one of this site, or one made by the page
+// itself (a picture just pasted is shown from a blob: address until it is saved).
+function readablePicture(src) {
+  try {
+    var url = new URL(src, window.location.href);
+    return url.origin === window.location.origin || url.protocol === 'blob:' || url.protocol === 'data:';
+  } catch (e) {
+    return false;
+  }
+}
+
+// The picture in its own size as PNG, the format of pictures on the clipboard.
+function pictureAsPng(img) {
+  return new Promise(function(resolve, reject) {
+    var canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    canvas.toBlob(function(blob) {
+      if (blob) resolve(blob); else reject(new Error('The picture could not be made PNG'));
+    }, 'image/png');
   });
 }
 
