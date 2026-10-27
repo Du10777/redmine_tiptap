@@ -70,6 +70,13 @@ function makeToggleButton(spec, registry) {
   return btn;
 }
 
+// The buttons of makeToggleButton show the state at the cursor.
+function updateToggles(registry) {
+  registry.forEach(function(toggle) {
+    toggle.btn.classList.toggle('active', !!toggle.isActive());
+  });
+}
+
 function makeSep() {
   var sep = document.createElement('span');
   sep.className = 'tiptap-sep';
@@ -708,11 +715,7 @@ function makeRow1(editor) {
   row.appendChild(makeBackgroundColorButton(editor));
 
   function updateState() {
-    // toggle buttons (BIUS)
-    toggles.forEach(function(toggle) {
-      if (toggle.isActive()) toggle.btn.classList.add('active');
-      else toggle.btn.classList.remove('active');
-    });
+    updateToggles(toggles);   // B I U S and the others of makeMarkButtons
 
     // alignment: icon on the button + active in the menu
     var curAlign = 'left';
@@ -721,27 +724,21 @@ function makeRow1(editor) {
     });
     alignIcon.innerHTML = ALIGN_SVG[curAlign];
     ALIGNMENTS.forEach(function(al) {
-      if (al === curAlign) alignOptionBtns[al].classList.add('active');
-      else alignOptionBtns[al].classList.remove('active');
+      alignOptionBtns[al].classList.toggle('active', al === curAlign);
     });
 
     // paragraph style label
-    var cur = 'paragraph';
-    if (editor.isActive('heading', { level: 1 })) cur = 'h1';
-    else if (editor.isActive('heading', { level: 2 })) cur = 'h2';
-    else if (editor.isActive('heading', { level: 3 })) cur = 'h3';
-    else if (editor.isActive('heading', { level: 4 })) cur = 'h4';
-    else if (editor.isActive('heading', { level: 5 })) cur = 'h5';
-    else if (editor.isActive('heading', { level: 6 })) cur = 'h6';
-    else if (editor.isActive('codeBlock')) cur = 'codeBlock';
+    var cur = editor.isActive('codeBlock') ? 'codeBlock' : 'paragraph';
+    for (var level = 1; level <= 6; level++) {
+      if (editor.isActive('heading', { level: level })) { cur = 'h' + level; break; }
+    }
     var item = STYLE_ITEMS.filter(function(i) { return i.value === cur; })[0];
     styleBtn.firstChild.textContent = item ? item.short : 'T';
 
     var attrs = editor.getAttributes('textStyle');
     var curFont = attrs.fontFamily ? attrs.fontFamily.replace(/["']/g, '') : '';
     fontItems.forEach(function(it) {
-      if (it.value === curFont) it.el.classList.add('active');
-      else it.el.classList.remove('active');
+      it.el.classList.toggle('active', it.value === curFont);
     });
     sizeInput.value = attrs.fontSize ? (parseInt(attrs.fontSize) || 14) : 14;
   }
@@ -773,12 +770,7 @@ function buildCompactToolbar(editor, editorDiv, source, urlMap) {
             makeMarkButtons(editor, toggles), [makeSep(), makeBackgroundColorButton(editor)])
     .forEach(function(el) { row.appendChild(el); });
 
-  function updateState() {
-    toggles.forEach(function(toggle) {
-      if (toggle.isActive()) toggle.btn.classList.add('active');
-      else toggle.btn.classList.remove('active');
-    });
-  }
+  function updateState() { updateToggles(toggles); }
   // transaction fires for every applied transaction, a selection-only change too, and
   // right before selectionUpdate - so listening to it alone is enough and does not run
   // the update twice on each cursor move.
@@ -873,10 +865,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
 
   function refresh() {
     fmt.updateState();
-    row2Toggles.forEach(function(toggle) {
-      if (toggle.isActive()) toggle.btn.classList.add('active');
-      else toggle.btn.classList.remove('active');
-    });
+    updateToggles(row2Toggles);
   }
 
   // One listener: transaction covers selection-only changes too (see buildCompactToolbar).

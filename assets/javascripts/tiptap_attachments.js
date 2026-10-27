@@ -266,7 +266,8 @@ export function patchAddInlineAttachmentMarkup() {
     var activeEditor = window._tiptapActiveEditor;
     var isImage = window.wikiImageMimeTypes && window.wikiImageMimeTypes.indexOf(file.type) > -1;
 
-    if (activeEditor && isImage && document.body.getAttribute('data-text-formatting') === 'tiptap') {
+    // (patched only on the pages of this text formatting, see scanAndInit)
+    if (activeEditor && isImage) {
       var sanitizedFilename = file.name.replace(/[\/\?\%\*\:\|\"\'<>\n\r]+/g, '_');
       var blobUrl = URL.createObjectURL(file);
 

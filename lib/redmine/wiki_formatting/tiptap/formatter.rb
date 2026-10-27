@@ -276,7 +276,8 @@ module Redmine
       end
 
       module Helper
-        def wikitoolbar_for(field_id, preview_url = preview_text_path)
+        # The editor has its own toolbar: Redmine's (and its preview address) is not needed.
+        def wikitoolbar_for(_field_id, _preview_url = nil)
           heads_for_wiki_formatter
           nil
         end

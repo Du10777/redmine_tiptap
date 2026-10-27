@@ -9,9 +9,9 @@
 // page and got a 404, once for every such picture.
 var inert = null;
 
-export function inertElement(tag) {
+export function inertElement() {
   if (!inert) inert = document.implementation.createHTMLDocument('');
-  return inert.createElement(tag || 'div');
+  return inert.createElement('div');
 }
 
 // The three characters that start markup, as entities, so a piece of text can go into

@@ -39,31 +39,26 @@ export const Indent = Extension.create({
   },
 
   addCommands() {
+    var types = this.options.types;
+    // One level more (step 1, up to MAX_INDENT) or less (step -1, down to 0) for the block
+    // the cursor is in.
+    function stepIndent(step) {
+      return ({ editor, chain }) => {
+        var applied = false;
+        types.forEach(function(type) {
+          if (editor.isActive(type)) {
+            var cur = editor.getAttributes(type).indent || 0;
+            var next = step > 0 ? Math.min(cur + step, MAX_INDENT) : Math.max(cur + step, 0);
+            chain().updateAttributes(type, { indent: next }).run();
+            applied = true;
+          }
+        });
+        return applied;
+      };
+    }
     return {
-      indent: () => ({ editor, chain }) => {
-        var types = this.options.types;
-        var applied = false;
-        types.forEach(function(type) {
-          if (editor.isActive(type)) {
-            var cur = editor.getAttributes(type).indent || 0;
-            chain().updateAttributes(type, { indent: Math.min(cur + 1, MAX_INDENT) }).run();
-            applied = true;
-          }
-        });
-        return applied;
-      },
-      outdent: () => ({ editor, chain }) => {
-        var types = this.options.types;
-        var applied = false;
-        types.forEach(function(type) {
-          if (editor.isActive(type)) {
-            var cur = editor.getAttributes(type).indent || 0;
-            chain().updateAttributes(type, { indent: Math.max(cur - 1, 0) }).run();
-            applied = true;
-          }
-        });
-        return applied;
-      },
+      indent: () => stepIndent(1),
+      outdent: () => stepIndent(-1),
     };
   },
 });
