@@ -27,8 +27,13 @@ import { inertElement, escapeHtml } from './tiptap_inert.js';
 // text here as well. Code (<pre>, <code>) is skipped for the same reason, and so is
 // every tag: {{...}} in an attribute value (a title) is no macro, and the span put into
 // the value broke the tag.
+//
+// Each of these stops where it can no longer match - a code block at the next opening tag
+// of the same kind (they do not nest), a tag at the next "<": otherwise every <pre with no
+// </pre> after it, every "<" with no ">", scanned the rest of the text, and a text of many
+// of them took time growing with the square of its length to open.
 var PROTECT_RE = new RegExp(
-  '(<pre\\b[\\s\\S]*?<\\/pre>|<code\\b[\\s\\S]*?<\\/code>|<[^>]*>)'
+  '(<pre\\b(?:(?!<pre\\b)[\\s\\S])*?<\\/pre>|<code\\b(?:(?!<code\\b)[\\s\\S])*?<\\/code>|<[^<>]*>)'
   + '|(!)?(\\{\\{\\w+(?:\\([^\\n\\r]*?\\))?(?:[\\n\\r][\\s\\S]*?[\\n\\r])?\\}\\})',
   'gi'
 );

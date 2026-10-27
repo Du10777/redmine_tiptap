@@ -356,10 +356,8 @@ function makeListSelect(editor) {
     dropdown.appendChild(opt);
   });
 
-  // The focus stays in the editor. Moving it to the button (as before) blurred
-  // the editor, the blur is a transaction, and row 2 is rebuilt on every
-  // transaction - together with the dropdown that had just been opened, so
-  // the first click did nothing. Clicks elsewhere close the dropdown.
+  // The focus stays in the editor (a press on the button does not take it). Clicks
+  // elsewhere close the dropdown.
   function closeOnOutsideClick(e) {
     if (wrapper.contains(e.target)) return;
     dropdown.style.display = 'none';
@@ -797,18 +795,16 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
   primaryButtonOnly(bar);   // the dropdown menus are inside it too
-  var sourceMode = false;
 
   // Row 1: source code + stable formatting controls
   var fmt = makeRow1(editor);
   var row1 = fmt.row1El;
   var srcBtn = makeSourceButton(editor, editorDiv, source, urlMap, function(on) {
-    sourceMode = on;
     // hide all row 1 controls (except srcBtn) and all of row 2
     Array.prototype.forEach.call(row1.children, function(ch) {
-      if (ch !== srcBtn) ch.style.display = sourceMode ? 'none' : '';
+      if (ch !== srcBtn) ch.style.display = on ? 'none' : '';
     });
-    row2.style.display = sourceMode ? 'none' : '';
+    row2.style.display = on ? 'none' : '';
     refresh();
   });
 
@@ -816,28 +812,30 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
   row1.insertBefore(makeSep(), row1.firstChild);
   row1.insertBefore(srcBtn, row1.firstChild);
 
-  // Row 2: the remaining buttons (recreated on updates)
+  // Row 2: the remaining buttons. Made once; the state of the code, code block and link
+  // buttons follows the cursor as that of B I U S does. They were all made anew on every
+  // transaction - each keystroke and cursor move - an open list menu with them.
   var row2 = document.createElement('div');
   row2.className = 'tiptap-toolbar-row';
+  var row2Toggles = [];
 
   bar.appendChild(row1);
   bar.appendChild(row2);
 
-  function refresh() {
-    fmt.updateState();
-    if (sourceMode) { row2.innerHTML = ''; return; }
+  function add(el) { row2.appendChild(el); }
 
-    row2.innerHTML = '';
+  // undo / redo
+  makeHistoryButtons(editor).forEach(add);
 
-    // undo / redo
-    makeHistoryButtons(editor).forEach(function(btn) { row2.appendChild(btn); });
+  add(makeSep());
 
-    row2.appendChild(makeSep());
-
-    // collapse / inline code / code block
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.collapsible'), 'collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
-    row2.appendChild(makeButton('<>', withShortcut(t('toolbar.code'), 'code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
-    row2.appendChild(makeButton('', t('toolbar.code_block'), function() {
+  // collapse / inline code / code block
+  add(makeButton('', withShortcut(t('toolbar.collapsible'), 'collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
+  add(makeToggleButton({ label: '<>', title: withShortcut(t('toolbar.code'), 'code'),
+    action: function() { editor.chain().focus().toggleCode().run(); },
+    isActive: function() { return editor.isActive('code'); } }, row2Toggles));
+  add(makeToggleButton({ title: t('toolbar.code_block'), html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><line x1="3.5" y1="6" x2="8.5" y2="6"/><line x1="3.5" y1="8.5" x2="12.5" y2="8.5"/><line x1="3.5" y1="11" x2="7.5" y2="11"/></g></svg>',
+    action: function() {
       if (editor.isActive('codeBlock')) {
         editor.chain().focus().liftFromCodeBlock().run();
       } else {
@@ -848,32 +846,36 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
           { type: 'codeBlock', content: text ? [{ type: 'text', text: text }] : [] }
         ).run();
       }
-    }, editor.isActive('codeBlock'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><line x1="3.5" y1="6" x2="8.5" y2="6"/><line x1="3.5" y1="8.5" x2="12.5" y2="8.5"/><line x1="3.5" y1="11" x2="7.5" y2="11"/></g></svg>'));
+    },
+    isActive: function() { return editor.isActive('codeBlock'); } }, row2Toggles));
 
-    row2.appendChild(makeSep());
+  add(makeSep());
 
-    // horizontal rule / quote
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.horizontal_rule'), 'horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.quote'), 'quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
+  // horizontal rule / quote
+  add(makeButton('', withShortcut(t('toolbar.horizontal_rule'), 'horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
+  add(makeButton('', withShortcut(t('toolbar.quote'), 'quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
 
-    row2.appendChild(makeSep());
+  add(makeSep());
 
-    // add / remove link
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.link'), 'link'), function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
-    row2.appendChild(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
+  // add / remove link
+  add(makeToggleButton({ title: withShortcut(t('toolbar.link'), 'link'), html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>',
+    action: function() { openLinkModal(editor); },
+    isActive: function() { return editor.isActive('link'); } }, row2Toggles));
+  add(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
 
-    // list
-    row2.appendChild(makeListSelect(editor));
+  // list
+  add(makeListSelect(editor));
 
-    // the rest
-    var btns = [
-      { label: '', title: t('toolbar.insert_table'),        action: function() { openTableModal(editor); }, active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>' },
-      { label: '\ud83d\udcce', title: t('toolbar.insert_attachment'),             action: function() { openAttachmentPicker(editor, urlMap); }, active: false },
-      { label: '\ud83c\udf04', title: t('toolbar.insert_image'), action: function() { openImagePicker(editor, urlMap); },      active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><circle cx="5" cy="6" r="1.5"/><path d="M2 12 L6 8 L9 11 L11 9 L14 12" stroke-linejoin="round"/></g></svg>' },
-    ];
+  // table, attachment, picture
+  add(makeButton('', t('toolbar.insert_table'), function() { openTableModal(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>'));
+  add(makeButton('\ud83d\udcce', t('toolbar.insert_attachment'), function() { openAttachmentPicker(editor, urlMap); }, false));
+  add(makeButton('', t('toolbar.insert_image'), function() { openImagePicker(editor, urlMap); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><circle cx="5" cy="6" r="1.5"/><path d="M2 12 L6 8 L9 11 L11 9 L14 12" stroke-linejoin="round"/></g></svg>'));
 
-    btns.forEach(function(b) {
-      row2.appendChild(makeButton(b.label, b.title, b.action, b.active, b.html));
+  function refresh() {
+    fmt.updateState();
+    row2Toggles.forEach(function(toggle) {
+      if (toggle.isActive()) toggle.btn.classList.add('active');
+      else toggle.btn.classList.remove('active');
     });
   }
 
