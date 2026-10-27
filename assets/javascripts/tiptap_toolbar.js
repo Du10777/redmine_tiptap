@@ -98,12 +98,21 @@ function positionDropdown(dropdown, anchor) {
   dropdown.style.left = r.left + 'px';
 }
 
-// Closes a dropdown when the next mousedown lands outside its wrapper. The listener
-// stays on the document for the life of the page, as it did when written inline.
-function hideOnOutsideMousedown(wrapper, dropdown) {
-  document.addEventListener('mousedown', function(e) {
-    if (!wrapper.contains(e.target)) dropdown.style.display = 'none';
+// Closes a dropdown when the next mousedown lands outside its wrapper. One listener of
+// the document for the dropdowns of all the toolbars: it used to be one for every dropdown,
+// never removed - four for each editor, kept on with the editors gone (Redmine draws the
+// attributes of an issue anew on a change of tracker or status). Those of toolbars no
+// longer on the page are let go.
+var outsideDropdowns = [];
+document.addEventListener('mousedown', function(e) {
+  outsideDropdowns = outsideDropdowns.filter(function(d) { return d.wrapper.isConnected; });
+  outsideDropdowns.forEach(function(d) {
+    if (!d.wrapper.contains(e.target)) d.dropdown.style.display = 'none';
   });
+});
+
+function hideOnOutsideMousedown(wrapper, dropdown) {
+  outsideDropdowns.push({ wrapper: wrapper, dropdown: dropdown });
 }
 
 var COLOR_PALETTE = [

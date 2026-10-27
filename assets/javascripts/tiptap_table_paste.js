@@ -1,6 +1,20 @@
 import { flattenForeignDivs } from './tiptap_legacy.js';
 import { inertElement } from './tiptap_inert.js';
 
+// Excel takes font sizes in pt: a size in px of the editor is copied as px * EXCEL_PT_PER_PX
+// pt, and a size in pt of Excel is pasted as pt / EXCEL_PT_PER_PX px - the same factor both
+// ways, so a size comes back as it went (14px -> 12pt -> 14px). The paste took the pt for
+// px as they were, and Excel's 11pt came out smaller than in Excel, as 11px.
+var EXCEL_PT_PER_PX = 6 / 7;
+
+function excelPx(pt) {
+  return Math.round(pt / EXCEL_PT_PER_PX);
+}
+
+function excelPt(px) {
+  return Math.round(px * EXCEL_PT_PER_PX);
+}
+
 // Cleans up tables pasted from Excel/Word: strips junk styles,
 // screenshot images, fixed widths
 export function setupTablePaste(editorDiv, editor) {
@@ -48,7 +62,7 @@ export function setupTablePaste(editorDiv, editor) {
       if (el.style.fontSize.indexOf('px') === -1) return;
       var px = parseFloat(el.style.fontSize);
       if (px) {
-        el.style.fontSize = Math.round(px * 6 / 7) + 'pt';
+        el.style.fontSize = excelPt(px) + 'pt';
       }
     });
 
@@ -86,7 +100,7 @@ function cleanPastedTables(html) {
     var tdMatch = css.match(/(?:^|\})\s*td\s*\{([^}]*)\}/);
     if (tdMatch) {
       var fm0 = tdMatch[1].match(/font-size:\s*([\d.]+)pt/i);
-      if (fm0) baseFontSize = Math.round(parseFloat(fm0[1]));
+      if (fm0) baseFontSize = excelPx(parseFloat(fm0[1]));
     }
   });
 
@@ -131,7 +145,7 @@ function cleanTable(table, classRules, baseFontSize) {
       var fontSize = null;
       if (cls && classRules[cls]) {
         var fm = classRules[cls].match(/font-size:\s*([\d.]+)pt/i);
-        if (fm) fontSize = Math.round(parseFloat(fm[1])); // pt -> px
+        if (fm) fontSize = excelPx(parseFloat(fm[1]));
       }
       if (!fontSize) fontSize = baseFontSize;
 
@@ -279,7 +293,7 @@ export function setupSavedTableCopy() {
     container.querySelectorAll('[style*="font-size"]').forEach(function(node) {
       if (node.style.fontSize.indexOf('px') === -1) return;
       var px = parseFloat(node.style.fontSize);
-      if (px) node.style.fontSize = Math.round(px * 6 / 7) + 'pt';
+      if (px) node.style.fontSize = excelPt(px) + 'pt';
     });
 
     e.clipboardData.setData('text/html', '<html><body>' + container.innerHTML + '</body></html>');

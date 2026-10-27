@@ -99,7 +99,7 @@ export function toEditorHTML(html, urlMap) {
 // (Attachment.latest_attach): the name percent-decoded and in any case. Looked up as
 // written first; a picture named in another case showed on the saved page, but not in
 // the editor.
-function attachmentOf(urlMap, src) {
+export function attachmentOf(urlMap, src) {
   if (urlMap[src]) return urlMap[src];
   var name = src;
   try { name = decodeURIComponent(src); } catch (e) { /* not encoded: as it is */ }
@@ -232,19 +232,28 @@ export function setupFileInputBinding(textarea, editor) {
   //
   // Files chosen with the file field go into the editor the cursor was last in (see
   // initTextarea); if that is no editor of this form, into its first one.
-  inputEl.addEventListener('change', function() {
+  function onChange() {
     var active = window._tiptapActiveTextarea;
     if (!active || active.form !== form) setActiveEditor(editor, textarea);
-  }, true);
+  }
+  inputEl.addEventListener('change', onChange, true);
 
   // A dropped file goes into the editor it was dropped on. Dropped beside any editor (on
   // the box of the files), it is only attached, as Redmine does with a text field.
-  var dropZone = inputEl.closest('.filedroplistner') || inputEl.closest('.box');
-  if (dropZone) dropZone.addEventListener('drop', function(e) {
+  function onDrop(e) {
     var on = e.target && e.target.closest ? e.target.closest('.tiptap-wrapper') : null;
     if (on && on.contains(editor.view.dom)) setActiveEditor(editor, textarea);
     else if (!on) setActiveEditor(null, null);
-  }, true);
+  }
+  var dropZone = inputEl.closest('.filedroplistner') || inputEl.closest('.box');
+  if (dropZone) dropZone.addEventListener('drop', onDrop, true);
+
+  // The file field outlives the editor when Redmine draws the attributes of an issue
+  // anew: the listeners come off with the editor (see dropRemovedEditors).
+  return function() {
+    inputEl.removeEventListener('change', onChange, true);
+    if (dropZone) dropZone.removeEventListener('drop', onDrop, true);
+  };
 }
 
 export function patchAddInlineAttachmentMarkup() {

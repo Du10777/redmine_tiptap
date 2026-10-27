@@ -20,3 +20,14 @@ Redmine::WikiFormatting.register(:tiptap,
 Rails.application.config.to_prepare do
   require_dependency 'redmine_tiptap/hooks'
 end
+
+# The quotes of the Quote links (see lib/redmine_tiptap/quote_reply_patch.rb), in the two
+# controllers that build them. Applied right here, not in a to_prepare block: Redmine runs
+# the init.rb of a plugin within to_prepare itself (Redmine::PluginLoader), and a block
+# added from there was not run any more in production. Redmine has had the builder since
+# 6.0; without it nothing is changed.
+if defined?(Redmine::QuoteReply::Builder)
+  [JournalsController, MessagesController].each do |controller|
+    controller.prepend(RedmineTiptap::QuoteReplyPatch) unless controller < RedmineTiptap::QuoteReplyPatch
+  end
+end

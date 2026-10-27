@@ -102,6 +102,14 @@ function submitAnchor(wrapper) {
     || form.querySelector('.buttons');
 }
 
+// The editing area on the screen: the HTML of the source mode while it is shown, else the
+// editor. The other one is hidden, 0 px high: measured in the source mode, it made the
+// limit as much lower as the HTML box is high.
+function visibleArea(wrapper) {
+  var source = wrapper.querySelector('.tiptap-source-box');
+  return source && source.style.display !== 'none' ? source : wrapper.querySelector('.tiptap-content');
+}
+
 function applyMaxHeight(wrapper) {
   // A size set with the grip takes priority over auto-sizing.
   if (wrapper._tiptapManualHeight) return;
@@ -111,7 +119,7 @@ function applyMaxHeight(wrapper) {
   // recalculate once the editor shows up on screen.
   if (wrapper.getClientRects().length === 0) return;
 
-  var content = wrapper.querySelector('.tiptap-content');
+  var content = visibleArea(wrapper);
   var toolbar = wrapper.querySelector('.tiptap-toolbar');
   if (!content || !toolbar) return;
 
@@ -162,10 +170,36 @@ var sizeObserver = window.ResizeObserver
     })
   : null;
 
+// Returns what stops the watch (see dropRemovedEditors).
 function watchVisibility(wrapper) {
-  if (!sizeObserver) return;
+  if (!sizeObserver) return null;
   wrapper._tiptapHidden = wrapper.getClientRects().length === 0;
   sizeObserver.observe(wrapper);
+  return function() { sizeObserver.unobserve(wrapper); };
+}
+
+// The editors of the page, each with what it has put outside its own elements.
+var liveEditors = [];
+
+// An editor whose field has left the page - Redmine draws the attributes of an issue anew
+// when its tracker or status is changed, and drops the form of a note on Cancel - is
+// destroyed, and what it had put outside its own elements goes with it: its listeners on
+// the form's file field (which outlives it, and where they went on taking pictures for an
+// editor no longer there) and the watch of its size. A field still waiting to be shown
+// (initWhenVisible) is no longer watched either.
+function dropRemovedEditors() {
+  liveEditors = liveEditors.filter(function(entry) {
+    if (entry.textarea.isConnected) return true;
+    entry.cleanups.forEach(function(cleanup) { if (cleanup) cleanup(); });
+    if (window._tiptapActiveEditor === entry.editor) setActiveEditor(null, null);
+    entry.editor.destroy();
+    return false;
+  });
+  pendingFields = pendingFields.filter(function(textarea) {
+    if (textarea.isConnected) return true;
+    pendingFieldObserver.unobserve(textarea);
+    return false;
+  });
 }
 
 var maxHeightPending = false;
@@ -226,9 +260,7 @@ function buildResizer(wrapper) {
     event.preventDefault();
 
     // The user may be dragging either of the two areas - measure from the visible one.
-    var box = wrapper.querySelector('.tiptap-content');
-    var source = wrapper.querySelector('.tiptap-source-box');
-    if (source && source.style.display !== 'none') box = source;
+    var box = visibleArea(wrapper);
 
     var startY = event.clientY;
     var startHeight = box.getBoundingClientRect().height;
@@ -264,6 +296,22 @@ function buildResizer(wrapper) {
   });
 
   return grip;
+}
+
+// Calls onWritten when a script of the page writes the field's value (textarea.value =
+// or jQuery's .val(...)). Returns the function the editor writes the field with itself:
+// past this watch, so that it is not taken for such a write.
+function watchField(textarea, onWritten) {
+  var native = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
+  Object.defineProperty(textarea, 'value', {
+    configurable: true,
+    get: function() { return native.get.call(this); },
+    set: function(value) {
+      native.set.call(this, value);
+      onWritten();
+    },
+  });
+  return function(value) { native.set.call(textarea, value); };
 }
 
 // Redmine warns before leaving a page with unsaved text (warnLeavingUnsaved): it marks a
@@ -311,6 +359,19 @@ function initTextarea(textarea) {
   var initialContent = toEditorHTML(textarea.value || '', urlMap);
   var loaded = false;   // the stored text is in the editor (see onUpdate)
 
+  // Redmine's own scripts write the field too: the Quote link of a note puts the quote
+  // into it ($('#issue_notes').val(...), journals/new.js.erb; in a forum
+  // messages/quote.js.erb). The field is hidden behind the editor, where the quote was
+  // lost (the next edit wrote over it), so the editor takes what is written there, as
+  // when the field is opened, and the cursor goes to the end, where the reply is written.
+  // The editor's own writes (writeField) are not taken back.
+  var writeField = watchField(textarea, function() {
+    editor.commands.setContent(toEditorHTML(textarea.value || '', urlMap));
+    window.requestAnimationFrame(function() {
+      if (wrapper.getClientRects().length > 0) editor.commands.focus('end');
+    });
+  });
+
   var editor = new Editor({
     element: editorDiv,
     extensions: [
@@ -326,7 +387,7 @@ function initTextarea(textarea) {
       StyledOrderedList,
       TaskList,
       TaskItem.configure({ nested: true }),
-      Image,
+      Image.configure({ urlMap: urlMap }),
       CollapsibleBlock, CollapsibleSummary, CollapsibleContent,
       QuoteBlock, QuoteHeader, QuoteBody,
       TextStyle,
@@ -361,7 +422,7 @@ function initTextarea(textarea) {
       // into an empty line above and below the block.
       var value = collapseDetailsOpen(serializeAttachmentHTML(props.editor.getHTML()));
       if (value === textarea.value) return;
-      textarea.value = value;
+      writeField(value);
       if (loaded) markChanged(textarea);
     },
   });
@@ -376,12 +437,12 @@ function initTextarea(textarea) {
   var form = textarea.closest('form');
   if (form) {
     form.addEventListener('submit', function() {
-      textarea.value = collapseDetailsOpen(textarea.value);
+      writeField(collapseDetailsOpen(textarea.value));
     });
   }
 
   source.area.addEventListener('input', function() {
-    textarea.value = source.area.value;
+    writeField(source.area.value);
     markChanged(textarea);
   });
 
@@ -391,7 +452,7 @@ function initTextarea(textarea) {
   setupTablePaste(editorDiv, editor);
   setupImagePaste(editorDiv, editor, textarea);
   setupImageCopy(editorDiv, editor);
-  setupFileInputBinding(textarea, editor);
+  var cleanups = [setupFileInputBinding(textarea, editor)];
   setupTableContextMenu(editorDiv, editor);
 
   wrapper.appendChild(buildResizer(wrapper));
@@ -405,7 +466,8 @@ function initTextarea(textarea) {
   } else {
     applyMaxHeight(wrapper);
   }
-  watchVisibility(wrapper);
+  cleanups.push(watchVisibility(wrapper));
+  liveEditors.push({ textarea: textarea, editor: editor, cleanups: cleanups });
 
   // The editor was created for a field that already had the cursor (Redmine itself
   // focuses the field when it opens a form) - move the focus into the editor: to the
@@ -434,11 +496,13 @@ var pendingFieldObserver = window.ResizeObserver
         var textarea = entry.target;
         if (entry.contentRect.width === 0 && entry.contentRect.height === 0) return;
         pendingFieldObserver.unobserve(textarea);
+        pendingFields = pendingFields.filter(function(t) { return t !== textarea; });
         delete textarea.dataset.tiptapPending;
         initTextarea(textarea);
       });
     })
   : null;
+var pendingFields = [];   // the fields waiting to be shown (see dropRemovedEditors)
 
 function initWhenVisible(textarea) {
   if (textarea.dataset.tiptapInit || textarea.dataset.tiptapPending) return;
@@ -447,6 +511,7 @@ function initWhenVisible(textarea) {
     return;
   }
   textarea.dataset.tiptapPending = '1';
+  pendingFields.push(textarea);
   pendingFieldObserver.observe(textarea);
 }
 
@@ -484,6 +549,7 @@ function boot() {
       return !(el && el.closest && el.closest('.tiptap-wrapper, .tiptap-lang-panel'));
     });
     if (!outsideEditors) return;
+    dropRemovedEditors();
     scanAndInit();
     setupSavedTaskList();
     highlightSavedCodeBlocks();
