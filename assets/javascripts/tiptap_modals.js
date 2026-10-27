@@ -1,5 +1,22 @@
 import { t } from './tiptap_i18n.js';
 
+var MAX_TABLE_SIZE = 50;   // rows or columns of a table inserted with the dialog
+
+// A dialog takes the focus from the editor while it is open: Enter and the other keys go
+// to the dialog's own keydown listener, not into the text under it as well. Given now and
+// once more in the next frame: a focus of the editor still pending (TipTap's focus()
+// runs in requestAnimationFrame) took it back to the editor otherwise.
+function focusDialog(el, select) {
+  function give() {
+    if (!el.isConnected) return;
+    el.focus();
+    if (select) el.select();
+  }
+  if (el.tabIndex < 0 && !/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(el.tagName)) el.tabIndex = -1;
+  give();
+  window.requestAnimationFrame(give);
+}
+
 export function isImageFilename(filename) {
   return /\.(png|jpe?g|gif|webp|svg|bmp)$/i.test(filename);
 }
@@ -126,6 +143,7 @@ export function openAttachmentPicker(editor, urlMap) {
   modal.appendChild(footer);
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+  focusDialog(modal);
 }
 
 export function openImagePicker(editor, urlMap) {
@@ -210,6 +228,7 @@ export function openImagePicker(editor, urlMap) {
   modal.appendChild(grid);
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+  focusDialog(modal);
 }
 
 export function openLinkModal(editor) {
@@ -282,6 +301,17 @@ export function openLinkModal(editor) {
         .setLink({ href: url })
         .setTextSelection(from + text.length)
         .run();
+    } else if (text && text !== selectedText) {
+      // A selection whose text was changed in the dialog: the new text replaces it, as a
+      // link (the field was filled with the selection, could be edited, and its new
+      // text was ignored). Inserted as data and then linked, as above.
+      var start = state.selection.from;
+      editor.chain().focus()
+        .insertContent({ type: 'text', text: text })
+        .setTextSelection({ from: start, to: start + text.length })
+        .setLink({ href: url })
+        .setTextSelection(start + text.length)
+        .run();
     } else {
       // Selection exists - wrap it in a link
       editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
@@ -304,7 +334,7 @@ export function openLinkModal(editor) {
   modal.appendChild(footer);
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
-  urlInput.focus();
+  focusDialog(urlInput);
 }
 
 export function openTableModal(editor) {
@@ -332,7 +362,7 @@ export function openTableModal(editor) {
     var input = document.createElement('input');
     input.type = 'number';
     input.min = '1';
-    input.max = '50';
+    input.max = String(MAX_TABLE_SIZE);
     input.value = defVal;
     input.style.cssText = 'width:70px;height:26px;padding:0 6px;border:1px solid #ccc;border-radius:3px;font-size:13px;';
     wrap.appendChild(label);
@@ -361,9 +391,18 @@ export function openTableModal(editor) {
   insertBtn.textContent = t('dialog.insert');
   footer.appendChild(insertBtn);
 
+  // What the field says, kept to 1..MAX_TABLE_SIZE (as its min and max say; typed-in
+  // values are not held to them, and a table of 1000 x 1000 cells froze the page). An
+  // empty or unreadable field gives the default.
+  function tableSize(input) {
+    var n = parseInt(input.value, 10);
+    if (isNaN(n)) return 3;
+    return Math.min(MAX_TABLE_SIZE, Math.max(1, n));
+  }
+
   insertBtn.addEventListener('click', function() {
-    var rows = Math.max(1, parseInt(rowsInput.value) || 3);
-    var cols = Math.max(1, parseInt(colsInput.value) || 3);
+    var rows = tableSize(rowsInput);
+    var cols = tableSize(colsInput);
     editor.chain().focus().insertTable({
       rows: rows,
       cols: cols,
@@ -387,4 +426,7 @@ export function openTableModal(editor) {
   modal.appendChild(footer);
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+  // The focus goes to the dialog: left in the editor, Enter there split the paragraph
+  // before the dialog inserted the table, and digits typed went into the text.
+  focusDialog(rowsInput, true);
 }

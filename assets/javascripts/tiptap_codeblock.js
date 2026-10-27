@@ -660,13 +660,16 @@ export const FormattableCodeBlock = CodeBlock.extend({
         var contentStart = before + 1;
         var content = cbNode.content;
 
+        // The part of the selection in this block: a selection may go on into the next
+        // block (another code block or a paragraph), and offsets past the end of this one
+        // made content.cut() throw.
         var fromOff, toOff;
         if (sel.empty) {
           fromOff = 0;
           toOff = content.size;
         } else {
-          fromOff = sel.from - contentStart;
-          toOff = sel.to - contentStart;
+          fromOff = Math.max(0, sel.from - contentStart);
+          toOff = Math.min(content.size, sel.to - contentStart);
         }
 
         // Cut off the \n separators adjacent to the selection, so that the

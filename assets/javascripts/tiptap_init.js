@@ -23,7 +23,8 @@ import {
   serializeAttachmentHTML,
   collapseDetailsOpen,
   buildAttachmentUrlMap,
-  resolveAttachmentSrcs,
+  toEditorHTML,
+  setActiveEditor,
   setupImagePaste,
   setupImageCopy,
   setupFileInputBinding,
@@ -231,8 +232,10 @@ function buildResizer(wrapper) {
 
     var startY = event.clientY;
     var startHeight = box.getBoundingClientRect().height;
+    var moved = false;
 
     function onMove(moveEvent) {
+      moved = true;
       var height = Math.round(startHeight + (moveEvent.clientY - startY));
       if (height < MIN_EDITOR_HEIGHT) height = MIN_EDITOR_HEIGHT;
       setManualHeight(wrapper, height);
@@ -242,7 +245,9 @@ function buildResizer(wrapper) {
       grip.removeEventListener('pointermove', onMove);
       grip.removeEventListener('pointerup', onUp);
       grip.removeEventListener('pointercancel', onUp);
-      writeStoredHeight(wrapper._tiptapManualHeight);
+      // Only a drag sets the height. A click alone wrote the height of an editor that
+      // sizes itself (none: 0), which erased the one remembered for all editors.
+      if (moved) writeStoredHeight(wrapper._tiptapManualHeight);
     }
 
     // Pointer capture: events reach the grip even if the cursor moves past its edge.
@@ -259,6 +264,14 @@ function buildResizer(wrapper) {
   });
 
   return grip;
+}
+
+// Redmine warns before leaving a page with unsaved text (warnLeavingUnsaved): it marks a
+// field as changed on its "change" event, which a field that is set by a script never
+// gets. The hidden field of an editor is written on every edit, so it is told here -
+// otherwise leaving the page after typing in an editor lost the text without a word.
+function markChanged(textarea) {
+  textarea.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 // A long text custom field (the ToDo, the Next steps... of an issue) is a field of its own
@@ -295,13 +308,8 @@ function initTextarea(textarea) {
   var urlMap = buildAttachmentUrlMap(textarea);
   textarea._tiptapUrlMap = urlMap;
 
-  var initialContent = resolveAttachmentSrcs(
-    (textarea.value || '')
-      .replace(/<details>/g, '<details open="true">')
-      .replace(/<pre><code([^>]*)>\n/g, '<pre><code$1>')
-      .replace(/\n<\/code><\/pre>/g, '</code></pre>'),
-    urlMap
-  );
+  var initialContent = toEditorHTML(textarea.value || '', urlMap);
+  var loaded = false;   // the stored text is in the editor (see onUpdate)
 
   var editor = new Editor({
     element: editorDiv,
@@ -351,14 +359,18 @@ function initTextarea(textarea) {
       // No line breaks are added around the code block content: after <code> the
       // browser does not drop them (unlike <pre>), and in view mode they turned
       // into an empty line above and below the block.
-      textarea.value = collapseDetailsOpen(serializeAttachmentHTML(props.editor.getHTML()));
+      var value = collapseDetailsOpen(serializeAttachmentHTML(props.editor.getHTML()));
+      if (value === textarea.value) return;
+      textarea.value = value;
+      if (loaded) markChanged(textarea);
     },
   });
 
   editor.commands.setContent(initialContent);
+  loaded = true;
 
   editor.on('focus', function() {
-    window._tiptapActiveEditor = editor;
+    setActiveEditor(editor, textarea);
   });
 
   var form = textarea.closest('form');
@@ -370,6 +382,7 @@ function initTextarea(textarea) {
 
   source.area.addEventListener('input', function() {
     textarea.value = source.area.value;
+    markChanged(textarea);
   });
 
   var toolbar = buildToolbar(editor, editorDiv, source, urlMap, isCustomField(textarea));

@@ -24,9 +24,11 @@ import { inertElement, escapeHtml } from './tiptap_inert.js';
 //
 // The pattern is Redmine's own (Redmine::WikiFormatting::Macros::MACROS_RE); "!"
 // before the braces escapes a macro, such a one is shown as text, so it stays
-// text here as well. Code (<pre>, <code>) is skipped for the same reason.
+// text here as well. Code (<pre>, <code>) is skipped for the same reason, and so is
+// every tag: {{...}} in an attribute value (a title) is no macro, and the span put into
+// the value broke the tag.
 var PROTECT_RE = new RegExp(
-  '(<pre\\b[\\s\\S]*?<\\/pre>|<code\\b[\\s\\S]*?<\\/code>)'
+  '(<pre\\b[\\s\\S]*?<\\/pre>|<code\\b[\\s\\S]*?<\\/code>|<[^>]*>)'
   + '|(!)?(\\{\\{\\w+(?:\\([^\\n\\r]*?\\))?(?:[\\n\\r][\\s\\S]*?[\\n\\r])?\\}\\})',
   'gi'
 );
@@ -257,6 +259,10 @@ export function convertSpecialContainers(container) {
   // made in the document of the container: the text being loaded is kept in one that loads nothing
   var doc = container.ownerDocument;
   container.querySelectorAll('div[style]').forEach(function(div) {
+    // the style is its only attribute, as the formatter requires (SPECIAL_CONTAINER_RE):
+    // a div with a class as well stayed a div on the saved page but became a code block
+    // in the editor, and so after the first save
+    if (div.attributes.length !== 1) return;
     if (div.querySelector('div, [data-redmine-macro]')) return;
     if (styleSignature(div.getAttribute('style')) !== SPECIAL_CONTAINER_SIGNATURE) return;
     var code = doc.createElement('code');

@@ -118,8 +118,10 @@ export const Image = BaseImage.extend({
           // stay what they are; one that has only a width gets the height of its own
           // proportions from the browser.
           var scalesHeight = !!current.attrs.height && startWidth > 0;
+          var moved = false;
 
           function onMouseMove(e) {
+            moved = true;
             var dx = e.clientX - startX;
             var newWidth = Math.max(50, isLeft ? startWidth - dx : startWidth + dx);
             img.style.width = newWidth + 'px';
@@ -130,6 +132,10 @@ export const Image = BaseImage.extend({
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
+            // A handle pressed and let go without moving is no resize: writing the size the
+            // picture is shown at (scaled down to the text) gave it a fixed width and an
+            // undo step.
+            if (!moved) return;
             var pos2 = getPos();
             if (typeof pos2 === 'number') {
               editor.view.dispatch(
@@ -157,8 +163,9 @@ export const Image = BaseImage.extend({
         dom.classList.remove('tiptap-image-selected');
       }
 
-      dom.addEventListener('click', function(e) {
-        e.stopPropagation();
+      // The click goes on to the document: there the other pictures see it and drop their
+      // handles (stopping it here left a picture selected after a click on another one).
+      dom.addEventListener('click', function() {
         showHandles();
       });
 
@@ -314,7 +321,11 @@ export const CollapsibleSummary = Node.create({
       return {
         dom,
         contentDOM,
-        ignoreMutation: () => true,
+        // The arrow and the button are the view's own (their changes are no edit); what
+        // happens in the title itself is read, as in any text. Ignoring that too lost a
+        // title typed into an emptied one: the browser puts the new text node into the
+        // empty contentDOM, and that change was dropped (it showed, but was not saved).
+        ignoreMutation: (mutation) => !contentDOM.contains(mutation.target),
         stopEvent: (e) => unwrap.contains(e.target),
         destroy: () => { editor.off('transaction', update); },
       };

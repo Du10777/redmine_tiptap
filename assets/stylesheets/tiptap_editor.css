@@ -762,6 +762,12 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* The dialog box takes the focus while it is open (so keys do not reach the text under
+   it); that is no place to show a focus ring. */
+.tiptap-modal:focus {
+  outline: none;
+}
+
 .tiptap-modal-header {
   display: flex;
   align-items: center;

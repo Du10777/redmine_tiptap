@@ -70,8 +70,10 @@ function cleanPastedTables(html) {
   var div = inertElement();
   div.innerHTML = html;
 
-  // Resolve the .xlNN classes from <style> into inline styles
-  var classRules = {};
+  // Resolve the .xlNN classes from <style> into inline styles. A map without a prototype:
+  // a cell of class "constructor" or "toString" found a function of every object here,
+  // the paste threw and nothing was pasted.
+  var classRules = Object.create(null);
   var baseFontSize = null;
   div.querySelectorAll('style').forEach(function(styleTag) {
     var css = styleTag.textContent;
@@ -272,7 +274,10 @@ export function setupSavedTableCopy() {
       cell.style.border = '.5pt solid windowtext';
       cell.style.padding = '1px';
     });
+    // Only a size in px is turned into pt, as in the editor's copy above: 12pt became
+    // 10pt and 1.5em became 1pt.
     container.querySelectorAll('[style*="font-size"]').forEach(function(node) {
+      if (node.style.fontSize.indexOf('px') === -1) return;
       var px = parseFloat(node.style.fontSize);
       if (px) node.style.fontSize = Math.round(px * 6 / 7) + 'pt';
     });

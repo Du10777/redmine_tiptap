@@ -1,4 +1,5 @@
 import { t } from './tiptap_i18n.js';
+import { primaryButtonOnly } from './tiptap_toolbar.js';
 
 // Right-click menu for working with a table
 export function setupTableContextMenu(editorDiv, editor) {
@@ -13,6 +14,7 @@ export function setupTableContextMenu(editorDiv, editor) {
     var menu = document.createElement('div');
     menu.className = 'tiptap-table-menu';
     menu.id = 'tiptap-table-menu';
+    primaryButtonOnly(menu);   // a right click on "Delete table" deleted the table
 
     var items = [
       { label: t('table_menu.add_column_left'),  action: function() { editor.chain().focus().addColumnBefore().run(); } },

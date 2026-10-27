@@ -49,8 +49,10 @@ export const FontSize = Extension.create({
       setFontSize: size => ({ chain }) => {
         return chain().setMark('textStyle', { fontSize: size ? size + 'px' : null }).run();
       },
+      // removeEmptyTextStyle: a span left with no style at all goes, as TipTap's own
+      // unsetColor does (otherwise the saved text kept an empty <span>).
       unsetFontSize: () => ({ chain }) => {
-        return chain().setMark('textStyle', { fontSize: null }).run();
+        return chain().setMark('textStyle', { fontSize: null }).removeEmptyTextStyle().run();
       },
     };
   },
@@ -88,7 +90,7 @@ export const BackgroundColor = Extension.create({
         return chain().setMark('textStyle', { backgroundColor: color || null }).run();
       },
       unsetBackgroundColor: () => ({ chain }) => {
-        return chain().setMark('textStyle', { backgroundColor: null }).run();
+        return chain().setMark('textStyle', { backgroundColor: null }).removeEmptyTextStyle().run();
       },
     };
   },

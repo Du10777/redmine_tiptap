@@ -1,7 +1,7 @@
 import { insertCollapsible } from './tiptap_collapsible.js';
 import { insertQuote } from './tiptap_quote.js';
 import { openAttachmentPicker, openImagePicker, openLinkModal, openTableModal } from './tiptap_modals.js';
-import { serializeAttachmentHTML, resolveAttachmentSrcs, collapseDetailsOpen } from './tiptap_attachments.js';
+import { serializeAttachmentHTML, toEditorHTML, collapseDetailsOpen } from './tiptap_attachments.js';
 import { formatSourceHTML } from './tiptap_source.js';
 import { WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 import { t } from './tiptap_i18n.js';
@@ -76,6 +76,19 @@ function makeSep() {
   return sep;
 }
 
+// The controls act on mousedown, so that the editor keeps the focus - and a right or
+// middle press acted the same (a right click on Bold made the text bold, on "Delete
+// table" in the table menu deleted the table). Such a press is stopped on its way to
+// them; the browser's own menu still opens.
+export function primaryButtonOnly(el) {
+  el.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+}
+
 // Positions the dropdown with position:fixed relative to the button,
 // so that overflow:hidden/auto of parent containers does not clip it.
 function positionDropdown(dropdown, anchor) {
@@ -105,12 +118,28 @@ var COLOR_PALETTE = [
 ];
 
 function openColorPalette(anchorEl, currentColor, onSelect) {
+  // One palette at a time. A press on the button of the open one closes it; a press on
+  // another color button (of this editor or another one) opens that palette in its
+  // place - it used to only close the open one, so that it took two presses.
   var existing = document.getElementById('tiptap-color-palette');
-  if (existing) { existing.remove(); return; }
+  if (existing) {
+    var sameButton = existing._anchor === anchorEl;
+    existing._close();
+    if (sameButton) return;
+  }
 
   var palette = document.createElement('div');
   palette.id = 'tiptap-color-palette';
   palette.className = 'tiptap-palette';
+  palette._anchor = anchorEl;
+  palette._close = close;
+  primaryButtonOnly(palette);
+
+  // Closed by a choice or by a press elsewhere: either way its document listener goes.
+  function close() {
+    palette.remove();
+    document.removeEventListener('mousedown', onDocClick);
+  }
 
   var hexRow = document.createElement('div');
   hexRow.className = 'tiptap-palette-hex-row';
@@ -129,7 +158,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   hexBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
     onSelect(hexInput.value);
-    palette.remove();
+    close();
   });
 
   hexRow.appendChild(hexInput);
@@ -147,7 +176,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
     cell.addEventListener('mousedown', function(e) {
       e.preventDefault();
       onSelect(color);
-      palette.remove();
+      close();
     });
     grid.appendChild(cell);
   });
@@ -161,7 +190,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   resetBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
     onSelect(null);
-    palette.remove();
+    close();
   });
   palette.appendChild(resetBtn);
 
@@ -172,10 +201,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   document.body.appendChild(palette);
 
   function onDocClick(e) {
-    if (!palette.contains(e.target) && e.target !== anchorEl) {
-      palette.remove();
-      document.removeEventListener('mousedown', onDocClick);
-    }
+    if (!palette.contains(e.target) && !anchorEl.contains(e.target)) close();
   }
   setTimeout(function() {
     document.addEventListener('mousedown', onDocClick);
@@ -351,6 +377,7 @@ function makeListSelect(editor) {
 // textarea source.area, see tiptap_source.js). onSwitch(on) hides the other controls.
 function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
   var on = false;
+  var openStates = null;   // whether each collapsible block was open, when the mode was entered
   var btn = document.createElement('button');
   btn.type = 'button';
   btn.textContent = '<HTML>';
@@ -360,6 +387,7 @@ function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
     e.preventDefault();
     on = !on;
     if (on) {
+      openStates = collapsibleOpenStates(editor.state.doc);
       source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
         return collapseDetailsOpen(formatSourceHTML(html));
       });
@@ -367,7 +395,13 @@ function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
       source.show(true);
       btn.classList.add('active');
     } else {
-      editor.commands.setContent(resolveAttachmentSrcs(source.area.value || '', urlMap));
+      // Read the way the field is read when it is opened, in one step with putting the
+      // blocks back as they were (one undo step).
+      var states = openStates;
+      editor.chain()
+        .setContent(toEditorHTML(source.area.value || '', urlMap))
+        .command(function(props) { restoreOpenStates(props.tr, states); return true; })
+        .run();
       editorDiv.style.display = '';   // the display of the stylesheet (a flex column)
       source.show(false);
       btn.classList.remove('active');
@@ -375,6 +409,33 @@ function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
     onSwitch(on);
   });
   return btn;
+}
+
+function collapsibleOpenStates(doc) {
+  var states = [];
+  doc.descendants(function(node) {
+    if (node.type.name === 'collapsibleBlock') states.push(node.attrs.open);
+  });
+  return states;
+}
+
+// Back from the source mode, every collapsible block is open or closed as it was before
+// it - when the text still has as many of them. The source text does not tell (it is the
+// HTML as stored, every block closed): leaving the mode closed them all, and opening them
+// all would open the ones closed before. With blocks added or removed in the source mode,
+// they all stay open, as when the field is opened.
+function restoreOpenStates(tr, states) {
+  if (!states) return;
+  var blocks = [];
+  tr.doc.descendants(function(node, pos) {
+    if (node.type.name === 'collapsibleBlock') blocks.push({ node: node, pos: pos });
+  });
+  if (blocks.length !== states.length) return;
+  blocks.forEach(function(block, i) {
+    if (block.node.attrs.open !== states[i]) {
+      tr.setNodeMarkup(block.pos, null, Object.assign({}, block.node.attrs, { open: states[i] }));
+    }
+  });
 }
 
 // Builds the stable toolbar row 1. Returns { row1El, updateState }.
@@ -689,6 +750,7 @@ function makeRow1(editor) {
 function buildCompactToolbar(editor, editorDiv, source, urlMap) {
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
+  primaryButtonOnly(bar);
   var row = document.createElement('div');
   row.className = 'tiptap-toolbar-row';
   bar.appendChild(row);
@@ -725,6 +787,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
 
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
+  primaryButtonOnly(bar);   // the dropdown menus are inside it too
   var sourceMode = false;
 
   // Row 1: source code + stable formatting controls
