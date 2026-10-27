@@ -47,7 +47,7 @@ This is text editor for Redmine, based on TipTap https://github.com/ueberdosis/t
 
 [![The editor on the demo page](docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=en)
 
-Editor engine: **TipTap 3.31.4**. All `@tiptap/*` packages are pinned to this exact version in `package.json` and `package-lock.json` and must always be upgraded together, to one and the same version.
+Editor engine: **TipTap 3.32.0**. All `@tiptap/*` packages are pinned to this exact version in `package.json` and `package-lock.json` and must always be upgraded together, to one and the same version.
 
 **Contents**
 

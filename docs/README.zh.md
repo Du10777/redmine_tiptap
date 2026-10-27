@@ -50,7 +50,7 @@
 
 [![演示页面上的编辑器](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=zh)
 
-编辑器引擎：**TipTap 3.31.4**。所有 `@tiptap/*` 包在 `package.json` 和 `package-lock.json` 中都固定为这一确切版本，并且必须始终一起升级，且升级到同一个版本。
+编辑器引擎：**TipTap 3.32.0**。所有 `@tiptap/*` 包在 `package.json` 和 `package-lock.json` 中都固定为这一确切版本，并且必须始终一起升级，且升级到同一个版本。
 
 **目录**
 

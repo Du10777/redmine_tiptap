@@ -50,7 +50,7 @@ Tai tekstų redaktorius „Redmine", pagrįstas „TipTap" https://github.com/ue
 
 [![Redaktorius demonstraciniame puslapyje](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=lt)
 
-Redaktoriaus variklis: **TipTap 3.31.4**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
+Redaktoriaus variklis: **TipTap 3.32.0**. Visos `@tiptap/*` paketai yra prisegti prie šios tikslios versijos `package.json` ir `package-lock.json` ir visada turi būti atnaujinti kartu iki tos pačios versijos.
 
 **Turinys**
 

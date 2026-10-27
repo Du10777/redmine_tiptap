@@ -50,7 +50,7 @@ Tämä on tekstieditori Redminelle, joka perustuu TipTapiin https://github.com/u
 
 [![Editori esittelysivulla](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=fi)
 
-Editorin moottori: **TipTap 3.31.4**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
+Editorin moottori: **TipTap 3.32.0**. Kaikki `@tiptap/*`-paketit on kiinnitetty tähän tarkasti samaan versioon `package.json`- ja `package-lock.json`-tiedostoissa ja ne on aina päivitettävä yhdessä samaan versioon.
 
 **Sisällys**
 

@@ -50,7 +50,7 @@ Ky është një përpunues teksti për Redmine, i bazuar në TipTap https://gith
 
 [![Përpunuesi në faqen e demonstrimit](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=sq)
 
-Motori i përpunuesit: **TipTap 3.31.4**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
+Motori i përpunuesit: **TipTap 3.32.0**. Të gjitha paketat `@tiptap/*` janë fiksuar në këtë version të saktë në `package.json` dhe `package-lock.json` dhe duhet të përditësohen gjithmonë së bashku, në një dhe të njëjtin version.
 
 **Përmbajtja**
 

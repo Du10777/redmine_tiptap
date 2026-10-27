@@ -50,7 +50,7 @@ Bu, TipTap tabanlı Redmine için bir metin düzenleyicidir https://github.com/u
 
 [![Tanıtım sayfasındaki düzenleyici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=tr)
 
-Düzenleyici motoru: **TipTap 3.31.4**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
+Düzenleyici motoru: **TipTap 3.32.0**. Tüm `@tiptap/*` paketleri `package.json` ve `package-lock.json` dosyalarında bu tam sürüme sabitlenmiştir ve her zaman birlikte, aynı sürüme yükseltilmelidir.
 
 **İçindekiler**
 

@@ -50,7 +50,7 @@ Det här är en texteditor för Redmine, baserad på TipTap https://github.com/u
 
 [![Redigeraren på demosidan](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=sv)
 
-Motorn för redigeraren: **TipTap 3.31.4**. Alla `@tiptap/*`-paket är låsta till exakt denna version i `package.json` och `package-lock.json` och måste alltid uppgraderas tillsammans till en och samma version.
+Motorn för redigeraren: **TipTap 3.32.0**. Alla `@tiptap/*`-paket är låsta till exakt denna version i `package.json` och `package-lock.json` och måste alltid uppgraderas tillsammans till en och samma version.
 
 **Innehåll**
 

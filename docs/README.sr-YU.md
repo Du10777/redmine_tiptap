@@ -50,7 +50,7 @@ Ovo je uređivač teksta za Redmine, zasnovan na TipTap-u https://github.com/ueb
 
 [![Uređivač na demo stranici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=sr-YU)
 
-Mehanizam uređivača: **TipTap 3.31.4**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
+Mehanizam uređivača: **TipTap 3.32.0**. Svi paketi `@tiptap/*` fiksirani su na tačno ovu verziju u `package.json` i `package-lock.json` i uvek se moraju nadograđivati zajedno, na jednu istu verziju.
 
 **Sadržaj**
 

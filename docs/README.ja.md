@@ -50,7 +50,7 @@
 
 [![デモページのエディター](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=ja)
 
-エディターのエンジン: **TipTap 3.31.4**。`@tiptap/*` のパッケージはすべて、`package.json` と `package-lock.json` でこのバージョンに厳密に固定されています。アップグレードは、必ずすべてを一緒に、同一のバージョンへ行う必要があります。
+エディターのエンジン: **TipTap 3.32.0**。`@tiptap/*` のパッケージはすべて、`package.json` と `package-lock.json` でこのバージョンに厳密に固定されています。アップグレードは、必ずすべてを一緒に、同一のバージョンへ行う必要があります。
 
 **目次**
 

@@ -50,7 +50,7 @@ Es un editor de text per a Redmine, basat en TipTap https://github.com/ueberdosi
 
 [![L'editor a la pàgina de demostració](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=ca)
 
-Motor de l'editor: **TipTap 3.31.4**. Tots els paquets `@tiptap/*` es bloquegen a aquesta versió exacta a `package.json` i `package-lock.json` i sempre s'han d'actualitzar junts, a la mateixa versió.
+Motor de l'editor: **TipTap 3.32.0**. Tots els paquets `@tiptap/*` es bloquegen a aquesta versió exacta a `package.json` i `package-lock.json` i sempre s'han d'actualitzar junts, a la mateixa versió.
 
 **Índex**
 

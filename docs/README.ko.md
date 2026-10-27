@@ -50,7 +50,7 @@ Redmine용 텍스트 에디터로, TipTap https://github.com/ueberdosis/tiptap �
 
 [![데모 페이지의 에디터](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=ko)
 
-에디터 엔진: **TipTap 3.31.4**. 모든 `@tiptap/*` 패키지는 `package.json`과 `package-lock.json`에서 이 정확한 버전으로 고정되어 있으며, 항상 함께 동일한 버전으로 업그레이드해야 합니다.
+에디터 엔진: **TipTap 3.32.0**. 모든 `@tiptap/*` 패키지는 `package.json`과 `package-lock.json`에서 이 정확한 버전으로 고정되어 있으며, 항상 함께 동일한 버전으로 업그레이드해야 합니다.
 
 **목차**
 

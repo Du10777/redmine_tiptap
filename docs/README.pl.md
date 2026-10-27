@@ -50,7 +50,7 @@ To jest edytor tekstu dla Redmine'a, oparty na TipTap https://github.com/ueberdo
 
 [![Edytor na stronie demonstracyjnej](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=pl)
 
-Silnik edytora: **TipTap 3.31.4**. Wszystkie pakiety `@tiptap/*` są przypięte do tej dokładnej wersji w `package.json` i `package-lock.json` i zawsze muszą być uaktualniane razem do tej samej wersji.
+Silnik edytora: **TipTap 3.32.0**. Wszystkie pakiety `@tiptap/*` są przypięte do tej dokładnej wersji w `package.json` i `package-lock.json` i zawsze muszą być uaktualniane razem do tej samej wersji.
 
 **Spis treści**
 

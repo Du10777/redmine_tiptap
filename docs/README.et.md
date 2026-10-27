@@ -50,7 +50,7 @@ See on tekstiredaktor Redmine'i jaoks, mis põhineb TipTapil https://github.com/
 
 [![Redaktor demolehel](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=et)
 
-Redaktori mootor: **TipTap 3.31.4**. Kõik `@tiptap/*` paketid on kinnitatud selle täpsele versioonile `package.json` ja `package-lock.json` ning neid tuleb alati koos täiendada ühele ja samale versioonile.
+Redaktori mootor: **TipTap 3.32.0**. Kõik `@tiptap/*` paketid on kinnitatud selle täpsele versioonile `package.json` ja `package-lock.json` ning neid tuleb alati koos täiendada ühele ja samale versioonile.
 
 **Sisukord**
 

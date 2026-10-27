@@ -50,7 +50,7 @@ Ini adalah editor teks untuk Redmine, berdasarkan TipTap https://github.com/uebe
 
 [![Editor di halaman demo](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=id)
 
-Mesin editor: **TipTap 3.31.4**. Semua paket `@tiptap/*` disematkan ke versi yang sama persis dalam `package.json` dan `package-lock.json` dan harus selalu ditingkatkan bersama, ke satu versi yang sama.
+Mesin editor: **TipTap 3.32.0**. Semua paket `@tiptap/*` disematkan ke versi yang sama persis dalam `package.json` dan `package-lock.json` dan harus selalu ditingkatkan bersama, ke satu versi yang sama.
 
 **Daftar isi**
 

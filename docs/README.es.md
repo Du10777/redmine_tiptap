@@ -50,7 +50,7 @@ Este es un editor de texto para Redmine, basado en TipTap https://github.com/ueb
 
 [![El editor en la página de demostración](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=es)
 
-Motor del editor: **TipTap 3.31.4**. Todos los paquetes `@tiptap/*` están fijados a esta versión exacta en `package.json` y `package-lock.json` y siempre deben actualizarse juntos, a la misma versión exacta.
+Motor del editor: **TipTap 3.32.0**. Todos los paquetes `@tiptap/*` están fijados a esta versión exacta en `package.json` y `package-lock.json` y siempre deben actualizarse juntos, a la misma versión exacta.
 
 **Contenido**
 

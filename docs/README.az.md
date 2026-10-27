@@ -50,7 +50,7 @@ Bu, Redmine üçün TipTap (https://github.com/ueberdosis/tiptap) əsasında haz
 
 [![Demo səhifəsində redaktor](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=az)
 
-Redaktorun mühərriki: **TipTap 3.31.4**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
+Redaktorun mühərriki: **TipTap 3.32.0**. Bütün `@tiptap/*` paketləri `package.json` və `package-lock.json` fayllarında məhz bu versiyaya sabitlənib və həmişə birlikdə, bir və eyni versiyaya yenilənməlidir.
 
 **Mündəricat**
 

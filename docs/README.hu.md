@@ -50,7 +50,7 @@ Ez egy szövegszerkesztő a Redmine-hez, amely a TipTap alapján készült https
 
 [![A szerkesztő a bemutatóoldalon](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=hu)
 
-Szerkesztőmotor: **TipTap 3.31.4**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
+Szerkesztőmotor: **TipTap 3.32.0**. Minden `@tiptap/*` csomag a `package.json` és `package-lock.json` fájlban pontosan erre a verzióra van rögzítve, és mindig ugyanazon verzióra kell frissíteni.
 
 **Tartalom**
 

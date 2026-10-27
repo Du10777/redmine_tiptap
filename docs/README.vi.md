@@ -50,7 +50,7 @@
 
 [![Trình soạn thảo trên trang demo](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=vi)
 
-Công cụ trình soạn thảo: **TipTap 3.31.4**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
+Công cụ trình soạn thảo: **TipTap 3.32.0**. Tất cả các gói `@tiptap/*` được ghim vào phiên bản chính xác này trong `package.json` và `package-lock.json` và phải luôn được nâng cấp cùng nhau lên cùng một phiên bản.
 
 **Mục lục**
 

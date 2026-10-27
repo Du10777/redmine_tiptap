@@ -50,7 +50,7 @@ Ovo je tekstualni editor za Redmine, temeljen na TipTap https://github.com/ueber
 
 [![Editor na demo stranici](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=hr)
 
-Engine editora: **TipTap 3.31.4**. Svi `@tiptap/*` paketi su učvršćeni na ovu točnu verziju u `package.json` i `package-lock.json` i moraju se uvijek ažurirati zajedno, na istu verziju.
+Engine editora: **TipTap 3.32.0**. Svi `@tiptap/*` paketi su učvršćeni na ovu točnu verziju u `package.json` i `package-lock.json` i moraju se uvijek ažurirati zajedno, na istu verziju.
 
 **Sadržaj**
 

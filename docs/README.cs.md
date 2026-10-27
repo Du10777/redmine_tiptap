@@ -50,7 +50,7 @@ Toto je textový editor pro Redmine založený na TipTap https://github.com/uebe
 
 [![Editor na ukázkové stránce](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=cs)
 
-Editor: **TipTap 3.31.4**. Všechny balíčky `@tiptap/*` jsou v `package.json` a `package-lock.json` připnuty na tuto přesnou verzi a musí být vždy aktualizovány společně na stejnou verzi.
+Editor: **TipTap 3.32.0**. Všechny balíčky `@tiptap/*` jsou v `package.json` a `package-lock.json` připnuty na tuto přesnou verzi a musí být vždy aktualizovány společně na stejnou verzi.
 
 **Obsah**
 

@@ -50,7 +50,7 @@
 
 [![Redaktors demonstrācijas lapā](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=lv)
 
-Redaktora dzinējs: **TipTap 3.31.4**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
+Redaktora dzinējs: **TipTap 3.32.0**. Visas `@tiptap/*` pakotnes failos `package.json` un `package-lock.json` ir piesaistītas tieši šai versijai, un tās vienmēr jājaunina kopā — līdz vienai un tai pašai versijai.
 
 **Saturs**
 

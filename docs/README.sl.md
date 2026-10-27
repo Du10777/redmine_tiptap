@@ -50,7 +50,7 @@ To je urejevalnik besedil za Redmine, ki temelji na TipTap https://github.com/ue
 
 [![Urejevalnik na predstavitveni strani](../docs/images/demo.png)](https://du10777.github.io/redmine_tiptap/?lang=sl)
 
-Motor urejevalnika: **TipTap 3.31.4**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
+Motor urejevalnika: **TipTap 3.32.0**. Vsi paketi `@tiptap/*` so v `package.json` in `package-lock.json` pripeti na to natančno različico in se morajo vedno nadgraditi skupaj na isto različico.
 
 **Kazalo**
 
