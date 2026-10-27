@@ -20,11 +20,20 @@ module Redmine
           @urls ||= Object.new.extend(Redmine::Helpers::URL)
         end
 
+        # The bare host this Redmine is set up for. Setting.host_name may carry a port
+        # (host:3000) or a path (host/redmine); both are dropped, so only the host is
+        # compared. Parsed through a URI with a scheme in front, so a host:port and an
+        # [IPv6] address come out right too.
+        def self.config_host
+          URI.parse("http://#{Setting.host_name}").host.to_s.downcase
+        rescue URI::InvalidURIError
+          Setting.host_name.to_s.sub(%r{[/:].*}m, '').downcase
+        end
+
         # Whether the address is on the host this Redmine is set up for.
         def self.own_host?(url)
           host = URI.parse(url).host.to_s.downcase
-          own = Setting.host_name.to_s.split(':').first.to_s.downcase
-          host.empty? || host == own
+          host.empty? || host == config_host
         rescue URI::InvalidURIError
           true
         end
@@ -84,9 +93,14 @@ module Redmine
           list-style-type
         ].freeze
 
-        # Classes the editor writes: the language of a code block, and its own
-        # blocks (tiptap-quote and the like).
-        ALLOWED_CLASS = /\A(?:language-[\w+#-]+|tiptap-[\w-]+)\z/
+        # Classes the editor writes into a stored text: the language of a code block,
+        # and the three parts of a quote block. Not a general tiptap-* allowance: the
+        # editor's interface classes (the dropdowns, the modal overlay, the table menu)
+        # carry no meaning in a stored text, and their stylesheet is loaded on every
+        # page - a stored <div class="tiptap-modal-overlay">, which only the <HTML> mode
+        # or the REST API could put there, would lay a full-screen layer over the page
+        # of everyone who opens it. Only what the editor really saves is let through.
+        ALLOWED_CLASS = /\A(?:language-[\w+#-]+|tiptap-quote(?:-header|-body)?)\z/
 
         FILTER_CLASSES = lambda do |env|
           node = env[:node]

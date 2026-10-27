@@ -162,9 +162,14 @@ export const Image = BaseImage.extend({
         showHandles();
       });
 
-      document.addEventListener('click', function(e) {
+      // A click elsewhere deselects the picture. The listener is on the document, so it
+      // must come off when the view is dropped (ProseMirror rebuilds the view whenever
+      // the picture is moved, pasted, wrapped or on undo) - otherwise the listeners, and
+      // the detached pictures they hold, pile up for the life of the page.
+      function onDocumentClick(e) {
         if (!dom.contains(e.target)) hideHandles();
-      });
+      }
+      document.addEventListener('click', onDocumentClick);
 
       return {
         dom,
@@ -177,7 +182,7 @@ export const Image = BaseImage.extend({
           return true;
         },
         destroy() {
-          hideHandles();
+          document.removeEventListener('click', onDocumentClick);
         },
       };
     };

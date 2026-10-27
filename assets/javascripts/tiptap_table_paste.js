@@ -1,4 +1,5 @@
 import { flattenForeignDivs } from './tiptap_legacy.js';
+import { inertElement } from './tiptap_inert.js';
 
 // Cleans up tables pasted from Excel/Word: strips junk styles,
 // screenshot images, fixed widths
@@ -24,7 +25,7 @@ export function setupTablePaste(editorDiv, editor) {
     var html = e.clipboardData.getData('text/html');
     if (!html || html.indexOf('<table') === -1) return;
 
-    var container = document.createElement('div');
+    var container = inertElement();   // off the page: nothing in the HTML loads or runs
     container.innerHTML = html;
 
     // remove ProseMirror's internal slice marker
@@ -61,7 +62,12 @@ export function setupTablePaste(editorDiv, editor) {
 // text around the tables and further tables used to be dropped, only the first
 // table was inserted.
 function cleanPastedTables(html) {
-  var div = document.createElement('div');
+  // The pasted HTML comes from outside (another program, a web page). Take it apart in
+  // a document with no window, so an <img onerror=...> or the like in it does not run in
+  // this page while it is being cleaned. Everything below (querySelectorAll, .style,
+  // remove, the cell rewrites) works the same there, and the string handed to the editor
+  // is identical.
+  var div = inertElement();
   div.innerHTML = html;
 
   // Resolve the .xlNN classes from <style> into inline styles

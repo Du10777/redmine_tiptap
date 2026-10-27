@@ -710,7 +710,9 @@ function buildCompactToolbar(editor, editorDiv, source, urlMap) {
       else toggle.btn.classList.remove('active');
     });
   }
-  editor.on('selectionUpdate', updateState);
+  // transaction fires for every applied transaction, a selection-only change too, and
+  // right before selectionUpdate - so listening to it alone is enough and does not run
+  // the update twice on each cursor move.
   editor.on('transaction', updateState);
   updateState();
   return bar;
@@ -763,7 +765,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
     // collapse / inline code / code block
     row2.appendChild(makeButton('', withShortcut(t('toolbar.collapsible'), 'collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
     row2.appendChild(makeButton('<>', withShortcut(t('toolbar.code'), 'code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.code_block'), 'code_block'), function() {
+    row2.appendChild(makeButton('', t('toolbar.code_block'), function() {
       if (editor.isActive('codeBlock')) {
         editor.chain().focus().liftFromCodeBlock().run();
       } else {
@@ -803,7 +805,7 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
     });
   }
 
-  editor.on('selectionUpdate', refresh);
+  // One listener: transaction covers selection-only changes too (see buildCompactToolbar).
   editor.on('transaction', refresh);
   refresh();
   return bar;
