@@ -1,3 +1,4 @@
+require 'set'
 require_relative 'sanitizer'
 
 module Redmine
@@ -213,33 +214,46 @@ module Redmine
         def auto_link_addresses(html)
           return html unless html.include?('http') || html.include?('www.')
 
-          guarded = !html.include?(AMP) && !html.include?(HIDDEN)
+          amp, hidden = free_marks(html)
+          # A text with every one of the marks in it is shown without links: linked
+          # unguarded, its tags would break (see guard_for_auto_link).
+          return html unless hidden
+
           parts = html.split(%r{(<pre\b.*?</pre>|<code\b.*?</code>|<a\b.*?</a>)}im)
           parts.each_with_index.map do |part, index|
             next part if index.odd?
 
-            text = guarded ? guard_for_auto_link(part) : part.dup
+            text = guard_for_auto_link(part, amp, hidden)
             auto_link!(text)
-            guarded ? text.gsub(AMP, '&amp;').delete(HIDDEN) : text
+            text.gsub(amp, '&amp;').delete(hidden)
           end.join
-        end
-
-        def guard_for_auto_link(html)
-          html.gsub(/<[^>]*>/) { |tag| tag.gsub(%r{://|www\.}) { |m| m.dup.insert(m.length - 1, HIDDEN) } }
-              .gsub('&amp;', AMP)
         end
 
         # auto_link! takes plain text: it escapes the address it links, and an address
         # in a tag is linked as well. Here it gets HTML the sanitizer has escaped, so
         # - an & of an address came out as &amp;amp; in the link and its text: an
-        #   escaped & is kept aside as AMP meanwhile, and put back after;
+        #   escaped & is kept aside as the mark amp meanwhile, and put back after;
         # - an address in an attribute value (a title, an alt) got an <a> put into the
-        #   value, which broke the tag: in a tag, HIDDEN is put into "://" and "www."
-        #   meanwhile, so that auto_link! sees no address there.
-        # Two characters of Unicode's private use area, which no text has; a text that
-        # has one of them all the same is linked as before, see auto_link_addresses.
-        AMP = "\u{E000}".freeze
-        HIDDEN = "\u{E001}".freeze
+        #   value, which broke the tag after the sanitizer had checked it: in a tag, the
+        #   mark hidden is put into "://" and "www." meanwhile, so that auto_link! sees
+        #   no address there.
+        def guard_for_auto_link(html, amp, hidden)
+          html.gsub(/<[^>]*>/) { |tag| tag.gsub(%r{://|www\.}) { |m| m.dup.insert(m.length - 1, hidden) } }
+              .gsub('&amp;', amp)
+        end
+
+        # The marks are two characters of Unicode's private use area that the text does
+        # not have. Fixed ones would not do: whoever writes a text chooses its characters,
+        # and a text that had them was linked unguarded, its tags broken after the
+        # sanitizer. nil if the text has all of them.
+        MARKS = (0xE000..0xF8FF).freeze
+        MARK_RE = /[\u{E000}-\u{F8FF}]/.freeze
+
+        def free_marks(html)
+          used = html.scan(MARK_RE).to_set
+          marks = MARKS.lazy.map { |code| code.chr(Encoding::UTF_8) }.reject { |mark| used.include?(mark) }.first(2)
+          marks.size == 2 ? marks : nil
+        end
 
         # Earlier versions of the editor wrapped a quote block in one more plain
         # <blockquote> every time a saved text was opened (see tiptap_quote.js),

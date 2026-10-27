@@ -30,8 +30,16 @@ module RedmineTiptap
 
     # The whole note: its HTML as it is stored. A code block becomes "[...]", as Redmine
     # does in every format (a quote is not to carry a log along).
+    #
+    # A code block is "<pre" up to the next "</pre>" with no other "<pre" in between. The
+    # stored text can be any HTML, and a lazy .*? scanned from every "<pre" with no
+    # "</pre>" after it to the end of the text: on a Ruby without the linear-time
+    # matching of 3.2, time growing with the square of the length (seconds for a note of
+    # 40 KB, minutes for one of 400 KB) for each click on Quote.
+    PRE_BLOCK = %r{<pre\b(?:(?!<pre\b|</pre>).)*</pre>}m.freeze
+
     def quoted_html(text)
-      text.to_s.strip.gsub(%r{<pre\b.*?</pre>}m, '<p>[...]</p>').presence || '<p></p>'
+      text.to_s.strip.gsub(PRE_BLOCK, '<p>[...]</p>').presence || '<p></p>'
     end
   end
 end
