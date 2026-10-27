@@ -230,7 +230,7 @@ window.DEMO_SANITIZER = {
   "height",
   "list-style-type"
  ],
- "allowedClass": "^(?:language-[\\w+#-]+|tiptap-[\\w-]+)$",
+ "allowedClass": "^(?:language-[\\w+#-]+|tiptap-quote(?:-header|-body)?)$",
  "codeLanguageAliases": {
   "java_script": "javascript",
   "html": "xml",
