@@ -15,6 +15,27 @@ function excelPt(px) {
   return Math.round(px * EXCEL_PT_PER_PX);
 }
 
+// A container of tables (the editor's copy, the saved view's copy) made ready for Excel:
+// ruled borders, and the font sizes in pt, which Excel reads (a size in px it takes for pt,
+// so 14px came out as 14pt - only px is turned into pt, 12pt and 1.5em are left). dropMinWidth
+// takes off the min-width TipTap gives a resizable table (Excel would make a column that wide).
+function styleTableForExcel(container, dropMinWidth) {
+  container.querySelectorAll('table').forEach(function(t) {
+    t.setAttribute('border', '1');
+    t.style.borderCollapse = 'collapse';
+    if (dropMinWidth) t.style.removeProperty('min-width');
+  });
+  container.querySelectorAll('td, th').forEach(function(cell) {
+    cell.style.border = '.5pt solid windowtext';
+    cell.style.padding = '1px';
+  });
+  container.querySelectorAll('[style*="font-size"]').forEach(function(el) {
+    if (el.style.fontSize.indexOf('px') === -1) return;
+    var px = parseFloat(el.style.fontSize);
+    if (px) el.style.fontSize = excelPt(px) + 'pt';
+  });
+}
+
 // Cleans up tables pasted from Excel/Word: strips junk styles,
 // screenshot images, fixed widths
 export function setupTablePaste(editorDiv, editor) {
@@ -47,24 +68,7 @@ export function setupTablePaste(editorDiv, editor) {
       el.removeAttribute('data-pm-slice');
     });
 
-    container.querySelectorAll('table').forEach(function(t) {
-      t.setAttribute('border', '1');
-      t.style.borderCollapse = 'collapse';
-      t.style.removeProperty('min-width');
-    });
-    container.querySelectorAll('td, th').forEach(function(cell) {
-      cell.style.border = '.5pt solid windowtext';
-      cell.style.padding = '1px';
-    });
-
-    // Excel reads font-size in pt, not px - convert it
-    container.querySelectorAll('[style*="font-size"]').forEach(function(el) {
-      if (el.style.fontSize.indexOf('px') === -1) return;
-      var px = parseFloat(el.style.fontSize);
-      if (px) {
-        el.style.fontSize = excelPt(px) + 'pt';
-      }
-    });
+    styleTableForExcel(container, true);
 
     var fullHtml = '<html><body>' + container.innerHTML + '</body></html>';
     e.clipboardData.setData('text/html', fullHtml);
@@ -280,21 +284,7 @@ export function setupSavedTableCopy() {
       table = wrap;
     }
 
-    container.querySelectorAll('table').forEach(function(t) {
-      t.setAttribute('border', '1');
-      t.style.borderCollapse = 'collapse';
-    });
-    container.querySelectorAll('td, th').forEach(function(cell) {
-      cell.style.border = '.5pt solid windowtext';
-      cell.style.padding = '1px';
-    });
-    // Only a size in px is turned into pt, as in the editor's copy above: 12pt became
-    // 10pt and 1.5em became 1pt.
-    container.querySelectorAll('[style*="font-size"]').forEach(function(node) {
-      if (node.style.fontSize.indexOf('px') === -1) return;
-      var px = parseFloat(node.style.fontSize);
-      if (px) node.style.fontSize = excelPt(px) + 'pt';
-    });
+    styleTableForExcel(container, false);
 
     e.clipboardData.setData('text/html', '<html><body>' + container.innerHTML + '</body></html>');
     e.clipboardData.setData('text/plain', sel.toString());
