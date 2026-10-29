@@ -69,8 +69,9 @@
   function convertSpecialContainers(html) {
     if (!/<div\b/i.test(html) || !/<\/div/i.test(html)) return html;
     return html.replace(SPECIAL_CONTAINER_RE, function (whole, quote, style, inner) {
-      // In Redmine the macros of the text are already taken out at this point ({{macro_1}}).
-      if (/\{\{/.test(inner) || !specialContainerStyle(style)) return whole;
+      // In Redmine the macros of the text are already taken out at this point ({{macro(1)}});
+      // an escaped one (!{{name}}) is text (formatter.rb, macro?).
+      if (/(?<!!)\{\{/.test(inner) || !specialContainerStyle(style)) return whole;
       return '<pre><code class="language-plaintext">' + containerCode(inner) + '</code></pre>';
     });
   }
@@ -102,17 +103,14 @@
     return quoteBlock(children[0]) || wrapsOnlyQuote(children[0]);
   }
 
+  // All the wrappers in one pass, the innermost first (formatter.rb, unwrap_quotes).
   function unwrapQuotes(html) {
     var box = document.createElement('template');
     box.innerHTML = html;
-    var changed = false;
-    for (;;) {
-      var wrapper = Array.prototype.filter.call(box.content.querySelectorAll('blockquote'), wrapsOnlyQuote)[0];
-      if (!wrapper) break;
-      wrapper.replaceWith(wrapper.children[0]);
-      changed = true;
-    }
-    return changed ? box.innerHTML : html;
+    var wrappers = Array.prototype.filter.call(box.content.querySelectorAll('blockquote'), wrapsOnlyQuote);
+    if (!wrappers.length) return html;
+    wrappers.reverse().forEach(function (wrapper) { wrapper.replaceWith(wrapper.children[0]); });
+    return box.innerHTML;
   }
 
   // --- sanitizer.rb ------------------------------------------------------------------------------
@@ -262,10 +260,33 @@
     });
   }
 
+  // As formatter.rb: an escaped & of an address is kept aside meanwhile (the mark amp),
+  // and the addresses in tags are hidden from autoLink (the mark hidden in "://" and
+  // "www."), so that an address gets no &amp;amp; and an attribute value no <a>.
+  function guardForAutoLink(html, amp, hidden) {
+    return html.replace(/<[^>]*>/g, function (tag) {
+      return tag.replace(/:\/\/|www\./g, function (m) { return m.slice(0, -1) + hidden + m.slice(-1); });
+    }).replace(/&amp;/g, amp);
+  }
+
+  // The marks: two characters of Unicode's private use area that the text does not have,
+  // or null if it has them all (formatter.rb: free_marks).
+  function freeMarks(html) {
+    var used = {}, marks = [];
+    (html.match(/[\uE000-\uF8FF]/g) || []).forEach(function (c) { used[c] = true; });
+    for (var code = 0xE000; code <= 0xF8FF && marks.length < 2; code++) {
+      if (!used[String.fromCharCode(code)]) marks.push(String.fromCharCode(code));
+    }
+    return marks.length === 2 ? marks : null;
+  }
+
   function autoLinkAddresses(html) {
     if (html.indexOf('http') < 0 && html.indexOf('www.') < 0) return html;
+    var marks = freeMarks(html);
+    if (!marks) return html;   // no links rather than broken tags, as formatter.rb
     return html.split(/(<pre\b[\s\S]*?<\/pre>|<code\b[\s\S]*?<\/code>|<a\b[\s\S]*?<\/a>)/i).map(function (part, i) {
-      return i % 2 ? part : autoLink(part);
+      if (i % 2) return part;
+      return autoLink(guardForAutoLink(part, marks[0], marks[1])).split(marks[0]).join('&amp;').split(marks[1]).join('');
     }).join('');
   }
 
