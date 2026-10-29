@@ -1,7 +1,7 @@
 import { insertCollapsible } from './tiptap_collapsible.js';
 import { insertQuote } from './tiptap_quote.js';
 import { openAttachmentPicker, openImagePicker, openLinkModal, openTableModal } from './tiptap_modals.js';
-import { serializeAttachmentHTML, resolveAttachmentSrcs, collapseDetailsOpen } from './tiptap_attachments.js';
+import { serializeAttachmentHTML, toEditorHTML, collapseDetailsOpen } from './tiptap_attachments.js';
 import { formatSourceHTML } from './tiptap_source.js';
 import { WEB_SAFE_FONTS, FONT_SIZES } from './tiptap_formatting.js';
 import { t } from './tiptap_i18n.js';
@@ -70,10 +70,30 @@ function makeToggleButton(spec, registry) {
   return btn;
 }
 
+// The buttons of makeToggleButton show the state at the cursor.
+function updateToggles(registry) {
+  registry.forEach(function(toggle) {
+    toggle.btn.classList.toggle('active', !!toggle.isActive());
+  });
+}
+
 function makeSep() {
   var sep = document.createElement('span');
   sep.className = 'tiptap-sep';
   return sep;
+}
+
+// The controls act on mousedown, so that the editor keeps the focus - and a right or
+// middle press acted the same (a right click on Bold made the text bold, on "Delete
+// table" in the table menu deleted the table). Such a press is stopped on its way to
+// them; the browser's own menu still opens.
+export function primaryButtonOnly(el) {
+  el.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
 }
 
 // Positions the dropdown with position:fixed relative to the button,
@@ -85,12 +105,21 @@ function positionDropdown(dropdown, anchor) {
   dropdown.style.left = r.left + 'px';
 }
 
-// Closes a dropdown when the next mousedown lands outside its wrapper. The listener
-// stays on the document for the life of the page, as it did when written inline.
-function hideOnOutsideMousedown(wrapper, dropdown) {
-  document.addEventListener('mousedown', function(e) {
-    if (!wrapper.contains(e.target)) dropdown.style.display = 'none';
+// Closes a dropdown when the next mousedown lands outside its wrapper. One listener of
+// the document for the dropdowns of all the toolbars: it used to be one for every dropdown,
+// never removed - four for each editor, kept on with the editors gone (Redmine draws the
+// attributes of an issue anew on a change of tracker or status). Those of toolbars no
+// longer on the page are let go.
+var outsideDropdowns = [];
+document.addEventListener('mousedown', function(e) {
+  outsideDropdowns = outsideDropdowns.filter(function(d) { return d.wrapper.isConnected; });
+  outsideDropdowns.forEach(function(d) {
+    if (!d.wrapper.contains(e.target)) d.dropdown.style.display = 'none';
   });
+});
+
+function hideOnOutsideMousedown(wrapper, dropdown) {
+  outsideDropdowns.push({ wrapper: wrapper, dropdown: dropdown });
 }
 
 var COLOR_PALETTE = [
@@ -105,12 +134,28 @@ var COLOR_PALETTE = [
 ];
 
 function openColorPalette(anchorEl, currentColor, onSelect) {
+  // One palette at a time. A press on the button of the open one closes it; a press on
+  // another color button (of this editor or another one) opens that palette in its
+  // place - it used to only close the open one, so that it took two presses.
   var existing = document.getElementById('tiptap-color-palette');
-  if (existing) { existing.remove(); return; }
+  if (existing) {
+    var sameButton = existing._anchor === anchorEl;
+    existing._close();
+    if (sameButton) return;
+  }
 
   var palette = document.createElement('div');
   palette.id = 'tiptap-color-palette';
   palette.className = 'tiptap-palette';
+  palette._anchor = anchorEl;
+  palette._close = close;
+  primaryButtonOnly(palette);
+
+  // Closed by a choice or by a press elsewhere: either way its document listener goes.
+  function close() {
+    palette.remove();
+    document.removeEventListener('mousedown', onDocClick);
+  }
 
   var hexRow = document.createElement('div');
   hexRow.className = 'tiptap-palette-hex-row';
@@ -129,7 +174,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   hexBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
     onSelect(hexInput.value);
-    palette.remove();
+    close();
   });
 
   hexRow.appendChild(hexInput);
@@ -147,7 +192,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
     cell.addEventListener('mousedown', function(e) {
       e.preventDefault();
       onSelect(color);
-      palette.remove();
+      close();
     });
     grid.appendChild(cell);
   });
@@ -161,7 +206,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   resetBtn.addEventListener('mousedown', function(e) {
     e.preventDefault();
     onSelect(null);
-    palette.remove();
+    close();
   });
   palette.appendChild(resetBtn);
 
@@ -172,10 +217,7 @@ function openColorPalette(anchorEl, currentColor, onSelect) {
   document.body.appendChild(palette);
 
   function onDocClick(e) {
-    if (!palette.contains(e.target) && e.target !== anchorEl) {
-      palette.remove();
-      document.removeEventListener('mousedown', onDocClick);
-    }
+    if (!palette.contains(e.target) && !anchorEl.contains(e.target)) close();
   }
   setTimeout(function() {
     document.addEventListener('mousedown', onDocClick);
@@ -321,10 +363,8 @@ function makeListSelect(editor) {
     dropdown.appendChild(opt);
   });
 
-  // The focus stays in the editor. Moving it to the button (as before) blurred
-  // the editor, the blur is a transaction, and row 2 is rebuilt on every
-  // transaction - together with the dropdown that had just been opened, so
-  // the first click did nothing. Clicks elsewhere close the dropdown.
+  // The focus stays in the editor (a press on the button does not take it). Clicks
+  // elsewhere close the dropdown.
   function closeOnOutsideClick(e) {
     if (wrapper.contains(e.target)) return;
     dropdown.style.display = 'none';
@@ -351,6 +391,7 @@ function makeListSelect(editor) {
 // textarea source.area, see tiptap_source.js). onSwitch(on) hides the other controls.
 function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
   var on = false;
+  var openStates = null;   // whether each collapsible block was open, when the mode was entered
   var btn = document.createElement('button');
   btn.type = 'button';
   btn.textContent = '<HTML>';
@@ -360,6 +401,7 @@ function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
     e.preventDefault();
     on = !on;
     if (on) {
+      openStates = collapsibleOpenStates(editor.state.doc);
       source.area.value = serializeAttachmentHTML(editor.getHTML(), function(html) {
         return collapseDetailsOpen(formatSourceHTML(html));
       });
@@ -367,7 +409,13 @@ function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
       source.show(true);
       btn.classList.add('active');
     } else {
-      editor.commands.setContent(resolveAttachmentSrcs(source.area.value || '', urlMap));
+      // Read the way the field is read when it is opened, in one step with putting the
+      // blocks back as they were (one undo step).
+      var states = openStates;
+      editor.chain()
+        .setContent(toEditorHTML(source.area.value || '', urlMap))
+        .command(function(props) { restoreOpenStates(props.tr, states); return true; })
+        .run();
       editorDiv.style.display = '';   // the display of the stylesheet (a flex column)
       source.show(false);
       btn.classList.remove('active');
@@ -375,6 +423,33 @@ function makeSourceButton(editor, editorDiv, source, urlMap, onSwitch) {
     onSwitch(on);
   });
   return btn;
+}
+
+function collapsibleOpenStates(doc) {
+  var states = [];
+  doc.descendants(function(node) {
+    if (node.type.name === 'collapsibleBlock') states.push(node.attrs.open);
+  });
+  return states;
+}
+
+// Back from the source mode, every collapsible block is open or closed as it was before
+// it - when the text still has as many of them. The source text does not tell (it is the
+// HTML as stored, every block closed): leaving the mode closed them all, and opening them
+// all would open the ones closed before. With blocks added or removed in the source mode,
+// they all stay open, as when the field is opened.
+function restoreOpenStates(tr, states) {
+  if (!states) return;
+  var blocks = [];
+  tr.doc.descendants(function(node, pos) {
+    if (node.type.name === 'collapsibleBlock') blocks.push({ node: node, pos: pos });
+  });
+  if (blocks.length !== states.length) return;
+  blocks.forEach(function(block, i) {
+    if (block.node.attrs.open !== states[i]) {
+      tr.setNodeMarkup(block.pos, null, Object.assign({}, block.node.attrs, { open: states[i] }));
+    }
+  });
 }
 
 // Builds the stable toolbar row 1. Returns { row1El, updateState }.
@@ -640,11 +715,7 @@ function makeRow1(editor) {
   row.appendChild(makeBackgroundColorButton(editor));
 
   function updateState() {
-    // toggle buttons (BIUS)
-    toggles.forEach(function(toggle) {
-      if (toggle.isActive()) toggle.btn.classList.add('active');
-      else toggle.btn.classList.remove('active');
-    });
+    updateToggles(toggles);   // B I U S and the others of makeMarkButtons
 
     // alignment: icon on the button + active in the menu
     var curAlign = 'left';
@@ -653,27 +724,21 @@ function makeRow1(editor) {
     });
     alignIcon.innerHTML = ALIGN_SVG[curAlign];
     ALIGNMENTS.forEach(function(al) {
-      if (al === curAlign) alignOptionBtns[al].classList.add('active');
-      else alignOptionBtns[al].classList.remove('active');
+      alignOptionBtns[al].classList.toggle('active', al === curAlign);
     });
 
     // paragraph style label
-    var cur = 'paragraph';
-    if (editor.isActive('heading', { level: 1 })) cur = 'h1';
-    else if (editor.isActive('heading', { level: 2 })) cur = 'h2';
-    else if (editor.isActive('heading', { level: 3 })) cur = 'h3';
-    else if (editor.isActive('heading', { level: 4 })) cur = 'h4';
-    else if (editor.isActive('heading', { level: 5 })) cur = 'h5';
-    else if (editor.isActive('heading', { level: 6 })) cur = 'h6';
-    else if (editor.isActive('codeBlock')) cur = 'codeBlock';
+    var cur = editor.isActive('codeBlock') ? 'codeBlock' : 'paragraph';
+    for (var level = 1; level <= 6; level++) {
+      if (editor.isActive('heading', { level: level })) { cur = 'h' + level; break; }
+    }
     var item = STYLE_ITEMS.filter(function(i) { return i.value === cur; })[0];
     styleBtn.firstChild.textContent = item ? item.short : 'T';
 
     var attrs = editor.getAttributes('textStyle');
     var curFont = attrs.fontFamily ? attrs.fontFamily.replace(/["']/g, '') : '';
     fontItems.forEach(function(it) {
-      if (it.value === curFont) it.el.classList.add('active');
-      else it.el.classList.remove('active');
+      it.el.classList.toggle('active', it.value === curFont);
     });
     sizeInput.value = attrs.fontSize ? (parseInt(attrs.fontSize) || 14) : 14;
   }
@@ -689,6 +754,7 @@ function makeRow1(editor) {
 function buildCompactToolbar(editor, editorDiv, source, urlMap) {
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
+  primaryButtonOnly(bar);
   var row = document.createElement('div');
   row.className = 'tiptap-toolbar-row';
   bar.appendChild(row);
@@ -704,12 +770,7 @@ function buildCompactToolbar(editor, editorDiv, source, urlMap) {
             makeMarkButtons(editor, toggles), [makeSep(), makeBackgroundColorButton(editor)])
     .forEach(function(el) { row.appendChild(el); });
 
-  function updateState() {
-    toggles.forEach(function(toggle) {
-      if (toggle.isActive()) toggle.btn.classList.add('active');
-      else toggle.btn.classList.remove('active');
-    });
-  }
+  function updateState() { updateToggles(toggles); }
   // transaction fires for every applied transaction, a selection-only change too, and
   // right before selectionUpdate - so listening to it alone is enough and does not run
   // the update twice on each cursor move.
@@ -725,18 +786,17 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
 
   var bar = document.createElement('div');
   bar.className = 'tiptap-toolbar';
-  var sourceMode = false;
+  primaryButtonOnly(bar);   // the dropdown menus are inside it too
 
   // Row 1: source code + stable formatting controls
   var fmt = makeRow1(editor);
   var row1 = fmt.row1El;
   var srcBtn = makeSourceButton(editor, editorDiv, source, urlMap, function(on) {
-    sourceMode = on;
     // hide all row 1 controls (except srcBtn) and all of row 2
     Array.prototype.forEach.call(row1.children, function(ch) {
-      if (ch !== srcBtn) ch.style.display = sourceMode ? 'none' : '';
+      if (ch !== srcBtn) ch.style.display = on ? 'none' : '';
     });
-    row2.style.display = sourceMode ? 'none' : '';
+    row2.style.display = on ? 'none' : '';
     refresh();
   });
 
@@ -744,28 +804,30 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
   row1.insertBefore(makeSep(), row1.firstChild);
   row1.insertBefore(srcBtn, row1.firstChild);
 
-  // Row 2: the remaining buttons (recreated on updates)
+  // Row 2: the remaining buttons. Made once; the state of the code, code block and link
+  // buttons follows the cursor as that of B I U S does. They were all made anew on every
+  // transaction - each keystroke and cursor move - an open list menu with them.
   var row2 = document.createElement('div');
   row2.className = 'tiptap-toolbar-row';
+  var row2Toggles = [];
 
   bar.appendChild(row1);
   bar.appendChild(row2);
 
-  function refresh() {
-    fmt.updateState();
-    if (sourceMode) { row2.innerHTML = ''; return; }
+  function add(el) { row2.appendChild(el); }
 
-    row2.innerHTML = '';
+  // undo / redo
+  makeHistoryButtons(editor).forEach(add);
 
-    // undo / redo
-    makeHistoryButtons(editor).forEach(function(btn) { row2.appendChild(btn); });
+  add(makeSep());
 
-    row2.appendChild(makeSep());
-
-    // collapse / inline code / code block
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.collapsible'), 'collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
-    row2.appendChild(makeButton('<>', withShortcut(t('toolbar.code'), 'code'), function() { editor.chain().focus().toggleCode().run(); }, editor.isActive('code')));
-    row2.appendChild(makeButton('', t('toolbar.code_block'), function() {
+  // collapse / inline code / code block
+  add(makeButton('', withShortcut(t('toolbar.collapsible'), 'collapsible'), function() { insertCollapsible(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4 L4 6 L6 4"/><line x1="8" y1="5" x2="14" y2="5"/><line x1="2" y1="10" x2="14" y2="10"/><line x1="2" y1="13" x2="10" y2="13"/></g></svg>'));
+  add(makeToggleButton({ label: '<>', title: withShortcut(t('toolbar.code'), 'code'),
+    action: function() { editor.chain().focus().toggleCode().run(); },
+    isActive: function() { return editor.isActive('code'); } }, row2Toggles));
+  add(makeToggleButton({ title: t('toolbar.code_block'), html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><line x1="3.5" y1="6" x2="8.5" y2="6"/><line x1="3.5" y1="8.5" x2="12.5" y2="8.5"/><line x1="3.5" y1="11" x2="7.5" y2="11"/></g></svg>',
+    action: function() {
       if (editor.isActive('codeBlock')) {
         editor.chain().focus().liftFromCodeBlock().run();
       } else {
@@ -776,33 +838,34 @@ export function buildToolbar(editor, editorDiv, source, urlMap, compact) {
           { type: 'codeBlock', content: text ? [{ type: 'text', text: text }] : [] }
         ).run();
       }
-    }, editor.isActive('codeBlock'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><line x1="3.5" y1="6" x2="8.5" y2="6"/><line x1="3.5" y1="8.5" x2="12.5" y2="8.5"/><line x1="3.5" y1="11" x2="7.5" y2="11"/></g></svg>'));
+    },
+    isActive: function() { return editor.isActive('codeBlock'); } }, row2Toggles));
 
-    row2.appendChild(makeSep());
+  add(makeSep());
 
-    // horizontal rule / quote
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.horizontal_rule'), 'horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.quote'), 'quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
+  // horizontal rule / quote
+  add(makeButton('', withShortcut(t('toolbar.horizontal_rule'), 'horizontal_rule'), function() { editor.chain().focus().setHorizontalRule().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g stroke="currentColor" stroke-linecap="round"><line x1="3" y1="4" x2="13" y2="4" stroke-width="1.1" opacity="0.4"/><line x1="2" y1="8" x2="14" y2="8" stroke-width="1.8"/><line x1="3" y1="12" x2="13" y2="12" stroke-width="1.1" opacity="0.4"/></g></svg>'));
+  add(makeButton('', withShortcut(t('toolbar.quote'), 'quote'), function() { insertQuote(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g transform="translate(1.5,2)"><rect x="0" y="0" width="2.2" height="12" rx="1" fill="currentColor"/><g transform="translate(4.5,0)" fill="currentColor"><path d="M0 5 Q0 0 4 0 Q1.5 1.5 2 3.2 L3.2 3.2 L3.2 6.5 L0 6.5 Z"/><path d="M6 5 Q6 0 10 0 Q7.5 1.5 8 3.2 L9.2 3.2 L9.2 6.5 L6 6.5 Z"/></g><g transform="translate(4.5,0)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><line x1="0" y1="9.5" x2="9.5" y2="9.5"/><line x1="0" y1="12" x2="6.5" y2="12"/></g></g></svg>'));
 
-    row2.appendChild(makeSep());
+  add(makeSep());
 
-    // add / remove link
-    row2.appendChild(makeButton('', withShortcut(t('toolbar.link'), 'link'), function() { openLinkModal(editor); }, editor.isActive('link'), '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>'));
-    row2.appendChild(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
+  // add / remove link
+  add(makeToggleButton({ title: withShortcut(t('toolbar.link'), 'link'), html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M7 3 L5 3 Q1.5 3 1.5 6.5 Q1.5 10 5 10 L7 10"/><path d="M9 3 L11 3 Q14.5 3 14.5 6.5 Q14.5 10 11 10 L9 10"/><line x1="5.5" y1="6.5" x2="10.5" y2="6.5"/></g></svg>',
+    action: function() { openLinkModal(editor); },
+    isActive: function() { return editor.isActive('link'); } }, row2Toggles));
+  add(makeButton('', t('toolbar.unlink'), function() { editor.chain().focus().unsetLink().run(); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 4 L5 4 Q1.5 4 1.5 7.5 Q1.5 11 5 11 L6 11"/><path d="M10 4 L11 4 Q14.5 4 14.5 7.5 Q14.5 11 11 11 L10 11"/><line x1="5" y1="7.5" x2="7" y2="7.5"/><line x1="9" y1="7.5" x2="11" y2="7.5"/><line x1="11.5" y1="1.5" x2="14.5" y2="4.5"/><line x1="14.5" y1="1.5" x2="11.5" y2="4.5"/></g></svg>'));
 
-    // list
-    row2.appendChild(makeListSelect(editor));
+  // list
+  add(makeListSelect(editor));
 
-    // the rest
-    var btns = [
-      { label: '', title: t('toolbar.insert_table'),        action: function() { openTableModal(editor); }, active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>' },
-      { label: '\ud83d\udcce', title: t('toolbar.insert_attachment'),             action: function() { openAttachmentPicker(editor, urlMap); }, active: false },
-      { label: '\ud83c\udf04', title: t('toolbar.insert_image'), action: function() { openImagePicker(editor, urlMap); },      active: false, html: '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><circle cx="5" cy="6" r="1.5"/><path d="M2 12 L6 8 L9 11 L11 9 L14 12" stroke-linejoin="round"/></g></svg>' },
-    ];
+  // table, attachment, picture
+  add(makeButton('', t('toolbar.insert_table'), function() { openTableModal(editor); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="3.2" rx="0.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="0.5"/><line x1="1.5" y1="10" x2="14.5" y2="10"/><line x1="6" y1="5.7" x2="6" y2="13.5"/><line x1="10.5" y1="5.7" x2="10.5" y2="13.5"/></g></svg>'));
+  add(makeButton('\ud83d\udcce', t('toolbar.insert_attachment'), function() { openAttachmentPicker(editor, urlMap); }, false));
+  add(makeButton('', t('toolbar.insert_image'), function() { openImagePicker(editor, urlMap); }, false, '<svg width="14" height="14" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="2.5" width="13" height="11" rx="1"/><circle cx="5" cy="6" r="1.5"/><path d="M2 12 L6 8 L9 11 L11 9 L14 12" stroke-linejoin="round"/></g></svg>'));
 
-    btns.forEach(function(b) {
-      row2.appendChild(makeButton(b.label, b.title, b.action, b.active, b.html));
-    });
+  function refresh() {
+    fmt.updateState();
+    updateToggles(row2Toggles);
   }
 
   // One listener: transaction covers selection-only changes too (see buildCompactToolbar).

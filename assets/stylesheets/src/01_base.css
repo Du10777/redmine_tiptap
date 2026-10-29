@@ -98,7 +98,6 @@
 }
 
 .tiptap-list-dropdown {
-  top: 28px;
   min-width: 190px;
 }
 
@@ -114,7 +113,6 @@
 }
 
 .tiptap-font-dropdown {
-  top: 28px;
   min-width: 170px;
   max-height: 280px;
   overflow-y: auto;

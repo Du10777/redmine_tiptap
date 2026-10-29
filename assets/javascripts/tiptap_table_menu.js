@@ -1,4 +1,62 @@
 import { t } from './tiptap_i18n.js';
+import { primaryButtonOnly } from './tiptap_toolbar.js';
+
+// The items of the menu: the text and the command of the editor; null is a line between groups.
+var MENU_ITEMS = [
+  { labelKey: 'table_menu.add_column_left', command: 'addColumnBefore' },
+  { labelKey: 'table_menu.add_column_right', command: 'addColumnAfter' },
+  { labelKey: 'table_menu.delete_column', command: 'deleteColumn' },
+  null,
+  { labelKey: 'table_menu.add_row_above', command: 'addRowBefore' },
+  { labelKey: 'table_menu.add_row_below', command: 'addRowAfter' },
+  { labelKey: 'table_menu.delete_row', command: 'deleteRow' },
+  null,
+  { labelKey: 'table_menu.merge_cells', command: 'mergeCells' },
+  { labelKey: 'table_menu.split_cell', command: 'splitCell' },
+  null,
+  { labelKey: 'table_menu.header_row', command: 'toggleHeaderRow' },
+  { labelKey: 'table_menu.header_column', command: 'toggleHeaderColumn' },
+  null,
+  { labelKey: 'table_menu.delete_table', command: 'deleteTable', danger: true },
+];
+
+// The menu open on the page (one at a time, whichever editor opened it).
+var openMenu = null;
+
+function closeMenu() {
+  if (!openMenu) return;
+  openMenu.remove();
+  openMenu = null;
+  document.removeEventListener('mousedown', onDocumentMousedown);
+}
+
+function onDocumentMousedown(e) {
+  if (openMenu && !openMenu.contains(e.target)) closeMenu();
+}
+
+function buildMenu(editor) {
+  var menu = document.createElement('div');
+  menu.className = 'tiptap-table-menu';
+  primaryButtonOnly(menu);   // a right click on "Delete table" deleted the table
+
+  MENU_ITEMS.forEach(function(item) {
+    var el = document.createElement('div');
+    if (!item) {
+      el.className = 'tiptap-table-menu-sep';
+      menu.appendChild(el);
+      return;
+    }
+    el.className = 'tiptap-table-menu-item' + (item.danger ? ' danger' : '');
+    el.textContent = t(item.labelKey);
+    el.addEventListener('mousedown', function(ev) {
+      ev.preventDefault();
+      editor.chain().focus()[item.command]().run();
+      closeMenu();
+    });
+    menu.appendChild(el);
+  });
+  return menu;
+}
 
 // Right-click menu for working with a table
 export function setupTableContextMenu(editorDiv, editor) {
@@ -10,63 +68,15 @@ export function setupTableContextMenu(editorDiv, editor) {
     e.preventDefault();
     closeMenu();
 
-    var menu = document.createElement('div');
-    menu.className = 'tiptap-table-menu';
-    menu.id = 'tiptap-table-menu';
+    openMenu = buildMenu(editor);
+    openMenu.style.top = (e.clientY + window.scrollY) + 'px';
+    openMenu.style.left = (e.clientX + window.scrollX) + 'px';
+    document.body.appendChild(openMenu);
 
-    var items = [
-      { label: t('table_menu.add_column_left'),  action: function() { editor.chain().focus().addColumnBefore().run(); } },
-      { label: t('table_menu.add_column_right'), action: function() { editor.chain().focus().addColumnAfter().run(); } },
-      { label: t('table_menu.delete_column'),         action: function() { editor.chain().focus().deleteColumn().run(); } },
-      { sep: true },
-      { label: t('table_menu.add_row_above'),  action: function() { editor.chain().focus().addRowBefore().run(); } },
-      { label: t('table_menu.add_row_below'),   action: function() { editor.chain().focus().addRowAfter().run(); } },
-      { label: t('table_menu.delete_row'),          action: function() { editor.chain().focus().deleteRow().run(); } },
-      { sep: true },
-      { label: t('table_menu.merge_cells'),       action: function() { editor.chain().focus().mergeCells().run(); } },
-      { label: t('table_menu.split_cell'),        action: function() { editor.chain().focus().splitCell().run(); } },
-      { sep: true },
-      { label: t('table_menu.header_row'),  action: function() { editor.chain().focus().toggleHeaderRow().run(); } },
-      { label: t('table_menu.header_column'), action: function() { editor.chain().focus().toggleHeaderColumn().run(); } },
-      { sep: true },
-      { label: t('table_menu.delete_table'), action: function() { editor.chain().focus().deleteTable().run(); }, danger: true },
-    ];
-
-    items.forEach(function(item) {
-      if (item.sep) {
-        var sep = document.createElement('div');
-        sep.className = 'tiptap-table-menu-sep';
-        menu.appendChild(sep);
-        return;
-      }
-      var el = document.createElement('div');
-      el.className = 'tiptap-table-menu-item' + (item.danger ? ' danger' : '');
-      el.textContent = item.label;
-      el.addEventListener('mousedown', function(ev) {
-        ev.preventDefault();
-        item.action();
-        closeMenu();
-      });
-      menu.appendChild(el);
-    });
-
-    menu.style.top = (e.clientY + window.scrollY) + 'px';
-    menu.style.left = (e.clientX + window.scrollX) + 'px';
-    document.body.appendChild(menu);
-
+    // Listened for from the next task on: the mousedown of this right click is over already,
+    // but a listener added now would also get events still being dispatched.
     setTimeout(function() {
-      document.addEventListener('mousedown', onDocClick);
+      if (openMenu) document.addEventListener('mousedown', onDocumentMousedown);
     }, 0);
   });
-
-  function onDocClick(e) {
-    var menu = document.getElementById('tiptap-table-menu');
-    if (menu && !menu.contains(e.target)) closeMenu();
-  }
-
-  function closeMenu() {
-    var menu = document.getElementById('tiptap-table-menu');
-    if (menu) menu.remove();
-    document.removeEventListener('mousedown', onDocClick);
-  }
 }

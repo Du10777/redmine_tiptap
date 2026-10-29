@@ -1,6 +1,41 @@
 import { flattenForeignDivs } from './tiptap_legacy.js';
 import { inertElement } from './tiptap_inert.js';
 
+// Excel takes font sizes in pt: a size in px of the editor is copied as px * EXCEL_PT_PER_PX
+// pt, and a size in pt of Excel is pasted as pt / EXCEL_PT_PER_PX px - the same factor both
+// ways, so a size comes back as it went (14px -> 12pt -> 14px). The paste took the pt for
+// px as they were, and Excel's 11pt came out smaller than in Excel, as 11px.
+var EXCEL_PT_PER_PX = 6 / 7;
+
+function excelPx(pt) {
+  return Math.round(pt / EXCEL_PT_PER_PX);
+}
+
+function excelPt(px) {
+  return Math.round(px * EXCEL_PT_PER_PX);
+}
+
+// A container of tables (the editor's copy, the saved view's copy) made ready for Excel:
+// ruled borders, and the font sizes in pt, which Excel reads (a size in px it takes for pt,
+// so 14px came out as 14pt - only px is turned into pt, 12pt and 1.5em are left). dropMinWidth
+// takes off the min-width TipTap gives a resizable table (Excel would make a column that wide).
+function styleTableForExcel(container, dropMinWidth) {
+  container.querySelectorAll('table').forEach(function(t) {
+    t.setAttribute('border', '1');
+    t.style.borderCollapse = 'collapse';
+    if (dropMinWidth) t.style.removeProperty('min-width');
+  });
+  container.querySelectorAll('td, th').forEach(function(cell) {
+    cell.style.border = '.5pt solid windowtext';
+    cell.style.padding = '1px';
+  });
+  container.querySelectorAll('[style*="font-size"]').forEach(function(el) {
+    if (el.style.fontSize.indexOf('px') === -1) return;
+    var px = parseFloat(el.style.fontSize);
+    if (px) el.style.fontSize = excelPt(px) + 'pt';
+  });
+}
+
 // Cleans up tables pasted from Excel/Word: strips junk styles,
 // screenshot images, fixed widths
 export function setupTablePaste(editorDiv, editor) {
@@ -33,24 +68,7 @@ export function setupTablePaste(editorDiv, editor) {
       el.removeAttribute('data-pm-slice');
     });
 
-    container.querySelectorAll('table').forEach(function(t) {
-      t.setAttribute('border', '1');
-      t.style.borderCollapse = 'collapse';
-      t.style.removeProperty('min-width');
-    });
-    container.querySelectorAll('td, th').forEach(function(cell) {
-      cell.style.border = '.5pt solid windowtext';
-      cell.style.padding = '1px';
-    });
-
-    // Excel reads font-size in pt, not px - convert it
-    container.querySelectorAll('[style*="font-size"]').forEach(function(el) {
-      if (el.style.fontSize.indexOf('px') === -1) return;
-      var px = parseFloat(el.style.fontSize);
-      if (px) {
-        el.style.fontSize = Math.round(px * 6 / 7) + 'pt';
-      }
-    });
+    styleTableForExcel(container, true);
 
     var fullHtml = '<html><body>' + container.innerHTML + '</body></html>';
     e.clipboardData.setData('text/html', fullHtml);
@@ -70,8 +88,10 @@ function cleanPastedTables(html) {
   var div = inertElement();
   div.innerHTML = html;
 
-  // Resolve the .xlNN classes from <style> into inline styles
-  var classRules = {};
+  // Resolve the .xlNN classes from <style> into inline styles. A map without a prototype:
+  // a cell of class "constructor" or "toString" found a function of every object here,
+  // the paste threw and nothing was pasted.
+  var classRules = Object.create(null);
   var baseFontSize = null;
   div.querySelectorAll('style').forEach(function(styleTag) {
     var css = styleTag.textContent;
@@ -84,7 +104,7 @@ function cleanPastedTables(html) {
     var tdMatch = css.match(/(?:^|\})\s*td\s*\{([^}]*)\}/);
     if (tdMatch) {
       var fm0 = tdMatch[1].match(/font-size:\s*([\d.]+)pt/i);
-      if (fm0) baseFontSize = Math.round(parseFloat(fm0[1]));
+      if (fm0) baseFontSize = excelPx(parseFloat(fm0[1]));
     }
   });
 
@@ -129,7 +149,7 @@ function cleanTable(table, classRules, baseFontSize) {
       var fontSize = null;
       if (cls && classRules[cls]) {
         var fm = classRules[cls].match(/font-size:\s*([\d.]+)pt/i);
-        if (fm) fontSize = Math.round(parseFloat(fm[1])); // pt -> px
+        if (fm) fontSize = excelPx(parseFloat(fm[1]));
       }
       if (!fontSize) fontSize = baseFontSize;
 
@@ -264,18 +284,7 @@ export function setupSavedTableCopy() {
       table = wrap;
     }
 
-    container.querySelectorAll('table').forEach(function(t) {
-      t.setAttribute('border', '1');
-      t.style.borderCollapse = 'collapse';
-    });
-    container.querySelectorAll('td, th').forEach(function(cell) {
-      cell.style.border = '.5pt solid windowtext';
-      cell.style.padding = '1px';
-    });
-    container.querySelectorAll('[style*="font-size"]').forEach(function(node) {
-      var px = parseFloat(node.style.fontSize);
-      if (px) node.style.fontSize = Math.round(px * 6 / 7) + 'pt';
-    });
+    styleTableForExcel(container, false);
 
     e.clipboardData.setData('text/html', '<html><body>' + container.innerHTML + '</body></html>');
     e.clipboardData.setData('text/plain', sel.toString());

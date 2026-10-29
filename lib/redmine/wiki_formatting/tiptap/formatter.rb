@@ -1,3 +1,4 @@
+require 'set'
 require_relative 'sanitizer'
 
 module Redmine
@@ -145,10 +146,20 @@ module Redmine
 
           html.gsub(SPECIAL_CONTAINER_RE) do
             whole, style, inner = Regexp.last_match(0), Regexp.last_match(2), Regexp.last_match(3)
-            next whole if inner.include?('{{macro_') || !special_container_style?(style)
+            next whole if macro?(inner) || !special_container_style?(style)
 
             %(<pre><code class="language-plaintext">#{container_code(inner)}</code></pre>)
           end
+        end
+
+        # A macro in the text: what Redmine put in place of one before the formatter runs
+        # ({{macro(0)}}, see catch_macros), or one Redmine does not know, which stays as it
+        # is written ({{name}}). An escaped one (!{{name}}) is text. The editor keeps a
+        # container with a macro as a <div> (tiptap_legacy.js) - so here too. The check
+        # was for "{{macro_", which Redmine never writes: such a container became a code
+        # block with the macro's output inside.
+        def macro?(html)
+          html.match?(/(?<!!)\{\{/)
         end
 
         def special_container_style?(style)
@@ -203,14 +214,45 @@ module Redmine
         def auto_link_addresses(html)
           return html unless html.include?('http') || html.include?('www.')
 
+          amp, hidden = free_marks(html)
+          # A text with every one of the marks in it is shown without links: linked
+          # unguarded, its tags would break (see guard_for_auto_link).
+          return html unless hidden
+
           parts = html.split(%r{(<pre\b.*?</pre>|<code\b.*?</code>|<a\b.*?</a>)}im)
           parts.each_with_index.map do |part, index|
             next part if index.odd?
 
-            text = part.dup
+            text = guard_for_auto_link(part, amp, hidden)
             auto_link!(text)
-            text
+            text.gsub(amp, '&amp;').delete(hidden)
           end.join
+        end
+
+        # auto_link! takes plain text: it escapes the address it links, and an address
+        # in a tag is linked as well. Here it gets HTML the sanitizer has escaped, so
+        # - an & of an address came out as &amp;amp; in the link and its text: an
+        #   escaped & is kept aside as the mark amp meanwhile, and put back after;
+        # - an address in an attribute value (a title, an alt) got an <a> put into the
+        #   value, which broke the tag after the sanitizer had checked it: in a tag, the
+        #   mark hidden is put into "://" and "www." meanwhile, so that auto_link! sees
+        #   no address there.
+        def guard_for_auto_link(html, amp, hidden)
+          html.gsub(/<[^>]*>/) { |tag| tag.gsub(%r{://|www\.}) { |m| m.dup.insert(m.length - 1, hidden) } }
+              .gsub('&amp;', amp)
+        end
+
+        # The marks are two characters of Unicode's private use area that the text does
+        # not have. Fixed ones would not do: whoever writes a text chooses its characters,
+        # and a text that had them was linked unguarded, its tags broken after the
+        # sanitizer. nil if the text has all of them.
+        MARKS = (0xE000..0xF8FF).freeze
+        MARK_RE = /[\u{E000}-\u{F8FF}]/.freeze
+
+        def free_marks(html)
+          used = html.scan(MARK_RE).to_set
+          marks = MARKS.lazy.map { |code| code.chr(Encoding::UTF_8) }.reject { |mark| used.include?(mark) }.first(2)
+          marks.size == 2 ? marks : nil
         end
 
         # Earlier versions of the editor wrapped a quote block in one more plain
@@ -218,14 +260,18 @@ module Redmine
         # so texts saved with them show the quote nested several levels deep.
         # Drop such wrappers: a plain blockquote with nothing but a quote block
         # (or another wrapper) inside.
+        #
+        # All of them in one pass, the innermost first: unwrapping an inner one does not
+        # change whether the one around it is a wrapper, so the chain still ends as the
+        # quote block. (Finding one, replacing it and searching the whole text again
+        # took time that grew with the square of the number of blockquotes.)
         def unwrap_quotes(html)
           fragment = Nokogiri::HTML::DocumentFragment.parse(html)
-          changed = false
-          while (wrapper = fragment.css('blockquote').find { |el| wraps_only_quote?(el) })
-            wrapper.replace(wrapper.element_children.first)
-            changed = true
-          end
-          changed ? fragment.to_html : html
+          wrappers = fragment.css('blockquote').select { |el| wraps_only_quote?(el) }
+          return html if wrappers.empty?
+
+          wrappers.reverse_each { |wrapper| wrapper.replace(wrapper.element_children.first) }
+          fragment.to_html
         end
 
         def wraps_only_quote?(el)
@@ -244,7 +290,8 @@ module Redmine
       end
 
       module Helper
-        def wikitoolbar_for(field_id, preview_url = preview_text_path)
+        # The editor has its own toolbar: Redmine's (and its preview address) is not needed.
+        def wikitoolbar_for(_field_id, _preview_url = nil)
           heads_for_wiki_formatter
           nil
         end

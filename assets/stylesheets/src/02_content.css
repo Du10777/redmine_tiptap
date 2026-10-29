@@ -22,8 +22,16 @@
   flex: 1 0 auto;
 }
 
-.tiptap-content p {
-  padding-left: 0 !important;
+/* The left part of Redmine's rule for the fields of a form (.tabular p: 180px; on the
+   settings pages .tabular.settings p: 300px; in Redmine 7 as padding-inline-start) does
+   not belong to the paragraphs of an editor. Not !important, but as specific as those
+   rules and later: with !important the padding a paragraph of an old text has in its
+   style was dropped in the editor, while the saved page showed it. */
+.tiptap-content p,
+.tabular .tiptap-content p,
+.tabular.settings .tiptap-content p {
+  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 /* The rule of Redmine for the fields of a form (.tabular p, padding 3px 0 3px 180px) also

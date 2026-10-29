@@ -18,6 +18,18 @@ export const WEB_SAFE_FONTS = [
 
 export const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 72];
 
+// The attribute of the text style (a <span style="...">) for one CSS property: name is its
+// name in the editor and in element.style, property its name in CSS.
+function styleAttribute(name, property) {
+  var attributes = {};
+  attributes[name] = {
+    default: null,
+    parseHTML: element => element.style[name] || null,
+    renderHTML: attrs => (attrs[name] ? { style: property + ': ' + attrs[name] } : {}),
+  };
+  return attributes;
+}
+
 // Extension for font size (via style="font-size: Xpx")
 export const FontSize = Extension.create({
   name: 'fontSize',
@@ -27,21 +39,7 @@ export const FontSize = Extension.create({
   },
 
   addGlobalAttributes() {
-    return [
-      {
-        types: this.options.types,
-        attributes: {
-          fontSize: {
-            default: null,
-            parseHTML: element => element.style.fontSize || null,
-            renderHTML: attributes => {
-              if (!attributes.fontSize) return {};
-              return { style: 'font-size: ' + attributes.fontSize };
-            },
-          },
-        },
-      },
-    ];
+    return [{ types: this.options.types, attributes: styleAttribute('fontSize', 'font-size') }];
   },
 
   addCommands() {
@@ -49,8 +47,10 @@ export const FontSize = Extension.create({
       setFontSize: size => ({ chain }) => {
         return chain().setMark('textStyle', { fontSize: size ? size + 'px' : null }).run();
       },
+      // removeEmptyTextStyle: a span left with no style at all goes, as TipTap's own
+      // unsetColor does (otherwise the saved text kept an empty <span>).
       unsetFontSize: () => ({ chain }) => {
-        return chain().setMark('textStyle', { fontSize: null }).run();
+        return chain().setMark('textStyle', { fontSize: null }).removeEmptyTextStyle().run();
       },
     };
   },
@@ -65,21 +65,7 @@ export const BackgroundColor = Extension.create({
   },
 
   addGlobalAttributes() {
-    return [
-      {
-        types: this.options.types,
-        attributes: {
-          backgroundColor: {
-            default: null,
-            parseHTML: element => element.style.backgroundColor || null,
-            renderHTML: attributes => {
-              if (!attributes.backgroundColor) return {};
-              return { style: 'background-color: ' + attributes.backgroundColor };
-            },
-          },
-        },
-      },
-    ];
+    return [{ types: this.options.types, attributes: styleAttribute('backgroundColor', 'background-color') }];
   },
 
   addCommands() {
@@ -88,7 +74,7 @@ export const BackgroundColor = Extension.create({
         return chain().setMark('textStyle', { backgroundColor: color || null }).run();
       },
       unsetBackgroundColor: () => ({ chain }) => {
-        return chain().setMark('textStyle', { backgroundColor: null }).run();
+        return chain().setMark('textStyle', { backgroundColor: null }).removeEmptyTextStyle().run();
       },
     };
   },

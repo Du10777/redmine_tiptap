@@ -69,14 +69,50 @@ export function resolveAttachmentSrcs(html, urlMap) {
   div.innerHTML = protectMacros(html);
   div.querySelectorAll('img[src]').forEach(function(img) {
     var src = img.getAttribute('src');
-    if (urlMap[src]) {
+    var entry = attachmentOf(urlMap, src);
+    if (entry) {
+      // data-filename keeps the name as it is written: it is saved back unchanged
       img.setAttribute('data-filename', src);
-      img.setAttribute('src', urlMap[src].url);
+      img.setAttribute('src', entry.url);
     }
   });
   flattenTableExtras(div);
   convertSpecialContainers(div);
   return div.innerHTML;
+}
+
+// The stored text as the editor takes it, when the field is opened and when the source
+// mode is left: a collapsible block is open while edited (it is stored closed, see
+// collapseDetailsOpen), the line break that earlier versions wrote after <code> and
+// before </code> goes (the formatter drops it too), then resolveAttachmentSrcs. Leaving
+// the source mode skipped the first step, and every collapsible block came back closed.
+export function toEditorHTML(html, urlMap) {
+  return resolveAttachmentSrcs(
+    html.replace(/<details>/g, '<details open="true">')
+      .replace(/<pre><code([^>]*)>\n/g, '<pre><code$1>')
+      .replace(/\n<\/code><\/pre>/g, '</code></pre>'),
+    urlMap
+  );
+}
+
+// The attachment a picture names, as Redmine finds it for the saved page
+// (Attachment.latest_attach): the name percent-decoded and in any case. Looked up as
+// written first; a picture named in another case showed on the saved page, but not in
+// the editor.
+export function attachmentOf(urlMap, src) {
+  if (urlMap[src]) return urlMap[src];
+  var name = src;
+  try { name = decodeURIComponent(src); } catch (e) { /* not encoded: as it is */ }
+  name = name.toLowerCase();
+  var match = Object.keys(urlMap).filter(function(key) { return key.toLowerCase() === name; })[0];
+  return match ? urlMap[match] : null;
+}
+
+// The editor a picture uploaded from its form goes into, and the field whose map gets
+// the picture's address (see patchAddInlineAttachmentMarkup): always set together.
+export function setActiveEditor(editor, textarea) {
+  window._tiptapActiveEditor = editor;
+  window._tiptapActiveTextarea = textarea;
 }
 
 export function makeClipboardFilename(originalName) {
@@ -119,8 +155,7 @@ export function setupImagePaste(editorDiv, editor, textarea) {
       var filename = makeClipboardFilename(file.name || 'image.png');
       var namedFile = new File([file], filename, { type: file.type });
 
-      window._tiptapActiveEditor = editor;
-      window._tiptapActiveTextarea = textarea;
+      setActiveEditor(editor, textarea);
       window.handleFileDropEvent.target = textarea;
       window.addFile($(inputEl), namedFile, true);
     });
@@ -191,15 +226,34 @@ export function setupFileInputBinding(textarea, editor) {
   var inputEl = form.querySelector('input[type=file].filedrop');
   if (!inputEl) return;
 
-  var bindActive = function() {
-    window._tiptapActiveEditor = editor;
-    window._tiptapActiveTextarea = textarea;
-  };
+  // A form may have several editors (an issue: the description, the notes, the long text
+  // custom fields), and each of them listens here. They used to take the picture in turn,
+  // so it always went into the last one created.
+  //
+  // Files chosen with the file field go into the editor the cursor was last in (see
+  // initTextarea); if that is no editor of this form, into its first one.
+  function onChange() {
+    var active = window._tiptapActiveTextarea;
+    if (!active || active.form !== form) setActiveEditor(editor, textarea);
+  }
+  inputEl.addEventListener('change', onChange, true);
 
-  inputEl.addEventListener('change', bindActive, true);
-
+  // A dropped file goes into the editor it was dropped on. Dropped beside any editor (on
+  // the box of the files), it is only attached, as Redmine does with a text field.
+  function onDrop(e) {
+    var on = e.target && e.target.closest ? e.target.closest('.tiptap-wrapper') : null;
+    if (on && on.contains(editor.view.dom)) setActiveEditor(editor, textarea);
+    else if (!on) setActiveEditor(null, null);
+  }
   var dropZone = inputEl.closest('.filedroplistner') || inputEl.closest('.box');
-  if (dropZone) dropZone.addEventListener('drop', bindActive, true);
+  if (dropZone) dropZone.addEventListener('drop', onDrop, true);
+
+  // The file field outlives the editor when Redmine draws the attributes of an issue
+  // anew: the listeners come off with the editor (see dropRemovedEditors).
+  return function() {
+    inputEl.removeEventListener('change', onChange, true);
+    if (dropZone) dropZone.removeEventListener('drop', onDrop, true);
+  };
 }
 
 export function patchAddInlineAttachmentMarkup() {
@@ -212,7 +266,8 @@ export function patchAddInlineAttachmentMarkup() {
     var activeEditor = window._tiptapActiveEditor;
     var isImage = window.wikiImageMimeTypes && window.wikiImageMimeTypes.indexOf(file.type) > -1;
 
-    if (activeEditor && isImage && document.body.getAttribute('data-text-formatting') === 'tiptap') {
+    // (patched only on the pages of this text formatting, see scanAndInit)
+    if (activeEditor && isImage) {
       var sanitizedFilename = file.name.replace(/[\/\?\%\*\:\|\"\'<>\n\r]+/g, '_');
       var blobUrl = URL.createObjectURL(file);
 

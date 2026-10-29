@@ -1,5 +1,8 @@
 import { Node, mergeAttributes } from '@tiptap/core';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Fragment, Slice } from '@tiptap/pm/model';
 import BaseImage from '@tiptap/extension-image';
+import { attachmentOf } from './tiptap_attachments.js';
 import { definingAsContext } from './tiptap_blocks.js';
 import { unwrapCollapsible } from './tiptap_collapsible.js';
 import { t } from './tiptap_i18n.js';
@@ -34,6 +37,45 @@ function pictureSize(element, property) {
   return /^\d+$/.test(attribute) ? parseInt(attribute, 10) : null;
 }
 
+// A picture pasted from the editor of another page (another issue) names an attachment of
+// that page (data-filename): saved by that file name here, it did not show - this page has
+// no such attachment. Such a picture keeps its address (that of the other page's
+// attachment). One of this page - its file name gives the same address here - is still
+// saved by its name. Dropped content goes through here too.
+function keepForeignPictures(urlMap) {
+  return new Plugin({
+    key: new PluginKey('foreignPictures'),
+    props: {
+      transformPasted: function(slice) {
+        var content = mapLeaves(slice.content, function(node) {
+          if (node.type.name !== 'image' || !node.attrs.filename) return node;
+          var entry = attachmentOf(urlMap, node.attrs.filename);
+          if (entry && sameAddress(entry.url, node.attrs.src)) return node;
+          return node.type.create(Object.assign({}, node.attrs, { filename: null }), null, node.marks);
+        });
+        return new Slice(content, slice.openStart, slice.openEnd);
+      },
+    },
+  });
+}
+
+function mapLeaves(fragment, f) {
+  var nodes = [];
+  fragment.forEach(function(node) {
+    nodes.push(node.isLeaf ? f(node) : node.copy(mapLeaves(node.content, f)));
+  });
+  return Fragment.fromArray(nodes);
+}
+
+// One address written relatively and absolutely is one address.
+function sameAddress(a, b) {
+  try {
+    return new URL(a, window.location.href).href === new URL(b, window.location.href).href;
+  } catch (e) {
+    return a === b;
+  }
+}
+
 // The size of the picture in the editor: what the node says, nothing of its own where
 // the node says nothing (the picture has its own proportions then).
 function setSize(img, attrs) {
@@ -46,8 +88,14 @@ export const Image = BaseImage.extend({
   // around it stays in the same paragraph, and it can be a link (<a><img></a>).
   // As a block node it split the paragraph in two every time and could not be
   // wrapped in a link, so a text of CKEditor lost its layout when it was edited.
+  // urlMap: the attachments of the page (buildAttachmentUrlMap), see keepForeignPictures.
   addOptions() {
-    return { ...this.parent?.(), inline: true };
+    return { ...this.parent?.(), inline: true, urlMap: null };
+  },
+
+  addProseMirrorPlugins() {
+    var plugins = (this.parent && this.parent()) || [];
+    return this.options.urlMap ? plugins.concat(keepForeignPictures(this.options.urlMap)) : plugins;
   },
 
   addAttributes() {
@@ -118,8 +166,10 @@ export const Image = BaseImage.extend({
           // stay what they are; one that has only a width gets the height of its own
           // proportions from the browser.
           var scalesHeight = !!current.attrs.height && startWidth > 0;
+          var moved = false;
 
           function onMouseMove(e) {
+            moved = true;
             var dx = e.clientX - startX;
             var newWidth = Math.max(50, isLeft ? startWidth - dx : startWidth + dx);
             img.style.width = newWidth + 'px';
@@ -130,6 +180,10 @@ export const Image = BaseImage.extend({
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
+            // A handle pressed and let go without moving is no resize: writing the size the
+            // picture is shown at (scaled down to the text) gave it a fixed width and an
+            // undo step.
+            if (!moved) return;
             var pos2 = getPos();
             if (typeof pos2 === 'number') {
               editor.view.dispatch(
@@ -157,8 +211,9 @@ export const Image = BaseImage.extend({
         dom.classList.remove('tiptap-image-selected');
       }
 
-      dom.addEventListener('click', function(e) {
-        e.stopPropagation();
+      // The click goes on to the document: there the other pictures see it and drop their
+      // handles (stopping it here left a picture selected after a click on another one).
+      dom.addEventListener('click', function() {
         showHandles();
       });
 
@@ -314,7 +369,11 @@ export const CollapsibleSummary = Node.create({
       return {
         dom,
         contentDOM,
-        ignoreMutation: () => true,
+        // The arrow and the button are the view's own (their changes are no edit); what
+        // happens in the title itself is read, as in any text. Ignoring that too lost a
+        // title typed into an emptied one: the browser puts the new text node into the
+        // empty contentDOM, and that change was dropped (it showed, but was not saved).
+        ignoreMutation: (mutation) => !contentDOM.contains(mutation.target),
         stopEvent: (e) => unwrap.contains(e.target),
         destroy: () => { editor.off('transaction', update); },
       };

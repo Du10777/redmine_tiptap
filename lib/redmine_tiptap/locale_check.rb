@@ -118,7 +118,7 @@ module RedmineTiptap
     end
 
     def check_language(code, translated, english, strings)
-      known = english.keys.to_set
+      known = (@known ||= english.keys.to_set)   # the same for every language file
       extra = translated.keys.reject { |key| known.include?(key) || language_text?(key) }
       extra.sort.each { |key| error("#{code}.yml: #{key} is not in en.yml (a typo, or a string that was removed)") }
       translated.keys.grep(LANGUAGE_KEY).sort.each do |key|

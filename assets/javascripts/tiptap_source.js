@@ -226,9 +226,8 @@ function coloredHTML(text, tokens) {
   return parts.join('');
 }
 
-// { box, area, show(visible), isShown(), refresh() }: the box is what is shown and
-// hidden, the area is the textarea with the HTML (read and set its value; call
-// refresh() after setting it).
+// { box, area, show(visible) }: the box is what is shown and hidden, the area is the
+// textarea with the HTML (read it, and set its value before show(true)).
 export function createSourceBox() {
   var box = document.createElement('div');
   box.className = 'tiptap-source-box';
@@ -486,7 +485,5 @@ export function createSourceBox() {
       box.style.display = visible ? 'block' : 'none';
       if (visible) reset();
     },
-    isShown: function() { return box.style.display !== 'none'; },
-    refresh: reset,
   };
 }
